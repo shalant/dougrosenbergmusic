@@ -1,0 +1,309 @@
+---
+const pieces = [
+  { title: 'Adagio and Allegro by Handel', file: 'adagio-and-allegro-handel.pdf', type: 'pdf' },
+  { title: 'Aebersold Track 6', file: 'aebersold-track-6.png', type: 'image' },
+  { title: 'Alegretto by Arensky', file: 'alegretto-arensky.pdf', type: 'pdf' },
+  { title: 'Arioso by Bach', file: 'arioso-bach.pdf', type: 'pdf' },
+  { title: 'Arioso Sinfonia by Bach', file: 'arioso-sinfonia-bach.pdf', type: 'pdf' },
+  { title: 'Prelude by Bach, page 2', file: 'bach-prelude-page2.pdf', type: 'pdf' },
+  { title: 'Prelude by Bach', file: 'bach-prelude.pdf', type: 'pdf' },
+  { title: "Billie's Bounce in Bb", file: 'billies-bounce-bb.pdf', type: 'pdf' },
+  { title: 'Chanson de Printemps, page 2', file: 'chanson-de-printemps-page2.png', type: 'image' },
+  { title: 'Concertino by Guildhaud', file: 'concertino-guildhaud.pdf', type: 'pdf' },
+  { title: 'Corn Bread Bb', file: 'corn-bread-bb.pdf', type: 'pdf' },
+  { title: 'Corn Bread (Lee Morgan)', file: 'corn-bread-lee-morgan-eb.pdf', type: 'pdf' },
+  { title: 'Diverse — Charlie Parker', file: 'diverse-charlie-parker.pdf', type: 'pdf' },
+  { title: 'Fantasy Piece — Schumann', file: 'fantasy-piece-schumann.pdf', type: 'pdf' },
+  { title: 'Fur Elise', file: 'fur-elise.pdf', type: 'pdf' },
+  { title: 'G Blue Melodies', file: 'g-blues-melodies.jpg', type: 'image' },
+  { title: 'G Blues', file: 'g-blues.jpg', type: 'image' },
+  { title: 'Habanera', file: 'habanera.pdf', type: 'pdf' },
+  { title: 'Handel Sonate No. 1', file: 'handel-sonate-no1.pdf', type: 'pdf' },
+  { title: "He's a Pirate", file: 'hes-a-pirate.pdf', type: 'pdf' },
+  { title: 'In the Hall of the Mountain King', file: 'in-the-hall-of-the-mountain-king.pdf', type: 'pdf' },
+  { title: 'Mis Amores — Cervantes', file: 'mis-amores-cervantes.pdf', type: 'pdf' },
+  { title: 'Music Theory Quiz (Aebersold)', file: 'music-theory-quiz-aebersold.pdf', type: 'pdf' },
+  { title: "Now's the Time", file: 'nows-the-time.pdf', type: 'pdf' },
+  { title: 'O Christmas Tree (clarinet)', file: 'o-christmas-tree-cl.pdf', type: 'pdf' },
+  { title: 'Put Your Records On', file: 'put-your-records-on.pdf', type: 'pdf' },
+  { title: 'Rainbow Road', file: 'rainbow-road.pdf', type: 'pdf' },
+  { title: 'Rhapsody in Blue (clarinet)', file: 'rhapsody-in-blue-cl.pdf', type: 'pdf' },
+  { title: 'Rhapsody in Blue, page 1', file: 'rhapsody-page1.pdf', type: 'pdf' },
+  { title: 'Rigaudon', file: 'rigaudon.pdf', type: 'pdf' },
+  { title: 'Rubank Book of Solos (Intermediate)', file: 'rubank-book-of-solos-intermediate.pdf', type: 'pdf' },
+  { title: 'Sleigh Ride', file: 'sleigh-ride.jpg', type: 'image' },
+  { title: 'Spiderman (Bb)', file: 'spiderman-bb.pdf', type: 'pdf' },
+  { title: 'Star Wars', file: 'star-wars.pdf', type: 'pdf' },
+  { title: 'Super Mario (Eb)', file: 'super-mario-eb.pdf', type: 'pdf' },
+  { title: 'Take Me Out to the Ballgame', file: 'take-me-out-to-the-ballgame.pdf', type: 'pdf' },
+  { title: 'Valse Triste — Gliere', file: 'valse-triste-gliere.pdf', type: 'pdf' },
+  { title: 'We Wish You a Merry Christmas', file: 'we-wish-you-a-merry-christmas.pdf', type: 'pdf' },
+  { title: 'Wii Theme (Bb)', file: 'wii-theme-bb.pdf', type: 'pdf' },
+  { title: 'Wii Theme (Eb)', file: 'wii-theme-eb.pdf', type: 'pdf' },
+  { title: 'Yakety Sax', file: 'yakety-sax.pdf', type: 'pdf' },
+  { title: 'You Belong With Me', file: 'you-belong-with-me.jpg', type: 'image' },
+  { title: "You've Got a Friend in Me", file: 'youve-got-a-friend-in-me.jpg', type: 'image' },
+];
+---
+
+<section id="sheet-music" class="sheet-music">
+  <div class="wrap">
+    <p class="eyebrow">For My Students</p>
+    <h2 class="sheet-music__heading">Sheet Music Library</h2>
+    <p class="sheet-music__sub">Practice pieces and lesson material for private students — search or browse, then open a piece to view.</p>
+
+    <div class="sheet-music__panel">
+      <div class="sheet-music__list-col">
+        <input class="sheet-music__search" type="text" placeholder="Search pieces…" data-sheet-search aria-label="Search sheet music" />
+        <ul class="sheet-music__list" data-sheet-list>
+          {pieces.map((p, i) => (
+            <li>
+              <button class="sheet-music__item" data-file={p.file} data-type={p.type} data-title={p.title} data-index={i}>
+                {p.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="sheet-music__viewer">
+        <div class="sheet-music__viewer-empty" data-viewer-empty>
+          <p>Select a piece from the list to view.</p>
+        </div>
+        <div class="sheet-music__viewer-active" data-viewer-active hidden>
+          <div class="sheet-music__viewer-head">
+            <h3 data-viewer-title></h3>
+            <a data-viewer-link href="#" target="_blank" rel="noopener noreferrer">Open in new tab →</a>
+          </div>
+          <iframe data-viewer-frame class="sheet-music__frame" title="Sheet music preview" hidden></iframe>
+          <img data-viewer-image class="sheet-music__frame sheet-music__frame--image" alt="" hidden />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sheet-music {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+  }
+
+  .sheet-music__heading {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.3rem 0 0.6rem;
+  }
+
+  .sheet-music__sub {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 58ch;
+    margin: 0 0 2.5rem;
+  }
+
+  .sheet-music__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    background: var(--surface);
+    border: 1px solid rgba(233, 237, 245, 0.08);
+    border-radius: 10px;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .sheet-music__list-col {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .sheet-music__search {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid rgba(233, 237, 245, 0.14);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .sheet-music__search:focus {
+    outline: none;
+    border-color: var(--brass);
+  }
+
+  .sheet-music__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 420px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sheet-music__item {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .sheet-music__item:hover {
+    background: var(--staff-line);
+    color: var(--text);
+  }
+
+  .sheet-music__item.is-active {
+    background: var(--brass-soft);
+    color: var(--text);
+  }
+
+  .sheet-music__item[hidden] {
+    display: none;
+  }
+
+  .sheet-music__viewer {
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sheet-music__viewer-empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-faint);
+    font-size: 0.9rem;
+    border: 1px dashed rgba(233, 237, 245, 0.14);
+    border-radius: 8px;
+  }
+
+  .sheet-music__viewer-empty[hidden] {
+    display: none;
+  }
+
+  .sheet-music__viewer-active {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .sheet-music__viewer-active[hidden] {
+    display: none;
+  }
+
+  .sheet-music__viewer-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .sheet-music__viewer-head h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .sheet-music__viewer-head a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--brass);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .sheet-music__viewer-head a:hover {
+    text-decoration: underline;
+  }
+
+  .sheet-music__frame {
+    flex: 1;
+    width: 100%;
+    min-height: 380px;
+    border: 1px solid rgba(233, 237, 245, 0.1);
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  .sheet-music__frame--image {
+    object-fit: contain;
+    background: var(--bg);
+  }
+
+  @media (max-width: 800px) {
+    .sheet-music__panel {
+      grid-template-columns: 1fr;
+    }
+    .sheet-music__list {
+      max-height: 260px;
+    }
+  }
+</style>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>('[data-sheet-search]');
+  const list = document.querySelector<HTMLElement>('[data-sheet-list]');
+  const items = Array.from(document.querySelectorAll<HTMLButtonElement>('.sheet-music__item'));
+  const viewerEmpty = document.querySelector<HTMLElement>('[data-viewer-empty]');
+  const viewerActive = document.querySelector<HTMLElement>('[data-viewer-active]');
+  const viewerTitle = document.querySelector<HTMLElement>('[data-viewer-title]');
+  const viewerLink = document.querySelector<HTMLAnchorElement>('[data-viewer-link]');
+  const viewerFrame = document.querySelector<HTMLIFrameElement>('[data-viewer-frame]');
+  const viewerImage = document.querySelector<HTMLImageElement>('[data-viewer-image]');
+
+  if (search && list && viewerEmpty && viewerActive && viewerTitle && viewerLink && viewerFrame && viewerImage) {
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      items.forEach((item) => {
+        const match = item.dataset.title?.toLowerCase().includes(q);
+        item.hidden = !match;
+      });
+    });
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        items.forEach((i) => i.classList.remove('is-active'));
+        item.classList.add('is-active');
+
+        const file = item.dataset.file ?? '';
+        const type = item.dataset.type;
+        const url = `/sheetmusic/${file}`;
+
+        viewerEmpty.hidden = true;
+        viewerActive.hidden = false;
+        viewerTitle.textContent = item.dataset.title ?? '';
+        viewerLink.href = url;
+
+        if (type === 'image') {
+          viewerFrame.hidden = true;
+          viewerFrame.src = '';
+          viewerImage.hidden = false;
+          viewerImage.src = url;
+          viewerImage.alt = item.dataset.title ?? '';
+        } else {
+          viewerImage.hidden = true;
+          viewerImage.src = '';
+          viewerFrame.hidden = false;
+          viewerFrame.src = url;
+        }
+      });
+    });
+  }
+</script>

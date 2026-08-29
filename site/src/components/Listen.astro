@@ -1,0 +1,107 @@
+---
+const albums = [
+  {
+    title: 'Better Than TV',
+    cover: '/images/albums/better-than-tv.jpg',
+    blurb: '2014 debut. "Fearlessness of spirit and a robustness of tone" — Chicago Tribune.',
+    url: 'https://www.amazon.com/dp/B00G9Y8TPE',
+  },
+  {
+    title: 'Goran Ivanovic Group',
+    cover: '/images/albums/goran-ivanovic-group.jpg',
+    blurb: 'Balkan folk and acoustic jazz, with the zesty odd-metered rhythms of Eastern European folk music.',
+    url: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C',
+  },
+  {
+    title: 'Underwater',
+    cover: '/images/albums/underwater.jpg',
+    blurb: 'With Eastern Blok — foreign and familiar, patient and strange.',
+    url: 'https://www.amazon.com/dp/B006HTEKHM',
+  },
+  {
+    title: 'Folk Tales',
+    cover: '/images/albums/folk-tales.jpg',
+    blurb: "Eastern Blok's sophomore release — somber and serious, lively and elusive.",
+    url: 'https://www.amazon.com/dp/B00169L616',
+  },
+];
+---
+
+<section id="listen" class="listen staff-lines">
+  <div class="wrap">
+    <p class="eyebrow">Listen</p>
+    <h2 class="listen__heading">Recordings</h2>
+
+    <div class="listen__grid">
+      {albums.map((album) => (
+        <a class="album" href={album.url} target="_blank" rel="noopener noreferrer">
+          <img class="album__cover" src={album.cover} alt={`${album.title} album cover`} loading="lazy" />
+          <div class="album__body">
+            <p class="album__title">{album.title}</p>
+            <p class="album__blurb">{album.blurb}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .listen {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+  }
+
+  .listen__heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.3rem 0 2.5rem;
+  }
+
+  .listen__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .album {
+    display: block;
+    text-decoration: none;
+    color: var(--text);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid rgba(233, 237, 245, 0.08);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .album:hover {
+    transform: translateY(-3px);
+    border-color: var(--brass);
+  }
+
+  .album__cover {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .album__body {
+    padding: 0.9rem 1rem 1.15rem;
+  }
+
+  .album__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .album__blurb {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>

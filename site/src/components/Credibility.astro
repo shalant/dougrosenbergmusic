@@ -1,0 +1,141 @@
+---
+const schools = [
+  'Princeton University', 'University of Michigan', 'Cornell University',
+  'Carnegie Mellon University', 'University of Pittsburgh', 'Lewis University',
+  'SUNY Fredonia', 'University of Minnesota', 'University of Nebraska',
+  'Haverford College', 'Elgin Community College', 'Francis Parker School',
+  'New Trier High School', 'Kennedy High School',
+];
+---
+
+<section id="credibility" class="credibility staff-lines--strong">
+  <div class="wrap">
+    <p class="eyebrow">Guest Artist / Visiting Instructor</p>
+    <ul class="credibility__list">
+      {schools.map((school) => (
+        <li>{school}</li>
+      ))}
+    </ul>
+
+    <div class="credibility__grid">
+      <div class="credibility__block">
+        <h3 class="credibility__heading">Teaching Experience</h3>
+        <p class="credibility__lead"><strong>Private Instructor &amp; Clinician</strong></p>
+        <p class="credibility__text">
+          Chicago-area schools including Evanston middle schools, Sears School, Glenview, Glencoe,
+          Winnetka, Chicago Academy for the Arts, Oswego HS, and Plank MS.
+        </p>
+        <ul class="credibility__bullets">
+          <li>Private instruction in saxophone, clarinet, flute, jazz improvisation, and music theory</li>
+          <li>Customized lesson plans for students from beginner to advanced</li>
+          <li>Preparation for auditions, recitals, jazz ensemble placements, and honor bands</li>
+        </ul>
+      </div>
+
+      <div class="credibility__block">
+        <h3 class="credibility__heading">New Trier High School</h3>
+        <ul class="credibility__bullets">
+          <li>Freshman Jazz Ensemble Assistant (2005–2008)</li>
+          <li>Jazz Improvisation Instructor (2003–2008)</li>
+          <li>Saxophone Instructor (2007–2011)</li>
+        </ul>
+        <p class="credibility__lead"><strong>Lake Forest Country Day School</strong> — Band Director (Fall 2012)</p>
+      </div>
+
+      <div class="credibility__block">
+        <h3 class="credibility__heading">Professional Affiliations</h3>
+        <ul class="credibility__bullets">
+          <li>Member, International Association of Jazz Educators (since 2005)</li>
+          <li>Endorsed by Selmer Saxophones</li>
+        </ul>
+        <h3 class="credibility__heading credibility__heading--spaced">Education</h3>
+        <ul class="credibility__bullets">
+          <li><strong>New England Conservatory</strong> — Bachelor of Music, Jazz Performance (1997–2002)</li>
+          <li><strong>BS in Chemistry</strong> (1997–2002)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .credibility {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+    background: var(--surface);
+    border-block: 1px solid rgba(233, 237, 245, 0.08);
+  }
+
+  .credibility__list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .credibility__list li:not(:last-child)::after {
+    content: '·';
+    margin-left: 1.4rem;
+    color: var(--brass);
+  }
+
+  .credibility__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 3rem);
+    margin-top: 2.75rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(233, 237, 245, 0.1);
+  }
+
+  .credibility__heading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .credibility__heading--spaced {
+    margin-top: 1.75rem;
+  }
+
+  .credibility__lead {
+    margin: 0 0 0.4rem;
+    font-size: 0.92rem;
+    color: var(--text);
+  }
+
+  .credibility__text {
+    margin: 0 0 0.9rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .credibility__bullets {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .credibility__bullets li {
+    margin-bottom: 0.4rem;
+  }
+
+  .credibility__bullets strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .credibility__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

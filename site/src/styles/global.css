@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0a0e17;
+  --bg-elevated: #10162399;
+  --surface: #131a26;
+  --text: #e9edf5;
+  --text-muted: rgba(233, 237, 245, 0.62);
+  --text-faint: rgba(233, 237, 245, 0.4);
+  --glow: #7fb0ff;
+  --glow-soft: rgba(127, 176, 255, 0.16);
+  --brass: #cf9a4f;
+  --brass-soft: rgba(207, 154, 79, 0.14);
+  --staff-line: rgba(233, 237, 245, 0.09);
+  --staff-line-strong: rgba(233, 237, 245, 0.16);
+
+  /* one muted jewel-tone per section, used by the staff-corner nav */
+  --note-hero: var(--glow);
+  --note-listen: var(--brass);
+  --note-about: #e0794f;
+  --note-cred: #4fb894;
+  --note-contact: #b287df;
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Work Sans', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+/* ── Sheet-music staff-line texture ──
+   Five thin lines forming one "staff," then a wide gap before the pattern
+   repeats — a literal music-staff rhythm used as a structural background,
+   not a decorative pattern. Pure CSS, no image asset. */
+.staff-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--staff-line) 0px,
+    var(--staff-line) 1px,
+    transparent 1px,
+    transparent 11px,
+    var(--staff-line) 11px,
+    var(--staff-line) 12px,
+    transparent 12px,
+    transparent 23px,
+    var(--staff-line) 23px,
+    var(--staff-line) 24px,
+    transparent 24px,
+    transparent 35px,
+    var(--staff-line) 35px,
+    var(--staff-line) 36px,
+    transparent 36px,
+    transparent 47px,
+    var(--staff-line) 47px,
+    var(--staff-line) 48px,
+    transparent 48px,
+    transparent 220px
+  );
+}
+
+.staff-lines--strong {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--staff-line-strong) 0px,
+    var(--staff-line-strong) 1px,
+    transparent 1px,
+    transparent 11px,
+    var(--staff-line-strong) 11px,
+    var(--staff-line-strong) 12px,
+    transparent 12px,
+    transparent 23px,
+    var(--staff-line-strong) 23px,
+    var(--staff-line-strong) 24px,
+    transparent 24px,
+    transparent 35px,
+    var(--staff-line-strong) 35px,
+    var(--staff-line-strong) 36px,
+    transparent 36px,
+    transparent 47px,
+    var(--staff-line-strong) 47px,
+    var(--staff-line-strong) 48px,
+    transparent 48px,
+    transparent 220px
+  );
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,164 @@
+---
+const stats = [
+  { number: '6', label: 'Chicago Venues' },
+  { number: '14', label: 'National & International' },
+  { number: '34', label: 'Artists Performed With' },
+];
+
+const chicagoVenues = ['Millennium Park', 'Green Mill', 'Hothouse', 'Symphony Center', 'Jazz Showcase', 'Taste of Chicago'];
+
+const nationalVenues = [
+  "Joe's Pub", 'St. Louis Art Museum', 'Knitting Factory', "Chris' Jazz Café", 'Blues Alley', 'Makor',
+  'Satalla', 'Firefly Club', 'Cedar Cultural Center', "Johnny D's", 'Canadian Guitar Festival', 'Alchemia',
+  'Krannert Center', 'Dazzle',
+];
+
+const artists = [
+  'Sam Barsh', 'Brendan Bayliss', 'Bobby Broom', 'Maggie Brown', 'Maurice Brown', 'Oscar Brown Jr.',
+  'Phil Cohran', 'Ernest Dawkins', 'Michael Franti', 'George Freeman', 'Robert Glasper', 'Fareed Haque',
+  'Nikki Glaspie', 'Jen Hartswick', 'Keyon Harrold', 'Marquis Hill', 'Robert "Baabe" Irving III',
+  'Goran Ivanovic', 'Karsh Kale', 'Mark Kelley', 'Rakalam Bob Moses', 'Kris Myers', 'Jeff Parker',
+  'Danilo Pérez', 'Joe Russo', 'Kendrick Scott', 'Sherry Scott', 'John Sinclair', 'Walter Smith',
+  'Oscar Stagnaro', 'Luciana Souza', 'Matt Ulery', 'Corey Wilkes', 'David Young',
+];
+---
+
+<section id="performance" class="performance">
+  <div class="wrap">
+    <p class="eyebrow">Performance</p>
+    <h2 class="performance__heading">On the Road</h2>
+
+    <div class="performance__stats">
+      {stats.map((s) => (
+        <div class="performance__stat">
+          <span class="performance__stat-number">{s.number}</span>
+          <span class="performance__stat-label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="performance__venues">
+      <div class="performance__venue-group">
+        <p class="performance__venue-label">Chicago</p>
+        <ul class="performance__venue-list">
+          {chicagoVenues.map((v) => <li>{v}</li>)}
+        </ul>
+      </div>
+      <div class="performance__venue-group">
+        <p class="performance__venue-label">National &amp; International</p>
+        <ul class="performance__venue-list performance__venue-list--two-col">
+          {nationalVenues.map((v) => <li>{v}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="performance__artists">
+      <p class="performance__venue-label">Artists Performed With</p>
+      <p class="performance__artists-flow">
+        {artists.map((a, i) => (
+          <>
+            <span>{a}</span>
+            {i < artists.length - 1 && <span class="performance__dot" aria-hidden="true">·</span>}
+          </>
+        ))}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .performance {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+  }
+
+  .performance__heading {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.3rem 0 2.5rem;
+  }
+
+  .performance__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 6vw, 4rem);
+    margin-bottom: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(233, 237, 245, 0.08);
+  }
+
+  .performance__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .performance__stat-number {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    color: var(--brass);
+    line-height: 1;
+  }
+
+  .performance__stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .performance__venues {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 3rem;
+  }
+
+  .performance__venue-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 1rem;
+  }
+
+  .performance__venue-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .performance__venue-list--two-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.6rem 1.5rem;
+  }
+
+  .performance__artists-flow {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 2;
+    color: var(--text-muted);
+  }
+
+  .performance__dot {
+    color: var(--brass);
+    margin: 0 0.55rem;
+  }
+
+  @media (max-width: 700px) {
+    .performance__venues {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

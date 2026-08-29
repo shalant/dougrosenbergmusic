@@ -1,0 +1,111 @@
+---
+const email = 'doug.rosenberg@gmail.com';
+const socials = [
+  { label: 'Instagram', href: 'https://instagram.com/shalantdoro' },
+  { label: 'YouTube', href: 'https://youtube.com/@dougrosenberg2361' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/douglasrosenberg' },
+  { label: 'GitHub', href: 'https://github.com/shalant' },
+];
+---
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <p class="eyebrow">Booking &amp; Contact</p>
+    <h2 class="contact__heading">Let&rsquo;s make some music.</h2>
+    <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
+
+    <a class="contact__cta" href={`mailto:${email}`}>
+      {email}
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <nav class="contact__socials" aria-label="Social links">
+      {socials.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
+      ))}
+    </nav>
+  </div>
+
+  <footer class="contact__footer">
+    <p>© {new Date().getFullYear()} Doug Rosenberg</p>
+  </footer>
+</section>
+
+<style>
+  .contact {
+    padding-block: clamp(5rem, 12vw, 8.5rem) clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--bg) 0%, #060810 100%);
+    text-align: center;
+  }
+
+  .contact__heading {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.2rem, 6vw, 3.75rem);
+    margin: 0.5rem 0 0.6rem;
+  }
+
+  .contact__sub {
+    color: var(--text-muted);
+    margin: 0 0 2.5rem;
+  }
+
+  .contact__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    color: var(--bg);
+    background: var(--brass);
+    text-decoration: none;
+    padding: 1rem 1.75rem;
+    border-radius: 999px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px var(--brass-soft);
+  }
+
+  .contact__cta span {
+    transition: transform 0.2s ease;
+  }
+
+  .contact__cta:hover span {
+    transform: translateX(3px);
+  }
+
+  .contact__socials {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2.75rem;
+  }
+
+  .contact__socials a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .contact__socials a:hover {
+    color: var(--text);
+    border-color: var(--brass);
+  }
+
+  .contact__footer {
+    margin-top: 4.5rem;
+    text-align: center;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+</style>

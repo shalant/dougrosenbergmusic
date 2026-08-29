@@ -1,0 +1,133 @@
+---
+const tags = ['Saxophones, Flutes, Clarinets', 'Composition / Arranging', 'Education', 'Tech'];
+---
+
+<section id="about" class="about">
+  <div class="wrap about__grid">
+    <figure class="about__photo-wrap">
+      <img class="about__photo" src="/images/hero.webp" alt="Doug Rosenberg with saxophone" loading="lazy" />
+    </figure>
+
+    <div class="about__body">
+      <p class="eyebrow">About</p>
+      <blockquote class="about__quote">
+        &ldquo;Fearlessness of spirit and a robustness of tone that seem likely to win him a devoted following.&rdquo;
+        <cite>— Chicago Tribune</cite>
+      </blockquote>
+
+      <p class="about__text">
+        Doug Rosenberg is a member of the new generation of jazz musicians composing and
+        improvising music for the next century. His work on saxophone has an instantly
+        recognizable sound and personal melodic language — best known for his work with
+        Eastern Blok and Goran Ivanovic, and collaborations with Sam Barsh, Maurice Brown,
+        Kelan Phil Cohran, Robert Glasper, Robert &ldquo;Baabe&rdquo; Irving III, Rakalam Bob Moses, and
+        Kendrick Scott.
+      </p>
+
+      <ul class="about__tags">
+        {tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  .about__photo-wrap {
+    margin: 0;
+    position: relative;
+    justify-self: start;
+    width: min(100%, 360px);
+    /* deliberately offset up, breaking the row's vertical center */
+    transform: translateY(-2.5rem);
+  }
+
+  .about__photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 15%;
+    filter: grayscale(0.35) sepia(0.18) saturate(1.1);
+    border-radius: 2px;
+  }
+
+  .about__photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--brass);
+    transform: translate(14px, 14px);
+    z-index: -1;
+  }
+
+  .about__quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+    line-height: 1.4;
+    margin: 0.6rem 0 1.75rem;
+    color: var(--text);
+    border-left: 2px solid var(--brass);
+    padding-left: 1.2rem;
+  }
+
+  .about__quote cite {
+    display: block;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    margin-top: 0.6rem;
+  }
+
+  .about__text {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 58ch;
+  }
+
+  .about__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+  }
+
+  .about__tags li {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid rgba(233, 237, 245, 0.14);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+  }
+
+  @media (max-width: 800px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+    .about__photo-wrap {
+      transform: none;
+      width: min(100%, 280px);
+    }
+  }
+</style>

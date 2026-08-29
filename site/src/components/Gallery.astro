@@ -1,0 +1,321 @@
+---
+const photos = [
+  { src: '/images/gallery/formal.jpg', caption: 'Concert Performance', category: 'Performance' },
+  { src: '/images/gallery/jazzgallery.jpg', caption: 'Live at the Jazz Gallery', category: 'Performance' },
+  { src: '/images/gallery/andys.jpg', caption: "Andy's Jazz Club — Chicago", category: 'Performance' },
+  { src: '/images/gallery/lakebluff.jpg', caption: 'Lake Bluff', category: 'Performance' },
+  { src: '/images/gallery/barshpolkadots.jpg', caption: 'With Sam Barsh', category: 'Performance' },
+  { src: '/images/gallery/alison.jpg', caption: 'With Alison', category: 'Performance' },
+  { src: '/images/gallery/liliya.jpg', caption: 'With Liliya', category: 'Performance' },
+  { src: '/images/gallery/makaya.jpg', caption: 'With Makaya', category: 'Performance' },
+  { src: '/images/gallery/birdwalker.jpg', caption: 'Bird Walker', category: 'Performance' },
+  { src: '/images/gallery/whistlerfatalbert.jpg', caption: 'Whistler Fat Albert', category: 'Performance' },
+  { src: '/images/gallery/studio.jpg', caption: 'Recording Session', category: 'Studio' },
+  { src: '/images/gallery/artsy.jpg', caption: 'In the Studio', category: 'Studio' },
+  { src: '/images/gallery/chopin-album.jpg', caption: 'Chopin Recording', category: 'Studio' },
+  { src: '/images/gallery/sepia.jpg', caption: 'Vintage', category: 'Archive' },
+  { src: '/images/gallery/profile.jpg', caption: 'Doug Rosenberg', category: 'Press' },
+  { src: '/images/gallery/betterthantv.jpg', caption: 'Better Than TV', category: 'Albums' },
+  { src: '/images/gallery/albumcover.jpg', caption: 'Album Cover', category: 'Albums' },
+  { src: '/images/gallery/ryangosling.jpg', caption: 'Backstage', category: 'Performance' },
+];
+
+const categories = [...new Set(photos.map((p) => p.category))];
+---
+
+<section id="gallery" class="gallery staff-lines">
+  <div class="wrap">
+    <p class="eyebrow">Photo Gallery</p>
+    <h2 class="gallery__heading">In Frame</h2>
+
+    <div class="gallery__filters" data-filters>
+      <button class="gallery__filter is-active" data-category="">All</button>
+      {categories.map((c) => (
+        <button class="gallery__filter" data-category={c}>{c}</button>
+      ))}
+    </div>
+
+    <div class="gallery__grid" data-grid>
+      {photos.map((p, i) => (
+        <button class="gallery__card" data-category={p.category} data-index={i} aria-label={`Open ${p.caption}`}>
+          <img class="gallery__img" src={p.src} alt={p.caption} loading="lazy" />
+          <span class="gallery__overlay">
+            <span class="gallery__caption">{p.caption}</span>
+            <span class="gallery__tag">{p.category}</span>
+          </span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="gallery__lightbox" data-lightbox hidden>
+    <button class="gallery__lightbox-close" data-lightbox-close aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <span class="gallery__lightbox-counter" data-lightbox-counter></span>
+    <button class="gallery__lightbox-nav gallery__lightbox-nav--prev" data-lightbox-prev aria-label="Previous photo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="gallery__lightbox-content">
+      <img data-lightbox-img src="" alt="" />
+      <p class="gallery__lightbox-caption" data-lightbox-caption></p>
+    </div>
+    <button class="gallery__lightbox-nav gallery__lightbox-nav--next" data-lightbox-next aria-label="Next photo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--surface);
+    position: relative;
+  }
+
+  .gallery__heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.3rem 0 2rem;
+  }
+
+  .gallery__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .gallery__filter {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid rgba(233, 237, 245, 0.14);
+    border-radius: 999px;
+    padding: 0.42rem 0.95rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .gallery__filter:hover {
+    color: var(--text);
+    border-color: var(--brass);
+  }
+
+  .gallery__filter.is-active {
+    color: var(--bg);
+    background: var(--brass);
+    border-color: var(--brass);
+  }
+
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery__card {
+    position: relative;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 5;
+    background: var(--bg);
+  }
+
+  .gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .gallery__card:hover .gallery__img {
+    transform: scale(1.06);
+  }
+
+  .gallery__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.8rem;
+    background: linear-gradient(180deg, transparent 50%, rgba(10, 14, 23, 0.88) 100%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    text-align: left;
+  }
+
+  .gallery__card:hover .gallery__overlay,
+  .gallery__card:focus-visible .gallery__overlay {
+    opacity: 1;
+  }
+
+  .gallery__caption {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .gallery__tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .gallery__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(6, 8, 13, 0.94);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery__lightbox[hidden] {
+    display: none;
+  }
+
+  .gallery__lightbox-content {
+    max-width: min(80vw, 900px);
+    max-height: 82vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .gallery__lightbox-content img {
+    max-width: 100%;
+    max-height: 68vh;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .gallery__lightbox-caption {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .gallery__lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .gallery__lightbox-counter {
+    position: absolute;
+    top: 1.6rem;
+    left: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+
+  .gallery__lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0.75rem;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+
+  .gallery__lightbox-nav:hover {
+    opacity: 1;
+  }
+
+  .gallery__lightbox-nav--prev {
+    left: clamp(0.5rem, 3vw, 2rem);
+  }
+
+  .gallery__lightbox-nav--next {
+    right: clamp(0.5rem, 3vw, 2rem);
+  }
+</style>
+
+<script>
+  const grid = document.querySelector<HTMLElement>('[data-grid]');
+  const filters = document.querySelector<HTMLElement>('[data-filters]');
+  const lightbox = document.querySelector<HTMLElement>('[data-lightbox]');
+  const lightboxImg = document.querySelector<HTMLImageElement>('[data-lightbox-img]');
+  const lightboxCaption = document.querySelector<HTMLElement>('[data-lightbox-caption]');
+  const lightboxCounter = document.querySelector<HTMLElement>('[data-lightbox-counter]');
+
+  if (grid && filters && lightbox && lightboxImg && lightboxCaption && lightboxCounter) {
+    const cards = Array.from(grid.querySelectorAll<HTMLButtonElement>('.gallery__card'));
+    let currentIdx = 0;
+
+    filters.querySelectorAll<HTMLButtonElement>('.gallery__filter').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filters.querySelectorAll('.gallery__filter').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const category = btn.dataset.category;
+        cards.forEach((card) => {
+          const show = !category || card.dataset.category === category;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+
+    function openLightbox(idx: number) {
+      currentIdx = idx;
+      const card = cards[idx];
+      const img = card.querySelector('img');
+      if (!img) return;
+      lightboxImg!.src = img.src;
+      lightboxImg!.alt = img.alt;
+      lightboxCaption!.textContent = img.alt;
+      lightboxCounter!.textContent = `${idx + 1} / ${cards.length}`;
+      lightbox!.hidden = false;
+    }
+
+    function closeLightbox() {
+      lightbox!.hidden = true;
+    }
+
+    function step(delta: number) {
+      openLightbox((currentIdx + delta + cards.length) % cards.length);
+    }
+
+    cards.forEach((card, idx) => {
+      card.addEventListener('click', () => openLightbox(idx));
+    });
+
+    document.querySelector('[data-lightbox-close]')?.addEventListener('click', closeLightbox);
+    document.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => step(-1));
+    document.querySelector('[data-lightbox-next]')?.addEventListener('click', () => step(1));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lightbox!.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+  }
+</script>

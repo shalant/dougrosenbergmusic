@@ -1,0 +1,57 @@
+<div class="test-pattern-bar" aria-hidden="true">
+  <span class="tpb tpb--hero"></span>
+  <span class="tpb tpb--listen"></span>
+  <span class="tpb tpb--about"></span>
+  <span class="tpb tpb--cred"></span>
+  <span class="tpb tpb--contact"></span>
+</div>
+
+<style>
+  .test-pattern-bar {
+    display: flex;
+    height: 28px;
+  }
+
+  .tpb {
+    flex: 1;
+    position: relative;
+  }
+
+  .tpb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(10, 14, 23, 0.5) 0px, rgba(10, 14, 23, 0.5) 1px, transparent 1px, transparent 11px
+    );
+  }
+
+  .tpb--hero { background: var(--note-hero); }
+  .tpb--listen { background: var(--note-listen); }
+  .tpb--about { background: var(--note-about); }
+  .tpb--cred { background: var(--note-cred); }
+  .tpb--contact { background: var(--note-contact); }
+
+  /* Brief signal-flicker, like the picture settling in after changing the channel — not a loop. */
+  .tpb {
+    animation: tune-in 0.4s ease-out;
+  }
+
+  .tpb--listen { animation-delay: 0.05s; }
+  .tpb--about { animation-delay: 0.1s; }
+  .tpb--cred { animation-delay: 0.15s; }
+  .tpb--contact { animation-delay: 0.2s; }
+
+  @keyframes tune-in {
+    0% { opacity: 0.3; filter: brightness(1.8); }
+    40% { opacity: 0.7; filter: brightness(0.7); }
+    100% { opacity: 1; filter: brightness(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tpb {
+      animation: none;
+    }
+  }
+</style>
