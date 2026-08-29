@@ -1,0 +1,263 @@
+---
+// "Full-Bleed, Screen-Graded" hero — the recommended direction from the
+// twenty-variations pass. Same full-bleed photo and layout as the locked
+// Hero.astro (nothing shrinks into a TV object), with a broadcast grade —
+// scanlines, a soft screen vignette, a touch more warmth — laid directly
+// over the photo, plus the antenna detail carried over from the tube-set
+// preview. Kept as a separate component so Hero.astro stays untouched.
+interface Props {
+  antenna?: boolean;
+}
+
+const { antenna = true } = Astro.props;
+---
+
+<header id="hero" class="hero">
+  <img class="hero__photo" src="/images/hero.webp" alt="Doug Rosenberg holding a saxophone" />
+  <div class="hero__scan" aria-hidden="true"></div>
+  <div class="hero__screen-vignette" aria-hidden="true"></div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  {antenna && (
+    <div class="hero__antenna" aria-hidden="true">
+      <span class="hero__signal"></span>
+    </div>
+  )}
+
+  <div class="hero__content wrap">
+    <p class="eyebrow hero__eyebrow">Saxophonist · Composer · Educator</p>
+    <h1 class="hero__name">Doug<br />Rosenberg</h1>
+  </div>
+
+  <a class="now-playing" href="#listen">
+    <span class="now-playing__rec" aria-hidden="true"></span>
+    <span class="now-playing__label">On Air</span>
+    <span class="now-playing__track">Better Than TV</span>
+  </a>
+
+  <span class="hero__scroll-cue" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+    <span class="hero__scroll-cue-label">CH +</span>
+  </span>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: sepia(0.18) saturate(1.08) brightness(1.22) contrast(1.06);
+  }
+
+  /* the broadcast grade — scanlines and a soft screen-shaped vignette,
+     laid over the full photo instead of shrinking it into a frame */
+  .hero__scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      180deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  .hero__screen-vignette {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 18vw 4vw rgba(6, 9, 15, 0.55);
+    pointer-events: none;
+  }
+
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10, 14, 23, 0.02) 0%, rgba(10, 14, 23, 0.2) 55%, rgba(10, 14, 23, 0.88) 96%),
+      linear-gradient(90deg, rgba(10, 14, 23, 0.28) 0%, rgba(10, 14, 23, 0.02) 45%);
+  }
+
+  .hero__antenna {
+    /* opposite corner from the fixed nav, so the two don't collide */
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: clamp(1.5rem, 6vw, 4rem);
+    width: 70px;
+    height: 46px;
+  }
+
+  .hero__antenna::before,
+  .hero__antenna::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    height: 46px;
+    background: linear-gradient(to top, rgba(207, 154, 79, 0.55), rgba(207, 154, 79, 0));
+    transform-origin: bottom center;
+  }
+
+  .hero__antenna::before {
+    transform: translateX(-1px) rotate(-16deg);
+  }
+
+  .hero__antenna::after {
+    transform: translateX(-1px) rotate(16deg);
+  }
+
+  .hero__signal {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6fdc8c;
+    box-shadow: 0 0 8px 2px rgba(111, 220, 140, 0.6);
+    animation: signal-blink 2.6s ease-in-out infinite;
+  }
+
+  @keyframes signal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 7.5rem;
+    width: 100%;
+  }
+
+  .hero__eyebrow {
+    margin: 0 0 1rem;
+  }
+
+  .hero__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    line-height: 0.98;
+    margin: 0;
+    color: var(--text);
+    text-shadow: 0 0 42px var(--glow-soft), 0 0 4px rgba(127, 176, 255, 0.35);
+  }
+
+  .now-playing {
+    position: absolute;
+    z-index: 1;
+    left: clamp(1.25rem, 4vw, 3rem);
+    bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.65rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(19, 26, 38, 0.72);
+    border: 1px solid rgba(233, 237, 245, 0.12);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .now-playing:hover {
+    border-color: var(--brass);
+    background: rgba(19, 26, 38, 0.9);
+  }
+
+  .now-playing__rec {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e0574f;
+    animation: rec-pulse 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .now-playing__label {
+    color: #e0574f;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+
+  .now-playing__track {
+    color: var(--text-muted);
+  }
+
+  @keyframes rec-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero__scroll-cue {
+    position: absolute;
+    z-index: 1;
+    right: clamp(1.25rem, 4vw, 3rem);
+    bottom: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--text-faint);
+    animation: bob 2s ease-in-out infinite;
+  }
+
+  .hero__scroll-cue-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .now-playing__rec,
+    .hero__scroll-cue,
+    .hero__signal {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero__content {
+      padding-bottom: 6.5rem;
+    }
+    .now-playing {
+      left: 1.25rem;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      justify-content: space-between;
+    }
+    .hero__scroll-cue {
+      display: none;
+    }
+    .hero__antenna {
+      display: none;
+    }
+  }
+</style>

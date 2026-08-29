@@ -1,0 +1,381 @@
+---
+// "Expand on hover" nav: same colored noteheads on the staff, but each one
+// sprouts a horizontal label pill on hover/focus, and the CURRENT section's
+// note stays expanded all the time for constant orientation without needing
+// to hover. Flex layout (not fixed left/top positions like StaffNav) so the
+// row — and the pill container itself, anchored to the right edge — can
+// grow to fit whichever label is open.
+const sections = [
+  { id: 'hero', label: 'Hero', tone: 'hero' },
+  { id: 'listen', label: 'Listen', tone: 'listen' },
+  { id: 'about', label: 'About', tone: 'about' },
+  { id: 'credibility', label: 'Credibility', tone: 'cred' },
+  { id: 'contact', label: 'Contact', tone: 'contact' },
+];
+---
+
+<nav class="staff-nav" aria-label="Section navigation" data-staff-nav>
+  <div class="staff-nav__line" style="top: 14px;"></div>
+  <div class="staff-nav__line" style="top: 26px;"></div>
+  <div class="staff-nav__line" style="top: 38px;"></div>
+  <div class="staff-nav__line" style="top: 50px;"></div>
+  <div class="staff-nav__line" style="top: 62px;"></div>
+
+  <div class="staff-nav__row">
+    {sections.map((s, i) => (
+      <button
+        class={`staff-nav__note note--${s.tone} staff-jump${i === 0 ? ' is-active' : ''}`}
+        data-target={s.id}
+      >
+        <span class="staff-nav__blob" aria-hidden="true"></span>
+        <span class="staff-nav__label">{s.label}</span>
+      </button>
+    ))}
+  </div>
+</nav>
+
+<button
+  class="staff-toggle"
+  data-menu-toggle
+  aria-label="Open section menu"
+  aria-expanded="false"
+  aria-controls="staff-menu-panel"
+>
+  <span class="staff-toggle__bar"></span>
+  <span class="staff-toggle__bar"></span>
+  <span class="staff-toggle__bar"></span>
+</button>
+
+<div class="staff-menu" id="staff-menu-panel" data-menu-panel hidden>
+  <ul class="staff-menu__list">
+    {sections.map((s, i) => (
+      <li>
+        <button
+          class={`staff-menu__item note--${s.tone} staff-jump${i === 0 ? ' is-active' : ''}`}
+          data-target={s.id}
+        >
+          <span class="staff-menu__dot" aria-hidden="true"></span>
+          <span class="staff-menu__label">{s.label}</span>
+        </button>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .staff-nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 40;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    background: rgba(10, 14, 23, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 999px;
+    border: 1px solid rgba(233, 237, 245, 0.08);
+  }
+
+  .staff-nav__line {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: var(--staff-line-strong);
+  }
+
+  .staff-nav__row {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+  }
+
+  .staff-nav__note {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .staff-nav__blob {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px -3px rgba(0, 0, 0, 0.6);
+    opacity: 0.55;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+    animation: staff-breathe 4.6s ease-in-out infinite;
+  }
+
+  @keyframes staff-breathe {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.12) rotate(3deg); }
+  }
+
+  .staff-nav__note.note--hero .staff-nav__blob,
+  .staff-menu__item.note--hero .staff-menu__dot { background: var(--note-hero); }
+  .staff-nav__note.note--listen .staff-nav__blob,
+  .staff-menu__item.note--listen .staff-menu__dot { background: var(--note-listen); }
+  .staff-nav__note.note--about .staff-nav__blob,
+  .staff-menu__item.note--about .staff-menu__dot { background: var(--note-about); }
+  .staff-nav__note.note--cred .staff-nav__blob,
+  .staff-menu__item.note--cred .staff-menu__dot { background: var(--note-cred); }
+  .staff-nav__note.note--contact .staff-nav__blob,
+  .staff-menu__item.note--contact .staff-menu__dot { background: var(--note-contact); }
+
+  .staff-nav__note.note--hero .staff-nav__blob { border-radius: 58% 42% 63% 37% / 41% 55% 45% 59%; animation-delay: 0s; }
+  .staff-nav__note.note--listen .staff-nav__blob { border-radius: 42% 58% 37% 63% / 60% 38% 62% 40%; animation-delay: 0.9s; }
+  .staff-nav__note.note--about .staff-nav__blob { border-radius: 65% 35% 45% 55% / 48% 62% 38% 52%; animation-delay: 1.8s; }
+  .staff-nav__note.note--cred .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
+  .staff-nav__note.note--contact .staff-nav__blob { border-radius: 60% 40% 40% 60% / 35% 60% 40% 65%; animation-delay: 3.6s; }
+
+  .staff-nav__note:hover .staff-nav__blob,
+  .staff-nav__note:focus-visible .staff-nav__blob,
+  .staff-nav__note.is-active .staff-nav__blob {
+    opacity: 1;
+  }
+
+  .staff-nav__note.is-active .staff-nav__blob {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15), 0 2px 8px -3px rgba(0, 0, 0, 0.6);
+  }
+
+  /* the label pill: collapsed to nothing at rest, sprouts on hover/focus,
+     and stays open for whichever section is currently active */
+  .staff-nav__label {
+    display: inline-block;
+    max-width: 0;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    margin-left: 0;
+    padding: 0;
+    border-radius: 0 10px 10px 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bg);
+    transition: max-width 0.3s ease, opacity 0.2s ease, padding 0.3s ease, margin 0.3s ease;
+  }
+
+  .staff-nav__note.note--hero .staff-nav__label { background: var(--note-hero); }
+  .staff-nav__note.note--listen .staff-nav__label { background: var(--note-listen); }
+  .staff-nav__note.note--about .staff-nav__label { background: var(--note-about); }
+  .staff-nav__note.note--cred .staff-nav__label { background: var(--note-cred); }
+  .staff-nav__note.note--contact .staff-nav__label { background: var(--note-contact); }
+
+  .staff-nav__note:hover .staff-nav__label,
+  .staff-nav__note:focus-visible .staff-nav__label,
+  .staff-nav__note.is-active .staff-nav__label {
+    max-width: 140px;
+    opacity: 1;
+    margin-left: -2px;
+    padding: 0 10px 0 9px;
+  }
+
+  @media (max-width: 860px) {
+    .staff-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .staff-nav__blob {
+      animation: none !important;
+    }
+    .staff-nav__label {
+      transition: none;
+    }
+  }
+
+  .staff-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 41;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    background: rgba(10, 14, 23, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(233, 237, 245, 0.12);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .staff-toggle__bar {
+    width: 18px;
+    height: 2px;
+    background: var(--brass);
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .staff-toggle.is-open .staff-toggle__bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .staff-toggle.is-open .staff-toggle__bar:nth-child(2) {
+    opacity: 0;
+  }
+  .staff-toggle.is-open .staff-toggle__bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .staff-menu {
+    display: none;
+    position: fixed;
+    top: 72px;
+    right: 20px;
+    z-index: 41;
+    width: min(240px, calc(100vw - 40px));
+    background: var(--bg-elevated);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(233, 237, 245, 0.1);
+    border-radius: 14px;
+    padding: 0.4rem;
+    box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  .staff-menu[hidden] {
+    display: none;
+  }
+
+  .staff-menu__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .staff-menu__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: none;
+    border: none;
+    padding: 0.65rem 0.7rem;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+  }
+
+  .staff-menu__item:hover,
+  .staff-menu__item:focus-visible {
+    background: var(--staff-line);
+  }
+
+  .staff-menu__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+  }
+
+  .staff-menu__item.is-active .staff-menu__dot {
+    opacity: 1;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+  }
+
+  .staff-menu__label {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .staff-menu__item.is-active .staff-menu__label {
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .staff-toggle {
+      display: flex;
+    }
+    .staff-menu:not([hidden]) {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const sectionIds = ['hero', 'listen', 'about', 'credibility', 'contact'];
+  const jumpButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.staff-jump'));
+
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+
+  function closeMenu() {
+    panel?.setAttribute('hidden', '');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.classList.remove('is-open');
+  }
+
+  function openMenu() {
+    panel?.removeAttribute('hidden');
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.classList.add('is-open');
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    if (isOpen) closeMenu();
+    else openMenu();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!panel || panel.hasAttribute('hidden')) return;
+    const target = e.target as Node;
+    if (panel.contains(target) || toggle?.contains(target)) return;
+    closeMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  jumpButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target ?? '');
+      target?.scrollIntoView({ behavior: 'smooth' });
+      closeMenu();
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          jumpButtons.forEach((btn) => {
+            btn.classList.toggle('is-active', btn.dataset.target === entry.target.id);
+          });
+        }
+      });
+    },
+    { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+  );
+
+  sectionIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>

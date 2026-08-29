@@ -1,0 +1,66 @@
+---
+// Prototype route only — combines the "Tabletop Set" hero (B) and "Lead
+// Sheet" nav/divider treatments on top of the real, unmodified content
+// sections. Not linked from anywhere; visit directly at /preview-tv-leadsheet.
+// Delete this file plus HeroTV.astro, LeadSheetBar.astro,
+// StaffNavLeadSheet.astro, and PreviewLayout.astro to remove the prototype.
+import PreviewLayout from '../layouts/PreviewLayout.astro';
+import HeroTV from '../components/HeroTV.astro';
+import LeadSheetBar from '../components/LeadSheetBar.astro';
+import Listen from '../components/Listen.astro';
+import About from '../components/About.astro';
+import Performance from '../components/Performance.astro';
+import Credibility from '../components/Credibility.astro';
+import SheetMusicLibrary from '../components/SheetMusicLibrary.astro';
+import Gallery from '../components/Gallery.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<PreviewLayout
+  title="Preview — Tabletop Set + Lead Sheet — Doug Rosenberg"
+  description="Prototype: tabletop tube TV hero and lead-sheet nav/divider treatments."
+>
+  <HeroTV />
+  <LeadSheetBar />
+  <Listen />
+  <div class="chord-annot" data-label="B" data-chord="D–7">
+    <About />
+  </div>
+  <Performance />
+  <div class="chord-annot" data-label="C" data-chord="G7">
+    <Credibility />
+  </div>
+  <SheetMusicLibrary />
+  <Gallery />
+  <div class="chord-annot" data-label="Coda" data-chord="Cmaj7">
+    <Contact />
+  </div>
+</PreviewLayout>
+
+<style>
+  /* Carries the Lead Sheet rehearsal-letter/chord motif from the nav and
+     divider into the section headers themselves — a preview-only overlay,
+     so About/Credibility/Contact stay unmodified. */
+  .chord-annot {
+    position: relative;
+  }
+
+  .chord-annot::before {
+    content: attr(data-label) ' \00b7 ' attr(data-chord);
+    position: absolute;
+    top: clamp(2rem, 5vw, 3.5rem);
+    right: clamp(1.25rem, 4vw, 3rem);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  @media (max-width: 700px) {
+    .chord-annot::before {
+      display: none;
+    }
+  }
+</style>

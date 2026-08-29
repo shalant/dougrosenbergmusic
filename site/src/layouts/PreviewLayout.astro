@@ -1,0 +1,30 @@
+---
+// Copy of BaseLayout swapping in StaffNavLeadSheet — kept separate so the
+// locked BaseLayout/StaffNav pairing is untouched.
+import '../styles/global.css';
+import StaffNavLeadSheet from '../components/StaffNavLeadSheet.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  navShowChord?: boolean;
+}
+
+const { title, description, navShowChord = true } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="robots" content="noindex" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<StaffNavLeadSheet showChord={navShowChord} />
+		<slot />
+	</body>
+</html>

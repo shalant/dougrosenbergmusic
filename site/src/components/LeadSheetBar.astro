@@ -1,0 +1,81 @@
+---
+// Same five section colors as the staff-corner nav and the test-pattern bar,
+// recast as an actual chord chart — a I-vi-ii-V-I turnaround, one change per
+// section — instead of broadcast test bars.
+const changes = [
+  { id: 'hero', letter: 'Intro', chord: 'Cmaj7', tone: 'hero' },
+  { id: 'listen', letter: 'A', chord: 'A–7', tone: 'listen' },
+  { id: 'about', letter: 'B', chord: 'D–7', tone: 'about' },
+  { id: 'credibility', letter: 'C', chord: 'G7', tone: 'cred' },
+  { id: 'contact', letter: 'Coda', chord: 'Cmaj7', tone: 'contact' },
+];
+---
+
+<div class="leadsheet-bar staff-lines--strong" aria-hidden="true">
+  {changes.map((c) => (
+    <div class={`lsb__seg lsb__seg--${c.tone}`}>
+      <span class="lsb__letter">{c.letter}</span>
+      <span class="lsb__chord">{c.chord}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .leadsheet-bar {
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid rgba(233, 237, 245, 0.08);
+    border-bottom: 1px solid rgba(233, 237, 245, 0.08);
+  }
+
+  .lsb__seg {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.9rem 0.5rem;
+    border-right: 1px solid rgba(233, 237, 245, 0.06);
+  }
+
+  .lsb__seg:last-child {
+    border-right: none;
+  }
+
+  .lsb__letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.9rem;
+    height: 1.9rem;
+    padding: 0 0.3rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--seg-color);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--seg-color);
+  }
+
+  .lsb__chord {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+  }
+
+  .lsb__seg--hero { --seg-color: var(--note-hero); }
+  .lsb__seg--listen { --seg-color: var(--note-listen); }
+  .lsb__seg--about { --seg-color: var(--note-about); }
+  .lsb__seg--cred { --seg-color: var(--note-cred); }
+  .lsb__seg--contact { --seg-color: var(--note-contact); }
+
+  @media (max-width: 700px) {
+    .lsb__chord {
+      display: none;
+    }
+    .lsb__seg {
+      padding: 0.75rem 0.25rem;
+    }
+  }
+</style>

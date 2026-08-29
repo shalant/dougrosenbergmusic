@@ -1,0 +1,30 @@
+---
+// Third preview layout — swaps in StaffNavExpand (hover/active-expanding
+// noteheads) instead of StaffNavLeadSheet. Kept separate so the other two
+// preview layouts and the locked BaseLayout are all untouched.
+import '../styles/global.css';
+import StaffNavExpand from '../components/StaffNavExpand.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="robots" content="noindex" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<StaffNavExpand />
+		<slot />
+	</body>
+</html>

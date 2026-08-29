@@ -1,0 +1,33 @@
+---
+// Fourth prototype route — the current best-guess combination:
+// HeroGraded (full-bleed, screen-graded — the recommended hero direction)
+// + StaffNavExpand (noteheads that spell themselves out on hover/active)
+// + LeadSheetBarShape (the "Just the Shape" dot-voicing divider, preferred
+// over spelled-out chords). Independent of the three earlier preview
+// routes — none of them are touched by this one.
+import PreviewLayoutExpand from '../layouts/PreviewLayoutExpand.astro';
+import HeroGraded from '../components/HeroGraded.astro';
+import LeadSheetBarShape from '../components/LeadSheetBarShape.astro';
+import Listen from '../components/Listen.astro';
+import About from '../components/About.astro';
+import Performance from '../components/Performance.astro';
+import Credibility from '../components/Credibility.astro';
+import SheetMusicLibrary from '../components/SheetMusicLibrary.astro';
+import Gallery from '../components/Gallery.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<PreviewLayoutExpand
+  title="Preview — Graded Hero + Expanding Nav — Doug Rosenberg"
+  description="Prototype: full-bleed screen-graded hero, expanding notehead nav, dot-voicing divider."
+>
+  <HeroGraded />
+  <LeadSheetBarShape />
+  <Listen />
+  <About />
+  <Performance />
+  <Credibility />
+  <SheetMusicLibrary />
+  <Gallery />
+  <Contact />
+</PreviewLayoutExpand>

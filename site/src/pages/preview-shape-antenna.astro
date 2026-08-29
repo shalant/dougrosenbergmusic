@@ -1,0 +1,33 @@
+---
+// Second prototype route — the two picks from the Ten Variations pass:
+// "Just the Shape" (unlabeled dot-voicings instead of chord symbols) and
+// "Rabbit Ears" (antenna + signal detail on the tube set). Not linked from
+// anywhere; visit directly at /preview-shape-antenna. Independent from
+// /preview-tv-leadsheet — that route is untouched.
+import PreviewLayout from '../layouts/PreviewLayout.astro';
+import HeroTV from '../components/HeroTV.astro';
+import LeadSheetBarShape from '../components/LeadSheetBarShape.astro';
+import Listen from '../components/Listen.astro';
+import About from '../components/About.astro';
+import Performance from '../components/Performance.astro';
+import Credibility from '../components/Credibility.astro';
+import SheetMusicLibrary from '../components/SheetMusicLibrary.astro';
+import Gallery from '../components/Gallery.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<PreviewLayout
+  title="Preview — Shape + Antenna — Doug Rosenberg"
+  description="Prototype: dot-voicing nav/divider and rabbit-ears tube TV hero."
+  navShowChord={false}
+>
+  <HeroTV antenna />
+  <LeadSheetBarShape />
+  <Listen />
+  <About />
+  <Performance />
+  <Credibility />
+  <SheetMusicLibrary />
+  <Gallery />
+  <Contact />
+</PreviewLayout>

@@ -1,0 +1,104 @@
+---
+// "Just the Shape" variant of LeadSheetBar: same rehearsal letters, but each
+// segment shows an unlabeled three-dot voicing on a mini staff instead of a
+// spelled-out chord symbol. Kept separate from LeadSheetBar.astro so the
+// chord-symbol version stays intact for comparison.
+const changes = [
+  { id: 'hero', letter: 'Intro', tone: 'hero', dots: [[8, 3], [18, 15], [27, 27]] },
+  { id: 'listen', letter: 'A', tone: 'listen', dots: [[8, 20], [18, 9], [27, 15]] },
+  { id: 'about', letter: 'B', tone: 'about', dots: [[8, 9], [18, 27], [27, 3]] },
+  { id: 'credibility', letter: 'C', tone: 'cred', dots: [[8, 27], [18, 3], [27, 20]] },
+  { id: 'contact', letter: 'Coda', tone: 'contact', dots: [[8, 15], [18, 20], [27, 9]] },
+];
+---
+
+<div class="leadsheet-bar staff-lines--strong" aria-hidden="true">
+  {changes.map((c) => (
+    <div class={`lsb__seg lsb__seg--${c.tone}`}>
+      <span class="lsb__letter">{c.letter}</span>
+      <span class="lsb__shape">
+        <i class="lsb__stave" style="top: 3px;"></i>
+        <i class="lsb__stave" style="top: 14px;"></i>
+        <i class="lsb__stave" style="top: 25px;"></i>
+        {c.dots.map(([left, top]) => (
+          <i class="lsb__dot" style={`left: ${left}px; top: ${top}px;`}></i>
+        ))}
+      </span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .leadsheet-bar {
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid rgba(233, 237, 245, 0.08);
+    border-bottom: 1px solid rgba(233, 237, 245, 0.08);
+  }
+
+  .lsb__seg {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    padding: 0.9rem 0.5rem;
+    border-right: 1px solid rgba(233, 237, 245, 0.06);
+  }
+
+  .lsb__seg:last-child {
+    border-right: none;
+  }
+
+  .lsb__letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.9rem;
+    height: 1.9rem;
+    padding: 0 0.3rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--seg-color);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--seg-color);
+  }
+
+  .lsb__shape {
+    position: relative;
+    width: 36px;
+    height: 30px;
+  }
+
+  .lsb__stave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(233, 237, 245, 0.14);
+  }
+
+  .lsb__dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--seg-color);
+  }
+
+  .lsb__seg--hero { --seg-color: var(--note-hero); }
+  .lsb__seg--listen { --seg-color: var(--note-listen); }
+  .lsb__seg--about { --seg-color: var(--note-about); }
+  .lsb__seg--cred { --seg-color: var(--note-cred); }
+  .lsb__seg--contact { --seg-color: var(--note-contact); }
+
+  @media (max-width: 700px) {
+    .lsb__shape {
+      display: none;
+    }
+    .lsb__seg {
+      padding: 0.75rem 0.25rem;
+    }
+  }
+</style>
