@@ -31,7 +31,7 @@ const { antenna = false } = Astro.props;
           </div>
         )}
         <div class="tv-set__screen">
-          <img class="tv-set__photo" src="/images/hero.webp" alt="Doug Rosenberg holding a saxophone" />
+          <img class="tv-set__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" />
           <div class="tv-set__scanlines" aria-hidden="true"></div>
           <div class="tv-set__vignette" aria-hidden="true"></div>
         </div>

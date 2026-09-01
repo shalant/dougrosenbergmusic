@@ -35,7 +35,7 @@ const albums = [
     <div class="listen__grid">
       {albums.map((album) => (
         <a class="album" href={album.url} target="_blank" rel="noopener noreferrer">
-          <img class="album__cover" src={album.cover} alt={`${album.title} album cover`} loading="lazy" />
+          <img class="album__cover" src={`${import.meta.env.BASE_URL}${album.cover.replace(/^\//, '')}`} alt={`${album.title} album cover`} loading="lazy" />
           <div class="album__body">
             <p class="album__title">{album.title}</p>
             <p class="album__blurb">{album.blurb}</p>

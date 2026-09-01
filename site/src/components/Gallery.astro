@@ -38,7 +38,7 @@ const categories = [...new Set(photos.map((p) => p.category))];
     <div class="gallery__grid" data-grid>
       {photos.map((p, i) => (
         <button class="gallery__card" data-category={p.category} data-index={i} aria-label={`Open ${p.caption}`}>
-          <img class="gallery__img" src={p.src} alt={p.caption} loading="lazy" />
+          <img class="gallery__img" src={`${import.meta.env.BASE_URL}${p.src.replace(/^\//, '')}`} alt={p.caption} loading="lazy" />
           <span class="gallery__overlay">
             <span class="gallery__caption">{p.caption}</span>
             <span class="gallery__tag">{p.category}</span>
