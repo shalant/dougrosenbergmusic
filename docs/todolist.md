@@ -101,16 +101,29 @@ this project's own custom items and where it stands against them.
          `/sheetmusic/*` (not content-hashed, could be swapped without a filename change).
          Also checked gallery/album image sizes while in there - all under 250KB, already
          lazy-loaded, no action needed.
-   - [ ] **Round 2, remaining (Interaction & Visual Polish, partial):** the hover/focus-visible
-         parity sweep is done (part 8 below); still open from that category: a scroll-reveal
-         animation audit (this site doesn't appear to have any scroll-triggered reveal animations
-         at all — worth confirming, and deciding whether to add any or explicitly not), a
-         shadow/depth consistency audit (values documented in `docs/style-guide.md` but never
-         checked for stray one-offs), and a visual-rhythm check on the page's background
-         alternation (`Listen`/`About`/`Performance`/`SheetMusicLibrary` all use `--bg` back to
-         back before `Credibility`/`Gallery` break it up with `--surface` — worth a deliberate
-         look, not just noting it). Also still open: a real unit/E2E test suite (Lighthouse CI
-         covers the build+audit half of Testing/QA now, but not this half).
+   - [x] **Round 2, part 9 (2026-09-06): the rest of Interaction & Visual Polish, audited.**
+         - Scroll-reveal animations: confirmed there are none anywhere on the site (only
+           `IntersectionObserver` usage is `StaffNav`'s scroll-tracked nav highlighting, not
+           content reveal; every `@keyframes`/`animation` is ambient/decorative — the nav-dot
+           breathing pulse, the antenna signal blink, the REC dot, the scroll-cue bob). Not
+           implementing any speculatively — adding fade-in/slide-up reveals is itself one of the
+           more common generic-modern-site tells `docs/DESIGN_NOTES.md` explicitly tries to avoid,
+           so whether to add them at all is a deliberate design call, not a default to reach for.
+         - Shadow/depth consistency: audited every `box-shadow` declaration in the codebase. The
+           variation that exists tracks real differences in scale (small buttons get tight
+           shadows, the larger `staff-menu` dropdown gets a bigger one) and semantics (a static
+           0.6-alpha ring for `:focus-visible` vs. a much fainter 0.14-alpha ring for the mobile
+           menu's persistent "you are here" `is-active` dot vs. an animated pulsing ring for the
+           desktop nav's active note) — no stray one-off found that doesn't trace back to an
+           intentional distinction already documented in `docs/style-guide.md`.
+         - Visual rhythm: `About` and `Performance` do run back-to-back on identical flat `--bg`
+           with no staff-line texture or surface swap between them — the one real soft spot found.
+           Not changed here: their content layouts (a photo+text grid vs. numeric stats/venue
+           lists) already differ enough that this reads as a judgment call about the site's visual
+           character, not an objective bug — the kind of decision this session's been deliberately
+           leaving to a real design call rather than unilaterally reshuffling backgrounds.
+   - [ ] **Round 2, remaining:** a real unit/E2E test suite (Lighthouse CI covers the build+audit
+         half of Testing/QA now, but not this half).
    - [x] **Round 2, part 8 (2026-09-06): hover/focus-visible parity sweep.** Systematically
          cross-referenced every `:hover` selector against a matching `:focus-visible` across all
          components (round 1 only fixed this for `StaffNav`, never swept the rest of the site for
