@@ -6,6 +6,8 @@ const sections = [
   { id: 'credibility', label: 'Credibility', abbr: 'CR', tone: 'cred', left: 268, top: 50 },
   { id: 'contact', label: 'Contact', abbr: 'CO', tone: 'contact', left: 340, top: 50 },
 ];
+
+const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougrosenbergdev.com', left: 416, top: 50 };
 ---
 
 <nav class="staff-nav" aria-label="Section navigation" data-staff-nav>
@@ -26,6 +28,16 @@ const sections = [
       <span class="staff-nav__tag">{s.label}</span>
     </button>
   ))}
+
+  <a
+    class={`staff-nav__note note--${devLink.tone}`}
+    href={devLink.href}
+    style={`left: ${devLink.left}px; top: ${devLink.top}px;`}
+    aria-label={devLink.label}
+  >
+    <span class="staff-nav__blob" aria-hidden="true">{devLink.abbr}</span>
+    <span class="staff-nav__tag">{devLink.label}</span>
+  </a>
 </nav>
 
 <button
@@ -53,6 +65,12 @@ const sections = [
         </button>
       </li>
     ))}
+    <li>
+      <a class={`staff-menu__item note--${devLink.tone}`} href={devLink.href}>
+        <span class="staff-menu__dot" aria-hidden="true"></span>
+        <span class="staff-menu__label">{devLink.label}</span>
+      </a>
+    </li>
   </ul>
 </div>
 
@@ -61,7 +79,7 @@ const sections = [
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 380px;
+    width: 456px;
     height: 100px;
     z-index: 40;
     background: rgba(10, 14, 23, 0.32);
@@ -87,6 +105,8 @@ const sections = [
     border: none;
     padding: 0;
     font: inherit;
+    text-decoration: none;
+    color: inherit;
   }
 
   .staff-nav__blob {
@@ -125,12 +145,15 @@ const sections = [
   .staff-menu__item.note--cred .staff-menu__dot { background: var(--note-cred); }
   .staff-nav__note.note--contact .staff-nav__blob,
   .staff-menu__item.note--contact .staff-menu__dot { background: var(--note-contact); }
+  .staff-nav__note.note--dev .staff-nav__blob,
+  .staff-menu__item.note--dev .staff-menu__dot { background: var(--note-dev); }
 
   .staff-nav__note.note--hero .staff-nav__blob { border-radius: 58% 42% 63% 37% / 41% 55% 45% 59%; animation-delay: 0s; }
   .staff-nav__note.note--listen .staff-nav__blob { border-radius: 42% 58% 37% 63% / 60% 38% 62% 40%; animation-delay: 0.9s; }
   .staff-nav__note.note--about .staff-nav__blob { border-radius: 65% 35% 45% 55% / 48% 62% 38% 52%; animation-delay: 1.8s; }
   .staff-nav__note.note--cred .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
   .staff-nav__note.note--contact .staff-nav__blob { border-radius: 60% 40% 40% 60% / 35% 60% 40% 65%; animation-delay: 3.6s; }
+  .staff-nav__note.note--dev .staff-nav__blob { border-radius: 50% 50% 55% 45% / 45% 55% 50% 50%; animation-delay: 4.5s; }
 
   .staff-nav__tag {
     position: absolute;
@@ -262,6 +285,8 @@ const sections = [
     cursor: pointer;
     font: inherit;
     text-align: left;
+    text-decoration: none;
+    color: inherit;
   }
 
   .staff-menu__item:hover,
