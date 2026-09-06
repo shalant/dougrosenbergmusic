@@ -101,9 +101,15 @@ const categories = [...new Set(photos.map((p) => p.category))];
     transition: border-color 0.2s ease, color 0.2s ease;
   }
 
-  .gallery__filter:hover {
+  .gallery__filter:hover,
+  .gallery__filter:focus-visible {
     color: var(--text);
     border-color: var(--brass);
+  }
+
+  .gallery__filter:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
   }
 
   .gallery__filter.is-active {
@@ -244,7 +250,8 @@ const categories = [...new Set(photos.map((p) => p.category))];
     transition: opacity 0.2s ease;
   }
 
-  .gallery__lightbox-nav:hover {
+  .gallery__lightbox-nav:hover,
+  .gallery__lightbox-nav:focus-visible {
     opacity: 1;
   }
 
