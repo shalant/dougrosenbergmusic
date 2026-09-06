@@ -93,10 +93,17 @@ this project's own custom items and where it stands against them.
          `/sheetmusic/*` (not content-hashed, could be swapped without a filename change).
          Also checked gallery/album image sizes while in there - all under 250KB, already
          lazy-loaded, no action needed.
-   - [ ] **Round 2, remaining:** Design System (no written style-guide doc yet, though the token
-         layer in `global.css` already exists), Interaction & Visual Polish (systematic sweep, not
-         yet done), a real unit/E2E test suite (Lighthouse CI covers the build+audit half of
-         Testing/QA now, but not this half).
+   - [ ] **Round 2, remaining:** Interaction & Visual Polish (systematic sweep, not yet done), a
+         real unit/E2E test suite (Lighthouse CI covers the build+audit half of Testing/QA now,
+         but not this half).
+   - [x] **Round 2, part 7 (2026-09-06): design-system doc.** Added `docs/style-guide.md` — colors
+         (with the contrast-verification story, not just the values), typography (families,
+         weights actually loaded, a real type scale table pulled from every `font-size: clamp(...)`
+         in the codebase), spacing (`padding-block` scale), breakpoints (with a pointer back to the
+         round 2 part 6 caveat about them being unverified live), and component patterns (pill/card/
+         circle radii, the organic notehead-blob motif, shadow/focus-ring conventions, the
+         staff-line background texture). Written from the actual current code, not aspirationally —
+         explicitly says so, and to fix the doc rather than the code if they ever disagree.
    - [ ] **Round 2, part 6 (2026-09-06): mobile breakpoint-gap check — partial, blocked on a real
          tool limitation.** Inventoried every breakpoint in the codebase: 640/700/700/800/
          800/860/860/900px, across `StaffNav`, `HeroGraded`, `Performance`, `LeadSheetBarShape`,
