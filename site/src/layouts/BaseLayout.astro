@@ -52,6 +52,13 @@ const personSchema = {
 		<meta name="twitter:image" content={ogImageURL} />
 
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+		<!-- Cloudflare Web Analytics — chosen over GA4/Plausible for zero-config,
+		     no-cookie-consent-overhead reasons, same as haxbyte.com. Token isn't a
+		     secret; it's a public per-site beacon ID meant to ship in every page's
+		     HTML. Site registered under Web Analytics as
+		     dougrosenbergmusic.doug-rosenberg.workers.dev. -->
+		<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: '775b11737d154a3a8878533ba375f9f9' })}></script>
 	</head>
 	<body>
 		<StaffNav />

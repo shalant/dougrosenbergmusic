@@ -100,6 +100,18 @@ this project's own custom items and where it stands against them.
          yet done), Mobile breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone
          failure mode — untested here), Testing/QA (no automated test suite, no CI), Content
          basics (nav/footer 404 sweep, stale-date check).
+   - [x] **Round 2, part 3 (2026-09-06): analytics.** Enabled Cloudflare Web Analytics — same
+         choice haxbyte made, for the same reason (zero-config, no cookie-consent overhead, unlike
+         GA4). Registered `dougrosenbergmusic.doug-rosenberg.workers.dev` as a manual-setup site
+         (it's a Workers subdomain, not a DNS zone, so automatic setup wasn't offered) via the
+         Cloudflare dashboard, then added the resulting beacon `<script>` to `BaseLayout.astro`
+         and allowed `static.cloudflareinsights.com`/`cloudflareinsights.com` in `_headers`'s CSP
+         — same two allowances haxbyte's CSP carries. The beacon token isn't a secret; it's a
+         public per-site ID meant to ship in every page's HTML. Verified: build succeeds, the
+         script's external `src=` correctly excludes it from the inline-script hash set (still
+         only 4 hashes), no code-level issues found. **Not yet verified live** — need to confirm
+         the beacon actually fires with no CSP console violations once this deploys, same
+         verification pattern as round 1's CSP.
 
 ## Custom items (this project specifically)
 
