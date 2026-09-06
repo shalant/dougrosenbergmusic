@@ -126,8 +126,17 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     animation: staff-breathe 4.6s ease-in-out infinite;
   }
 
-  .staff-nav__note:hover .staff-nav__blob {
+  .staff-nav__note:hover .staff-nav__blob,
+  .staff-nav__note:focus-visible .staff-nav__blob {
     filter: brightness(1.18);
+  }
+
+  .staff-nav__note:focus-visible {
+    outline: none;
+  }
+
+  .staff-nav__note:focus-visible .staff-nav__blob {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
   }
 
   @keyframes staff-breathe {
@@ -175,7 +184,8 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     transition: opacity 0.15s ease, transform 0.15s ease;
   }
 
-  .staff-nav__note:hover .staff-nav__tag {
+  .staff-nav__note:hover .staff-nav__tag,
+  .staff-nav__note:focus-visible .staff-nav__tag {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
@@ -192,6 +202,14 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
   .staff-nav__note.is-active .staff-nav__blob {
     animation: breathe-active 2.2s ease-in-out infinite;
     opacity: 1;
+  }
+
+  /* the active note's own pulse animation continuously redeclares box-shadow
+     every frame, which silently overrides the focus-visible ring below it in
+     the cascade - pause the pulse while focused so the ring stays visible */
+  .staff-nav__note.is-active:focus-visible .staff-nav__blob {
+    animation: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
   }
 
   /* Desktop staff hides below this width; the hamburger below picks up from here. */

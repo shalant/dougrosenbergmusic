@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found — Doug Rosenberg"
+  description="The page you're looking for doesn't exist."
+>
+  <section class="not-found">
+    <p class="eyebrow">404</p>
+    <h1>This page went off-book.</h1>
+    <p class="not-found__text">The page you're looking for doesn't exist or has moved.</p>
+    <a class="not-found__link" href="/">Back to the top &rarr;</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 1rem;
+    background: var(--bg);
+  }
+
+  .not-found h1 {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0;
+    color: var(--text);
+  }
+
+  .not-found__text {
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .not-found__link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--brass);
+    text-decoration: none;
+    margin-top: 0.5rem;
+  }
+
+  .not-found__link:hover,
+  .not-found__link:focus-visible {
+    text-decoration: underline;
+  }
+</style>
