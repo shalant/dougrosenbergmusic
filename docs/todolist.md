@@ -82,13 +82,24 @@ this project's own custom items and where it stands against them.
          allowances from `_headers`'s CSP. Verified: build succeeds, all 4 CSP script hashes still
          match, no more cross-origin font requests (checked via live network-request capture),
          fonts render identically (screenshot-verified).
-   - [ ] **Round 2, remaining:** Performance/Lighthouse audit (blocked on PSI quota — retry later,
-         or run Lighthouse some other way), Analytics (no GA4/Web Analytics installed), Design
-         System (no written style-guide doc yet, though the token layer in `global.css` already
-         exists), Interaction & Visual Polish (systematic sweep, not yet done), Mobile
-         breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone failure mode —
-         untested here), Testing/QA (no automated test suite, no CI), Content basics (nav/footer
-         404 sweep, stale-date check).
+   - [x] **Round 2, part 2 (2026-09-06): static asset caching.** Manual performance check
+         (PSI's quota still exhausted) via `curl -sI` against production found every asset -
+         including `/_astro/*`'s content-hashed, provably-immutable bundles and the newly
+         self-hosted font files - served with `Cache-Control: public, max-age=0, must-revalidate`.
+         That's a Cloudflare Workers static-assets default, not anything this repo had set
+         deliberately. Added explicit `Cache-Control` rules in `_headers`: `immutable`
+         year-long caching for `/_astro/*` and `/fonts/*` (filenames change on content change, or
+         I'd know to bump them), a more conservative week-long cache for `/images/*` and
+         `/sheetmusic/*` (not content-hashed, could be swapped without a filename change).
+         Also checked gallery/album image sizes while in there - all under 250KB, already
+         lazy-loaded, no action needed.
+   - [ ] **Round 2, remaining:** Performance/Lighthouse audit proper (PSI quota still exhausted -
+         retry later, or find another way to get real Core Web Vitals), Analytics (no GA4/Web
+         Analytics installed), Design System (no written style-guide doc yet, though the token
+         layer in `global.css` already exists), Interaction & Visual Polish (systematic sweep, not
+         yet done), Mobile breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone
+         failure mode — untested here), Testing/QA (no automated test suite, no CI), Content
+         basics (nav/footer 404 sweep, stale-date check).
 
 ## Custom items (this project specifically)
 
@@ -96,6 +107,11 @@ this project's own custom items and where it stands against them.
       (Blazor) site: Ferling #12 alla furioso, Ferling #6 G major, Ferling #8, Ferling #18 in Bb,
       New York, Spiderman (Cl), Super Mario (Bb). Need the source PDF/image for each before they
       can be added to `site/src/components/SheetMusicLibrary.astro`. (See also root `TODO.md`.)
+- [ ] **`site/public/sheetmusic/` is 88MB** — some individual scanned PDFs run 5-10MB (e.g.
+      `rubank-book-of-solos-intermediate.pdf` at 10.6MB). Real payload weight, but recompressing
+      scanned sheet music risks making actual notation illegible for the students this feature is
+      for - needs a careful, visually-verified pass per file, not a bulk automated one. Deferred
+      rather than rushed.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
