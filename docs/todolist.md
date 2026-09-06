@@ -42,6 +42,39 @@ this project's own custom items and where it stands against them.
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need
    re-checking.
+   - [x] **Round 1 (2026-09-06):**
+     - Single `<main>` landmark added around every page's content (was missing entirely —
+       `BaseLayout.astro` now wraps `<slot />`).
+     - Real accessibility bug found and fixed: the primary desktop staff-nav had a `:hover` state
+       but no `:focus-visible` state at all (same failure mode the checklist calls out from a
+       prior project). Fixed in `StaffNav.astro` — then found a second-order bug while verifying
+       it live: the *active* section's note has its own pulsing `breathe-active` animation that
+       continuously redeclares `box-shadow` every frame, silently overriding the new focus ring
+       whenever the active note was the one tabbed to. Fixed by disabling that animation on
+       `:focus-visible`. Verified via direct DOM `.focus()` + computed-style checks in the
+       browser, not just a code read.
+     - Contrast-checked every accent color used as text (brass/orange/teal/purple/red/blue) against
+       the dark background — all pass AA, 5.5:1–8.8:1. No dual-theme toggle exists (deliberate,
+       per `docs/DESIGN_NOTES.md`), so only the one theme needed checking.
+     - SEO foundation added: canonical tag, Open Graph + Twitter card tags, a real `og:image`
+       cropped to 1200×630 from the hero photo (via ImageMagick, visually verified — not just
+       trusted from the resize command), Person JSON-LD, `robots.txt`, and `sitemap.xml` via
+       `@astrojs/sitemap`.
+     - Custom `404.astro` page added (was the host's bare default before).
+     - `public/_headers` added with HSTS, X-Frame-Options, Referrer-Policy, Permissions-Policy,
+       and a CSP with sha256-pinned inline scripts (not `unsafe-inline`) — same pattern as
+       haxbyte.com. Astro inlines every page's `<script>` bodies directly into the HTML, so each
+       of the 4 unique inline scripts (Person JSON-LD, StaffNav, SheetMusicLibrary, Gallery) needed
+       its own hash; verified by recomputing hashes against a fresh build and diffing against what
+       shipped in `_headers`. **Not yet verified live** — `astro dev`/`preview` don't apply
+       `_headers` (Cloudflare-only), so confirm no console CSP violations after this deploys.
+   - [ ] **Round 2+ (not started):** Performance (Lighthouse/PageSpeed run against the live
+         production URL — hasn't been done at all yet), Analytics (no GA4/Web Analytics installed),
+         Design System (no written style-guide doc yet, though the token layer in `global.css`
+         already exists), Interaction & Visual Polish (systematic sweep, not yet done), Mobile
+         breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone failure mode —
+         untested here), Testing/QA (no automated test suite, no CI), Content basics (nav/footer
+         404 sweep, stale-date check).
 
 ## Custom items (this project specifically)
 
@@ -49,6 +82,11 @@ this project's own custom items and where it stands against them.
       (Blazor) site: Ferling #12 alla furioso, Ferling #6 G major, Ferling #8, Ferling #18 in Bb,
       New York, Spiderman (Cl), Super Mario (Bb). Need the source PDF/image for each before they
       can be added to `site/src/components/SheetMusicLibrary.astro`. (See also root `TODO.md`.)
+- [ ] **Fonts are still loaded via a Google Fonts `@import` in `global.css`**, not self-hosted —
+      the `SITE_BUILD_CHECKLIST.md` §3 item this project doesn't yet meet. Surfaced while writing
+      `public/_headers`: the CSP has to allow `fonts.googleapis.com`/`fonts.gstatic.com` as a
+      result, unlike haxbyte's fully self-hosted, single-origin CSP. Migrating would let those two
+      allowances be dropped.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
