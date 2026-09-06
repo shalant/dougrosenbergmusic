@@ -95,9 +95,26 @@ this project's own custom items and where it stands against them.
          lazy-loaded, no action needed.
    - [ ] **Round 2, remaining:** Design System (no written style-guide doc yet, though the token
          layer in `global.css` already exists), Interaction & Visual Polish (systematic sweep, not
-         yet done), Mobile breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone
-         failure mode — untested here), a real unit/E2E test suite (Lighthouse CI covers the
-         build+audit half of Testing/QA now, but not this half).
+         yet done), a real unit/E2E test suite (Lighthouse CI covers the build+audit half of
+         Testing/QA now, but not this half).
+   - [ ] **Round 2, part 6 (2026-09-06): mobile breakpoint-gap check — partial, blocked on a real
+         tool limitation.** Inventoried every breakpoint in the codebase: 640/700/700/800/
+         800/860/860/900px, across `StaffNav`, `HeroGraded`, `Performance`, `LeadSheetBarShape`,
+         `SheetMusicLibrary`, `About`, `Credibility`. Structural read: `StaffNav` is
+         `position: fixed` — an overlay, not an in-flow element competing for horizontal space —
+         so the specific dead-zone failure mode `SITE_QUALITY_CHECKLIST.md` describes (a fixed-
+         width in-flow nav and a sibling section fighting over the same row at different
+         breakpoints) doesn't structurally apply the same way here; nothing in the other
+         components' CSS branches on the nav's state either. That reasoning is as far as this
+         session could verify, though: this browser session's viewport genuinely cannot be
+         resized — `resize_window` reports success but `window.innerWidth` stays fixed
+         (confirmed via direct JS check), and `window.resizeTo()` is blocked too. No real-device or
+         actual-DevTools-responsive-mode check happened here, which is exactly what
+         `SITE_QUALITY_CHECKLIST.md`'s own Mobile item requires ("not assumed from desktop-only
+         testing") — this is desktop-only-and-then-some. **Needs a human check**: resize an actual
+         browser window (or a real phone) through 640-900px and watch specifically for the fixed
+         nav visually colliding with section headings as they scroll past the top-right corner,
+         and for the antenna/now-playing/scroll-cue elements HeroGraded hides at ≤640px.
    - [x] **Round 2, part 3 (2026-09-06): analytics.** Enabled Cloudflare Web Analytics — same
          choice haxbyte made, for the same reason (zero-config, no cookie-consent overhead, unlike
          GA4). Registered `dougrosenbergmusic.doug-rosenberg.workers.dev` as a manual-setup site
