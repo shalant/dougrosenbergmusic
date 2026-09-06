@@ -37,7 +37,15 @@ this project's own custom items and where it stands against them.
          `DEPLOY_TARGET` conditional — there's only one deploy target now). The GitHub Pages site
          itself (`shalant.github.io/dougrosenbergmusic/`) was disabled directly via the GitHub API,
          outside this PR, since that's a repo-settings action, not a code change.
-   - [ ] Attaching a custom domain to the Cloudflare Worker is still an open, undecided item.
+   - [ ] Attaching a custom domain to the Cloudflare Worker is still an open, undecided item. **Now
+         a prerequisite, not just an open question** (2026-09-06): a real contact form is wanted,
+         same pattern as `haxbyte.com`'s (a Worker + Cloudflare's native `send_email` binding, see
+         `docs/todolist.md`'s new Contact Form item below) — that binding needs its `from` address
+         on a domain with active Email Routing in this Cloudflare account, which the current
+         `workers.dev` subdomain isn't. Asked whether to borrow `haxbyte.com`'s already-verified
+         Email Routing setup for now vs. wait for `dougrosenberg.com`'s own domain to be attached
+         here — decided to wait, so this domain decision blocks the contact form specifically, not
+         just "nice to have eventually."
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need
@@ -215,7 +223,24 @@ this project's own custom items and where it stands against them.
       light-theme contrast check, same rigor as the dark-mode pass already done in round 1/round 2
       — a light background raises the AA bar for anything currently relying on a near-black
       backdrop.
+- [ ] **Contact form wanted** (2026-09-06), same pattern as `haxbyte.com`'s — a real Worker (not
+      assets-only like this project's current `wrangler.jsonc`) handling `POST /api/contact` via
+      Cloudflare's native `send_email` binding (no third-party API/secret needed), falling back to
+      `env.ASSETS.fetch()` for everything else. Blocked on the custom-domain decision above (see
+      that item for why). When unblocked, `haxbyte/site/src/worker.js` +
+      `haxbyte/site/src/pages/contact.astro` are the reference implementation to adapt: origin
+      check, honeypot field, server-side validation (length caps, email format), a
+      `CONTACT_TO`/`FROM_ADDRESS`/`ALLOWED_ORIGIN` set of constants to update for this site, and
+      the client-side fetch+status-message handling. The account-level destination-address
+      verification for `doug.rosenberg@gmail.com` should already carry over from haxbyte's setup
+      (verified once per Cloudflare account, not per Worker) — confirm that rather than assuming.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
       than defaulting either way.
+- [ ] **Refine the design system, then use it to develop a meaningful logo** (2026-09-06, no
+      timeline yet — "at some point"). `docs/style-guide.md` is the current design-system doc to
+      refine; per `SITE_QUALITY_CHECKLIST.md`'s Design System item, a logo (if it becomes part of
+      this) should end up as clean vector SVG source, not just a raster export — `haxbyte`'s own
+      still-open "redraw logo SVGs from DALL-E reference (currently PNG only)" item is the real
+      cautionary example of skipping that step.
