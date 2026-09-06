@@ -1,9 +1,9 @@
 # Todo List
 
 **Status (2026-09-06):** hero/nav direction is locked (full-bleed graded hero + static-abbreviation
-staff nav, with a "DEV" note linking to dougrosenbergdev.com). Live on both GitHub Pages and
-Cloudflare Workers static-assets (https://dougrosenbergmusic.doug-rosenberg.workers.dev). This doc
-tracks what's left, in order.
+staff nav, with a "DEV" note linking to dougrosenbergdev.com). GitHub Pages is retired; the site
+now lives solely on Cloudflare Workers static-assets
+(https://dougrosenbergmusic.doug-rosenberg.workers.dev). This doc tracks what's left, in order.
 
 This project is also the reference build behind `career-development/projects/SITE_BUILD_CHECKLIST.md`
 and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the master checklists (living
@@ -32,8 +32,12 @@ this project's own custom items and where it stands against them.
          asset URLs and the DEV nav link both render correctly.
    - [x] Replaced the placeholder `cloudflareSite` URL in `astro.config.mjs` with the real
          workers.dev URL above.
-   - [ ] Decide whether/when to point a custom domain at it and retire the GitHub Pages workflow,
-         or run both in parallel for a while. Both are currently live simultaneously.
+   - [x] GitHub Pages retired 2026-09-06: removed `.github/workflows/deploy.yml`, simplified
+         `astro.config.mjs` back to a single hardcoded Cloudflare `site`/`base` (no more
+         `DEPLOY_TARGET` conditional — there's only one deploy target now). The GitHub Pages site
+         itself (`shalant.github.io/dougrosenbergmusic/`) was disabled directly via the GitHub API,
+         outside this PR, since that's a repo-settings action, not a code change.
+   - [ ] Attaching a custom domain to the Cloudflare Worker is still an open, undecided item.
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need
@@ -45,10 +49,6 @@ this project's own custom items and where it stands against them.
       (Blazor) site: Ferling #12 alla furioso, Ferling #6 G major, Ferling #8, Ferling #18 in Bb,
       New York, Spiderman (Cl), Super Mario (Bb). Need the source PDF/image for each before they
       can be added to `site/src/components/SheetMusicLibrary.astro`. (See also root `TODO.md`.)
-- [ ] Confirm the Cloudflare migration doesn't break the `/dougrosenbergmusic/` base-path asset
-      URLs fixed for GitHub Pages (`site/astro.config.mjs`'s `base`) — Cloudflare Pages/Workers
-      serving from an apex or subdomain won't need that prefix, so `astro.config.mjs` and every
-      `import.meta.env.BASE_URL` usage need revisiting together, not left over from the GH Pages setup.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
