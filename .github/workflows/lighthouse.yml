@@ -1,0 +1,46 @@
+name: Lighthouse CI
+
+# PR-time quality gate only. This workflow does NOT deploy anything — Cloudflare
+# builds and deploys straight from `master` via its own dashboard git integration
+# (npm run build -> npx wrangler deploy), independent of GitHub Actions. This
+# workflow only builds the site in a throwaway CI runner and audits the output;
+# it has no credentials and touches no Cloudflare resources.
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+# Cancel superseded runs on the same PR/branch so pushes don't queue up stale audits.
+concurrency:
+  group: lighthouse-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.12.0"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Run Lighthouse CI
+        run: npx @lhci/cli@0.14.x autorun --config=./lighthouserc.json

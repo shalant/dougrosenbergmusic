@@ -93,13 +93,11 @@ this project's own custom items and where it stands against them.
          `/sheetmusic/*` (not content-hashed, could be swapped without a filename change).
          Also checked gallery/album image sizes while in there - all under 250KB, already
          lazy-loaded, no action needed.
-   - [ ] **Round 2, remaining:** Performance/Lighthouse audit proper (PSI quota still exhausted -
-         retry later, or find another way to get real Core Web Vitals), Analytics (no GA4/Web
-         Analytics installed), Design System (no written style-guide doc yet, though the token
+   - [ ] **Round 2, remaining:** Design System (no written style-guide doc yet, though the token
          layer in `global.css` already exists), Interaction & Visual Polish (systematic sweep, not
          yet done), Mobile breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone
-         failure mode — untested here), Testing/QA (no automated test suite, no CI), Content
-         basics (nav/footer 404 sweep, stale-date check).
+         failure mode — untested here), a real unit/E2E test suite (Lighthouse CI covers the
+         build+audit half of Testing/QA now, but not this half).
    - [x] **Round 2, part 3 (2026-09-06): analytics.** Enabled Cloudflare Web Analytics — same
          choice haxbyte made, for the same reason (zero-config, no cookie-consent overhead, unlike
          GA4). Registered `dougrosenbergmusic.doug-rosenberg.workers.dev` as a manual-setup site
@@ -109,9 +107,43 @@ this project's own custom items and where it stands against them.
          — same two allowances haxbyte's CSP carries. The beacon token isn't a secret; it's a
          public per-site ID meant to ship in every page's HTML. Verified: build succeeds, the
          script's external `src=` correctly excludes it from the inline-script hash set (still
-         only 4 hashes), no code-level issues found. **Not yet verified live** — need to confirm
-         the beacon actually fires with no CSP console violations once this deploys, same
-         verification pattern as round 1's CSP.
+         only 4 hashes), no code-level issues found. Verified live post-deploy 2026-09-06: beacon
+         script loads (200) and its RUM POST fires (204), no CSP console violations.
+   - [x] **Round 2, part 4 (2026-09-06): content basics + a real Lighthouse run.** Nav/footer/
+         album link sweep — all clean; two Amazon links initially looked dead via `curl` but that
+         was Amazon's bot detection (TLS reset), not real breakage — confirmed live in an actual
+         browser. Copyright year is already computed via `new Date().getFullYear()`, never stale.
+         Set up `@lhci/cli` locally (`site/lighthouserc.json`, modeled on haxbyte's config) to
+         finally get a real Lighthouse audit, sidestepping PSI's exhausted API quota entirely —
+         `staticDistDir` serves the built `dist/` locally, no external API needed. First real
+         numbers: index.html 93 performance / 96 a11y / 96 best-practices / 100 SEO; 404.html
+         98-99 / 100 / 96 / 100. Investigated the two dents: `errors-in-console` was a
+         beacon-CORS artifact specific to testing against `localhost` (already confirmed clean on
+         the real domain above, not a real bug); `color-contrast` was real — `--text-faint`
+         (`.about__quote cite`'s attribution line, the sheet-music empty-state message) measured
+         3.4:1 against its actual backgrounds, below the 4.5:1 AA minimum my earlier manual audit
+         never caught (it only checked accent colors, not this token). Fixed by raising
+         `--text-faint`'s alpha 0.4 → 0.52 in `global.css` (computed against `--bg`, `--surface`,
+         and the gallery lightbox's overlay color — all land at 4.9-5.0:1 now, verified
+         programmatically before touching the file).
+   - [x] Re-ran `@lhci/cli` after the contrast fix — confirmed 100 a11y on both pages (the first
+         rerun attempt hit a `staticDistDir` path-resolution issue, not a real regression: it
+         resolves relative to whatever directory the `lhci` process actually runs from, and that
+         run's shell command chain had ended back at the repo root instead of `site/`, so
+         `./dist` pointed at a nonexistent folder one level up from the real build output).
+         Final scores: index.html 93 performance / **100 a11y** / 96 best-practices / 100 SEO;
+         404.html 99 / **100** / 96 / 100. The remaining 96 best-practices point on both pages is
+         the beacon-CORS-on-localhost artifact, already confirmed clean on the real domain.
+   - [x] **Round 2, part 5 (2026-09-06): Lighthouse CI wired into GitHub Actions.** Added
+         `.github/workflows/lighthouse.yml` (PR + push on `master`, mirrors haxbyte's own
+         Lighthouse CI workflow almost exactly) so every future PR gets this same audit
+         automatically instead of relying on a manual local run. Installed `@lhci/cli@0.14.0` as a
+         pinned devDependency (same version verified locally, matching haxbyte's pattern of
+         pinning rather than an unversioned `npx` fetch in CI) — pulled in 15 vulnerabilities in
+         its own transitive tree, but `npm audit --omit=dev` confirms 0 in production
+         dependencies; this tool never ships in the built site, only runs standalone in CI/locally,
+         same trade-off haxbyte already accepted for the identical tool. Added `.lighthouseci/` to
+         `.gitignore` (local report artifacts, shouldn't be committed).
 
 ## Custom items (this project specifically)
 
@@ -124,6 +156,16 @@ this project's own custom items and where it stands against them.
       scanned sheet music risks making actual notation illegible for the students this feature is
       for - needs a careful, visually-verified pass per file, not a bulk automated one. Deferred
       rather than rushed.
+- [ ] **Light-mode refactor.** Site is currently dark-only by deliberate choice (see
+      `docs/DESIGN_NOTES.md`) — no toggle, no `prefers-color-scheme` handling. Per
+      `SITE_QUALITY_CHECKLIST.md`'s Design System category, dual-theme support (if added) needs to
+      be a scoped decision up front — palette, toggle mechanism (manual override persisted to
+      `localStorage`, applied via an inline blocking script before paint to avoid a flash-of-
+      wrong-theme, per `SITE_BUILD_CHECKLIST.md` §3), and how far it extends across the site — not
+      bolted on reflexively. Every accent color (`--note-*`, `--brass`, etc.) would need its own
+      light-theme contrast check, same rigor as the dark-mode pass already done in round 1/round 2
+      — a light background raises the AA bar for anything currently relying on a near-black
+      backdrop.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
