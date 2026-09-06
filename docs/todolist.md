@@ -66,12 +66,26 @@ this project's own custom items and where it stands against them.
        haxbyte.com. Astro inlines every page's `<script>` bodies directly into the HTML, so each
        of the 4 unique inline scripts (Person JSON-LD, StaffNav, SheetMusicLibrary, Gallery) needed
        its own hash; verified by recomputing hashes against a fresh build and diffing against what
-       shipped in `_headers`. **Not yet verified live** — `astro dev`/`preview` don't apply
-       `_headers` (Cloudflare-only), so confirm no console CSP violations after this deploys.
-   - [ ] **Round 2+ (not started):** Performance (Lighthouse/PageSpeed run against the live
-         production URL — hasn't been done at all yet), Analytics (no GA4/Web Analytics installed),
-         Design System (no written style-guide doc yet, though the token layer in `global.css`
-         already exists), Interaction & Visual Polish (systematic sweep, not yet done), Mobile
+       shipped in `_headers`. Verified live post-deploy 2026-09-06 via `curl -sI` against the
+       production URL — all headers present, CSP hashes match exactly, no console violations.
+   - [x] **Round 2, part 1 (2026-09-06): font self-hosting.** Attempted a Performance audit first
+         via the PageSpeed Insights API, but its public quota was exhausted for this environment
+         (`429 rateLimitExceeded`) — fell back to manually inspecting real network requests
+         instead. That surfaced the Google Fonts `@import` as an actual render-blocking
+         cross-origin request (not just a checklist checkbox), so fixed it: downloaded the 4
+         actual variable-font files Google serves for this family/weight/style set (verified via
+         `getComputedStyle` across every element in the live DOM, including pseudo-elements — one
+         "Work Sans italic" hit turned out to be a false positive from decorative empty `<i>` tags
+         in `LeadSheetBarShape.astro`, not real rendered text), added them under
+         `site/public/fonts/`, and replaced the `@import` with local `@font-face` rules in
+         `global.css`. Dropped the now-unneeded `fonts.googleapis.com`/`fonts.gstatic.com`
+         allowances from `_headers`'s CSP. Verified: build succeeds, all 4 CSP script hashes still
+         match, no more cross-origin font requests (checked via live network-request capture),
+         fonts render identically (screenshot-verified).
+   - [ ] **Round 2, remaining:** Performance/Lighthouse audit (blocked on PSI quota — retry later,
+         or run Lighthouse some other way), Analytics (no GA4/Web Analytics installed), Design
+         System (no written style-guide doc yet, though the token layer in `global.css` already
+         exists), Interaction & Visual Polish (systematic sweep, not yet done), Mobile
          breakpoint-gap check (`SITE_QUALITY_CHECKLIST.md`'s known dead-zone failure mode —
          untested here), Testing/QA (no automated test suite, no CI), Content basics (nav/footer
          404 sweep, stale-date check).
@@ -82,11 +96,6 @@ this project's own custom items and where it stands against them.
       (Blazor) site: Ferling #12 alla furioso, Ferling #6 G major, Ferling #8, Ferling #18 in Bb,
       New York, Spiderman (Cl), Super Mario (Bb). Need the source PDF/image for each before they
       can be added to `site/src/components/SheetMusicLibrary.astro`. (See also root `TODO.md`.)
-- [ ] **Fonts are still loaded via a Google Fonts `@import` in `global.css`**, not self-hosted —
-      the `SITE_BUILD_CHECKLIST.md` §3 item this project doesn't yet meet. Surfaced while writing
-      `public/_headers`: the CSP has to allow `fonts.googleapis.com`/`fonts.gstatic.com` as a
-      result, unlike haxbyte's fully self-hosted, single-origin CSP. Migrating would let those two
-      allowances be dropped.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
