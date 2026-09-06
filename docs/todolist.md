@@ -1,7 +1,8 @@
 # Todo List
 
 **Status (2026-09-06):** hero/nav direction is locked (full-bleed graded hero + static-abbreviation
-staff nav, with a "DEV" note linking to dougrosenbergdev.com). Deployed to GitHub Pages. This doc
+staff nav, with a "DEV" note linking to dougrosenbergdev.com). Live on both GitHub Pages and
+Cloudflare Workers static-assets (https://dougrosenbergmusic.doug-rosenberg.workers.dev). This doc
 tracks what's left, in order.
 
 This project is also the reference build behind `career-development/projects/SITE_BUILD_CHECKLIST.md`
@@ -23,14 +24,16 @@ this project's own custom items and where it stands against them.
          `.github/workflows/deploy.yml`) so GitHub Pages keeps its `/dougrosenbergmusic/` subpath
          while a plain `npm run build` (what Cloudflare's dashboard runs) serves from root. Verified
          both build modes produce correct asset URLs.
-   - [ ] **Blocked on the user:** connect this GitHub repo in the Cloudflare dashboard (Workers &
-         Pages → Create → root directory `site`, build command `npm run build`, deploy command
-         `npx wrangler deploy`) — same flow as haxbyte.com's setup (`haxbyte/docs/TODO.md`). This
-         needs Doug's own Cloudflare login; can't be done from here.
-   - [ ] Once a real workers.dev subdomain or custom domain exists, replace the placeholder
-         `cloudflareSite` URL in `astro.config.mjs` with it (only affects sitemap/canonical URLs).
+   - [x] Connected the repo in the Cloudflare dashboard (Workers & Pages → Create) — done
+         2026-09-06. Used a dedicated `dougrosenbergmusic` deploy token rather than reusing
+         haxbyte's build token (scoped separately on purpose). Root directory `site`, build
+         command `npm run build`, deploy command `npx wrangler deploy`. Build succeeded, live at
+         https://dougrosenbergmusic.doug-rosenberg.workers.dev — verified in-browser, root-path
+         asset URLs and the DEV nav link both render correctly.
+   - [x] Replaced the placeholder `cloudflareSite` URL in `astro.config.mjs` with the real
+         workers.dev URL above.
    - [ ] Decide whether/when to point a custom domain at it and retire the GitHub Pages workflow,
-         or run both in parallel for a while.
+         or run both in parallel for a while. Both are currently live simultaneously.
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need

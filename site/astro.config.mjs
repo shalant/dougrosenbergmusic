@@ -8,10 +8,9 @@ import { defineConfig } from 'astro/config';
 // leaves it unset, so root-path is the default.
 const isGhPages = process.env.DEPLOY_TARGET === 'gh-pages';
 
-// TODO(cloudflare): replace with the real workers.dev subdomain or custom
-// domain once the Cloudflare project exists — this placeholder only affects
-// sitemap.xml/canonical URLs, not the actual deploy.
-const cloudflareSite = 'https://dougrosenbergmusic.example-placeholder.workers.dev';
+// Live since 2026-09-06: https://dougrosenbergmusic.doug-rosenberg.workers.dev
+// Update this if a custom domain is ever attached instead.
+const cloudflareSite = 'https://dougrosenbergmusic.doug-rosenberg.workers.dev';
 
 // https://astro.build/config
 export default defineConfig({
