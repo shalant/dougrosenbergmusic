@@ -93,9 +93,34 @@ this project's own custom items and where it stands against them.
          `/sheetmusic/*` (not content-hashed, could be swapped without a filename change).
          Also checked gallery/album image sizes while in there - all under 250KB, already
          lazy-loaded, no action needed.
-   - [ ] **Round 2, remaining:** Interaction & Visual Polish (systematic sweep, not yet done), a
-         real unit/E2E test suite (Lighthouse CI covers the build+audit half of Testing/QA now,
-         but not this half).
+   - [ ] **Round 2, remaining (Interaction & Visual Polish, partial):** the hover/focus-visible
+         parity sweep is done (part 8 below); still open from that category: a scroll-reveal
+         animation audit (this site doesn't appear to have any scroll-triggered reveal animations
+         at all — worth confirming, and deciding whether to add any or explicitly not), a
+         shadow/depth consistency audit (values documented in `docs/style-guide.md` but never
+         checked for stray one-offs), and a visual-rhythm check on the page's background
+         alternation (`Listen`/`About`/`Performance`/`SheetMusicLibrary` all use `--bg` back to
+         back before `Credibility`/`Gallery` break it up with `--surface` — worth a deliberate
+         look, not just noting it). Also still open: a real unit/E2E test suite (Lighthouse CI
+         covers the build+audit half of Testing/QA now, but not this half).
+   - [x] **Round 2, part 8 (2026-09-06): hover/focus-visible parity sweep.** Systematically
+         cross-referenced every `:hover` selector against a matching `:focus-visible` across all
+         components (round 1 only fixed this for `StaffNav`, never swept the rest of the site for
+         the same gap). Found 6 more: `.contact__cta`, `.gallery__filter`, `.gallery__lightbox-nav`,
+         `.now-playing`, `.album`, `.sheet-music__item` — all had `:hover` with zero
+         `:focus-visible`. Fixed all 6: pill-shaped elements (`.contact__cta`, `.now-playing`,
+         `.gallery__filter`) got a suppressed default outline + a custom ring matching `StaffNav`'s
+         round 1 pattern; rectangular elements just mirror their existing `:hover` treatment onto
+         `:focus-visible` since the browser's default outline already reads fine on them. Verified
+         all 6 via direct DOM `.focus()` + computed-style checks — not just a code read. One,
+         `.gallery__lightbox-nav`, initially looked broken (`:focus-visible` matched but `opacity`
+         computed style didn't update) across several attempts; root cause was a stale
+         computed-style artifact specific to testing a just-unhidden element in this browser
+         automation session (`nav.matches(':focus-visible')` and its actual applied style
+         genuinely diverged until a forced reflow via `offsetHeight`), not a real CSS bug — the
+         rule itself was confirmed correctly written, correctly scoped, and correctly specific via
+         direct CSSOM inspection throughout. Also re-verified: build succeeds, all 4 CSP hashes
+         unaffected (CSS-only changes), Lighthouse CI assertions still pass.
    - [x] **Round 2, part 7 (2026-09-06): design-system doc.** Added `docs/style-guide.md` — colors
          (with the contrast-verification story, not just the values), typography (families,
          weights actually loaded, a real type scale table pulled from every `font-size: clamp(...)`

@@ -65,16 +65,23 @@ const socials = [
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .contact__cta:hover {
+  .contact__cta:hover,
+  .contact__cta:focus-visible {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px var(--brass-soft);
+  }
+
+  .contact__cta:focus-visible {
+    outline: none;
+    box-shadow: 0 10px 30px var(--brass-soft), 0 0 0 3px rgba(255, 255, 255, 0.6);
   }
 
   .contact__cta span {
     transition: transform 0.2s ease;
   }
 
-  .contact__cta:hover span {
+  .contact__cta:hover span,
+  .contact__cta:focus-visible span {
     transform: translateX(3px);
   }
 
