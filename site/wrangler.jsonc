@@ -1,0 +1,25 @@
+{
+	// Cloudflare Workers static-assets config — same pattern as haxbyte.com's
+	// site/wrangler.jsonc. Assets-only (no "main" worker script): unlike
+	// haxbyte, this site has no contact-form backend to run (Contact.astro
+	// is a plain mailto: link per SITE_BUILD_CHECKLIST.md's default), so
+	// there's no server-side logic to execute.
+	//
+	// In the Cloudflare dashboard (Workers & Pages -> Create -> connect this
+	// GitHub repo): set root directory (Advanced settings) to "site", build
+	// command "npm run build", deploy command "npx wrangler deploy" (default,
+	// picks up this file). Root directory matters because this file's
+	// relative path ("./dist") resolves from wherever the dashboard's root
+	// directory is set, not from the repo root.
+	"name": "dougrosenbergmusic",
+	"compatibility_date": "2026-09-06",
+	"assets": {
+		"directory": "./dist",
+		// Without this, unmatched routes get a bare 404 with an empty body
+		// instead of the built dist/404.html — Workers static assets
+		// defaults to "none", unlike classic Pages which served 404.html
+		// automatically. (No custom 404.astro exists yet — see
+		// docs/todolist.md's checklist-pass item.)
+		"not_found_handling": "404-page"
+	}
+}

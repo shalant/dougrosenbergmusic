@@ -17,6 +17,20 @@ this project's own custom items and where it stands against them.
    `public/_headers`, HTTPS/HSTS, Core Web Vitals against the real production URL, a custom 404)
    can only be verified for real once the site is on its actual target host. Do this before the
    checklist pass, not after, to avoid auditing GitHub Pages and then re-auditing post-move.
+   - [x] Repo-side prep done: `site/wrangler.jsonc` added (assets-only, no worker script needed —
+         Contact.astro is a plain `mailto:` link, unlike haxbyte's email-handling worker).
+         `astro.config.mjs`'s `base`/`site` are now conditional on `DEPLOY_TARGET=gh-pages` (set in
+         `.github/workflows/deploy.yml`) so GitHub Pages keeps its `/dougrosenbergmusic/` subpath
+         while a plain `npm run build` (what Cloudflare's dashboard runs) serves from root. Verified
+         both build modes produce correct asset URLs.
+   - [ ] **Blocked on the user:** connect this GitHub repo in the Cloudflare dashboard (Workers &
+         Pages → Create → root directory `site`, build command `npm run build`, deploy command
+         `npx wrangler deploy`) — same flow as haxbyte.com's setup (`haxbyte/docs/TODO.md`). This
+         needs Doug's own Cloudflare login; can't be done from here.
+   - [ ] Once a real workers.dev subdomain or custom domain exists, replace the placeholder
+         `cloudflareSite` URL in `astro.config.mjs` with it (only affects sitemap/canonical URLs).
+   - [ ] Decide whether/when to point a custom domain at it and retire the GitHub Pages workflow,
+         or run both in parallel for a while.
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need
