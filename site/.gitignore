@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# Lighthouse CI local reports
+.lighthouseci/
+
 # generated types
 .astro/
 
