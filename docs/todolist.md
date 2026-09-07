@@ -1,9 +1,11 @@
 # Todo List
 
-**Status (2026-09-06):** hero/nav direction is locked (full-bleed graded hero + static-abbreviation
-staff nav, with a "DEV" note linking to dougrosenbergdev.com). GitHub Pages is retired; the site
-now lives solely on Cloudflare Workers static-assets
-(https://dougrosenbergmusic.doug-rosenberg.workers.dev). This doc tracks what's left, in order.
+**Status (2026-09-07):** hero/nav direction is locked (full-bleed graded hero + icon-marked staff
+nav, with a "DEV" note linking to dougrosenbergdev.com). GitHub Pages is retired; the site lives on
+Cloudflare Workers static-assets (https://dougrosenbergmusic.doug-rosenberg.workers.dev), currently
+**mid-cutover to the real domain** — `dougrosenberg.com`'s nameservers were switched to Cloudflare
+today and are waiting on propagation; see the domain-cutover checklist under "Migrate deployment"
+below for the exact next steps once that finishes. This doc tracks what's left, in order.
 
 This project is also the reference build behind `career-development/projects/SITE_BUILD_CHECKLIST.md`
 and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the master checklists (living
@@ -37,15 +39,46 @@ this project's own custom items and where it stands against them.
          `DEPLOY_TARGET` conditional — there's only one deploy target now). The GitHub Pages site
          itself (`shalant.github.io/dougrosenbergmusic/`) was disabled directly via the GitHub API,
          outside this PR, since that's a repo-settings action, not a code change.
-   - [ ] Attaching a custom domain to the Cloudflare Worker is still an open, undecided item. **Now
-         a prerequisite, not just an open question** (2026-09-06): a real contact form is wanted,
-         same pattern as `haxbyte.com`'s (a Worker + Cloudflare's native `send_email` binding, see
-         `docs/todolist.md`'s new Contact Form item below) — that binding needs its `from` address
-         on a domain with active Email Routing in this Cloudflare account, which the current
-         `workers.dev` subdomain isn't. Asked whether to borrow `haxbyte.com`'s already-verified
-         Email Routing setup for now vs. wait for `dougrosenberg.com`'s own domain to be attached
-         here — decided to wait, so this domain decision blocks the contact form specifically, not
-         just "nice to have eventually."
+   - [ ] **Domain cutover to dougrosenberg.com — IN PROGRESS as of 2026-09-07.** Decided to proceed
+         (previously an open/undecided item). Live DNS check before starting confirmed: registrar
+         is GoDaddy, current host is GitHub Pages (apex A-records to GitHub's 4 IPs, `www` CNAMEd to
+         `shalant.github.io`), no MX record (no email hosted at the domain), one `_dmarc` TXT record
+         to preserve. The old site's nav sub-paths (`/about`, `/contact`, `/education`, `/listen`)
+         all 404 on direct load — Blazor client routes with no SPA fallback — so nothing is actually
+         indexed there to redirect.
+         Steps, in order:
+         1. [x] Added `dougrosenberg.com` as a Cloudflare zone ("Connect a domain") — DNS records
+                scanned/imported correctly (4 GitHub Pages A-records, `www`→`shalant.github.io`
+                CNAME, the `_dmarc` TXT, plus two GoDaddy helper CNAMEs — `_domainconnect` and a
+                `pay.` one for GoDaddy Payments, both harmless either way).
+         2. [x] Nameservers changed at GoDaddy to `carrera.ns.cloudflare.com` /
+                `charles.ns.cloudflare.com`, done 2026-09-07 — confirmed correct on GoDaddy's own
+                Nameservers screen. **Waiting on propagation** (Cloudflare: 1-2hrs typical, up to
+                24). Zone was still showing "pending" in Cloudflare and still resolving to GoDaddy's
+                nameservers as of the change. No downtime during this wait — site keeps serving
+                from GitHub Pages exactly as today until Cloudflare finishes verifying.
+         3. [ ] Once Cloudflare shows the zone active: attach `dougrosenberg.com` (+ `www`) as a
+                Custom Domain on the `dougrosenbergmusic` Worker (Workers & Pages → dougrosenbergmusic
+                → Settings → Domains & Routes).
+         4. [ ] Update `astro.config.mjs`'s `site` from the `workers.dev` URL to
+                `https://dougrosenberg.com` (feeds sitemap/canonical/OG/JSON-LD, baked in at build
+                time) — commit/push, Cloudflare auto-deploys.
+         5. [ ] Verify live: HTTPS, every section, Lighthouse CI against the real domain, mobile
+                spot-check.
+         6. [ ] Disable the old GitHub Pages site (Settings → Pages, on whichever repo currently
+                serves it) — formal cleanup once DNS no longer points there.
+         7. [ ] Submit the new sitemap to Google Search Console for the property, request
+                re-indexing.
+         **Separately decided, not coupled to the above:** eventually transfer domain
+         *registration* itself from GoDaddy to Cloudflare Registrar too (wholesale pricing, free
+         WHOIS privacy) — but that's an independent errand (unlock + EPP code + several-day ICANN
+         wait), doesn't need to happen before or after the cutover above.
+         **Still true, now that domain attachment is actually happening:** a real contact form is
+         wanted, same pattern as `haxbyte.com`'s (a Worker + Cloudflare's native `send_email`
+         binding, see the Contact Form item below) — that binding needs its `from` address on a
+         domain with active Email Routing in this Cloudflare account. Once `dougrosenberg.com` is
+         attached, Email Routing can be set up on it directly — this unblocks the contact form work
+         once steps 3-4 above are done.
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need
@@ -333,14 +366,19 @@ this project's own custom items and where it stands against them.
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
       than defaulting either way.
-- [ ] **Before/after case study draft written** (2026-09-06 overnight, PR #20,
-      `case-study-draft`): `docs/case-study-draft.md` + the 8 live-Blazor-site screenshots in
-      `docs/case-study-assets/`. First draft only, not published anywhere — ends with 3 possible
-      framings (general template-vs-custom post, dev-portfolio case study for
-      dougrosenbergdev.com, or a short in-place note) for Doug to pick from. Also found while
-      writing it: the live site already has a full Sheet Music Library page (reframes the "7
-      missing pieces" item above as a parity gap, not new scope), and a real broken-image bug in
-      the old site's gallery.
+- [x] **Before/after case study draft written and published** (draft: 2026-09-06 overnight, PR #20
+      `case-study-draft`, this repo). Decided on the dev-portfolio framing: published as a real
+      blog post on **dougrosenbergdev.com** (separate repo, `shalant/PortfolioNov25`) —
+      `/blog/rebuilding-musician-site-blazor-to-astro`, PR #55 (post) + PR #56 (added the 8
+      old-site screenshots as a gallery, both merged 2026-09-07). Live and verified: renders on
+      `/blog`, its own `/blog/{slug}` route, and `/blog/archive`; `sitemap.xml`/`llms.txt` updated
+      to match. `docs/case-study-draft.md` + `docs/case-study-assets/` remain in *this* repo as the
+      source material/backup, not duplicated content to maintain going forward.
+- [x] **StaffNav abbreviations replaced with icons** (2026-09-07, PR #22 `staff-nav-icons`,
+      merged): HE/LI/AB/CR/CO → home/music-note/user/award/mail line icons (DEV stays text).
+      Also renamed the two labels that read oddly in the hover tooltip: "Hero" → "Home", "Credibility"
+      → "Highlights" — grepped `site/src` first to confirm neither word appeared anywhere else on
+      the page before renaming.
 - [ ] **Refine the design system, then use it to develop a meaningful logo** (2026-09-06, no
       timeline yet — "at some point"). `docs/style-guide.md` is the current design-system doc to
       refine; per `SITE_QUALITY_CHECKLIST.md`'s Design System item, a logo (if it becomes part of
