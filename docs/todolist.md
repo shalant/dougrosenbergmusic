@@ -318,6 +318,12 @@ this project's own custom items and where it stands against them.
       the client-side fetch+status-message handling. The account-level destination-address
       verification for `doug.rosenberg@gmail.com` should already carry over from haxbyte's setup
       (verified once per Cloudflare account, not per Worker) — confirm that rather than assuming.
+- [ ] **No branch protection on `master`** (checked 2026-09-07 via `gh api repos/.../branches/
+      master/protection` — 404, confirmed off). A real `SITE_QUALITY_CHECKLIST.md` Security item,
+      but deliberately not enabled here without asking first — the wrong rule (e.g. "require an
+      approving review") would block solo merging on a single-contributor repo like this one.
+      Worth deciding what protection actually makes sense here (e.g. "require status checks to
+      pass" without requiring a review) rather than defaulting to GitHub's stricter presets.
 - [ ] Once the checklist pass is clean, consider whether this project becomes an informal
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
