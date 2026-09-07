@@ -27,6 +27,14 @@ const personSchema = {
     'https://github.com/shalant',
   ],
 };
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Doug Rosenberg',
+  url: Astro.site?.toString(),
+  description: 'Doug Rosenberg — saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
+};
 ---
 
 <html lang="en">
@@ -53,6 +61,7 @@ const personSchema = {
 		<meta name="twitter:image" content={ogImageURL} />
 
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
 		<!-- Cloudflare Web Analytics — chosen over GA4/Plausible for zero-config,
 		     no-cookie-consent-overhead reasons, same as haxbyte.com. Token isn't a

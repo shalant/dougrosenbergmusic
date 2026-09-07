@@ -1,13 +1,14 @@
 # Todo List
 
-**Status (2026-09-07 evening):** hero/nav direction is locked (full-bleed graded hero + a TV/DR
-logo top-left linking home + icon-marked staff nav, "DEV" note linking to dougrosenbergdev.com).
-GitHub Pages is retired; the site lives on Cloudflare Workers static-assets
-(https://dougrosenbergmusic.doug-rosenberg.workers.dev), **mid-cutover to the real domain** —
-`dougrosenberg.com`'s DNS has finished propagating to Cloudflare (confirmed today), but the domain
-currently still serves the *old* Blazor site since the new Worker isn't attached as a Custom Domain
-yet — see the domain-cutover checklist under "Migrate deployment" below for the exact next step.
-This doc tracks what's left, in order.
+**Status (2026-09-07, late evening):** hero/nav direction is locked (full-bleed graded hero + a
+TV/DR logo top-left linking home + icon-marked staff nav, "DEV" note linking to
+dougrosenbergdev.com). **The site is now fully live at https://dougrosenberg.com** — domain cutover
+complete (DNS propagated, Custom Domain attached, `astro.config.mjs` updated), GitHub Pages
+retired. A same-evening SEO/GEO pass added `llms.txt`, a `WebSite` JSON-LD block, and fixed a real
+CSP hash bug that had silently broken `StaffNav`'s script in production. Two items are flagged for
+Doug specifically, not done autonomously: submitting the sitemap to Search Console, and a decision
+on Cloudflare's auto-injected AI-crawler-blocking `robots.txt` rule (see the domain-cutover
+checklist under "Migrate deployment" for both). This doc tracks what's left, in order.
 
 This project is also the reference build behind `career-development/projects/SITE_BUILD_CHECKLIST.md`
 and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the master checklists (living
@@ -41,7 +42,7 @@ this project's own custom items and where it stands against them.
          `DEPLOY_TARGET` conditional — there's only one deploy target now). The GitHub Pages site
          itself (`shalant.github.io/dougrosenbergmusic/`) was disabled directly via the GitHub API,
          outside this PR, since that's a repo-settings action, not a code change.
-   - [ ] **Domain cutover to dougrosenberg.com — IN PROGRESS as of 2026-09-07.** Decided to proceed
+   - [x] **Domain cutover to dougrosenberg.com — LIVE as of 2026-09-07 evening.** Decided to proceed
          (previously an open/undecided item). Live DNS check before starting confirmed: registrar
          is GoDaddy, current host is GitHub Pages (apex A-records to GitHub's 4 IPs, `www` CNAMEd to
          `shalant.github.io`), no MX record (no email hosted at the domain), one `_dmarc` TXT record
@@ -55,39 +56,100 @@ this project's own custom items and where it stands against them.
                 `pay.` one for GoDaddy Payments, both harmless either way).
          2. [x] Nameservers changed at GoDaddy to `carrera.ns.cloudflare.com` /
                 `charles.ns.cloudflare.com`, done 2026-09-07 — confirmed correct on GoDaddy's own
-                Nameservers screen. **Propagation confirmed complete same day (2026-09-07 evening):**
-                `nslookup -type=NS dougrosenberg.com` against both `8.8.8.8` (Google) and `1.1.1.1`
-                (Cloudflare) now returns `carrera`/`charles.ns.cloudflare.com`; the apex A record
-                resolves to Cloudflare's own proxy IPs; `curl -I https://dougrosenberg.com` returns
-                `server: cloudflare`. Zone is active, not pending. No downtime during the wait,
-                as expected.
-         3. [ ] **Current blocker — do this next.** Cloudflare is proxying the zone but the apex
-                A-records it imported still point at GitHub Pages, so the domain is *live and
-                resolving* but currently serves the **old Blazor site** (confirmed via
-                `x-github-request-id` in the response headers) — not the new Astro build. Fix:
-                attach `dougrosenberg.com` (+ `www`) as a Custom Domain on the `dougrosenbergmusic`
-                Worker (Workers & Pages → dougrosenbergmusic → Settings → Domains & Routes). This is
-                a Cloudflare-dashboard action, not a code change — needs to happen in-browser, not
-                something doable from this repo.
-         4. [ ] Update `astro.config.mjs`'s `site` from the `workers.dev` URL to
-                `https://dougrosenberg.com` (feeds sitemap/canonical/OG/JSON-LD, baked in at build
-                time) — commit/push, Cloudflare auto-deploys.
-         5. [ ] Verify live: HTTPS, every section, Lighthouse CI against the real domain, mobile
-                spot-check.
+                Nameservers screen. Propagation confirmed complete same day via `nslookup -type=NS`
+                against both `8.8.8.8` and `1.1.1.1`; zone active, no downtime during the wait.
+         3. [x] **Custom Domain attached 2026-09-07 evening.** First attempt via
+                `npx wrangler deploy` (added `routes` with `custom_domain: true` for both hosts to
+                `site/wrangler.jsonc`) failed: `Hostname 'dougrosenberg.com' already has externally
+                managed DNS records` — the imported GitHub Pages A-records were blocking Cloudflare
+                from provisioning its own. Doug deleted the 4 apex A-records and the `www` CNAME
+                (kept `_domainconnect`, `pay.`, and `_dmarc` — unrelated/still needed) via the
+                dashboard's DNS tab; re-ran `wrangler deploy` and both hosts attached cleanly.
+                `wrangler` here is authenticated as Doug's own Cloudflare account with sufficient
+                token scope (`workers_routes: write`, `ssl_certs: write`) to do this from the
+                terminal — no dashboard click-through needed once the conflicting records were gone.
+         4. [x] Updated `astro.config.mjs`'s `site` from the `workers.dev` URL to
+                `https://dougrosenberg.com`; rebuilt and redeployed. Verified via `curl`: canonical
+                tag and `sitemap-index.xml` both now reference the real domain.
+         5. [x] Verified live: `curl -I` confirms HSTS/CSP/security headers present on the real
+                domain; a real Lighthouse run against `https://dougrosenberg.com/` (not just local
+                `dist/`) scores 87 performance / 100 accessibility / 100 best-practices / 92 SEO.
+                The SEO score is capped by one thing outside this repo's control — see the
+                Cloudflare AI-bot item below. Full section-by-section + mobile spot-check not yet
+                done (screenshots, not just Lighthouse).
          6. [ ] Disable the old GitHub Pages site (Settings → Pages, on whichever repo currently
-                serves it) — formal cleanup once DNS no longer points there.
+                serves it) — formal cleanup once DNS no longer points there. Not done — needs GitHub
+                access to that specific repo (`newMusicWebsiteJan26` per `docs/DESIGN_NOTES.md`'s
+                Reference section), unconfirmed whether this session has it.
          7. [ ] Submit the new sitemap to Google Search Console for the property, request
-                re-indexing.
+                re-indexing. **Needs Doug** — requires his Google account.
          **Separately decided, not coupled to the above:** eventually transfer domain
          *registration* itself from GoDaddy to Cloudflare Registrar too (wholesale pricing, free
          WHOIS privacy) — but that's an independent errand (unlock + EPP code + several-day ICANN
          wait), doesn't need to happen before or after the cutover above.
-         **Still true, now that domain attachment is actually happening:** a real contact form is
-         wanted, same pattern as `haxbyte.com`'s (a Worker + Cloudflare's native `send_email`
-         binding, see the Contact Form item below) — that binding needs its `from` address on a
-         domain with active Email Routing in this Cloudflare account. Once `dougrosenberg.com` is
-         attached, Email Routing can be set up on it directly — this unblocks the contact form work
-         once steps 3-4 above are done.
+         **Now unblocked, not yet started:** a real contact form, same pattern as `haxbyte.com`'s (a
+         Worker + Cloudflare's native `send_email` binding, see the Contact Form item below) — that
+         binding needs Email Routing active on `dougrosenberg.com`. The domain is attached now, so
+         this is technically unblocked, but standing up Email Routing is itself a mail-routing/
+         integration change — held here for an explicit go-ahead rather than set up unasked, even
+         though the wrangler token's scope (`email_routing: write`) could technically do it.
+   - [x] **Cloudflare auto-injects an AI-crawler-blocking `robots.txt` block — flagged, not
+         changed (2026-09-07).** Discovered while investigating a Lighthouse `robots.txt is not
+         valid` finding against the live domain: Cloudflare's zone-level "Content Signals"/AI Crawl
+         Control feature wraps this repo's actual `public/robots.txt` (a plain `Allow: /`) with an
+         injected block that explicitly `Disallow`s `GPTBot`, `ClaudeBot`, `Google-Extended`,
+         `Applebot-Extended`, and `meta-externalagent` — exactly the crawlers that feed AI answer
+         engines (ChatGPT, Claude, Google AI Overviews, Apple Intelligence, Meta AI). This directly
+         works against the GEO work below: content can't be cited by an answer engine whose crawler
+         is blocked outright. **Deliberately not changed here** — this is a real content-licensing
+         decision (allow AI training/citation vs. not), not a technical toggle, and needs Doug's
+         call, not an autonomous one. The setting lives in the Cloudflare dashboard (Security →
+         Bots, or similar — not confirmed exactly where) for the `dougrosenberg.com` zone; the
+         `zone` scope on this session's wrangler token is read-only, so it couldn't be changed from
+         here even if it were the right call to make unasked. Doug's own blog post on
+         dougrosenbergdev.com (`Why GEO Doesn't Work in a Blazor WASM SPA`) covers exactly this
+         class of problem on a different site — worth his own read for context on the framing.
+   - [x] **SEO/GEO pass against the live domain (2026-09-07 evening).** Prompted by "implement SEO,
+         GEO, and the easy items" while Doug was away — everything below is done without needing
+         him, logged here rather than assumed obvious:
+         - Fixed a stale `Sitemap:` URL in `public/robots.txt` (still pointed at the old
+           `workers.dev` host).
+         - Added `public/llms.txt`, following the same convention Doug already uses on
+           dougrosenbergdev.com (`PortfolioNov25/src/BlazorApp/wwwroot/llms.txt`) — a plain-text
+           orientation summary for AI systems, listing background, page sections, and contact info.
+         - Added a `WebSite` JSON-LD block alongside the existing `Person` schema in
+           `BaseLayout.astro`, matching the `Person`/`WebSite`/`SoftwareApplication` pattern his own
+           portfolio site uses (no `SoftwareApplication` here — doesn't apply to a musician site).
+         - Verified this site doesn't have the client-render-gating problem Doug's own GEO blog
+           post found on his Blazor WASM portfolio: `curl`'d the live homepage directly and
+           confirmed real content (bio text, venue names, album titles) is present in the plain
+           HTML, not hidden behind JS hydration — Astro's static rendering already avoids that
+           failure mode structurally.
+         - Audited alt text on every `<img>` site-wide (About, Hero, Gallery, Listen, Sheet Music
+           viewer) — all meaningful already, including the two dynamically-populated ones (gallery
+           lightbox, sheet-music viewer image) which do get real alt text set via JS. No changes
+           needed.
+         - **Real bug found and fixed in the process, unrelated to SEO but caught while
+           regenerating CSP hashes for the new `WebSite` script:** `public/_headers`'s CSP
+           `script-src` hashes were stale from an *earlier* same-day StaffNav.astro edit (the
+           logo-click preventDefault fix) that was deployed without ever regenerating hashes —
+           meaning StaffNav's own script had been silently CSP-blocked in production since that
+           deploy. Confirmed via direct DOM testing on the live site (an IntersectionObserver
+           active-state check, not a click — this environment's browser automation doesn't support
+           `scrollIntoView`/`scrollTo` with `behavior: 'smooth'` at all, which looked like a broken
+           click at first and wasn't). Regenerated all 5 current hashes and redeployed; reconfirmed
+           the active-state tracking now fires correctly on real scroll. Lesson: any StaffNav/
+           Gallery/SheetMusicLibrary/BaseLayout script edit needs a hash regen before its next
+           deploy, not just before merge — this one shipped without one.
+         - Re-ran Lighthouse against the live domain after all fixes: best-practices 93 → 100
+           (console-clean now); SEO holds at 92, capped by the Cloudflare robots.txt item above,
+           outside this repo's control.
+         - **Not done, needs Doug:** submitting the sitemap to Search Console (his Google account);
+           the Cloudflare AI-bot-blocking decision above; verifying Cloudflare Web Analytics is
+           still tracking correctly now that the beacon's registered hostname
+           (`dougrosenbergmusic.doug-rosenberg.workers.dev`) differs from where it's actually served
+           (`dougrosenberg.com`) — unconfirmed whether Web Analytics needs the new hostname added
+           explicitly or auto-discovers it.
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need

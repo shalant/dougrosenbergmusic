@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dougrosenbergmusic.doug-rosenberg.workers.dev/sitemap-index.xml
+Sitemap: https://dougrosenberg.com/sitemap-index.xml
