@@ -13,6 +13,15 @@
 	// directory is set, not from the repo root.
 	"name": "dougrosenbergmusic",
 	"compatibility_date": "2026-09-06",
+	// Attaches the real domain to this Worker (docs/todolist.md's domain-cutover
+	// step 3) — `custom_domain: true` provisions it via the Cloudflare API on
+	// deploy, same end result as doing it by hand in Workers & Pages -> Settings
+	// -> Domains & Routes. Requires the dougrosenberg.com zone to already exist
+	// in this account (it does — added as a Cloudflare zone during cutover).
+	"routes": [
+		{ "pattern": "dougrosenberg.com", "custom_domain": true },
+		{ "pattern": "www.dougrosenberg.com", "custom_domain": true }
+	],
 	"assets": {
 		"directory": "./dist",
 		// Without this, unmatched routes get a bare 404 with an empty body
