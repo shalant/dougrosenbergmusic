@@ -219,6 +219,19 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     }
   }
 
+  /* The nav's fixed 456px width eats a much bigger share of narrower desktop
+     widths just above the hamburger breakpoint - without this, it lands on
+     top of the hero photo's subject instead of the empty sky beside them
+     (confirmed via real screenshots at 861px, not assumed). Scaling down
+     from the same fixed top-right corner keeps every note's relative
+     spacing intact - no need to touch the per-note pixel offsets above. */
+  @media (min-width: 861px) and (max-width: 1010px) {
+    .staff-nav {
+      transform-origin: top right;
+      transform: scale(0.74);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .staff-nav__blob {
       animation: none !important;
