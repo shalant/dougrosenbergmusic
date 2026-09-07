@@ -122,8 +122,34 @@ this project's own custom items and where it stands against them.
            lists) already differ enough that this reads as a judgment call about the site's visual
            character, not an objective bug — the kind of decision this session's been deliberately
            leaving to a real design call rather than unilaterally reshuffling backgrounds.
-   - [ ] **Round 2, remaining:** a real unit/E2E test suite (Lighthouse CI covers the build+audit
-         half of Testing/QA now, but not this half).
+   - [x] **Round 2, part 10 (2026-09-07): a real E2E test suite.** This closes out the last open
+         round 2 item — Testing/QA now has both halves covered (Lighthouse CI = build+audit,
+         this = does the interactive stuff actually work). Added `@playwright/test` +
+         `site/e2e/*.spec.ts` (36 test cases across 2 browser projects: desktop Chrome + a
+         Pixel 7 mobile profile) covering the site's real interactive surfaces: `StaffNav`
+         scroll-jump + active-note tracking + the mobile hamburger menu, `Gallery`'s category
+         filter + lightbox (open/close/Escape/arrow-key navigation), `SheetMusicLibrary`'s search
+         + viewer, plus smoke tests (title, every section present, single `<main>`, the custom
+         404, the Dev link's href). Runs against a real production build (`npm run build` +
+         a static server), not the dev server. Wired into its own
+         `.github/workflows/e2e.yml` (separate from `lighthouse.yml` so a slow/flaky E2E run never
+         blocks the Lighthouse audit or vice versa).
+         - Real bugs caught in the *tests themselves* while writing this, not the app: `astro
+           preview` self-daemonizes in this Astro version (same as `astro dev` did all session) and
+           exits immediately rather than staying in the foreground, which Playwright's `webServer`
+           misreads as a startup failure - switched to a plain `http-server` static server instead
+           (closer to production anyway, which is served by Cloudflare Workers static-assets, not
+           `astro preview`). Also: `items.locator(':visible')` chained onto an existing locator
+           searches for *descendants* matching `:visible`, not the items themselves filtered by
+           visibility - a real locator-chaining mistake in the first draft of the search test that
+           produced a false failure; fixed to a single compound selector
+           (`.sheet-music__item:visible`) and re-verified the fix against a real debug script
+           before trusting it. And an invalid test assumption: `StaffNav`'s nav notes only cover
+           hero/listen/about/credibility/contact, not every section on the page (performance,
+           sheet-music, and gallery have no corresponding nav note) - a test asserting an
+           `[data-target="gallery"]` note existed was just wrong, not a real app bug.
+         - `npm audit --omit=dev` still 0 vulnerabilities in production dependencies after adding
+           `@playwright/test` and `http-server` as devDependencies.
    - [x] **Round 2, part 8 (2026-09-06): hover/focus-visible parity sweep.** Systematically
          cross-referenced every `:hover` selector against a matching `:focus-visible` across all
          components (round 1 only fixed this for `StaffNav`, never swept the rest of the site for
