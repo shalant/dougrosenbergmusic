@@ -1,11 +1,13 @@
 # Todo List
 
-**Status (2026-09-07):** hero/nav direction is locked (full-bleed graded hero + icon-marked staff
-nav, with a "DEV" note linking to dougrosenbergdev.com). GitHub Pages is retired; the site lives on
-Cloudflare Workers static-assets (https://dougrosenbergmusic.doug-rosenberg.workers.dev), currently
-**mid-cutover to the real domain** — `dougrosenberg.com`'s nameservers were switched to Cloudflare
-today and are waiting on propagation; see the domain-cutover checklist under "Migrate deployment"
-below for the exact next steps once that finishes. This doc tracks what's left, in order.
+**Status (2026-09-07 evening):** hero/nav direction is locked (full-bleed graded hero + a TV/DR
+logo top-left linking home + icon-marked staff nav, "DEV" note linking to dougrosenbergdev.com).
+GitHub Pages is retired; the site lives on Cloudflare Workers static-assets
+(https://dougrosenbergmusic.doug-rosenberg.workers.dev), **mid-cutover to the real domain** —
+`dougrosenberg.com`'s DNS has finished propagating to Cloudflare (confirmed today), but the domain
+currently still serves the *old* Blazor site since the new Worker isn't attached as a Custom Domain
+yet — see the domain-cutover checklist under "Migrate deployment" below for the exact next step.
+This doc tracks what's left, in order.
 
 This project is also the reference build behind `career-development/projects/SITE_BUILD_CHECKLIST.md`
 and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the master checklists (living
@@ -53,13 +55,20 @@ this project's own custom items and where it stands against them.
                 `pay.` one for GoDaddy Payments, both harmless either way).
          2. [x] Nameservers changed at GoDaddy to `carrera.ns.cloudflare.com` /
                 `charles.ns.cloudflare.com`, done 2026-09-07 — confirmed correct on GoDaddy's own
-                Nameservers screen. **Waiting on propagation** (Cloudflare: 1-2hrs typical, up to
-                24). Zone was still showing "pending" in Cloudflare and still resolving to GoDaddy's
-                nameservers as of the change. No downtime during this wait — site keeps serving
-                from GitHub Pages exactly as today until Cloudflare finishes verifying.
-         3. [ ] Once Cloudflare shows the zone active: attach `dougrosenberg.com` (+ `www`) as a
-                Custom Domain on the `dougrosenbergmusic` Worker (Workers & Pages → dougrosenbergmusic
-                → Settings → Domains & Routes).
+                Nameservers screen. **Propagation confirmed complete same day (2026-09-07 evening):**
+                `nslookup -type=NS dougrosenberg.com` against both `8.8.8.8` (Google) and `1.1.1.1`
+                (Cloudflare) now returns `carrera`/`charles.ns.cloudflare.com`; the apex A record
+                resolves to Cloudflare's own proxy IPs; `curl -I https://dougrosenberg.com` returns
+                `server: cloudflare`. Zone is active, not pending. No downtime during the wait,
+                as expected.
+         3. [ ] **Current blocker — do this next.** Cloudflare is proxying the zone but the apex
+                A-records it imported still point at GitHub Pages, so the domain is *live and
+                resolving* but currently serves the **old Blazor site** (confirmed via
+                `x-github-request-id` in the response headers) — not the new Astro build. Fix:
+                attach `dougrosenberg.com` (+ `www`) as a Custom Domain on the `dougrosenbergmusic`
+                Worker (Workers & Pages → dougrosenbergmusic → Settings → Domains & Routes). This is
+                a Cloudflare-dashboard action, not a code change — needs to happen in-browser, not
+                something doable from this repo.
          4. [ ] Update `astro.config.mjs`'s `site` from the `workers.dev` URL to
                 `https://dougrosenberg.com` (feeds sitemap/canonical/OG/JSON-LD, baked in at build
                 time) — commit/push, Cloudflare auto-deploys.

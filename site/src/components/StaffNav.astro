@@ -89,16 +89,16 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
 <style>
   .staff-nav {
     position: fixed;
-    top: 20px;
+    top: 12px;
     right: 20px;
     width: 380px;
     height: 100px;
     z-index: 40;
-    background: rgba(10, 14, 23, 0.32);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(19, 26, 38, 0.38);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     border-radius: 28px;
-    border: 1px solid rgba(233, 237, 245, 0.08);
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.45);
   }
 
   .staff-nav__line {
@@ -260,7 +260,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
   .staff-toggle {
     display: none;
     position: fixed;
-    top: 20px;
+    top: 12px;
     right: 20px;
     z-index: 41;
     width: 44px;
@@ -298,7 +298,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
   .staff-menu {
     display: none;
     position: fixed;
-    top: 72px;
+    top: 64px;
     right: 20px;
     z-index: 41;
     width: min(240px, calc(100vw - 40px));
@@ -380,7 +380,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
 
 <script>
   const sectionIds = ['listen', 'about', 'credibility', 'contact'];
-  const jumpButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.staff-jump'));
+  const jumpButtons = Array.from(document.querySelectorAll<HTMLElement>('.staff-jump'));
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
@@ -415,7 +415,14 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
   });
 
   jumpButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      // Logo.astro's home link is a real `<a href="#hero">` (works without JS,
+      // matches id="hero"); prevented here so its target section is reached
+      // by the same smooth-scroll every other nav item uses, rather than a
+      // native hash jump that would leave a stale #hero in the URL forever
+      // once the user scrolls elsewhere (nothing else in this nav touches
+      // the URL either).
+      e.preventDefault();
       const target = document.getElementById(btn.dataset.target ?? '');
       target?.scrollIntoView({ behavior: 'smooth' });
       closeMenu();
