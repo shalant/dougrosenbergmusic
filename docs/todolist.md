@@ -150,6 +150,26 @@ this project's own custom items and where it stands against them.
            `[data-target="gallery"]` note existed was just wrong, not a real app bug.
          - `npm audit --omit=dev` still 0 vulnerabilities in production dependencies after adding
            `@playwright/test` and `http-server` as devDependencies.
+   - [x] **Round 2, part 11 (2026-09-07): a final sweep against the master checklists while
+         waiting on CI.** With the two master checklists mostly covered, swept the remaining
+         un-verified items:
+         - **Favicon at actual tab size** (`SITE_QUALITY_CHECKLIST.md`'s SEO category) — rendered
+           `favicon.svg` through real Chromium with `page.emulateMedia()` actually forcing light
+           and dark `prefers-color-scheme`, not just a differently-colored background (that
+           distinction mattered: a first attempt without real color-scheme emulation made the
+           dark-mode variant look broken/invisible, which was a flaw in the test, not the
+           favicon). Confirmed clean and legible at 16px and 32px in both themes — the theme-aware
+           `<style>`/`@media` trick inside the SVG works correctly in a real browser.
+         - **No secrets committed** — grepped for API keys/secrets/passwords/tokens across
+           `site/src` and config files; only hits were the word "secret" inside a code comment and
+           an npm package name (`@azure/keyvault-secrets`, a transitive dependency), both harmless.
+         - **No horizontal scroll on mobile** — measured `scrollWidth` vs. `clientWidth` at 300–428px
+           via a real headless-browser check (not assumed). Found a real, small (6px) overflow at
+           320px specifically: `.contact__cta`'s pill padding pushed the full email address past
+           the viewport at that width. Fixed with a `@media (max-width: 360px)` override tightening
+           the pill's padding/gap; re-verified 300–428px are all now overflow-free.
+         - Re-verified after the fix: build succeeds, all 32 E2E tests still pass, Lighthouse CI
+           assertions still pass.
    - [x] **Round 2, part 8 (2026-09-06): hover/focus-visible parity sweep.** Systematically
          cross-referenced every `:hover` selector against a matching `:focus-visible` across all
          components (round 1 only fixed this for `StaffNav`, never swept the rest of the site for
