@@ -379,9 +379,49 @@ this project's own custom items and where it stands against them.
       Also renamed the two labels that read oddly in the hover tooltip: "Hero" → "Home", "Credibility"
       → "Highlights" — grepped `site/src` first to confirm neither word appeared anywhere else on
       the page before renaming.
-- [ ] **Refine the design system, then use it to develop a meaningful logo** (2026-09-06, no
-      timeline yet — "at some point"). `docs/style-guide.md` is the current design-system doc to
-      refine; per `SITE_QUALITY_CHECKLIST.md`'s Design System item, a logo (if it becomes part of
-      this) should end up as clean vector SVG source, not just a raster export — `haxbyte`'s own
-      still-open "redraw logo SVGs from DALL-E reference (currently PNG only)" item is the real
-      cautionary example of skipping that step.
+- [x] **Logo designed and shipped** (2026-09-07). `docs/style-guide.md` refinement deferred —
+      the logo work ended up self-contained and didn't require a broader design-system pass first.
+      Per `SITE_QUALITY_CHECKLIST.md`'s Design System item, ships as clean vector SVG source (real
+      `<path>` geometry, not a raster export) — avoids `haxbyte`'s still-open "redraw logo SVGs
+      from DALL-E reference" cautionary example.
+      - [x] **Round 3 groundwork (2026-09-07):** tested whether the already-committed color-bar
+            test-pattern strip (see `docs/DESIGN_NOTES.md`'s Brand direction) condenses into a
+            standalone mark, rather than starting a new icon set. ~45 concepts explored in
+            `ui-lab/artifacts/dougrosenbergmusic/logo-from-testcard.html` across several rounds —
+            a bars roundel, a bare "DR" filled with the same five bars, a TV-silhouette screen
+            showing the DR bars, and refinements on all three (favicon-scale tests, monochrome/
+            print variants, antenna on/off, split-color letterforms).
+      - [x] **Shipped (2026-09-07):** the winning direction — a TV silhouette with "DR" filling
+            the screen, each letter split horizontally into two of the five section colors — is
+            now the site's actual logo and favicon. `site/src/components/Logo.astro` (new): a
+            fixed top-left home link, wrapping the mark; `site/public/favicon.svg`: same mark,
+            tighter-cropped viewBox so it fills more of the tab icon. Both use **static vector
+            `<path>` data for the D/R glyphs**, not live text — extracted directly from the site's
+            own self-hosted Fraunces font (`site/public/fonts/fraunces-normal.woff2`, via a
+            temporary `wawoff2` + `opentype.js` decode/parse script, not committed) so neither the
+            favicon nor the logo depend on a webfont being loaded to render correctly, matching
+            how the existing favicon.svg was already pure geometry with zero font dependency. Real
+            bug caught and fixed before shipping: coloring the letters via plain vertical bands
+            (agnostic to the glyph shapes) cut a color boundary straight through the R's stem, and
+            since serif feet flare wider than the stem, they poked into the neighboring band as
+            small disconnected fragments that read as a rendering glitch, not a color choice —
+            fixed by using a **horizontal** split instead (crosses the stem at a constant width,
+            no serif to flare into it), confirmed via a large-scale diagnostic render before
+            trusting the fix at thumbnail size.
+      - [x] **StaffNav's "Home" note removed** (2026-09-07): now redundant with the new logo/home
+            link. Removed from both the desktop note row and the mobile dropdown, remaining notes
+            (Listen/About/Highlights/Contact) and the Dev link re-flowed to close the gap, nav's
+            fixed width shrunk to match (456px → 380px). The unused `home` icon and the now-dead
+            `'hero'` entry in the scroll-tracking `sectionIds` list were removed too, and the
+            hardcoded "first note defaults to active on load" behavior was dropped (verified via
+            direct DOM inspection, not just a screenshot, that no note now falsely shows active
+            while viewing the hero — nothing was relying on that default).
+      - [x] **A separate, pre-existing decorative antenna on `HeroGraded.astro` removed**
+            (2026-09-07): a CSS-only "rabbit ears" detail in the hero's own top-left corner,
+            explicitly built (per its own code comment) to occupy the one corner the old
+            right-anchored nav didn't reach — i.e. it was always a stand-in for a future logo.
+            Once `Logo.astro` took that corner for real, the two visually collided; removed the
+            `antenna` prop, the conditional markup, and the associated CSS/keyframes entirely
+            rather than leaving a now-dead toggle.
+      - All 36 E2E tests still pass; full build verified in a real browser (favicon at actual tab
+        size, logo's home link click-through, hover/focus states) before/after each change.

@@ -2,22 +2,22 @@
 // Feather-style line icons (24x24, stroke=currentColor) - matches the thin
 // stroke look already used for the hero's scroll-cue chevron.
 const ICONS: Record<string, string> = {
-  home: '<path d="M3 9.5 12 2.5l9 7V21a1 1 0 0 1-1 1h-5v-8H9v8H4a1 1 0 0 1-1-1Z"/>',
   music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
   user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
   award: '<circle cx="12" cy="8" r="6"/><path d="m8.5 13.5-1.5 8 5-3 5 3-1.5-8"/>',
   mail: '<path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="m3 6 9 7 9-7"/>',
 };
 
+// hero/"Home" dropped as of the Logo component's top-left home link -
+// StaffNav no longer needs its own note for it.
 const sections = [
-  { id: 'hero', label: 'Home', icon: 'home', tone: 'hero', left: 40, top: 50 },
-  { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 116, top: 50 },
-  { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 192, top: 50 },
-  { id: 'credibility', label: 'Highlights', icon: 'award', tone: 'cred', left: 268, top: 50 },
-  { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 340, top: 50 },
+  { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 40, top: 50 },
+  { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 116, top: 50 },
+  { id: 'credibility', label: 'Highlights', icon: 'award', tone: 'cred', left: 192, top: 50 },
+  { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 268, top: 50 },
 ];
 
-const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougrosenbergdev.com', left: 416, top: 50 };
+const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougrosenbergdev.com', left: 344, top: 50 };
 ---
 
 <nav class="staff-nav" aria-label="Section navigation" data-staff-nav>
@@ -27,9 +27,9 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
   <div class="staff-nav__line" style="top: 62px;"></div>
   <div class="staff-nav__line" style="top: 74px;"></div>
 
-  {sections.map((s, i) => (
+  {sections.map((s) => (
     <button
-      class={`staff-nav__note note--${s.tone} staff-jump${i === 0 ? ' is-active' : ''}`}
+      class={`staff-nav__note note--${s.tone} staff-jump`}
       data-target={s.id}
       style={`left: ${s.left}px; top: ${s.top}px;`}
       aria-label={s.label}
@@ -66,10 +66,10 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
 
 <div class="staff-menu" id="staff-menu-panel" data-menu-panel hidden>
   <ul class="staff-menu__list">
-    {sections.map((s, i) => (
+    {sections.map((s) => (
       <li>
         <button
-          class={`staff-menu__item note--${s.tone} staff-jump${i === 0 ? ' is-active' : ''}`}
+          class={`staff-menu__item note--${s.tone} staff-jump`}
           data-target={s.id}
         >
           <span class="staff-menu__dot" aria-hidden="true"></span>
@@ -91,7 +91,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 456px;
+    width: 380px;
     height: 100px;
     z-index: 40;
     background: rgba(10, 14, 23, 0.32);
@@ -255,7 +255,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     }
   }
 
-  /* ---- mobile: hamburger + dropdown, same five notes, no logo to balance against ---- */
+  /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
   .staff-toggle {
     display: none;
@@ -379,7 +379,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
 </style>
 
 <script>
-  const sectionIds = ['hero', 'listen', 'about', 'credibility', 'contact'];
+  const sectionIds = ['listen', 'about', 'credibility', 'contact'];
   const jumpButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.staff-jump'));
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');

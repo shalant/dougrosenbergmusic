@@ -3,13 +3,10 @@
 // twenty-variations pass. Same full-bleed photo and layout as the locked
 // Hero.astro (nothing shrinks into a TV object), with a broadcast grade —
 // scanlines, a soft screen vignette, a touch more warmth — laid directly
-// over the photo, plus the antenna detail carried over from the tube-set
-// preview. Kept as a separate component so Hero.astro stays untouched.
-interface Props {
-  antenna?: boolean;
-}
-
-const { antenna = true } = Astro.props;
+// over the photo. Kept as a separate component so Hero.astro stays untouched.
+// The corner antenna decoration this hero used to carry (a stand-in for a
+// logo in the one corner the nav didn't occupy) was dropped once Logo.astro
+// took that corner for real.
 ---
 
 <header id="hero" class="hero">
@@ -17,12 +14,6 @@ const { antenna = true } = Astro.props;
   <div class="hero__scan" aria-hidden="true"></div>
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
-
-  {antenna && (
-    <div class="hero__antenna" aria-hidden="true">
-      <span class="hero__signal"></span>
-    </div>
-  )}
 
   <div class="hero__content wrap">
     <p class="eyebrow hero__eyebrow">Saxophonist · Composer · Educator</p>
@@ -88,54 +79,6 @@ const { antenna = true } = Astro.props;
     background:
       linear-gradient(180deg, rgba(10, 14, 23, 0.02) 0%, rgba(10, 14, 23, 0.2) 55%, rgba(10, 14, 23, 0.88) 96%),
       linear-gradient(90deg, rgba(10, 14, 23, 0.28) 0%, rgba(10, 14, 23, 0.02) 45%);
-  }
-
-  .hero__antenna {
-    /* opposite corner from the fixed nav, so the two don't collide */
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: clamp(1.5rem, 6vw, 4rem);
-    width: 70px;
-    height: 46px;
-  }
-
-  .hero__antenna::before,
-  .hero__antenna::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    height: 46px;
-    background: linear-gradient(to top, rgba(207, 154, 79, 0.55), rgba(207, 154, 79, 0));
-    transform-origin: bottom center;
-  }
-
-  .hero__antenna::before {
-    transform: translateX(-1px) rotate(-16deg);
-  }
-
-  .hero__antenna::after {
-    transform: translateX(-1px) rotate(16deg);
-  }
-
-  .hero__signal {
-    position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #6fdc8c;
-    box-shadow: 0 0 8px 2px rgba(111, 220, 140, 0.6);
-    animation: signal-blink 2.6s ease-in-out infinite;
-  }
-
-  @keyframes signal-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
   }
 
   .hero__content {
@@ -260,9 +203,6 @@ const { antenna = true } = Astro.props;
       justify-content: space-between;
     }
     .hero__scroll-cue {
-      display: none;
-    }
-    .hero__antenna {
       display: none;
     }
   }

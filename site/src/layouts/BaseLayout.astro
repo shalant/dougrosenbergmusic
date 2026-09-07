@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Logo from '../components/Logo.astro';
 import StaffNav from '../components/StaffNav.astro';
 
 interface Props {
@@ -61,6 +62,7 @@ const personSchema = {
 		<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: '775b11737d154a3a8878533ba375f9f9' })}></script>
 	</head>
 	<body>
+		<Logo />
 		<StaffNav />
 		<main>
 			<slot />
