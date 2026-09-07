@@ -129,6 +129,15 @@ this project's own custom items and where it stands against them.
            viewer) — all meaningful already, including the two dynamically-populated ones (gallery
            lightbox, sheet-music viewer image) which do get real alt text set via JS. No changes
            needed.
+         - **Touch-target audit (`SITE_QUALITY_CHECKLIST.md`'s 44×44px minimum — an item `haxbyte`
+           found and fixed on its own site but never checked here) found real gaps, measured, not
+           assumed:** the hero's "Now Playing" pill (42px), `Gallery`'s category filter pills
+           (30px), and `SheetMusicLibrary`'s list items (32px) were all under the minimum, on every
+           breakpoint (none had a mobile-specific override, so the deficiency wasn't
+           viewport-dependent). Bumped vertical padding on all three (`HeroGraded.astro`,
+           `Gallery.astro`, `SheetMusicLibrary.astro`) until each measured ≥44px in a real browser —
+           44–46px now, verified via `getBoundingClientRect()`, not eyeballed. Visually confirmed
+           no layout regressions in the gallery filter row or the (43-item) sheet music list.
          - **Real bug found and fixed in the process, unrelated to SEO but caught while
            regenerating CSP hashes for the new `WebSite` script:** `public/_headers`'s CSP
            `script-src` hashes were stale from an *earlier* same-day StaffNav.astro edit (the
