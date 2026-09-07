@@ -115,4 +115,16 @@ const socials = [
     font-family: var(--font-mono);
     font-size: 0.72rem;
   }
+
+  /* the email address is long enough at the mono font's clamp() minimum that
+     the pill's default padding pushes it past the viewport at ~320px-wide
+     phones (confirmed via a real horizontal-scrollWidth check, not assumed) -
+     tighter padding here is enough to close the gap without needing the pill
+     to wrap onto two lines. */
+  @media (max-width: 360px) {
+    .contact__cta {
+      padding: 1rem 1rem;
+      gap: 0.5rem;
+    }
+  }
 </style>
