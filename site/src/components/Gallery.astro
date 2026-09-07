@@ -124,6 +124,17 @@ const categories = [...new Set(photos.map((p) => p.category))];
     gap: 1rem;
   }
 
+  /* 200px's floor only ever fits one column on a phone-width viewport,
+     turning 18 photos into ~8000px of single-file scrolling (confirmed via a
+     real mobile screenshot, not just a code read) - a tighter floor here
+     gets a real two-column gallery grid on phones instead. */
+  @media (max-width: 480px) {
+    .gallery__grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.6rem;
+    }
+  }
+
   .gallery__card {
     position: relative;
     padding: 0;

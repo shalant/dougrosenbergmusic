@@ -255,6 +255,15 @@ const pieces = [
     .sheet-music__list {
       max-height: 260px;
     }
+    /* 420px only exists to match the list column's height in the desktop
+       side-by-side grid - stacked on mobile, that same floor reserves a
+       mostly-empty dashed box just for "select a piece to view" (confirmed
+       via a real mobile screenshot). Doesn't shrink the *active* viewer once
+       a piece is picked - its frame's own 380px min-height still pushes this
+       taller as needed. */
+    .sheet-music__viewer {
+      min-height: 180px;
+    }
   }
 </style>
 
