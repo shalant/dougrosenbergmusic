@@ -281,22 +281,27 @@ this project's own custom items and where it stands against them.
       (Blazor) site: Ferling #12 alla furioso, Ferling #6 G major, Ferling #8, Ferling #18 in Bb,
       New York, Spiderman (Cl), Super Mario (Bb). Need the source PDF/image for each before they
       can be added to `site/src/components/SheetMusicLibrary.astro`. (See also root `TODO.md`.)
-- [ ] **`site/public/sheetmusic/` is 88MB** — some individual scanned PDFs run 5-10MB (e.g.
-      `rubank-book-of-solos-intermediate.pdf` at 10.6MB). Real payload weight, but recompressing
-      scanned sheet music risks making actual notation illegible for the students this feature is
-      for - needs a careful, visually-verified pass per file, not a bulk automated one. Deferred
-      rather than rushed.
-- [ ] **Hero photo / desktop nav composition overlap** (found 2026-09-07 during the mobile
-      breakpoint check). At nearly every desktop width the nav is visible (861px up through at
-      least 1920px, verified via real screenshots at 861/900/950/1000/1100/1200/1300/1440/1600/
-      1920), the fixed `StaffNav` sits close to or directly over the subject's face in the hero
-      photo — only clearly clearing at very wide viewports. Root cause: the photo uses
-      `object-fit: cover; object-position: center 20%` (horizontally centered), while the nav is
-      anchored `right: 20px` — as viewport width grows, the face (pinned near viewport-center)
-      and the nav's left edge (pinned near viewport-right) both drift right, but at a similar
-      enough rate that they stay close across a wide range instead of clearly separating. Needs
-      real visual iteration (adjusting `object-position`, or reconsidering the nav's placement) —
-      not a rushed one-line fix.
+- [x] **`site/public/sheetmusic/` is 88MB** — investigated 2026-09-06 overnight (PR #18,
+      `optimize-sheetmusic-assets`). Built a verified recompress-and-diff script (PyMuPDF +
+      Pillow): only accepts a recompressed file if it renders near-pixel-identical to the
+      original. Result: most of the payload is PDFs whose embedded images are already
+      JPEG-compressed, so there was nothing safe to win there without real PDF tooling
+      (Ghostscript-style mask-aware resampling, not installed here) — also tried detecting
+      fully-occluded duplicate images (a scan-export artifact) and the verification step
+      correctly rejected the one candidate it found when removing the "duplicate" actually
+      changed the render. 3 files did get verified, real reductions: `sleigh-ride.jpg` -44.5%,
+      `aebersold-track-6.png` -10%, `g-blues.jpg` -5.4%. Remaining ~90MB needs either better
+      tooling or accepting the payload as-is — not a rushed bulk pass either way.
+- [x] **Hero photo / desktop nav composition overlap** — fixed 2026-09-06 overnight (PR #19,
+      `fix-hero-nav-overlap`). Re-investigated with real Playwright screenshots at 12 widths
+      (861-1920px): the earlier root-cause guess above (object-position drift) didn't hold up —
+      the photo's framing was actually fine and consistent across the whole range. The real
+      cause was `.staff-nav`'s fixed 456px width consuming a much bigger share of the viewport
+      in the narrow 861-1010px band just above the mobile-hamburger breakpoint. Fixed by scaling
+      the nav down from its own fixed top-right corner in that band only — every note's relative
+      spacing comes along for free, no changes needed to the per-note pixel offsets or the photo.
+      Verified clear at 861px (previously the worst case) and no jump/overlap at the 1010px
+      transition boundary.
 - [ ] **Light-mode refactor.** Site is currently dark-only by deliberate choice (see
       `docs/DESIGN_NOTES.md`) — no toggle, no `prefers-color-scheme` handling. Per
       `SITE_QUALITY_CHECKLIST.md`'s Design System category, dual-theme support (if added) needs to
@@ -328,6 +333,14 @@ this project's own custom items and where it stands against them.
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
       than defaulting either way.
+- [ ] **Before/after case study draft written** (2026-09-06 overnight, PR #20,
+      `case-study-draft`): `docs/case-study-draft.md` + the 8 live-Blazor-site screenshots in
+      `docs/case-study-assets/`. First draft only, not published anywhere — ends with 3 possible
+      framings (general template-vs-custom post, dev-portfolio case study for
+      dougrosenbergdev.com, or a short in-place note) for Doug to pick from. Also found while
+      writing it: the live site already has a full Sheet Music Library page (reframes the "7
+      missing pieces" item above as a parity gap, not new scope), and a real broken-image bug in
+      the old site's gallery.
 - [ ] **Refine the design system, then use it to develop a meaningful logo** (2026-09-06, no
       timeline yet — "at some point"). `docs/style-guide.md` is the current design-system doc to
       refine; per `SITE_QUALITY_CHECKLIST.md`'s Design System item, a logo (if it becomes part of
