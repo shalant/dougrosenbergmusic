@@ -150,24 +150,38 @@ this project's own custom items and where it stands against them.
          circle radii, the organic notehead-blob motif, shadow/focus-ring conventions, the
          staff-line background texture). Written from the actual current code, not aspirationally —
          explicitly says so, and to fix the doc rather than the code if they ever disagree.
-   - [ ] **Round 2, part 6 (2026-09-06): mobile breakpoint-gap check — partial, blocked on a real
-         tool limitation.** Inventoried every breakpoint in the codebase: 640/700/700/800/
-         800/860/860/900px, across `StaffNav`, `HeroGraded`, `Performance`, `LeadSheetBarShape`,
-         `SheetMusicLibrary`, `About`, `Credibility`. Structural read: `StaffNav` is
-         `position: fixed` — an overlay, not an in-flow element competing for horizontal space —
-         so the specific dead-zone failure mode `SITE_QUALITY_CHECKLIST.md` describes (a fixed-
-         width in-flow nav and a sibling section fighting over the same row at different
-         breakpoints) doesn't structurally apply the same way here; nothing in the other
-         components' CSS branches on the nav's state either. That reasoning is as far as this
-         session could verify, though: this browser session's viewport genuinely cannot be
-         resized — `resize_window` reports success but `window.innerWidth` stays fixed
-         (confirmed via direct JS check), and `window.resizeTo()` is blocked too. No real-device or
-         actual-DevTools-responsive-mode check happened here, which is exactly what
-         `SITE_QUALITY_CHECKLIST.md`'s own Mobile item requires ("not assumed from desktop-only
-         testing") — this is desktop-only-and-then-some. **Needs a human check**: resize an actual
-         browser window (or a real phone) through 640-900px and watch specifically for the fixed
-         nav visually colliding with section headings as they scroll past the top-right corner,
-         and for the antenna/now-playing/scroll-cue elements HeroGraded hides at ≤640px.
+   - [x] **Round 2, part 6 (2026-09-07): mobile breakpoint-gap check — actually verified this
+         time, real bugs found and fixed.** The `resize_window`/`window.resizeTo()` limitation from
+         the first attempt was real, but turned out to be specific to the interactive browser
+         session — worked around it by using Puppeteer-core + chrome-launcher directly (both
+         already installed as Lighthouse's own dependencies) to drive a separate headless Chrome
+         with real device-metrics emulation, serving the built `dist/` via `http-server` locally.
+         Captured real full-page and scroll-positioned screenshots at 375/390/639/641/768/822/861
+         and a spread of desktop widths up to 1920px. Found two real, screenshot-verified bugs and
+         fixed both:
+         - **Gallery grid was effectively single-column on every phone width** —
+           `repeat(auto-fill, minmax(200px, 1fr))`'s 200px floor never fits two columns below
+           ~450px, turning 18 photos into ~8000px of single-file scrolling (measured: the gallery
+           section alone was 48% of the entire page's height at 375px). Added a
+           `@media (max-width: 480px)` override dropping the floor to 140px. Verified: gallery
+           height at 390px dropped from 8166px to 2348px (71% reduction), now a real 2-column grid
+           — screenshot-confirmed, not just measured.
+         - **Sheet Music Library's empty-state viewer reserved a 420px-tall mostly-blank dashed
+           box on mobile** — that height only exists to match the list column in the desktop
+           side-by-side grid; stacked on mobile it's just wasted scroll before any content.
+           Added a mobile override reducing `.sheet-music__viewer`'s min-height to 180px — doesn't
+           affect the *active* viewer once a piece is picked, since its own frame's 380px
+           min-height still grows the container as needed. Verified: 420px → 180px, confirmed
+           both by direct measurement and screenshot.
+         - **A third, bigger finding, not fixed here:** the desktop `StaffNav`/hero-photo
+           composition was suspected to have a narrow "dead zone" around 861px (just above the nav
+           breakpoint) where the fixed nav overlaps the subject's face. Actual measurement across
+           861 through 1920px showed this isn't a narrow zone at all — the nav sits close to or
+           directly over the face across nearly the *entire* range the desktop nav is visible,
+           only clearly resolving at very wide (>1920px) viewports. This is a hero-composition
+           issue (how `object-position` on the photo interacts with a right-anchored fixed nav),
+           not a quick CSS tweak — needs real visual iteration, not a rushed fix. Flagged as its
+           own item below rather than attempted under time pressure.
    - [x] **Round 2, part 3 (2026-09-06): analytics.** Enabled Cloudflare Web Analytics — same
          choice haxbyte made, for the same reason (zero-config, no cookie-consent overhead, unlike
          GA4). Registered `dougrosenbergmusic.doug-rosenberg.workers.dev` as a manual-setup site
@@ -226,6 +240,17 @@ this project's own custom items and where it stands against them.
       scanned sheet music risks making actual notation illegible for the students this feature is
       for - needs a careful, visually-verified pass per file, not a bulk automated one. Deferred
       rather than rushed.
+- [ ] **Hero photo / desktop nav composition overlap** (found 2026-09-07 during the mobile
+      breakpoint check). At nearly every desktop width the nav is visible (861px up through at
+      least 1920px, verified via real screenshots at 861/900/950/1000/1100/1200/1300/1440/1600/
+      1920), the fixed `StaffNav` sits close to or directly over the subject's face in the hero
+      photo — only clearly clearing at very wide viewports. Root cause: the photo uses
+      `object-fit: cover; object-position: center 20%` (horizontally centered), while the nav is
+      anchored `right: 20px` — as viewport width grows, the face (pinned near viewport-center)
+      and the nav's left edge (pinned near viewport-right) both drift right, but at a similar
+      enough rate that they stay close across a wide range instead of clearly separating. Needs
+      real visual iteration (adjusting `object-position`, or reconsidering the nav's placement) —
+      not a rushed one-line fix.
 - [ ] **Light-mode refactor.** Site is currently dark-only by deliberate choice (see
       `docs/DESIGN_NOTES.md`) — no toggle, no `prefers-color-scheme` handling. Per
       `SITE_QUALITY_CHECKLIST.md`'s Design System category, dual-theme support (if added) needs to
