@@ -453,6 +453,13 @@ this project's own custom items and where it stands against them.
             was correct all along. Four test messages were sent to `doug.rosenberg@gmail.com`
             during this verification process (all clearly labeled as tests in the body) — safe to
             delete from the inbox.
+      - **Known, not a bug:** the test messages landed in Gmail's Junk folder, not the inbox. The
+            domain's DMARC policy is `p=quarantine`, and a brand-new sending domain with zero prior
+            history commonly gets quarantined by Gmail on first contact even when SPF/DKIM pass —
+            a deliverability-reputation characteristic, not a misconfiguration. Marking a message
+            "Not Spam" trains Gmail's per-sender filter for future messages from
+            `contact@dougrosenberg.com`. If this doesn't improve with real usage over time, revisit
+            then — not something to chase further right now.
 - [ ] **No branch protection on `master`** (checked 2026-09-07 via `gh api repos/.../branches/
       master/protection` — 404, confirmed off). A real `SITE_QUALITY_CHECKLIST.md` Security item,
       but deliberately not enabled here without asking first — the wrong rule (e.g. "require an
