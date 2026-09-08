@@ -425,17 +425,33 @@ this project's own custom items and where it stands against them.
       light-theme contrast check, same rigor as the dark-mode pass already done in round 1/round 2
       — a light background raises the AA bar for anything currently relying on a near-black
       backdrop.
-- [ ] **Contact form wanted** (2026-09-06), same pattern as `haxbyte.com`'s — a real Worker (not
-      assets-only like this project's current `wrangler.jsonc`) handling `POST /api/contact` via
-      Cloudflare's native `send_email` binding (no third-party API/secret needed), falling back to
-      `env.ASSETS.fetch()` for everything else. Blocked on the custom-domain decision above (see
-      that item for why). When unblocked, `haxbyte/site/src/worker.js` +
-      `haxbyte/site/src/pages/contact.astro` are the reference implementation to adapt: origin
-      check, honeypot field, server-side validation (length caps, email format), a
-      `CONTACT_TO`/`FROM_ADDRESS`/`ALLOWED_ORIGIN` set of constants to update for this site, and
-      the client-side fetch+status-message handling. The account-level destination-address
-      verification for `doug.rosenberg@gmail.com` should already carry over from haxbyte's setup
-      (verified once per Cloudflare account, not per Worker) — confirm that rather than assuming.
+- [x] **Contact form — built and deployed 2026-09-07 night, blocked on one dashboard step.**
+      Adapted `haxbyte/site/src/worker.js` + `haxbyte/site/src/pages/contact.astro`'s pattern:
+      `site/src/worker.js` (new) handles `POST /api/contact` via Cloudflare's native `send_email`
+      binding, falling back to `env.ASSETS.fetch()` for everything else — same origin check,
+      honeypot field, and server-side validation (length caps, email format). Rather than a
+      separate page, the form was added directly into the existing `Contact.astro` section (this
+      site is single-page, unlike haxbyte) below the existing mailto CTA, styled to match this
+      site's own tokens (brass/mono/pill conventions), not haxbyte's. `wrangler.jsonc` gained
+      `"main"` + a `send_email` binding; `_headers`' CSP hashes regenerated for the new inline
+      script (6 hashes now — learned from the earlier StaffNav miss to always regen on any script
+      change, not just before merge).
+      - [x] Verified end-to-end on the live domain via `wrangler tail` while submitting a real
+            test message: the API route runs correctly (no CSP block, no CORS/origin rejection,
+            validation passes), and fails at the actual send with a precise error:
+            `could not find domain config of sending domain` — **Email Routing is not yet enabled
+            on the `dougrosenberg.com` zone.** This is a genuine Cloudflare-dashboard step (adds
+            real MX/verification DNS records for the zone), not something attempted here even
+            though this session's wrangler token happens to carry `email_routing: write` scope —
+            it's a standing mail-configuration change for the whole domain, not just this form,
+            and deserves an explicit ask rather than a silent side-effect of "build the contact
+            form."
+      - [ ] **Needs Doug:** in the Cloudflare dashboard, `dougrosenberg.com` zone → Email → Email
+            Routing → Enable. Then confirm `doug.rosenberg@gmail.com` is a verified Destination
+            Address (may already be, account-wide, from `haxbyte.com`'s identical setup — check
+            rather than assume, per the original note here). Once both are done, the form should
+            work with no further code changes — ask for a re-test and it'll be verified the same
+            way (a real submission watched live via `wrangler tail`).
 - [ ] **No branch protection on `master`** (checked 2026-09-07 via `gh api repos/.../branches/
       master/protection` — 404, confirmed off). A real `SITE_QUALITY_CHECKLIST.md` Security item,
       but deliberately not enabled here without asking first — the wrong rule (e.g. "require an

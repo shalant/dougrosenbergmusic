@@ -1,9 +1,9 @@
 {
-	// Cloudflare Workers static-assets config — same pattern as haxbyte.com's
-	// site/wrangler.jsonc. Assets-only (no "main" worker script): unlike
-	// haxbyte, this site has no contact-form backend to run (Contact.astro
-	// is a plain mailto: link per SITE_BUILD_CHECKLIST.md's default), so
-	// there's no server-side logic to execute.
+	// Cloudflare Workers config — same pattern as haxbyte.com's
+	// site/wrangler.jsonc. Now has a real "main" worker script (src/worker.js)
+	// handling POST /api/contact, falling back to the assets binding for
+	// everything else — Contact.astro grew a real form once the domain
+	// attachment below unblocked Email Routing.
 	//
 	// In the Cloudflare dashboard (Workers & Pages -> Create -> connect this
 	// GitHub repo): set root directory (Advanced settings) to "site", build
@@ -12,6 +12,7 @@
 	// relative path ("./dist") resolves from wherever the dashboard's root
 	// directory is set, not from the repo root.
 	"name": "dougrosenbergmusic",
+	"main": "./src/worker.js",
 	"compatibility_date": "2026-09-06",
 	// Attaches the real domain to this Worker (docs/todolist.md's domain-cutover
 	// step 3) — `custom_domain: true` provisions it via the Cloudflare API on
@@ -21,6 +22,18 @@
 	"routes": [
 		{ "pattern": "dougrosenberg.com", "custom_domain": true },
 		{ "pattern": "www.dougrosenberg.com", "custom_domain": true }
+	],
+	// Lets the Worker send contact-form email via Cloudflare's native Workers
+	// send_email binding — no third-party account/API key needed. Requires
+	// Email Routing enabled on the dougrosenberg.com zone, and
+	// destination_address verified as a "Destination Address" in this
+	// Cloudflare account's Email Routing settings (one-time email
+	// confirmation) before sends will succeed. See src/worker.js.
+	"send_email": [
+		{
+			"name": "CONTACT_EMAIL",
+			"destination_address": "doug.rosenberg@gmail.com"
+		}
 	],
 	"assets": {
 		"directory": "./dist",
