@@ -82,8 +82,17 @@ this project's own custom items and where it stands against them.
                 so did it directly after a quick confirm rather than needing Doug. Deleted via
                 `gh api -X DELETE repos/shalant/newMusicWebsiteJan26/pages`; verified both the
                 Pages config and the live site itself now 404.
-         7. [ ] Submit the new sitemap to Google Search Console for the property, request
-                re-indexing. **Needs Doug** — requires his Google account.
+         7. [ ] **In progress (2026-09-07 night).** Doug chose URL-prefix verification with the
+                HTML-file method. Real bug caught before he clicked "Verify": Cloudflare's static-
+                assets binding auto-redirects any `*.html` URL to its extensionless form (307) by
+                default — Google's verification fetcher doesn't follow redirects, so the file would
+                have silently failed verification. Fixed by having `site/src/worker.js` serve that
+                exact path directly (bypassing `env.ASSETS.fetch()` and its redirect) rather than
+                disabling `html_handling` site-wide, which would've broken every other page's clean
+                extensionless URLs. Verified via `curl`: `/google1dc7e3b5d5d6c264.html` now returns
+                a direct `200` with the exact expected content, no redirect. Still needs Doug to
+                click "Verify" in Search Console, then submit `sitemap-index.xml` and request
+                re-indexing — both are one-time dashboard actions on his Google account.
          **Separately decided, not coupled to the above:** eventually transfer domain
          *registration* itself from GoDaddy to Cloudflare Registrar too (wholesale pricing, free
          WHOIS privacy) — but that's an independent errand (unlock + EPP code + several-day ICANN

@@ -114,6 +114,17 @@ async function handleContact(request, env) {
 	return json({ ok: true });
 }
 
+// Cloudflare's static-assets binding auto-redirects any *.html URL to its
+// extensionless form (307) via its default html_handling behavior. That's
+// fine for normal pages, but Google's site-verification fetcher won't follow
+// redirects - it needs a literal 200 at the exact *.html URL it was given.
+// Served directly here instead of via env.ASSETS.fetch() to sidestep that
+// redirect entirely, rather than disabling html_handling site-wide (which
+// would break the clean extensionless URLs every other page relies on).
+const GOOGLE_SITE_VERIFICATION = {
+	"/google1dc7e3b5d5d6c264.html": "google-site-verification: google1dc7e3b5d5d6c264.html\n",
+};
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
@@ -123,6 +134,12 @@ export default {
 				return json({ error: "Method not allowed" }, 405);
 			}
 			return handleContact(request, env);
+		}
+
+		if (url.pathname in GOOGLE_SITE_VERIFICATION) {
+			return new Response(GOOGLE_SITE_VERIFICATION[url.pathname], {
+				headers: { "Content-Type": "text/html; charset=utf-8" },
+			});
 		}
 
 		return env.ASSETS.fetch(request);
