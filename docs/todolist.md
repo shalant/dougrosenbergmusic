@@ -93,22 +93,24 @@ this project's own custom items and where it stands against them.
          this is technically unblocked, but standing up Email Routing is itself a mail-routing/
          integration change — held here for an explicit go-ahead rather than set up unasked, even
          though the wrangler token's scope (`email_routing: write`) could technically do it.
-   - [x] **Cloudflare auto-injects an AI-crawler-blocking `robots.txt` block — flagged, not
-         changed (2026-09-07).** Discovered while investigating a Lighthouse `robots.txt is not
-         valid` finding against the live domain: Cloudflare's zone-level "Content Signals"/AI Crawl
-         Control feature wraps this repo's actual `public/robots.txt` (a plain `Allow: /`) with an
-         injected block that explicitly `Disallow`s `GPTBot`, `ClaudeBot`, `Google-Extended`,
-         `Applebot-Extended`, and `meta-externalagent` — exactly the crawlers that feed AI answer
-         engines (ChatGPT, Claude, Google AI Overviews, Apple Intelligence, Meta AI). This directly
-         works against the GEO work below: content can't be cited by an answer engine whose crawler
-         is blocked outright. **Deliberately not changed here** — this is a real content-licensing
-         decision (allow AI training/citation vs. not), not a technical toggle, and needs Doug's
-         call, not an autonomous one. The setting lives in the Cloudflare dashboard (Security →
-         Bots, or similar — not confirmed exactly where) for the `dougrosenberg.com` zone; the
-         `zone` scope on this session's wrangler token is read-only, so it couldn't be changed from
-         here even if it were the right call to make unasked. Doug's own blog post on
-         dougrosenbergdev.com (`Why GEO Doesn't Work in a Blazor WASM SPA`) covers exactly this
-         class of problem on a different site — worth his own read for context on the framing.
+   - [x] **Cloudflare's auto-injected AI-crawler-blocking `robots.txt` block — resolved
+         2026-09-07 night.** Discovered while investigating a Lighthouse `robots.txt is not valid`
+         finding against the live domain: Cloudflare's zone-level "Manage AI bot access" feature
+         (zone Overview page) was wrapping this repo's actual `public/robots.txt` (a plain
+         `Allow: /`) with an injected block explicitly `Disallow`ing `GPTBot`, `ClaudeBot`,
+         `Google-Extended`, `Applebot-Extended`, and `meta-externalagent` — exactly the crawlers
+         that feed AI answer engines. Flagged rather than changed at the time, since it's a real
+         content-licensing decision (allow AI training/citation or not), not a technical toggle —
+         this session's wrangler token is zone-read-only anyway, so it couldn't have been changed
+         from here regardless. **Doug decided to allow AI training/citation** and changed two
+         separate dashboard settings himself: "Block AI training bots" → "Do not block (allow
+         crawlers)", and "Manage your robots.txt" → "Disable robots.txt configuration" (the second
+         one was necessary too — reputable crawlers like GPTBot/ClaudeBot actually respect
+         `robots.txt`, so leaving the injected block in place would have kept them away even with
+         the firewall-level block turned off). Verified via `curl`: `robots.txt` now serves exactly
+         the repo's own clean version, no injected block. Re-ran Lighthouse: **SEO 92 → 100**,
+         `robots-txt` audit now passes. Doug's own blog post on dougrosenbergdev.com (`Why GEO
+         Doesn't Work in a Blazor WASM SPA`) covers this same class of problem on a different site.
    - [x] **SEO/GEO pass against the live domain (2026-09-07 evening).** Prompted by "implement SEO,
          GEO, and the easy items" while Doug was away — everything below is done without needing
          him, logged here rather than assumed obvious:
