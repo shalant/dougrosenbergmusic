@@ -77,10 +77,11 @@ this project's own custom items and where it stands against them.
                 The SEO score is capped by one thing outside this repo's control — see the
                 Cloudflare AI-bot item below. Full section-by-section + mobile spot-check not yet
                 done (screenshots, not just Lighthouse).
-         6. [ ] Disable the old GitHub Pages site (Settings → Pages, on whichever repo currently
-                serves it) — formal cleanup once DNS no longer points there. Not done — needs GitHub
-                access to that specific repo (`newMusicWebsiteJan26` per `docs/DESIGN_NOTES.md`'s
-                Reference section), unconfirmed whether this session has it.
+         6. [x] Disabled the old GitHub Pages site (2026-09-07 night) — turned out this session
+                does have admin access to `shalant/newMusicWebsiteJan26` (confirmed via `gh api`),
+                so did it directly after a quick confirm rather than needing Doug. Deleted via
+                `gh api -X DELETE repos/shalant/newMusicWebsiteJan26/pages`; verified both the
+                Pages config and the live site itself now 404.
          7. [ ] Submit the new sitemap to Google Search Console for the property, request
                 re-indexing. **Needs Doug** — requires his Google account.
          **Separately decided, not coupled to the above:** eventually transfer domain
@@ -153,14 +154,16 @@ this project's own custom items and where it stands against them.
            Gallery/SheetMusicLibrary/BaseLayout script edit needs a hash regen before its next
            deploy, not just before merge — this one shipped without one.
          - Re-ran Lighthouse against the live domain after all fixes: best-practices 93 → 100
-           (console-clean now); SEO holds at 92, capped by the Cloudflare robots.txt item above,
-           outside this repo's control.
-         - **Not done, needs Doug:** submitting the sitemap to Search Console (his Google account);
-           the Cloudflare AI-bot-blocking decision above; verifying Cloudflare Web Analytics is
-           still tracking correctly now that the beacon's registered hostname
-           (`dougrosenbergmusic.doug-rosenberg.workers.dev`) differs from where it's actually served
-           (`dougrosenberg.com`) — unconfirmed whether Web Analytics needs the new hostname added
-           explicitly or auto-discovers it.
+           (console-clean now); SEO reached 100 once the Cloudflare robots.txt item above was
+           resolved (see that item).
+         - **Cloudflare Web Analytics confirmed still tracking correctly (2026-09-07 night)** now
+           that the site's actually served from `dougrosenberg.com` instead of the beacon's
+           originally-registered `dougrosenbergmusic.doug-rosenberg.workers.dev` hostname — checked
+           real network requests on the live domain: the beacon script loads (200) and its RUM POST
+           fires (204), same as before the domain change. The token isn't hostname-gated for
+           collection, so no dashboard change was needed.
+         - **Not done, still needs Doug:** submitting the sitemap to Search Console (his Google
+           account).
 3. **Run the full checklist pass** against the live Cloudflare URL: `SITE_BUILD_CHECKLIST.md`
    §3–8 + all 68 items in `SITE_QUALITY_CHECKLIST.md`. Expect multiple rounds — items like
    contrast, `:focus-visible` states, and breakpoint gaps tend to surface fixes that need
