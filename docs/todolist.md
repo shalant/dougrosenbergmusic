@@ -1,14 +1,19 @@
 # Todo List
 
-**Status (2026-09-07, late evening):** hero/nav direction is locked (full-bleed graded hero + a
-TV/DR logo top-left linking home + icon-marked staff nav, "DEV" note linking to
-dougrosenbergdev.com). **The site is now fully live at https://dougrosenberg.com** — domain cutover
-complete (DNS propagated, Custom Domain attached, `astro.config.mjs` updated), GitHub Pages
-retired. A same-evening SEO/GEO pass added `llms.txt`, a `WebSite` JSON-LD block, and fixed a real
-CSP hash bug that had silently broken `StaffNav`'s script in production. Two items are flagged for
-Doug specifically, not done autonomously: submitting the sitemap to Search Console, and a decision
-on Cloudflare's auto-injected AI-crawler-blocking `robots.txt` rule (see the domain-cutover
-checklist under "Migrate deployment" for both). This doc tracks what's left, in order.
+**Status (2026-09-07/08, night):** hero/nav direction is locked (full-bleed graded hero + a TV/DR
+logo top-left linking home + icon-marked staff nav, "DEV" note linking to dougrosenbergdev.com).
+**The site is now fully live at https://dougrosenberg.com** — domain cutover complete and fully
+closed out: DNS propagated, Custom Domain attached, `astro.config.mjs` updated, old GitHub Pages
+site disabled, HTTPS enforced, Search Console verified with the sitemap submitted and indexed
+successfully. A same-evening SEO/GEO pass added `llms.txt`, a `WebSite` JSON-LD block, a working
+contact form (Worker + `send_email` binding), and closed Cloudflare's auto-injected AI-crawler
+block after Doug decided to allow AI training/citation — Lighthouse SEO reached 100 as a result.
+A handful of real bugs were caught and fixed along the way (stale CSP hashes silently breaking
+`StaffNav`'s script, three touch targets under 44px, a `.html`-URL redirect that would have failed
+Search Console verification, HTTPS not enforced). Only two items remain, both needing Doug directly:
+the 7 missing Sheet Music Library pieces (needs source files), and the larger "not urgent" decisions
+(light-mode, branch protection, logo timing) — see "Custom items" below. This doc tracks what's
+left, in order.
 
 This project is also the reference build behind `career-development/projects/SITE_BUILD_CHECKLIST.md`
 and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the master checklists (living
@@ -82,17 +87,18 @@ this project's own custom items and where it stands against them.
                 so did it directly after a quick confirm rather than needing Doug. Deleted via
                 `gh api -X DELETE repos/shalant/newMusicWebsiteJan26/pages`; verified both the
                 Pages config and the live site itself now 404.
-         7. [ ] **In progress (2026-09-07 night).** Doug chose URL-prefix verification with the
-                HTML-file method. Real bug caught before he clicked "Verify": Cloudflare's static-
-                assets binding auto-redirects any `*.html` URL to its extensionless form (307) by
-                default — Google's verification fetcher doesn't follow redirects, so the file would
-                have silently failed verification. Fixed by having `site/src/worker.js` serve that
-                exact path directly (bypassing `env.ASSETS.fetch()` and its redirect) rather than
-                disabling `html_handling` site-wide, which would've broken every other page's clean
-                extensionless URLs. Verified via `curl`: `/google1dc7e3b5d5d6c264.html` now returns
-                a direct `200` with the exact expected content, no redirect. Still needs Doug to
-                click "Verify" in Search Console, then submit `sitemap-index.xml` and request
-                re-indexing — both are one-time dashboard actions on his Google account.
+         7. [x] **Done (2026-09-07 night).** Doug chose URL-prefix verification with the HTML-file
+                method. Real bug caught before he clicked "Verify": Cloudflare's static-assets
+                binding auto-redirects any `*.html` URL to its extensionless form (307) by default —
+                Google's verification fetcher doesn't follow redirects, so the file would have
+                silently failed verification. Fixed by having `site/src/worker.js` serve that exact
+                path directly (bypassing `env.ASSETS.fetch()` and its redirect) rather than disabling
+                `html_handling` site-wide, which would've broken every other page's clean
+                extensionless URLs. Domain verified successfully after the fix. Sitemap submitted;
+                briefly showed "Couldn't fetch" (a timing artifact — Google's first fetch attempt
+                landing before its crawl actually ran, confirmed by every manual check — plain
+                `curl`, a spoofed Googlebot user-agent — coming back clean), then changed to
+                "Success" on its own within the hour, as expected.
          **Separately decided, not coupled to the above:** eventually transfer domain
          *registration* itself from GoDaddy to Cloudflare Registrar too (wholesale pricing, free
          WHOIS privacy) — but that's an independent errand (unlock + EPP code + several-day ICANN
