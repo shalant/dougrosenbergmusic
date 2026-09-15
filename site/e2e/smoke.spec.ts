@@ -4,8 +4,8 @@ test.describe('smoke', () => {
   test('homepage loads with correct title and hero content', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Doug Rosenberg/);
-    await expect(page.locator('h1')).toContainText('Doug');
-    await expect(page.locator('h1')).toContainText('Rosenberg');
+    await expect(page.locator('h1')).toContainText('websites');
+    await expect(page.locator('h1')).toContainText('sound like you');
   });
 
   test('every major section renders', async ({ page }) => {

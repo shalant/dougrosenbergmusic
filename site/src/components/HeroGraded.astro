@@ -1,12 +1,15 @@
 ---
-// "Full-Bleed, Screen-Graded" hero — the recommended direction from the
-// twenty-variations pass. Same full-bleed photo and layout as the locked
-// Hero.astro (nothing shrinks into a TV object), with a broadcast grade —
-// scanlines, a soft screen vignette, a touch more warmth — laid directly
-// over the photo. Kept as a separate component so Hero.astro stays untouched.
-// The corner antenna decoration this hero used to carry (a stand-in for a
-// logo in the one corner the nav didn't occupy) was dropped once Logo.astro
-// took that corner for real.
+// "Full-Bleed, Screen-Graded" hero — Riff 14 of the dev-services pivot
+// exploration (see docs/HeroDesigns). Same full-bleed photo, broadcast
+// grade (scanlines, screen vignette, warmth) and real animated haze as the
+// prior bottom-left version, but the content block now sits right-of-
+// center, left-aligned, slightly overlapping Doug's body, carrying the
+// pivoted copy plus a services list and two CTAs instead of just a name.
+// The photo's own baked-in haze (upper-right of hero.webp) drifts with a
+// stronger, faster amplitude than a purely decorative hero needs, since
+// it's now sharing the frame with the content block instead of being the
+// only thing happening in it. Four "now playing" chips drift up out of
+// the bell on curved paths, each naming a real track from Listen.astro.
 ---
 
 <header id="hero" class="hero">
@@ -16,31 +19,138 @@
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
 
+  <a class="hero__chip hero__chip--nc1" href="https://www.amazon.com/dp/B00G9Y8TPE" target="_blank" rel="noopener noreferrer"><span>♪</span> Better Than TV</a>
+  <a class="hero__chip hero__chip--nc2 hero__chip--mirror" href="https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C" target="_blank" rel="noopener noreferrer"><span>♪</span> Goran Ivanovic Group</a>
+  <a class="hero__chip hero__chip--nc3" href="https://www.amazon.com/dp/B006HTEKHM" target="_blank" rel="noopener noreferrer"><span>♪</span> Underwater</a>
+  <a class="hero__chip hero__chip--nc4 hero__chip--mirror" href="https://www.amazon.com/dp/B00169L616" target="_blank" rel="noopener noreferrer"><span>♪</span> Folk Tales</a>
+
   <div class="hero__content wrap">
-    <p class="eyebrow hero__eyebrow">Saxophonist · Composer · Educator</p>
-    <h1 class="hero__name">Doug<br />Rosenberg</h1>
+    <p class="eyebrow hero__eyebrow">Formerly on stage. Now behind the screen.</p>
+    <h1 class="hero__title">I make websites<br />that <span class="accent">sound like you.</span></h1>
+    <div class="hero__services">
+      <div class="hero__service"><span class="hero__service-bar"></span>Web Design</div>
+      <div class="hero__service"><span class="hero__service-bar"></span>Development</div>
+      <div class="hero__service"><span class="hero__service-bar"></span>Branding</div>
+      <div class="hero__service"><span class="hero__service-bar"></span>Ongoing Support</div>
+    </div>
+    <div class="hero__ctas">
+      <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-primary">Let's Build Something →</a>
+      <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary">See My Work</a>
+    </div>
   </div>
 
-  <a class="now-playing" href="#listen">
-    <span class="now-playing__rec" aria-hidden="true"></span>
-    <span class="now-playing__label">On Air</span>
-    <span class="now-playing__track">Better Than TV</span>
+  <!-- Sits in the empty lower-left of the frame. Rotates through four
+       destinations that aren't otherwise surfaced in the hero (the CTA
+       buttons above already cover "build" and "portfolio" overlaps here
+       with "portfolio") - a discovery path for the things easy to miss
+       on first scroll, not a replacement for the CTA buttons. Lessons
+       and private events both point at #contact since neither has its
+       own page yet - real inquiries for either go through that form. -->
+  <a class="hero__terminal" id="hero-terminal" href="#listen">
+    <span class="hero__terminal-prompt" aria-hidden="true">&gt;</span>
+    <span class="hero__terminal-text" id="hero-terminal-text"></span><span class="hero__terminal-cursor" aria-hidden="true"></span>
   </a>
-
-  <span class="hero__scroll-cue" aria-hidden="true">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-    <span class="hero__scroll-cue-label">CH +</span>
-  </span>
 </header>
+
+<script>
+  (function () {
+    const items = [
+      { text: 'listen now  →', href: '#listen', external: false },
+      { text: 'lessons  →', href: '#contact', external: false },
+      { text: 'private events  →', href: '#contact', external: false },
+      { text: 'portfolio  →', href: 'https://dougrosenbergdev.com', external: true },
+    ];
+
+    const link = document.getElementById('hero-terminal');
+    const textEl = document.getElementById('hero-terminal-text');
+    if (!link || !textEl) return;
+
+    function applyItem(item) {
+      link.href = item.href;
+      if (item.external) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      } else {
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+      }
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      applyItem(items[0]);
+      textEl.textContent = items[0].text;
+      return;
+    }
+
+    const TYPE_MS = 38;
+    const ERASE_MS = 20;
+    const CYCLE_MS = 10000;
+
+    let index = 0;
+    let paused = false;
+
+    function typeText(text, done) {
+      let i = 0;
+      textEl.textContent = '';
+      (function step() {
+        if (paused) { setTimeout(step, 200); return; }
+        if (i <= text.length) {
+          textEl.textContent = text.slice(0, i);
+          i++;
+          setTimeout(step, TYPE_MS);
+        } else {
+          done();
+        }
+      })();
+    }
+
+    function eraseText(text, done) {
+      let i = text.length;
+      (function step() {
+        if (paused) { setTimeout(step, 200); return; }
+        if (i >= 0) {
+          textEl.textContent = text.slice(0, i);
+          i--;
+          setTimeout(step, ERASE_MS);
+        } else {
+          done();
+        }
+      })();
+    }
+
+    function cycle() {
+      const item = items[index];
+      applyItem(item);
+      typeText(item.text, function () {
+        const holdMs = Math.max(CYCLE_MS - item.text.length * TYPE_MS, 1500);
+        setTimeout(function () {
+          eraseText(item.text, function () {
+            index = (index + 1) % items.length;
+            cycle();
+          });
+        }, holdMs);
+      });
+    }
+
+    // Pausing on hover/focus (rather than just letting the interval run)
+    // keeps the link's text - and its href - from changing out from under
+    // someone mid-click or mid-read.
+    link.addEventListener('mouseenter', () => { paused = true; });
+    link.addEventListener('mouseleave', () => { paused = false; });
+    link.addEventListener('focus', () => { paused = true; });
+    link.addEventListener('blur', () => { paused = false; });
+
+    cycle();
+  })();
+</script>
 
 <style>
   .hero {
     position: relative;
     min-height: 100vh;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: flex-end;
     overflow: hidden;
     background: var(--bg);
   }
@@ -51,21 +161,31 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 14%;
+    /* At this crop's aspect ratio the box is wider than the photo, so
+       object-fit: cover already stretches it to full width with zero
+       horizontal slack left to pan with object-position - only the
+       vertical axis has room. A small scale-up manufactures that slack so
+       the subsequent translateX can actually move him left, away from
+       the content block; object-position's Y value was pulled back from
+       20% to 14% to give the scale's symmetric crop room to grow without
+       clipping the hat brim. */
+    transform: scale(1.08) translateX(-5%);
     filter: sepia(0.18) saturate(1.08) brightness(1.22) contrast(1.06);
   }
 
   /* the studio haze already baked into hero.webp (right side of the frame)
      is static pixels - this drifts two soft blurred glows over that same
-     region so it reads as living smoke instead of a still photo. Two blobs
-     on independent, slightly different loops read as organic drift; one
-     alone just looks like a single thing sliding back and forth. */
+     region so it reads as living smoke instead of a still photo. Tuned
+     stronger/faster than a purely decorative hero needs, since this haze
+     now shares the frame with the content block instead of being the only
+     thing happening in it. */
   .hero__haze {
     position: absolute;
     inset: 0;
     pointer-events: none;
     mix-blend-mode: screen;
-    opacity: 0.55;
+    opacity: 0.8;
   }
 
   .hero__haze::before,
@@ -82,7 +202,7 @@
     top: 8%;
     right: 6%;
     background: radial-gradient(circle, rgba(224, 121, 79, 0.28), transparent 70%);
-    animation: haze-drift-a 22s ease-in-out infinite;
+    animation: haze-drift-a 13s ease-in-out infinite;
   }
 
   .hero__haze::after {
@@ -90,18 +210,18 @@
     height: 38vw;
     top: 28%;
     right: 14%;
-    background: radial-gradient(circle, rgba(127, 176, 255, 0.22), transparent 70%);
-    animation: haze-drift-b 26s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(82, 209, 166, 0.22), transparent 70%);
+    animation: haze-drift-b 15s ease-in-out infinite;
   }
 
   @keyframes haze-drift-a {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-3%, 4%) scale(1.12); }
+    50% { transform: translate(-7%, 8%) scale(1.28); }
   }
 
   @keyframes haze-drift-b {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(4%, -3%) scale(0.92); }
+    50% { transform: translate(8%, -6%) scale(0.82); }
   }
 
   /* the broadcast grade — scanlines and a soft screen-shaped vignette,
@@ -127,134 +247,311 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgba(10, 14, 23, 0.02) 0%, rgba(10, 14, 23, 0.2) 55%, rgba(10, 14, 23, 0.88) 96%),
-      linear-gradient(90deg, rgba(10, 14, 23, 0.28) 0%, rgba(10, 14, 23, 0.02) 45%);
+      linear-gradient(180deg, rgba(10, 14, 23, 0.1) 0%, rgba(10, 14, 23, 0.25) 55%, rgba(10, 14, 23, 0.85) 100%),
+      radial-gradient(ellipse 62% 58% at 68% 52%, rgba(10, 14, 23, 0.6), transparent 72%);
   }
 
+  /* content block sits right-of-center, left-aligned, slightly
+     overlapping Doug's body rather than hugging the frame's edge */
   .hero__content {
-    position: relative;
+    position: absolute;
     z-index: 1;
-    padding-bottom: 7.5rem;
-    width: 100%;
+    left: 50%;
+    right: clamp(1.25rem, 4vw, 3rem);
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: none;
+    padding-bottom: 0;
+    text-align: left;
   }
 
   .hero__eyebrow {
-    margin: 0 0 1rem;
+    margin: 0 0 0.9rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
   }
 
-  .hero__name {
+  .hero__title {
     font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    line-height: 1.08;
+    margin: 0;
+    /* smoke-tinted headline, shimmering within the site's own glow
+       family rather than a second competing hue */
+    background: linear-gradient(100deg, var(--text) 0%, var(--glow) 32%, var(--text) 58%, #9fe8cd 80%, var(--text) 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: fade-up 0.7s ease-out 0.15s both, smoke-text 16s ease-in-out infinite;
+  }
+
+  .hero__title .accent {
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    color: var(--glow);
+    -webkit-text-fill-color: var(--glow);
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(3rem, 9vw, 6.5rem);
-    line-height: 0.98;
-    margin: 0;
-    color: var(--text);
-    text-shadow: 0 0 42px var(--glow-soft), 0 0 4px rgba(127, 176, 255, 0.35);
   }
 
-  .now-playing {
-    position: absolute;
-    z-index: 1;
-    left: clamp(1.25rem, 4vw, 3rem);
-    bottom: 2rem;
-    display: inline-flex;
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes smoke-text {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero__services {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 1.6rem 0;
+    align-items: flex-start;
+  }
+
+  .hero__service {
+    display: flex;
     align-items: center;
     gap: 0.7rem;
-    padding: 0.75rem 1.1rem;
-    border-radius: 999px;
-    background: rgba(19, 26, 38, 0.72);
-    border: 1px solid rgba(233, 237, 245, 0.12);
-    backdrop-filter: blur(10px);
-    text-decoration: none;
-    color: var(--text);
     font-family: var(--font-mono);
-    font-size: 0.78rem;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
   }
 
-  .now-playing:hover,
-  .now-playing:focus-visible {
-    border-color: var(--brass);
-    background: rgba(19, 26, 38, 0.9);
+  .hero__service-bar {
+    width: 26px;
+    height: 2px;
+    background: var(--glow);
+    opacity: 0.75;
   }
 
-  .now-playing:focus-visible {
+  .hero__ctas {
+    display: flex;
+    gap: 0.7rem;
+    justify-content: flex-start;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .cta-primary {
+    background: var(--glow);
+    color: var(--bg);
+  }
+
+  .cta-primary:hover,
+  .cta-primary:focus-visible {
+    background: #9fe8cd;
+    transform: translateY(-1px);
+  }
+
+  .cta-secondary {
+    color: var(--text);
+    border: 1px solid rgba(233, 237, 245, 0.22);
+    background: rgba(19, 26, 38, 0.4);
+    backdrop-filter: blur(6px);
+  }
+
+  .cta-secondary:hover,
+  .cta-secondary:focus-visible {
+    border-color: var(--glow);
+    color: var(--glow);
+  }
+
+  .cta:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
   }
 
-  .now-playing__rec {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #e0574f;
-    animation: rec-pulse 1.4s ease-in-out infinite;
+  /* skewed "command line" — rotates through the three real destinations
+     (build / listen / portfolio) as one typed line, a second path to the
+     same links the CTA buttons above already cover. Sized to its content
+     (not a fixed box) so the pill visibly grows and shrinks as the JS
+     types and erases. */
+  .hero__terminal {
+    position: absolute;
+    z-index: 1;
+    left: 5%;
+    bottom: 10%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    background: rgba(10, 14, 23, 0.72);
+    border: 1px solid rgba(233, 237, 245, 0.18);
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    transform: rotate(-6deg);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .hero__terminal:hover,
+  .hero__terminal:focus-visible {
+    border-color: var(--glow);
+    transform: rotate(-6deg) scale(1.03);
+  }
+
+  .hero__terminal:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+  }
+
+  .hero__terminal-prompt {
+    color: var(--glow);
     flex-shrink: 0;
   }
 
-  .now-playing__label {
-    color: #e0574f;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.68rem;
-    font-weight: 600;
+  .hero__terminal-cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background: var(--glow);
+    flex-shrink: 0;
+    animation: terminal-blink 1s step-end infinite;
   }
 
-  .now-playing__track {
-    color: var(--text-muted);
-  }
-
-  @keyframes rec-pulse {
+  @keyframes terminal-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    50% { opacity: 0; }
   }
 
-  .hero__scroll-cue {
+  /* "now playing" chips — real track titles (see Listen.astro), drifting
+     up from the bell one at a time on a gentle curved path rather than a
+     straight vertical line; alternating chips curve opposite ways so they
+     don't all bow the same direction. Each links out to its album, so
+     (unlike a purely decorative chip) it needs to be reachable and
+     visible on keyboard focus even mid-animation, and needs to actually
+     render for reduced-motion users instead of freezing at the
+     animation's invisible starting frame. */
+  .hero__chip {
     position: absolute;
     z-index: 1;
-    right: clamp(1.25rem, 4vw, 3rem);
-    bottom: 2.2rem;
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
-    gap: 0.2rem;
-    color: var(--text-faint);
-    animation: bob 2s ease-in-out infinite;
-  }
-
-  .hero__scroll-cue-label {
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(19, 26, 38, 0.75);
+    border: 1px solid var(--glow-soft);
+    backdrop-filter: blur(6px);
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.06em;
+    font-size: 0.68rem;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+    animation: chip-float 9s ease-in-out infinite;
+    white-space: nowrap;
+    transition: border-color 0.2s ease;
   }
 
-  @keyframes bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
+  .hero__chip:hover,
+  .hero__chip:focus-visible {
+    border-color: var(--brass);
+  }
+
+  .hero__chip:focus-visible {
+    opacity: 1;
+    transform: none;
+    animation-play-state: paused;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+  }
+
+  .hero__chip span {
+    color: var(--glow);
+  }
+
+  .hero__chip--nc1 { left: 27%; top: 34%; animation-delay: 0s; }
+  .hero__chip--nc2 { left: 14%; top: 21%; animation-delay: 4.5s; }
+  .hero__chip--nc3 { left: 22%; top: 45%; animation-delay: 2.25s; }
+  .hero__chip--nc4 { left: 10%; top: 30%; animation-delay: 6.75s; }
+
+  @keyframes chip-float {
+    0%, 100% { opacity: 0; transform: translate(0, 14px) scale(0.9); }
+    8% { opacity: 1; transform: translate(3px, 2px) scale(1); }
+    22% { opacity: 1; transform: translate(11px, -12px) scale(1); }
+    38% { opacity: 1; transform: translate(5px, -28px) scale(1); }
+    48% { opacity: 0; transform: translate(-6px, -44px) scale(0.95); }
+  }
+
+  @keyframes chip-float-mirror {
+    0%, 100% { opacity: 0; transform: translate(0, 14px) scale(0.9); }
+    8% { opacity: 1; transform: translate(-3px, 2px) scale(1); }
+    22% { opacity: 1; transform: translate(-11px, -12px) scale(1); }
+    38% { opacity: 1; transform: translate(-5px, -28px) scale(1); }
+    48% { opacity: 0; transform: translate(6px, -44px) scale(0.95); }
+  }
+
+  .hero__chip--mirror {
+    animation-name: chip-float-mirror;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .now-playing__rec,
-    .hero__scroll-cue,
+    .hero__chip,
+    .hero__title,
+    .hero__eyebrow,
+    .hero__terminal-cursor,
     .hero__haze::before,
     .hero__haze::after {
       animation: none;
     }
   }
 
-  @media (max-width: 640px) {
+  /* tablet: drop the overlap, pull the block into a plain right-hand
+     column instead of jumping straight to a full mobile stack */
+  @media (max-width: 1024px) {
     .hero__content {
-      padding-bottom: 6.5rem;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      transform: none;
+      max-width: 460px;
+      padding-bottom: 0;
     }
-    .now-playing {
-      left: 1.25rem;
-      right: 1.25rem;
-      bottom: 1.25rem;
-      justify-content: space-between;
+    .hero__scrim {
+      background:
+        linear-gradient(180deg, rgba(10, 14, 23, 0.1) 0%, rgba(10, 14, 23, 0.2) 60%, rgba(10, 14, 23, 0.85) 100%),
+        linear-gradient(to left, rgba(10, 14, 23, 0.82) 0%, rgba(10, 14, 23, 0.5) 32%, transparent 62%);
     }
-    .hero__scroll-cue {
+  }
+
+  @media (max-width: 640px) {
+    .hero__chip,
+    .hero__terminal {
       display: none;
+    }
+    .hero__content {
+      max-width: 100%;
+      padding-bottom: 5.5rem;
+    }
+    .hero__scrim {
+      background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.22) 55%, rgba(10, 14, 23, 0.92) 97%);
     }
   }
 </style>

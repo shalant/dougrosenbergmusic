@@ -490,6 +490,34 @@ this project's own custom items and where it stands against them.
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
       than defaulting either way.
+- [ ] **Dev-services hero pivot — branch `hero-riff-14`, built, not yet merged.** See
+      `docs/DESIGN_NOTES.md`'s new "Dev-services hero pivot" section for the full design narrative;
+      this entry tracks the engineering side. `HeroGraded.astro` rewritten for a right-column,
+      dev-services-copy layout (Riff 14 of a 14-riff exploration artifact), then iterated: photo
+      panned left (a `scale()`+`translateX()` workaround for `object-position` having zero
+      horizontal slack at this crop's aspect ratio), eyebrow shrunk, all 4 chips + both CTAs wired
+      to real URLs, site's `--glow` token swapped powder blue → seafoam (picked a shade distinct
+      from `--note-cred`'s identical-hex teal on purpose — see design notes), and a rotating typed
+      "command line" element added (listen/lessons/private events/portfolio, vanilla-JS typewriter,
+      pauses on hover/focus, static fallback under `prefers-reduced-motion`).
+      - [x] **Two real regressions caught and fixed before calling this PR-ready, not just "the
+            feature works":**
+            - `e2e/smoke.spec.ts`'s `<h1>` assertion still checked for "Doug"/"Rosenberg" — broken
+              by the new headline copy ("I make websites that sound like you"). Confirmed the
+              failure with a real `npx playwright test` run first, then updated the assertion to
+              match the new copy rather than assuming it was fine. Full suite re-run after: 16
+              passed, 2 skipped (a mobile-only nav spec, expected under the chromium-only project
+              used for this check), 0 failures.
+            - `public/_headers`'s CSP `script-src` wasn't updated for the new inline script the
+              terminal widget added — the exact silently-blocked-script failure mode this file's
+              own comment warns about (and that already bit `StaffNav` once, see Round 1 above).
+              Built `dist/`, recomputed sha256 hashes for every inline script on both `index.html`
+              and `404.html` per the file's own regen instructions, diffed against the previous 6 —
+              exactly one new hash, all 6 old ones unchanged. Added the new hash (7 total now).
+      - **Not yet decided:** whether this hero replaces the locked musician-bio one, coexists as
+        some kind of split, or stays a parked exploration — a real product decision, not something
+        to default on. Branch is pushed to `origin/hero-riff-14`; PR/merge held for Doug to do
+        manually.
 - [x] **Before/after case study draft written and published** (draft: 2026-09-06 overnight, PR #20
       `case-study-draft`, this repo). Decided on the dev-portfolio framing: published as a real
       blog post on **dougrosenbergdev.com** (separate repo, `shalant/PortfolioNov25`) —
