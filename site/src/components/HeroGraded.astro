@@ -19,10 +19,10 @@
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
 
-  <div class="hero__chip hero__chip--nc1" aria-hidden="true"><span>♪</span> Better Than TV</div>
-  <div class="hero__chip hero__chip--nc2 hero__chip--mirror" aria-hidden="true"><span>♪</span> Goran Ivanovic Group</div>
-  <div class="hero__chip hero__chip--nc3" aria-hidden="true"><span>♪</span> Underwater</div>
-  <div class="hero__chip hero__chip--nc4 hero__chip--mirror" aria-hidden="true"><span>♪</span> Folk Tales</div>
+  <a class="hero__chip hero__chip--nc1" href="https://www.amazon.com/dp/B00G9Y8TPE" target="_blank" rel="noopener noreferrer"><span>♪</span> Better Than TV</a>
+  <a class="hero__chip hero__chip--nc2 hero__chip--mirror" href="https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C" target="_blank" rel="noopener noreferrer"><span>♪</span> Goran Ivanovic Group</a>
+  <a class="hero__chip hero__chip--nc3" href="https://www.amazon.com/dp/B006HTEKHM" target="_blank" rel="noopener noreferrer"><span>♪</span> Underwater</a>
+  <a class="hero__chip hero__chip--nc4 hero__chip--mirror" href="https://www.amazon.com/dp/B00169L616" target="_blank" rel="noopener noreferrer"><span>♪</span> Folk Tales</a>
 
   <div class="hero__content wrap">
     <p class="eyebrow hero__eyebrow">Formerly on stage. Now behind the screen.</p>
@@ -34,8 +34,8 @@
       <div class="hero__service"><span class="hero__service-bar"></span>Ongoing Support</div>
     </div>
     <div class="hero__ctas">
-      <a href="#contact" class="cta cta-primary">Let's Build Something →</a>
-      <a href="#listen" class="cta cta-secondary">See My Work</a>
+      <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-primary">Let's Build Something →</a>
+      <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary">See My Work</a>
     </div>
   </div>
 </header>
@@ -281,7 +281,11 @@
   /* "now playing" chips — real track titles (see Listen.astro), drifting
      up from the bell one at a time on a gentle curved path rather than a
      straight vertical line; alternating chips curve opposite ways so they
-     don't all bow the same direction */
+     don't all bow the same direction. Each links out to its album, so
+     (unlike a purely decorative chip) it needs to be reachable and
+     visible on keyboard focus even mid-animation, and needs to actually
+     render for reduced-motion users instead of freezing at the
+     animation's invisible starting frame. */
   .hero__chip {
     position: absolute;
     z-index: 1;
@@ -296,11 +300,25 @@
     font-family: var(--font-mono);
     font-size: 0.68rem;
     color: var(--text);
+    text-decoration: none;
     opacity: 0;
     transform: translateY(14px) scale(0.9);
     animation: chip-float 9s ease-in-out infinite;
-    pointer-events: none;
     white-space: nowrap;
+    transition: border-color 0.2s ease;
+  }
+
+  .hero__chip:hover,
+  .hero__chip:focus-visible {
+    border-color: var(--brass);
+  }
+
+  .hero__chip:focus-visible {
+    opacity: 1;
+    transform: none;
+    animation-play-state: paused;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
   }
 
   .hero__chip span {
