@@ -38,7 +38,111 @@
       <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary">See My Work</a>
     </div>
   </div>
+
+  <!-- Sits in the empty lower-left of the frame. Rotates through four
+       destinations that aren't otherwise surfaced in the hero (the CTA
+       buttons above already cover "build" and "portfolio" overlaps here
+       with "portfolio") - a discovery path for the things easy to miss
+       on first scroll, not a replacement for the CTA buttons. Lessons
+       and private events both point at #contact since neither has its
+       own page yet - real inquiries for either go through that form. -->
+  <a class="hero__terminal" id="hero-terminal" href="#listen">
+    <span class="hero__terminal-prompt" aria-hidden="true">&gt;</span>
+    <span class="hero__terminal-text" id="hero-terminal-text"></span><span class="hero__terminal-cursor" aria-hidden="true"></span>
+  </a>
 </header>
+
+<script>
+  (function () {
+    const items = [
+      { text: 'listen now  →', href: '#listen', external: false },
+      { text: 'lessons  →', href: '#contact', external: false },
+      { text: 'private events  →', href: '#contact', external: false },
+      { text: 'portfolio  →', href: 'https://dougrosenbergdev.com', external: true },
+    ];
+
+    const link = document.getElementById('hero-terminal');
+    const textEl = document.getElementById('hero-terminal-text');
+    if (!link || !textEl) return;
+
+    function applyItem(item) {
+      link.href = item.href;
+      if (item.external) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      } else {
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+      }
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      applyItem(items[0]);
+      textEl.textContent = items[0].text;
+      return;
+    }
+
+    const TYPE_MS = 38;
+    const ERASE_MS = 20;
+    const CYCLE_MS = 10000;
+
+    let index = 0;
+    let paused = false;
+
+    function typeText(text, done) {
+      let i = 0;
+      textEl.textContent = '';
+      (function step() {
+        if (paused) { setTimeout(step, 200); return; }
+        if (i <= text.length) {
+          textEl.textContent = text.slice(0, i);
+          i++;
+          setTimeout(step, TYPE_MS);
+        } else {
+          done();
+        }
+      })();
+    }
+
+    function eraseText(text, done) {
+      let i = text.length;
+      (function step() {
+        if (paused) { setTimeout(step, 200); return; }
+        if (i >= 0) {
+          textEl.textContent = text.slice(0, i);
+          i--;
+          setTimeout(step, ERASE_MS);
+        } else {
+          done();
+        }
+      })();
+    }
+
+    function cycle() {
+      const item = items[index];
+      applyItem(item);
+      typeText(item.text, function () {
+        const holdMs = Math.max(CYCLE_MS - item.text.length * TYPE_MS, 1500);
+        setTimeout(function () {
+          eraseText(item.text, function () {
+            index = (index + 1) % items.length;
+            cycle();
+          });
+        }, holdMs);
+      });
+    }
+
+    // Pausing on hover/focus (rather than just letting the interval run)
+    // keeps the link's text - and its href - from changing out from under
+    // someone mid-click or mid-read.
+    link.addEventListener('mouseenter', () => { paused = true; });
+    link.addEventListener('mouseleave', () => { paused = false; });
+    link.addEventListener('focus', () => { paused = true; });
+    link.addEventListener('blur', () => { paused = false; });
+
+    cycle();
+  })();
+</script>
 
 <style>
   .hero {
@@ -278,6 +382,63 @@
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
   }
 
+  /* skewed "command line" — rotates through the three real destinations
+     (build / listen / portfolio) as one typed line, a second path to the
+     same links the CTA buttons above already cover. Sized to its content
+     (not a fixed box) so the pill visibly grows and shrinks as the JS
+     types and erases. */
+  .hero__terminal {
+    position: absolute;
+    z-index: 1;
+    left: 5%;
+    bottom: 10%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    background: rgba(10, 14, 23, 0.72);
+    border: 1px solid rgba(233, 237, 245, 0.18);
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    transform: rotate(-6deg);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .hero__terminal:hover,
+  .hero__terminal:focus-visible {
+    border-color: var(--glow);
+    transform: rotate(-6deg) scale(1.03);
+  }
+
+  .hero__terminal:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+  }
+
+  .hero__terminal-prompt {
+    color: var(--glow);
+    flex-shrink: 0;
+  }
+
+  .hero__terminal-cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background: var(--glow);
+    flex-shrink: 0;
+    animation: terminal-blink 1s step-end infinite;
+  }
+
+  @keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
   /* "now playing" chips — real track titles (see Listen.astro), drifting
      up from the bell one at a time on a gentle curved path rather than a
      straight vertical line; alternating chips curve opposite ways so they
@@ -354,6 +515,7 @@
     .hero__chip,
     .hero__title,
     .hero__eyebrow,
+    .hero__terminal-cursor,
     .hero__haze::before,
     .hero__haze::after {
       animation: none;
@@ -380,7 +542,8 @@
   }
 
   @media (max-width: 640px) {
-    .hero__chip {
+    .hero__chip,
+    .hero__terminal {
       display: none;
     }
     .hero__content {
