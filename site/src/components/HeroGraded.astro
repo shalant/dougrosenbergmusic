@@ -57,7 +57,16 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 14%;
+    /* At this crop's aspect ratio the box is wider than the photo, so
+       object-fit: cover already stretches it to full width with zero
+       horizontal slack left to pan with object-position - only the
+       vertical axis has room. A small scale-up manufactures that slack so
+       the subsequent translateX can actually move him left, away from
+       the content block; object-position's Y value was pulled back from
+       20% to 14% to give the scale's symmetric crop room to grow without
+       clipping the hat brim. */
+    transform: scale(1.08) translateX(-5%);
     filter: sepia(0.18) saturate(1.08) brightness(1.22) contrast(1.06);
   }
 
@@ -154,6 +163,8 @@
 
   .hero__eyebrow {
     margin: 0 0 0.9rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
   }
 
   .hero__title {
