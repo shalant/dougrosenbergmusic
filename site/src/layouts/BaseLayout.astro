@@ -17,10 +17,11 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Doug Rosenberg',
-  jobTitle: ['Saxophonist', 'Composer', 'Educator'],
+  jobTitle: ['Web Developer', 'Saxophonist', 'Composer', 'Educator'],
   url: Astro.site?.toString(),
   email: 'mailto:doug.rosenberg@gmail.com',
   sameAs: [
+    'https://dougrosenbergdev.com',
     'https://instagram.com/shalantdoro',
     'https://youtube.com/@dougrosenberg2361',
     'https://linkedin.com/in/douglasrosenberg',
@@ -33,7 +34,7 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: 'Doug Rosenberg',
   url: Astro.site?.toString(),
-  description: 'Doug Rosenberg — saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
+  description: 'Doug Rosenberg — web design and development, plus a saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
 };
 ---
 
