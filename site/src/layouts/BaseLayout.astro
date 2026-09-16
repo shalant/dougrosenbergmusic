@@ -92,23 +92,35 @@ const websiteSchema = {
 		     heuristic - which only fires for <a> tags pointing at a different
 		     http(s) host - would silently miss them. A single delegated
 		     listener on document covers every current and future data-cta
-		     element with no per-component script. -->
+		     element with no per-component script.
+
+		     gtag is assigned to window explicitly (not the classic
+		     `function gtag(){}` snippet Google's own docs show) because
+		     Astro auto-wraps every inline <script> as an ES module - a
+		     bare top-level function declaration is scoped to that module,
+		     not attached to window, so any other script on the page
+		     (Contact.astro's form handler, a separate module) couldn't see
+		     it. Confirmed live: the bare version left `generate_lead` in
+		     Contact.astro throwing "gtag is not defined" on every real
+		     submission, silently swallowed by that script's own try/catch
+		     and surfacing to visitors as a false "Something went wrong"
+		     error even though the email itself sent successfully. -->
 		<script>
 			window.dataLayer = window.dataLayer || [];
-			function gtag() { dataLayer.push(arguments); }
-			gtag('consent', 'default', {
+			window.gtag = function gtag() { window.dataLayer.push(arguments); };
+			window.gtag('consent', 'default', {
 				ad_storage: 'denied',
 				ad_user_data: 'denied',
 				ad_personalization: 'denied',
 				analytics_storage: 'denied',
 			});
-			gtag('js', new Date());
-			gtag('config', 'G-BGSJ1FWPTF');
+			window.gtag('js', new Date());
+			window.gtag('config', 'G-BGSJ1FWPTF');
 
 			document.addEventListener('click', function (event) {
 				var el = event.target.closest('[data-cta]');
 				if (!el) return;
-				gtag('event', 'cta_click', {
+				window.gtag('event', 'cta_click', {
 					cta_id: el.getAttribute('data-cta'),
 					cta_href: el.getAttribute('href') || '',
 				});
