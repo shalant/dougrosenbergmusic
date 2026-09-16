@@ -21,6 +21,53 @@ const CONTACT_TO = "doug.rosenberg@gmail.com";
 const FROM_ADDRESS = "contact@dougrosenberg.com";
 const ALLOWED_ORIGINS = ["https://dougrosenberg.com", "https://www.dougrosenberg.com"];
 
+// First-party GA4 proxy — added 2026-09-15 after confirming (via live network
+// inspection) that gtag.js's own hits to google-analytics.com were coming
+// back blocked/altered in a real browser, while identical hits fired
+// manually from the same page succeeded, pointing at hostname-based ad-
+// blocker/security-software filtering rather than anything wrong with the
+// site's CSP or the GA4 config itself. Domain-based blocklists (EasyList/
+// EasyPrivacy and most consumer security tools) match on
+// googletagmanager.com / google-analytics.com specifically, not on request
+// content - routing both the library load and the collect hits through our
+// own domain via gtag's documented `transport_url` + `first_party_collection`
+// config (see BaseLayout.astro) sidesteps that without needing full
+// server-side Tag Manager. BaseLayout.astro's script-src/connect-src CSP no
+// longer needs to allow the two Google hosts directly, since the browser
+// only ever talks to dougrosenberg.com now - the fetch() below is the one
+// place that still reaches Google, server-side, unaffected by any client
+// CSP or blocker.
+const GA_PROXY_ROUTES = {
+	"/gtm/gtag/js": "https://www.googletagmanager.com/gtag/js",
+	"/gtm/g/collect": "https://www.google-analytics.com/g/collect",
+};
+
+async function proxyAnalytics(request, target) {
+	const url = new URL(request.url);
+	const upstream = new URL(target);
+	upstream.search = url.search;
+
+	const upstreamResponse = await fetch(upstream, {
+		method: request.method,
+		headers: request.headers,
+		body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
+	});
+
+	// fetch() already transparently decompresses the upstream body, so the
+	// original Content-Encoding/Content-Length headers no longer describe
+	// what's actually in the response - forwarding them as-is would make the
+	// browser try to re-decompress plain content and fail.
+	const headers = new Headers(upstreamResponse.headers);
+	headers.delete("content-encoding");
+	headers.delete("content-length");
+
+	return new Response(upstreamResponse.body, {
+		status: upstreamResponse.status,
+		statusText: upstreamResponse.statusText,
+		headers,
+	});
+}
+
 function json(data, status = 200) {
 	return new Response(JSON.stringify(data), {
 		status,
@@ -145,6 +192,10 @@ export default {
 				return json({ error: "Method not allowed" }, 405);
 			}
 			return handleContact(request, env);
+		}
+
+		if (url.pathname in GA_PROXY_ROUTES) {
+			return proxyAnalytics(request, GA_PROXY_ROUTES[url.pathname]);
 		}
 
 		if (url.pathname in GOOGLE_SITE_VERIFICATION) {

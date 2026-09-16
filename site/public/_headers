@@ -36,16 +36,16 @@
 # script) — same two allowances haxbyte's CSP carries for the same reason.
 # Remove both if Web Analytics is ever turned off.
 #
-# www.googletagmanager.com (script-src) / www.google-analytics.com +
-# *.google-analytics.com (connect-src) are for GA4 (BaseLayout.astro's gtag
-# snippet, reinstalled 2026-09-15, plus its delegated data-cta click
-# listener that fires 'cta_click' events - added because most real CTAs
-# on this page are same-origin (#contact, #dev) or mailto: links, which
-# GA4 Enhanced Measurement's automatic outbound-click tracking never
-# would have caught). GA4 runs in Consent Mode v2's default
-# "denied" state — no consent UI on this site ever grants it — so it only
-# ever sends cookieless pings, but those pings still go out to these hosts.
-# Remove all three if GA4 is ever turned off.
+# GA4 no longer needs www.googletagmanager.com/www.google-analytics.com
+# allowances here at all, as of 2026-09-15 - worker.js now proxies both the
+# gtag.js library and every collect hit through this domain (/gtm/gtag/js,
+# /gtm/g/collect) after live testing showed hostname-based ad-blocker/
+# security-software filtering was silently dropping hits sent straight to
+# those two hosts. The browser's own requests are all same-origin now
+# ('self' already covers them); only worker.js's server-side fetch() still
+# talks to Google directly, and that's outside the browser's CSP entirely.
+# GA4 still runs in Consent Mode v2's default "denied" state - no consent UI
+# on this site ever grants it - so it only ever sends cookieless pings.
 
 /*
   X-Content-Type-Options: nosniff
@@ -53,7 +53,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-Jgaq2nP+1ppXo0jydKZmWNdZp+5p9RAJGQXJ2BWamVk=' 'sha256-votDdFOvqIaIYhcVNlTD7HiBcCqk1u4WhbUl2QkV1aY=' 'sha256-u8Sw8tn3HZh3A64ocB1YNn6oBWQ2avr5gW0AaWGBPqg=' 'sha256-YBEzulwLq8g8Js4V4jtGOxZMQWDHkekkyvCAlKMKgPs=' 'sha256-Jr+1y2U/1M1WlR1c+wttcaOZFJMiM/j6z6hEDxjZW5g=' 'sha256-XHTB+4oJMm+A6EVWYFrd4DPyVrIQ4aPzj+M5LYvSNis=' 'sha256-FtQMGXIgf+z4P4IOaJ/2Cvf8Ct+QJwemceM64BUkTFs=' 'sha256-G1gk/1ami/KUR8EYqTis8nBGKhgJGt8tsdU48IVeIK8=' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-Jgaq2nP+1ppXo0jydKZmWNdZp+5p9RAJGQXJ2BWamVk=' 'sha256-votDdFOvqIaIYhcVNlTD7HiBcCqk1u4WhbUl2QkV1aY=' 'sha256-jzm27h03lpwBvxkRDIu+GjO5A3zS2q1/cMMAyawFD4I=' 'sha256-YBEzulwLq8g8Js4V4jtGOxZMQWDHkekkyvCAlKMKgPs=' 'sha256-Jr+1y2U/1M1WlR1c+wttcaOZFJMiM/j6z6hEDxjZW5g=' 'sha256-XHTB+4oJMm+A6EVWYFrd4DPyVrIQ4aPzj+M5LYvSNis=' 'sha256-FtQMGXIgf+z4P4IOaJ/2Cvf8Ct+QJwemceM64BUkTFs=' 'sha256-G1gk/1ami/KUR8EYqTis8nBGKhgJGt8tsdU48IVeIK8=' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
 
 # Caching — Cloudflare Workers static-assets defaults every file to
 # `max-age=0, must-revalidate` regardless of content, confirmed via `curl -I`
