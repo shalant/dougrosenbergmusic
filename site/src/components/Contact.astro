@@ -14,7 +14,7 @@ const socials = [
     <h2 class="contact__heading">Let&rsquo;s make some music.</h2>
     <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
 
-    <a class="contact__cta" href={`mailto:${email}`}>
+    <a class="contact__cta" href={`mailto:${email}`} data-cta="contact-email">
       {email}
       <span aria-hidden="true">→</span>
     </a>
@@ -37,6 +37,13 @@ const socials = [
           <input type="email" id="contact-email" name="email" required maxlength="200" autocomplete="email" />
         </div>
         <div class="contact__field">
+          <label for="contact-interest">I&rsquo;m interested in</label>
+          <select id="contact-interest" name="interest">
+            <option value="music">Music booking or lessons</option>
+            <option value="web">A web project</option>
+          </select>
+        </div>
+        <div class="contact__field">
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" required maxlength="5000" rows="5"></textarea>
         </div>
@@ -47,13 +54,17 @@ const socials = [
           <label for="contact-website">Website</label>
           <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
         </div>
-        <button type="submit" class="contact__submit">Send Message</button>
+        <button type="submit" class="contact__submit" data-cta="contact-form-submit">Send Message</button>
         <p id="contact-form-status" class="contact__form-status" role="status"></p>
       </form>
     </div>
   </div>
 
   <footer class="contact__footer">
+    <p class="contact__footer-proof">
+      This site — Astro, Cloudflare Workers, no bloat — is the portfolio.
+      <a href="https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro/" target="_blank" rel="noopener noreferrer">See how it was rebuilt →</a>
+    </p>
     <p>© {new Date().getFullYear()} Doug Rosenberg</p>
   </footer>
 </section>
@@ -73,6 +84,7 @@ const socials = [
       name: String(formData.get('name') ?? '').trim(),
       email: String(formData.get('email') ?? '').trim(),
       message: String(formData.get('message') ?? '').trim(),
+      interest: String(formData.get('interest') ?? ''),
       website: String(formData.get('website') ?? ''),
     };
 
@@ -97,6 +109,11 @@ const socials = [
         status.textContent = "Message sent — thanks! I'll reply within a few days.";
         status.classList.add('contact__form-status--success');
         form.reset();
+        // Fires alongside the 'cta_click' from the submit button itself -
+        // that one only means the button was clicked, this one means the
+        // message actually reached the worker. gtag is declared in
+        // BaseLayout's inline script, which always renders before this one.
+        gtag('event', 'generate_lead', { method: 'contact_form', interest: payload.interest });
       } else {
         status.textContent = result.error || 'Something went wrong. Please email directly instead.';
         status.classList.add('contact__form-status--error');
@@ -196,6 +213,24 @@ const socials = [
     font-size: 0.72rem;
   }
 
+  .contact__footer-proof {
+    margin: 0 0 0.6rem;
+    color: var(--text-muted);
+  }
+
+  .contact__footer-proof a {
+    color: var(--glow);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease;
+  }
+
+  .contact__footer-proof a:hover,
+  .contact__footer-proof a:focus-visible {
+    border-color: var(--glow);
+  }
+
   /* the email address is long enough at the mono font's clamp() minimum that
      the pill's default padding pushes it past the viewport at ~320px-wide
      phones (confirmed via a real horizontal-scrollWidth check, not assumed) -
@@ -240,6 +275,7 @@ const socials = [
   }
 
   .contact__field input,
+  .contact__field select,
   .contact__field textarea {
     font: inherit;
     font-size: 0.95rem;
@@ -255,6 +291,7 @@ const socials = [
   }
 
   .contact__field input:focus-visible,
+  .contact__field select:focus-visible,
   .contact__field textarea:focus-visible {
     outline: none;
     border-color: var(--brass);

@@ -77,7 +77,10 @@
 
 :root {
   --bg: #0a0e17;
-  --bg-elevated: #10162399;
+  /* solid, not translucent - both consumers (StaffNav's hover tag and its
+     mobile dropdown panel) need to read as an opaque surface over whatever
+     photo/content sits behind them, not blend into it */
+  --bg-elevated: #101623;
   --surface: #131a26;
   --text: #e9edf5;
   --text-muted: rgba(233, 237, 245, 0.62);
@@ -110,6 +113,18 @@
 
 html {
   scroll-behavior: smooth;
+  /* Chrome/Safari's text-autosizer ("font boosting") inflates font sizes in
+     narrow text columns to stay legible on real devices - left on its
+     default "auto", this can blow past a clamp()'d heading's own max and
+     overlap neighboring content (seen on the hero's h1 in Chrome's
+     Responsive-mode device emulation at certain widths). Explicit 100%
+     disables the auto-inflation and trusts our own font-size/clamp values
+     instead. Headless Chrome doesn't run this heuristic the same way real
+     Chrome does, so this fix isn't screenshot-verifiable here - it's the
+     standard fix for this exact symptom class (also in normalize.css/
+     Tailwind preflight for the same reason). */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -198,6 +213,51 @@ a {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--brass);
+}
+
+/* Shared pill-button pair — originally hero-only, promoted here once
+   DevServices.astro needed the exact same buttons: Astro scopes
+   component <style> blocks per-component, so a class defined in
+   HeroGraded.astro wasn't reachable from a different component. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.cta-primary {
+  background: var(--glow);
+  color: var(--bg);
+}
+
+.cta-primary:hover,
+.cta-primary:focus-visible {
+  background: #9fe8cd;
+  transform: translateY(-1px);
+}
+
+.cta-secondary {
+  color: var(--text);
+  border: 1px solid rgba(233, 237, 245, 0.22);
+  background: rgba(19, 26, 38, 0.4);
+  backdrop-filter: blur(6px);
+}
+
+.cta-secondary:hover,
+.cta-secondary:focus-visible {
+  border-color: var(--glow);
+  color: var(--glow);
+}
+
+.cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
 }
 
 .visually-hidden {

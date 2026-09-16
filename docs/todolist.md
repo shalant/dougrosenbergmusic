@@ -490,7 +490,7 @@ this project's own custom items and where it stands against them.
       case-study reference for the client-musician-site pitch (`SITE_BUILD_CHECKLIST.md`'s whole
       reason for existing) — not a launch requirement, just worth deciding deliberately rather
       than defaulting either way.
-- [ ] **Dev-services hero pivot — branch `hero-riff-14`, built, not yet merged.** See
+- [x] **Dev-services hero pivot — branch `hero-riff-14`, merged to master 2026-09-14 night (PR #27).** See
       `docs/DESIGN_NOTES.md`'s new "Dev-services hero pivot" section for the full design narrative;
       this entry tracks the engineering side. `HeroGraded.astro` rewritten for a right-column,
       dev-services-copy layout (Riff 14 of a 14-riff exploration artifact), then iterated: photo
@@ -514,10 +514,176 @@ this project's own custom items and where it stands against them.
               Built `dist/`, recomputed sha256 hashes for every inline script on both `index.html`
               and `404.html` per the file's own regen instructions, diffed against the previous 6 —
               exactly one new hash, all 6 old ones unchanged. Added the new hash (7 total now).
-      - **Not yet decided:** whether this hero replaces the locked musician-bio one, coexists as
-        some kind of split, or stays a parked exploration — a real product decision, not something
-        to default on. Branch is pushed to `origin/hero-riff-14`; PR/merge held for Doug to do
-        manually.
+      - **Decided (2026-09-15):** not a split — one page, deliberately. Doug: this stays a
+        musician's site *and* is a billboard for dev services, with the hero's two CTAs + the
+        DEV nav pill + the terminal's portfolio item as the fork's exit points for visitors who
+        want dev work, while everyone else keeps scrolling into the musician content unchanged.
+        GA4 (dormant since the rebuild, see below) shows dougrosenberg.com as the higher-traffic,
+        more-human-engagement property of Doug's two sites, which is *why* this fork's execution
+        matters — see the fork-conversion pass below.
+      - [x] **Mobile/nav cleanup — branch `mobile-hero-nav-polish` (off `hero-riff-14`,
+            2026-09-14 overnight), merged via `hero-fork-polish` 2026-09-15.** Doug flagged two things from a real
+            screenshot at 448×487: the hero looked "totally cluttered" on mobile, and the
+            hamburger dropdown was too translucent. Verified and fixed both with real headless-
+            Chrome screenshots at 375/390/448/641/768/861/1010/1024px (`chrome-launcher` +
+            `puppeteer-core`, same workaround this repo's own history already used for the
+            `resize_window` limitation), not eyeballed:
+            - **Dropdown translucency — root cause was `global.css`'s `--bg-elevated: #10162399`**
+              (~60% opacity), shared by `StaffNav.astro`'s mobile dropdown panel and its desktop
+              hover tooltip. Made it fully opaque (`#101623`) — screenshot-confirmed the dropdown
+              now reads as a solid card instead of the hero photo/title bleeding straight through
+              it.
+            - **Hero clutter, two separate real bugs, not one:**
+              1. `Logo.astro`'s fixed 104×104px mark had no mobile override, landing directly on
+                 top of the eyebrow/title text on any short viewport where `.hero__content`'s
+                 vertical centering pushed it up that far. Added a `≤640px` override matching the
+                 hamburger's own 44×44px size (still clears the 44px touch-target minimum this
+                 project already holds itself to elsewhere).
+              2. `.hero__content` was vertically centered over the full-bleed photo at every
+                 breakpoint including phone, putting the title/services list directly over Doug's
+                 face instead of beside it. Anchored it to the bottom on `≤640px` instead (reuses
+                 the scrim's already-strong bottom darkening, keeps the photo itself fully visible
+                 above it) and strengthened that breakpoint's scrim gradient to stay dark from ~42%
+                 down rather than ~55%, so it holds up regardless of how many lines the title wraps
+                 to.
+              - **A third, pre-existing bug found in the process, not part of Doug's original
+                report:** the four "now playing" chips (percentage-positioned for the desktop
+                absolute-overlay composition) landed squarely on top of the eyebrow text at 768px
+                once `.hero__content` drops into normal flow at the existing `≤1024px` tablet
+                breakpoint — confirmed via screenshot, not assumed. Moved the chips' existing
+                `display: none` up into the `≤1024px` query (was `≤640px` only) rather than
+                tuning per-breakpoint coordinates for four decorative elements already sacrificed
+                on phone.
+            - Verified: full build succeeds, all 32 non-skipped E2E tests pass (mobile-chrome
+              project's hamburger-menu specs included), no CSP hash regen needed (style-only
+              changes, no inline `<script>` content touched). The 861–1010px desktop-nav
+              scale-down from the earlier `fix-hero-nav-overlap` work is unaffected — screenshot-
+              checked at 861px, still clear of the subject.
+      - [x] **SEO/GEO pass — branch `seo-geo-hero-fixes` (off `hero-riff-14`, 2026-09-14
+            overnight), merged via `hero-fork-polish` 2026-09-15.** Title/meta/`personSchema`/
+            `websiteSchema`/`llms.txt` all reworded to lead with web design/dev, matching the
+            hero's own copy. Real bug fixed: the terminal widget's text shipped empty in
+            server-rendered HTML (JS-only typewriter), invisible to non-JS crawlers — now
+            pre-rendered with the first item's text and a `firstRun` flag so the client script
+            doesn't re-type what's already there.
+      - [x] **Scroll-overlap bug found and fixed, `hero-fork-polish` branch, 2026-09-15 —
+            not from any prior branch.** `StaffNav.astro`'s `.staff-nav` panel is
+            `position: fixed`, on screen through the entire scroll, with a translucent glass
+            background (`rgba(19,26,38,0.38)` + blur) — confirmed via real screenshots that at
+            several scroll depths it visually bled into body content (the About pull-quote, the
+            "Professional Affiliations" heading, a Gallery photo) rather than reading as
+            intentional UI. A prior fix (`fix-hero-nav-overlap`, PR #19) only addressed the nav
+            overlapping the hero *photo* at narrow desktop widths, a different bug. Fixed by
+            swapping the translucent background for the same solid `--bg-elevated` token
+            `mobile-hero-nav-polish` already uses for the dropdown/tooltip, plus a real drop
+            shadow — the panel still sits over content while scrolling (unavoidable for
+            position:fixed chrome), but now unambiguously as solid UI, not a rendering glitch.
+            Same treatment applied to `Logo.astro`'s fixed mark once mobile screenshots (a step
+            further than the plan called for) showed the hero's own "See My Work" button
+            visible behind/beside it mid-scroll — the mark's SVG plate doesn't fill its full
+            bounding box, so untreated it had the same bleed-through problem at a smaller scale.
+      - [x] **`LeadSheetBarShape.astro` cut, 2026-09-15 (Doug's call).** The decorative
+            "Intro/A/B/C/Coda" song-form strip (`aria-hidden`, no scroll-tracking, no click
+            behavior) collided visually with both the desktop `StaffNav` panel and, on mobile,
+            the fixed logo/hamburger band, as it scrolled past — confirmed on both breakpoints
+            via screenshot. Purely decorative and colliding with real nav chrome on two separate
+            breakpoints wasn't worth restyling around. Archived (full markup/CSS + why-cut note)
+            to `ui-lab/artifacts/dougrosenbergmusic/leadsheet-bar-divider.html` before removal,
+            per this project's usual practice of not just deleting exploratory work. Its
+            chord-symbol sibling, `LeadSheetBar.astro`, was already dead code (never wired into
+            `index.astro`) — left alone, out of scope for this pass.
+      - [x] **Fork-conversion pass, 2026-09-15 (Doug: "make it sing," target 9/10).** Four
+            tactics, each independently acceptable/revertable:
+            1. Footer now pairs the "this site is the proof" line with a real teaser link to
+               the already-published case study (`Contact.astro`'s footer, previously just the
+               copyright line) — the DEV nav pill was the only prior exit point and gave zero
+               context before asking for a click.
+            2. Hero's primary CTA reworded from generic agency copy ("Let's Build Something →")
+               to reference the page the visitor is already on ("Like This Site? Let's Build
+               Yours →") — flagged as a copy suggestion for Doug to keep/edit/revert, not a
+               locked decision.
+            3. **Real gap found while wiring click-tracking (tactic 4): GA4 (`G-BGSJ1FWPTF`,
+               already configured against `dougrosenberg.com` in the dashboard) has collected
+               no data since the Astro rebuild — no gtag code exists anywhere in this codebase.**
+               The "dougrosenberg.com has real human engagement" claim made earlier this session
+               was based on stale/pre-cutover data, not the current site — corrected with Doug
+               directly. Reinstalled in `BaseLayout.astro` with Consent Mode v2 defaulted to
+               `denied` for every storage type (no consent-collection UI exists on this site, so
+               this preserves the original no-cookie-consent-overhead reasoning documented right
+               above the Cloudflare Web Analytics tag — GA4 now runs in cookieless/modeled mode
+               rather than setting `_ga`). `_headers` CSP updated: `www.googletagmanager.com`
+               (script-src) and `www.google-analytics.com` + `*.google-analytics.com`
+               (connect-src), plus one new inline-script hash for the consent bootstrap (8
+               total now, comment block updated to match). All four fork exit points (both hero
+               CTAs, the DEV pill, the terminal's portfolio item) are plain `<a>` tags to
+               dougrosenbergdev.com, so GA4's own Enhanced Measurement "outbound click"
+               auto-tracking covers all four with no custom event code needed.
+            - Verified: full build + all 32 non-skipped E2E tests pass; every inline-script hash
+              recomputed and cross-checked against `_headers`, exact match. GA4 script tag
+              confirmed present in served HTML and Consent Mode's default-deny is Google's own
+              documented pattern; local cookie-behavior verification was inconclusive
+              (`localhost`'s cookie jar in this browser profile is contaminated by unrelated
+              past projects) — real confirmation needs a check against production after deploy.
+- [ ] **Lighthouse mobile performance score investigation (2026-09-15) — deferred, not urgent.**
+      Mobile score sat at 50/100 (desktop: 95/100) under Lighthouse's default *simulated*
+      throttling. Chased it in order: froze the hero's continuous mobile/tablet animations (haze
+      drift, title shimmer, terminal cursor blink) to their static resting frame in
+      `HeroGraded.astro`'s `≤1024px` query, desktop's animated version untouched - measurably cut
+      raw paint/composite cost (5.9s → 0.2s in the trace) but barely moved the score (50 → 51),
+      proving that wasn't the real bottleneck. A controlled Puppeteer A/B test (native Long Tasks
+      API, blocking fonts vs. GTM vs. both) then found GTM/gtag.js responsible for roughly 2x the
+      blocking-time impact fonts had. Before acting on that, re-ran Lighthouse with
+      `--throttling-method=devtools` (real, not simulated, throttling) and got **83-92/100** across
+      3 runs. **Resolved: the 50 was overwhelmingly a Lighthouse simulation-model artifact, not a
+      real site defect** - the animation freeze and the GTM/font findings were both real and valid,
+      just not fixes for an actual bug (the animation freeze ships anyway, no harm). One real
+      caveat: PageSpeed Insights, what an outside visitor or prospective client would actually
+      check, uses the same simulated method by default - the public-facing number would likely
+      still show something in the 50s despite the real experience being fast.
+      - [ ] **If ever pursued:** move GTM off the main thread via Astro's official Partytown
+            integration (`astro add partytown`; wrap the two GTM `<script>` tags with
+            `type="text/partytown"`) - confirmed the single largest remaining *real* (not
+            simulated) contributor. Estimated impact on the simulated score: modest, roughly
+            +5-15 points, not transformative - the page is already fast for real users.
+- [ ] **Tech-debt / hygiene findings from a harsh code-quality + git-status review (2026-09-15),
+      Doug asked for a cold grade — landed on a C+.** Not urgent, but real; parking here so they
+      don't get lost. None of these were introduced by tonight's work, all pre-existing.
+      - [ ] **`"strict": true` in `tsconfig.json` is unenforced.** No `astro check`, no
+            `@astrojs/check` dependency, no type-checking step anywhere in CI (`.github/workflows/
+            e2e.yml` and `lighthouse.yml` both just build + test, never type-check). A type error
+            could ship indefinitely with nothing catching it.
+      - [ ] **No lint/format tooling at all** — no ESLint, no Prettier, no config for either.
+            Style consistency depends entirely on manual discipline, not anything enforced.
+      - [ ] **No rate limiting on `POST /api/contact`** (`site/src/worker.js`). The honeypot
+            stops naive bots; nothing stops a scripted flood of well-formed submissions from
+            hammering the `send_email` binding or Doug's inbox.
+      - [ ] **CSP hash maintenance is fully manual** — copy the one-liner from `_headers`'s own
+            comment, run it, hand-paste up to 8 hashes. Already silently broke a feature once
+            before (see Round 1 history above, `StaffNav`) with no build-time failure to catch it.
+      - [ ] **Dead code: `site/src/components/LeadSheetBar.astro`** (the chord-symbol sibling of
+            `LeadSheetBarShape.astro`, which *was* wired in until tonight) was never imported
+            anywhere — confirmed via grep. Shipped, unused, nobody noticed until this review.
+      - [ ] **No monitoring/alerting.** If `send_email` starts silently failing (quota,
+            misconfigured binding), the only signal is a visitor getting a generic error and
+            giving up — nobody gets paged.
+      - [ ] **`folk-tales.jpg` (album cover) has ~130KiB of easy savings** — wrong display size
+            for its actual dimensions, caught by a real Lighthouse run 2026-09-15. Unrelated to
+            tonight's hero work; just sitting on production.
+      - [ ] **Branch/git hygiene, checked 2026-09-15:** 13 of the repo's 17 branches on `origin`
+            are already fully merged into `master` (confirmed via `git merge-base --is-ancestor`
+            against `origin/master` for every branch) and just sitting there stale — candidates
+            for deletion: `case-study-draft`, `contact-form`, `docs/hero-smoke-exploration-notes`,
+            `domain-cutover-custom-domain`, `fix-hero-nav-overlap`, `focus-visible-sweep`,
+            `note-contact-form-deliverability`, `optimize-sheetmusic-assets`,
+            `resolve-ai-bot-blocking`, `search-console-verification`, `seo-geo-pass`,
+            `staff-nav-icons`, `update-todolist-domain-cutover-status`,
+            `update-todolist-overnight-work`, plus `hero-riff-14` itself (merged via PR #27).
+            Only `mobile-hero-nav-polish` and `seo-geo-hero-fixes` are genuinely outstanding, and
+            both are being folded into `hero-fork-polish` tonight — see the fork-conversion pass
+            above. Also noted: local `master` is 9 commits behind `origin/master` (never an issue
+            in practice since work always branches from `origin/master` directly, but worth a
+            `git checkout master && git pull` at some point). Nothing here is urgent; it's the
+            kind of thing that's cheap to fix today and only gets more confusing to sort out later.
 - [x] **Before/after case study draft written and published** (draft: 2026-09-06 overnight, PR #20
       `case-study-draft`, this repo). Decided on the dev-portfolio framing: published as a real
       blog post on **dougrosenbergdev.com** (separate repo, `shalant/PortfolioNov25`) —

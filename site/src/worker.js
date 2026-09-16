@@ -44,20 +44,31 @@ function encodeHeaderUtf8(value) {
 	return `=?UTF-8?B?${btoa(unescape(encodeURIComponent(value)))}?=`;
 }
 
-function buildRawEmail({ name, email, message }) {
+// Whitelisted, not passed through raw - this drives both the subject-line
+// triage tag and gets echoed in the body, so an arbitrary value from a
+// direct API call (bypassing the <select>'s two real options) shouldn't
+// reach either.
+const INTEREST_LABELS = {
+	web: "Web Project",
+	music: "Music",
+};
+
+function buildRawEmail({ name, email, message, interest }) {
 	const safeName = sanitizeHeaderValue(name);
 	const safeEmail = sanitizeHeaderValue(email);
 	const encodedName = encodeHeaderUtf8(safeName);
+	const interestLabel = INTEREST_LABELS[interest] ?? INTEREST_LABELS.music;
 
 	return [
 		`From: ${encodeHeaderUtf8("Doug Rosenberg Music — Contact Form")} <${FROM_ADDRESS}>`,
 		`To: ${CONTACT_TO}`,
 		`Reply-To: ${encodedName} <${safeEmail}>`,
-		`Subject: ${encodeHeaderUtf8(`New contact form message from ${safeName}`)}`,
+		`Subject: ${encodeHeaderUtf8(`[${interestLabel}] New contact form message from ${safeName}`)}`,
 		`Content-Type: text/plain; charset="UTF-8"`,
 		`MIME-Version: 1.0`,
 		``,
 		`From: ${safeName} <${safeEmail}>`,
+		`Interested in: ${interestLabel}`,
 		``,
 		message,
 	].join("\r\n");
@@ -80,7 +91,7 @@ async function handleContact(request, env) {
 		return json({ error: "Invalid request body" }, 400);
 	}
 
-	const { name, email, message, website } = body ?? {};
+	const { name, email, message, interest, website } = body ?? {};
 
 	// Honeypot field: real visitors never see or fill it (hidden via CSS in
 	// the form itself); bots that fill every field trip this silently.
@@ -98,7 +109,7 @@ async function handleContact(request, env) {
 		return json({ error: "One of the fields is too long." }, 400);
 	}
 
-	const raw = buildRawEmail({ name, email, message });
+	const raw = buildRawEmail({ name, email, message, interest });
 	const emailMessage = new EmailMessage(FROM_ADDRESS, CONTACT_TO, raw);
 
 	try {

@@ -1,0 +1,451 @@
+---
+// Dedicated dev-services pitch, not just a hero mention + a corner nav
+// pill - added because dougrosenberg.com gets far more real traffic than
+// dougrosenbergdev.com (confirmed via GA4), so this page is the actual
+// lead-gen vehicle for freelance web work, not a courtesy cross-link.
+// Reuses the site's existing visual language (same background/typography
+// as every other section, --note-dev for the one accent) rather than
+// introducing a fourth visual idiom - see docs/DESIGN_NOTES.md.
+//
+// The broadcast screen + channel clicker below replaces an earlier,
+// flatter "centered box" version (Doug's own harsh-grade callout: it was
+// the weakest-looking section on the page precisely because it didn't
+// use any of the site's own visual devices). Explored as 20+ mockups in
+// ui-lab/artifacts/dougrosenbergmusic/dev-section-riffs.html before
+// landing here - "Channel Surf" screen + "Clicker" remote, the two Doug
+// picked. Every channel is real, live client/personal work, not filler -
+// see that URL for the fuller reasoning and the other variants.
+const services = ['Web Design', 'Development', 'Branding', 'Ongoing Support'];
+const base = import.meta.env.BASE_URL;
+const channels = [
+  { name: 'Guacamayo', tagline: 'Chicago funky Latin groove band', stack: 'Astro', href: 'https://dougrosenbergdev.com/webdesign/guacamayo-band/', img: `${base}images/portfolio/guacamayo.jpg` },
+  { name: 'Sonus Construction Group', tagline: 'General contractor, multi-family renovation', stack: 'Squarespace', href: 'https://dougrosenbergdev.com/webdesign/sonus-construction/', img: `${base}images/portfolio/sonus-construction.jpg` },
+  { name: 'Hardware Etc LLC', tagline: 'Bulk materials supplier', stack: 'Squarespace', href: 'https://dougrosenbergdev.com/webdesign/hardware-etc/', img: `${base}images/portfolio/hardware-etc.jpg` },
+  { name: 'GigSync', tagline: 'Booking automation for gigging musicians', stack: 'Cloudflare Workers', href: 'https://dougrosenbergdev.com/webdesign/gigsync/', img: `${base}images/portfolio/gigsync.jpg` },
+  { name: 'ArborKin', tagline: 'Multi-user family tree app, ~8k lines of C#, real users', stack: 'Blazor Server', href: 'https://dougrosenbergdev.com/webdesign/arborkin/', img: `${base}images/portfolio/arborkin.webp` },
+  { name: 'This site', tagline: 'The one you’re looking at right now', stack: 'Astro', href: '#hero', img: `${base}images/portfolio/this-site.jpg` },
+];
+---
+
+<section id="dev" class="dev">
+  <div class="wrap dev__grid">
+    <div class="dev__body">
+      <p class="eyebrow dev__eyebrow">For businesses</p>
+      <h2 class="dev__heading">I also build sites like this one.</h2>
+      <p class="dev__text">
+        I design and build custom websites for small businesses — the same care that went into
+        every animation, form, and pixel on this page. Astro, Cloudflare, no bloat, no bolted-on
+        page builder.
+      </p>
+      <ul class="dev__services">
+        {services.map((s) => (
+          <li>{s}</li>
+        ))}
+      </ul>
+      <div class="dev__ctas">
+        <a href="#contact" class="cta cta-primary" data-cta="dev-primary">Let&rsquo;s Talk About Your Site →</a>
+        <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary" data-cta="dev-secondary">See More of My Work</a>
+      </div>
+      <!-- The "see how this site was built" case-study link used to live
+           here too, verbatim duplicate of Contact.astro's footer link -
+           cut rather than fixed twice. Channel Surf below is now the
+           proof mechanism for this section (six real, clickable
+           projects); the case-study link earns its keep more right
+           before the contact form, the actual moment of deciding to
+           reach out, than repeated here. -->
+    </div>
+
+    <div class="dev__demo">
+      <!-- The screen shows the actual site, not a name card - a TV plays a
+           picture, not a caption. "channel" image/href/target are set by
+           the script below on load and on every click - kept out of the
+           initial markup (besides the first channel, pre-rendered same as
+           the hero terminal pattern) so a non-JS visitor still gets one
+           real, working link and a real image rather than a dead button.
+           Remote overlaps the screen's own bottom edge (skewed, resting
+           against it) instead of sitting in its own row below - Doug's
+           call, both for the physical-object feel and because a separate
+           row was dead space this section didn't need. -->
+      <div class="dev__screen-wrap">
+        <a class="dev__screen" id="dev-screen" href={channels[0].href} target="_blank" rel="noopener noreferrer" aria-label={`View ${channels[0].name}`}>
+          <img class="dev__screen-img" id="dev-screen-img" src={channels[0].img} alt="" />
+          <span class="dev__screen-top">
+            <span class="dev__screen-live" id="dev-screen-live" data-live="true">On air</span>
+            <span class="dev__screen-count" id="dev-screen-count">{`CH 01 / ${String(channels.length).padStart(2, '0')}`}</span>
+          </span>
+        </a>
+        <div class="dev__remote">
+          <button class="dev__remote-btn" id="dev-ch-prev" type="button" aria-label="Previous channel">&lsaquo;</button>
+          <div class="dev__remote-leds" id="dev-ch-leds">
+            {channels.map((_, i) => <span class={`dev__remote-led${i === 0 ? ' is-active' : ''}`} />)}
+          </div>
+          <button class="dev__remote-btn" id="dev-ch-next" type="button" aria-label="Next channel">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="dev__caption">
+        <p class="dev__caption-row">
+          <span class="dev__caption-name" id="dev-caption-name">{channels[0].name}</span>
+          <span class="dev__caption-stack" id="dev-caption-stack">{channels[0].stack}</span>
+        </p>
+        <p class="dev__caption-tagline" id="dev-caption-tagline">{channels[0].tagline}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ channels }}>
+  (function () {
+    var i = 0;
+    var screenEl = document.getElementById('dev-screen');
+    var imgEl = document.getElementById('dev-screen-img');
+    var nameEl = document.getElementById('dev-caption-name');
+    var taglineEl = document.getElementById('dev-caption-tagline');
+    var stackEl = document.getElementById('dev-caption-stack');
+    var countEl = document.getElementById('dev-screen-count');
+    var liveEl = document.getElementById('dev-screen-live');
+    var leds = document.getElementById('dev-ch-leds').children;
+    if (!screenEl) return;
+
+    function render() {
+      var c = channels[i];
+      imgEl.src = c.img;
+      nameEl.textContent = c.name;
+      taglineEl.textContent = c.tagline;
+      stackEl.textContent = c.stack;
+      countEl.textContent = 'CH ' + String(i + 1).padStart(2, '0') + ' / ' + String(channels.length).padStart(2, '0');
+      liveEl.textContent = 'On air';
+      screenEl.setAttribute('aria-label', 'View ' + c.name);
+      if (c.href.startsWith('#')) {
+        screenEl.href = c.href;
+        screenEl.removeAttribute('target');
+        screenEl.removeAttribute('rel');
+      } else {
+        screenEl.href = c.href;
+        screenEl.target = '_blank';
+        screenEl.rel = 'noopener noreferrer';
+      }
+      Array.from(leds).forEach(function (led, idx) {
+        led.classList.toggle('is-active', idx === i);
+      });
+    }
+
+    document.getElementById('dev-ch-next').addEventListener('click', function () {
+      i = (i + 1) % channels.length;
+      render();
+    });
+    document.getElementById('dev-ch-prev').addEventListener('click', function () {
+      i = (i - 1 + channels.length) % channels.length;
+      render();
+    });
+  })();
+</script>
+
+<style>
+  .dev {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+    border-top: 1px solid rgba(233, 237, 245, 0.08);
+    border-bottom: 1px solid rgba(233, 237, 245, 0.08);
+  }
+
+  .dev__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 6vw, 4rem);
+    align-items: center;
+  }
+
+  .dev__eyebrow {
+    color: var(--note-dev);
+  }
+
+  .dev__heading {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 4.4vw, 2.9rem);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .dev__text {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 48ch;
+  }
+
+  .dev__services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+  }
+
+  .dev__services li {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid rgba(233, 237, 245, 0.14);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .dev__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 2.25rem;
+  }
+
+  /* ---- broadcast screen + clicker ---- */
+
+  .dev__demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dev__screen-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    /* room for the remote, which overlaps the screen's own bottom edge
+       rather than sitting in a separate row below it */
+    margin-bottom: 1.6rem;
+  }
+
+  .dev__screen {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 2px solid var(--brass);
+    overflow: hidden;
+  }
+
+  /* contain, not cover - these are Doug's own curated "best shot" per
+     project, so the fix for a too-narrow 4:3 frame cropping them is to
+     show the whole picture, not to crop less. The 16:9 frame above is
+     close enough to every source image's real ratio (~1.85-2.3:1) that
+     the letterbox bars stay thin - and letterboxing itself reads as
+     more broadcast-TV, not less. */
+  .dev__screen-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.4s ease;
+  }
+
+  .dev__screen:hover .dev__screen-img,
+  .dev__screen:focus-visible .dev__screen-img {
+    transform: scale(1.03);
+  }
+
+  /* scanlines + a bottom vignette so the corner chrome stays legible over
+     whatever the current channel's image happens to be - broadcast-grade
+     treatment applied to a real picture, same idea as the hero's own
+     scanline/vignette layers, not a new device. */
+  .dev__screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(233, 237, 245, 0.05) 0px,
+      rgba(233, 237, 245, 0.05) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    pointer-events: none;
+  }
+
+  .dev__screen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 14, 23, 0.55) 0%, transparent 22%, transparent 78%, rgba(10, 14, 23, 0.4) 100%);
+    pointer-events: none;
+  }
+
+  .dev__screen-top {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .dev__screen-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--note-cred);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  .dev__screen-live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: dev-blink 1.8s ease-in-out infinite;
+  }
+
+  @keyframes dev-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .dev__screen-count {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Compact on purpose - name, stack, and tagline share two lines instead
+     of three stacked blocks with their own margins, since this whole
+     column was taking up more vertical real estate than the amount of
+     actual information in it justified (Doug's own call). */
+  .dev__caption {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .dev__caption-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .dev__caption-name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    color: var(--text);
+  }
+
+  .dev__caption-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin: 0.3rem 0 0;
+  }
+
+  .dev__caption-stack {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brass);
+    border: 1px solid rgba(207, 154, 79, 0.4);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  /* Rests against the screen's own bottom-right corner, skewed, rather
+     than sitting in a separate row below it - a physical object leaning
+     on the TV, and it closes the dead space that row used to be. */
+  .dev__remote {
+    position: absolute;
+    bottom: -22px;
+    right: 28px;
+    display: flex;
+    align-items: center;
+    height: 52px;
+    border-radius: 999px;
+    padding-inline: 0.4rem;
+    gap: 0.6rem;
+    background: linear-gradient(160deg, #1b2333, #0d1119);
+    border: 1px solid rgba(233, 237, 245, 0.08);
+    box-shadow: 0 16px 32px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transform: rotate(-5deg);
+    transition: transform 0.2s ease;
+  }
+
+  .dev__remote:hover,
+  .dev__remote:focus-within {
+    transform: rotate(-5deg) scale(1.04);
+  }
+
+  .dev__remote-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dev__remote-btn:hover,
+  .dev__remote-btn:focus-visible {
+    color: var(--text);
+  }
+
+  .dev__remote-btn:active {
+    transform: scale(0.96);
+  }
+
+  .dev__remote-leds {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dev__remote-led {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(233, 237, 245, 0.18);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dev__remote-led.is-active {
+    background: var(--note-cred);
+    box-shadow: 0 0 5px var(--note-cred);
+  }
+
+  @media (max-width: 760px) {
+    .dev__grid {
+      grid-template-columns: 1fr;
+    }
+    .dev__services,
+    .dev__ctas {
+      justify-content: center;
+    }
+    .dev__body {
+      text-align: center;
+    }
+    .dev__text {
+      margin-inline: auto;
+    }
+  }
+</style>

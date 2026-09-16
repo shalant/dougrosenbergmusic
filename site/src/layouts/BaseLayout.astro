@@ -17,10 +17,11 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Doug Rosenberg',
-  jobTitle: ['Saxophonist', 'Composer', 'Educator'],
+  jobTitle: ['Web Developer', 'Saxophonist', 'Composer', 'Educator'],
   url: Astro.site?.toString(),
   email: 'mailto:doug.rosenberg@gmail.com',
   sameAs: [
+    'https://dougrosenbergdev.com',
     'https://instagram.com/shalantdoro',
     'https://youtube.com/@dougrosenberg2361',
     'https://linkedin.com/in/douglasrosenberg',
@@ -33,7 +34,7 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: 'Doug Rosenberg',
   url: Astro.site?.toString(),
-  description: 'Doug Rosenberg — saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
+  description: 'Doug Rosenberg — web design and development, plus a saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
 };
 ---
 
@@ -69,6 +70,51 @@ const websiteSchema = {
 		     HTML. Site registered under Web Analytics as
 		     dougrosenbergmusic.doug-rosenberg.workers.dev. -->
 		<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: '775b11737d154a3a8878533ba375f9f9' })}></script>
+
+		<!-- GA4 — reinstalled 2026-09-15; the property (G-BGSJ1FWPTF) existed but
+		     had no tag on the current Astro build, so it collected nothing since
+		     the rebuild.
+		     Consent Mode v2 default is 'denied' for every storage type below,
+		     and there's no consent-collection UI on this site to ever grant it -
+		     this keeps the original no-cookie-consent-overhead reasoning above
+		     intact: GA4 runs in its cookieless/modeled "ping" mode rather than
+		     setting the _ga client-id cookie. Less precise than cookied GA4
+		     (no cross-session user counts, some numbers are modeled/estimated),
+		     but real click and page data without reopening the consent-banner
+		     question this site deliberately doesn't have an answer for yet.
+
+		     CTA clicks are sent as explicit 'cta_click' events on every element
+		     with a data-cta attribute, rather than relying on GA4 Enhanced
+		     Measurement's automatic "outbound click" tracking - most of the
+		     real CTAs (DevServices' "#contact" anchor, the Dev nav pill's
+		     "#dev" anchor, Contact's mailto: link) are same-origin or a
+		     non-http(s) scheme, so Enhanced Measurement's outbound-click
+		     heuristic - which only fires for <a> tags pointing at a different
+		     http(s) host - would silently miss them. A single delegated
+		     listener on document covers every current and future data-cta
+		     element with no per-component script. -->
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('consent', 'default', {
+				ad_storage: 'denied',
+				ad_user_data: 'denied',
+				ad_personalization: 'denied',
+				analytics_storage: 'denied',
+			});
+			gtag('js', new Date());
+			gtag('config', 'G-BGSJ1FWPTF');
+
+			document.addEventListener('click', function (event) {
+				var el = event.target.closest('[data-cta]');
+				if (!el) return;
+				gtag('event', 'cta_click', {
+					cta_id: el.getAttribute('data-cta'),
+					cta_href: el.getAttribute('href') || '',
+				});
+			});
+		</script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF"></script>
 	</head>
 	<body>
 		<Logo />
