@@ -645,6 +645,30 @@ this project's own custom items and where it stands against them.
             `type="text/partytown"`) - confirmed the single largest remaining *real* (not
             simulated) contributor. Estimated impact on the simulated score: modest, roughly
             +5-15 points, not transformative - the page is already fast for real users.
+      - **Update, same night:** Doug pursued a different lever himself - branch
+        `ga4-first-party-proxy` (pushed, not reviewed or merged from this session), one commit,
+        "Proxy GA4 through worker.js as a first-party endpoint." Not evaluated here; noting its
+        existence so it isn't lost track of.
+- [x] **`hero-fork-polish` deployed - PR #28 merged 2026-09-15 night, live and verified.** Branch
+      consolidated `mobile-hero-nav-polish` + `seo-geo-hero-fixes` (both finished merges that had
+      sat uncommitted) plus that night's own work into 7 commits: the DevServices/Channel Surf
+      section + nav bleed-through fixes, the mobile-first hero pass, GA4 reinstall + contact-form
+      interest field, GA4 click/conversion tracking, and this doc. Verified live, not just merged:
+      `curl`'d `https://dougrosenberg.com/` directly and confirmed the new headline, the
+      DevServices content, and the click-tracking code are actually present in the served HTML,
+      and that the live CSP header's hashes match the final commit exactly.
+- [x] **`ui-lab` design-artifact archive brought current, 2026-09-15 night.** Doug had ~15 Claude
+      Artifact tabs open from the hero-exploration marathon and asked whether they were all backed
+      up locally. They weren't - cross-referencing the full artifact list against what's actually
+      in `ui-lab/artifacts/dougrosenbergmusic/` found 8 real gaps (mostly early hero mockups predating
+      the site's real Fraunces/staff-nav system, plus the "Head Room" memo that directly diagnosed
+      the shipped hero's headline-overlap bug, and "Dev Section Riffs," the exploration that became
+      `DevServices.astro`). All 8 fetched and saved, `index.html` updated with matching entries
+      (including 3 files from an earlier session that were saved but never linked), committed on
+      the existing `archive-hero-smoke-and-guacamayo` branch and pushed - not yet merged to `main`.
+      **Real gap found and fixed while at it: `ui-lab` had no `CLAUDE.md` at all, unlike
+      `dougrosenbergmusic`/`haxbyte` - added one with the same "always a branch, never main"
+      principle (no work-hours restriction, since this repo has no deploy cadence to protect).
 - [ ] **Tech-debt / hygiene findings from a harsh code-quality + git-status review (2026-09-15),
       Doug asked for a cold grade — landed on a C+.** Not urgent, but real; parking here so they
       don't get lost. None of these were introduced by tonight's work, all pre-existing.
