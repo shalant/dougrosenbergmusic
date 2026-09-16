@@ -9,7 +9,22 @@
 // stronger, faster amplitude than a purely decorative hero needs, since
 // it's now sharing the frame with the content block instead of being the
 // only thing happening in it. Four "now playing" chips drift up out of
-// the bell on curved paths, each naming a real track from Listen.astro.
+// the bell on curved paths, each naming a real track from Listen.astro. A
+// mobile-first pass tried folding the chips and the terminal pill into
+// .hero__content's flow instead of hiding them outright on phones - real
+// content, not filler - but on an actual phone it was simply too much
+// competing for the same short viewport (confirmed via a real screenshot,
+// not assumed: the headline, eyebrow, chips, and terminal all stacked up
+// and crowded/overlapped). Reverted to display:none on phones (see the
+// max-width: 640px query) for the chips, terminal, AND the eyebrow, which
+// wasn't part of the earlier reactive-hide list but is cut for the same
+// reason - the phone hero keeps the headline, services, and two CTAs only.
+const tracks = [
+  { href: 'https://www.amazon.com/dp/B00G9Y8TPE', label: 'Better Than TV' },
+  { href: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C', label: 'Goran Ivanovic Group' },
+  { href: 'https://www.amazon.com/dp/B006HTEKHM', label: 'Underwater' },
+  { href: 'https://www.amazon.com/dp/B00169L616', label: 'Folk Tales' },
+];
 ---
 
 <header id="hero" class="hero">
@@ -19,10 +34,14 @@
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
 
-  <a class="hero__chip hero__chip--nc1" href="https://www.amazon.com/dp/B00G9Y8TPE" target="_blank" rel="noopener noreferrer"><span>♪</span> Better Than TV</a>
-  <a class="hero__chip hero__chip--nc2 hero__chip--mirror" href="https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C" target="_blank" rel="noopener noreferrer"><span>♪</span> Goran Ivanovic Group</a>
-  <a class="hero__chip hero__chip--nc3" href="https://www.amazon.com/dp/B006HTEKHM" target="_blank" rel="noopener noreferrer"><span>♪</span> Underwater</a>
-  <a class="hero__chip hero__chip--nc4 hero__chip--mirror" href="https://www.amazon.com/dp/B00169L616" target="_blank" rel="noopener noreferrer"><span>♪</span> Folk Tales</a>
+  {tracks.map((track, i) => (
+    <a
+      class={`hero__chip hero__chip--nc${i + 1}${i % 2 === 1 ? ' hero__chip--mirror' : ''}`}
+      href={track.href}
+      target="_blank"
+      rel="noopener noreferrer"
+    ><span>♪</span> {track.label}</a>
+  ))}
 
   <div class="hero__content wrap">
     <p class="eyebrow hero__eyebrow">Formerly on stage. Now behind the screen.</p>
@@ -33,132 +52,28 @@
       <div class="hero__service"><span class="hero__service-bar"></span>Branding</div>
       <div class="hero__service"><span class="hero__service-bar"></span>Ongoing Support</div>
     </div>
+
     <div class="hero__ctas">
-      <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-primary">Let's Build Something →</a>
+      <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-primary">Like This Site? Let's Build Yours →</a>
       <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary">See My Work</a>
     </div>
   </div>
 
-  <!-- Sits in the empty lower-left of the frame. Rotates through four
-       destinations that aren't otherwise surfaced in the hero (the CTA
-       buttons above already cover "build" and "portfolio" overlaps here
-       with "portfolio") - a discovery path for the things easy to miss
-       on first scroll, not a replacement for the CTA buttons. Lessons
-       and private events both point at #contact since neither has its
-       own page yet - real inquiries for either go through that form. The
-       first item's text is pre-rendered server-side (matched exactly by
-       the script below) rather than starting blank and typing it in on
-       load - a crawler that doesn't run JS still gets real link text and
-       a real destination instead of an empty anchor. -->
-  <a class="hero__terminal" id="hero-terminal" href="#listen">
+  <!-- Sits in the empty lower-left of the frame. Used to rotate through
+       four destinations (listen/lessons/private events/portfolio) as a
+       typewriter cycle; simplified to a static line once the new #dev
+       section gave "portfolio" a real home with its own CTAs - the other
+       two rotating items were already hard to discover (a visitor had to
+       catch the right moment in a 10s cycle), so dropping the rotation
+       loses little and removes a third competing visual idiom (terminal/
+       typewriter) from a hero that already carries broadcast and musical-
+       notation motifs. Full rotating version archived at
+       ui-lab/artifacts/dougrosenbergmusic/hero-terminal-widget.html. -->
+  <a class="hero__terminal" href="#listen">
     <span class="hero__terminal-prompt" aria-hidden="true">&gt;</span>
-    <span class="hero__terminal-text" id="hero-terminal-text">listen now  →</span><span class="hero__terminal-cursor" aria-hidden="true"></span>
+    <span class="hero__terminal-text">listen now  →</span><span class="hero__terminal-cursor" aria-hidden="true"></span>
   </a>
 </header>
-
-<script>
-  (function () {
-    const items = [
-      { text: 'listen now  →', href: '#listen', external: false },
-      { text: 'lessons  →', href: '#contact', external: false },
-      { text: 'private events  →', href: '#contact', external: false },
-      { text: 'portfolio  →', href: 'https://dougrosenbergdev.com', external: true },
-    ];
-
-    const link = document.getElementById('hero-terminal');
-    const textEl = document.getElementById('hero-terminal-text');
-    if (!link || !textEl) return;
-
-    function applyItem(item) {
-      link.href = item.href;
-      if (item.external) {
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-      } else {
-        link.removeAttribute('target');
-        link.removeAttribute('rel');
-      }
-    }
-
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      applyItem(items[0]);
-      textEl.textContent = items[0].text;
-      return;
-    }
-
-    const TYPE_MS = 38;
-    const ERASE_MS = 20;
-    const CYCLE_MS = 10000;
-
-    let index = 0;
-    let paused = false;
-    let firstRun = true;
-
-    function typeText(text, done) {
-      let i = 0;
-      textEl.textContent = '';
-      (function step() {
-        if (paused) { setTimeout(step, 200); return; }
-        if (i <= text.length) {
-          textEl.textContent = text.slice(0, i);
-          i++;
-          setTimeout(step, TYPE_MS);
-        } else {
-          done();
-        }
-      })();
-    }
-
-    function eraseText(text, done) {
-      let i = text.length;
-      (function step() {
-        if (paused) { setTimeout(step, 200); return; }
-        if (i >= 0) {
-          textEl.textContent = text.slice(0, i);
-          i--;
-          setTimeout(step, ERASE_MS);
-        } else {
-          done();
-        }
-      })();
-    }
-
-    function cycle() {
-      const item = items[index];
-      applyItem(item);
-
-      function holdThenAdvance() {
-        const holdMs = Math.max(CYCLE_MS - item.text.length * TYPE_MS, 1500);
-        setTimeout(function () {
-          eraseText(item.text, function () {
-            index = (index + 1) % items.length;
-            cycle();
-          });
-        }, holdMs);
-      }
-
-      // The first item's text ships pre-rendered in the markup (so it's
-      // visible without JS) - skip re-typing it from scratch on load and
-      // just hold what's already there before erasing into the cycle.
-      if (firstRun) {
-        firstRun = false;
-        holdThenAdvance();
-      } else {
-        typeText(item.text, holdThenAdvance);
-      }
-    }
-
-    // Pausing on hover/focus (rather than just letting the interval run)
-    // keeps the link's text - and its href - from changing out from under
-    // someone mid-click or mid-read.
-    link.addEventListener('mouseenter', () => { paused = true; });
-    link.addEventListener('mouseleave', () => { paused = false; });
-    link.addEventListener('focus', () => { paused = true; });
-    link.addEventListener('blur', () => { paused = false; });
-
-    cycle();
-  })();
-</script>
 
 <style>
   .hero {
@@ -339,7 +254,12 @@
     font-family: var(--font-mono);
     font-size: 0.76rem;
     letter-spacing: 0.03em;
-    color: var(--text-muted);
+    /* Bespoke, not --text-muted (0.62) - this sits over a hazy photo
+       rather than a flat --bg, where that opacity reads as low-contrast
+       and hard to read. Bumped locally rather than raising the shared
+       token, which other --text-muted usages elsewhere rely on staying
+       quiet. */
+    color: rgba(233, 237, 245, 0.85);
   }
 
   .hero__service-bar {
@@ -357,52 +277,10 @@
     flex-wrap: wrap;
   }
 
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.85rem 1.6rem;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .cta-primary {
-    background: var(--glow);
-    color: var(--bg);
-  }
-
-  .cta-primary:hover,
-  .cta-primary:focus-visible {
-    background: #9fe8cd;
-    transform: translateY(-1px);
-  }
-
-  .cta-secondary {
-    color: var(--text);
-    border: 1px solid rgba(233, 237, 245, 0.22);
-    background: rgba(19, 26, 38, 0.4);
-    backdrop-filter: blur(6px);
-  }
-
-  .cta-secondary:hover,
-  .cta-secondary:focus-visible {
-    border-color: var(--glow);
-    color: var(--glow);
-  }
-
-  .cta:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
-  }
-
-  /* skewed "command line" — rotates through the three real destinations
-     (build / listen / portfolio) as one typed line, a second path to the
-     same links the CTA buttons above already cover. Sized to its content
-     (not a fixed box) so the pill visibly grows and shrinks as the JS
-     types and erases. */
+  /* skewed "command line" — static now (see the markup comment above for
+     why the rotating version was simplified out). Sized to its content,
+     not a fixed box, so it still reads as a pill rather than a full-width
+     bar. */
   .hero__terminal {
     position: absolute;
     z-index: 1;
@@ -543,10 +421,52 @@
      playing" chips are hidden from here down too - their left/top percentages
      are tuned for the desktop absolute-overlay composition and land
      straight on top of the content block's text once .hero__content drops
-     into normal flow (confirmed via screenshot at 768px, not assumed). */
+     into normal flow.
+
+     A fixed max-width: 460px looked fine at 768px (where it was originally
+     checked) but was never re-checked across the rest of this range - at
+     the narrow end (641px) that same 460px box is nearly the full viewport
+     width, and left-aligned text inside it starts right where Doug is
+     (confirmed via a real 641px screenshot, not assumed). min(460px, 58vw)
+     keeps the original 460px wherever there's room for it (~793px+, where
+     the headline still wants that width to hold "that sound like you." on
+     one line - dropping the cap to 400px fixed 641px but broke this,
+     orphaning "you." onto its own third line at 1024px) and only shrinks
+     below 460px on the narrower widths where 58vw is the smaller number.
+
+     text-align: right alone (the fix already proven at the phone
+     breakpoint below) turned out not to be enough here on its own: the
+     eyebrow sentence is naturally almost exactly as wide as the box, so a
+     right-aligned single line of it still starts at the box's own left
+     edge either way (confirmed via a second real screenshot after the
+     first fix attempt still showed it landing on him) - same root issue as
+     the phone breakpoint's eyebrow overlap, same fix: cap the eyebrow's
+     own width so it wraps to two shorter lines that actually pull clear,
+     instead of relying on the container alone. */
   @media (max-width: 1024px) {
     .hero__chip {
       display: none;
+    }
+    /* Lighthouse mobile audit: 50/100, traced to ~5.9s of paint/composite
+       work under throttled CPU (desktop: 95/100, no such cost - so this is
+       purely a lower-end-hardware concern, not a real bug). The chips above
+       and the staff-nav's breathing dots are already display:none at this
+       width, so they're already free; these three are what's actually left
+       running - the haze blobs' drift, the title's shimmer, and the
+       terminal's cursor blink. Freezing them to their resting frame (not
+       hiding the elements - the haze glow, the gradient title, and the
+       cursor block all still render, just without the continuous
+       repaint/recomposite) keeps the atmosphere while cutting the
+       measured cost. Desktop keeps the full animated version untouched. */
+    .hero__haze::before,
+    .hero__haze::after {
+      animation: none;
+    }
+    .hero__title {
+      animation: fade-up 0.7s ease-out 0.15s both;
+    }
+    .hero__terminal-cursor {
+      animation: none;
     }
     .hero__content {
       position: relative;
@@ -554,8 +474,33 @@
       right: auto;
       top: auto;
       transform: none;
-      max-width: 460px;
+      /* .hero__content also carries the global .wrap class (max-width:
+         1180px; margin: 0 auto - a page-content gutter meant for normal
+         in-flow sections). Inside .hero's flex row, that auto margin wins
+         over .hero's own justify-content: flex-end (flexbox gives auto
+         margins first claim on free space), so the block was actually
+         being centered - equal gaps on both sides - not hugging the right
+         edge the way every other breakpoint does. Confirmed via computed
+         styles at 665x674 (Doug's "weird size" report): a 132px margin on
+         each side, not the flush-right position the max-width/text-align
+         tuning above assumed it already had. Zeroing it here restores the
+         actual right-hug and moves everything further right at once,
+         which is what "slide the text right" needed - not another narrower
+         max-width. */
+      margin: 0;
+      max-width: min(460px, 58vw);
       padding-bottom: 0;
+      text-align: right;
+    }
+    .hero__eyebrow {
+      max-width: 13rem;
+      margin-left: auto;
+    }
+    .hero__services {
+      align-items: flex-end;
+    }
+    .hero__ctas {
+      justify-content: flex-end;
     }
     .hero__scrim {
       background:
@@ -571,7 +516,18 @@
      assumed). Anchoring it to the bottom instead reuses the scrim's
      already-strong bottom darkening, keeps his face fully visible above
      it, and leaves it a plain dark band to sit on regardless of how many
-     lines the title wraps to at any given width. */
+     lines the title wraps to at any given width.
+
+     That fixed the vertical crowding but not the horizontal - .hero's own
+     `justify-content: flex-end` is what keeps the content block right-of-
+     center (clear of Doug, who sits left-of-center in the photo) at every
+     other breakpoint, but `max-width: 100%` here made the block fill the
+     entire row, leaving justify-content nothing to push against. Left-
+     aligned text in a full-width block then started flush at the hero's
+     left edge - directly over his face again (confirmed via a real
+     448x487 screenshot, not assumed). Right-aligning the text itself,
+     rather than fighting for width, is the fix that survives regardless
+     of exact viewport width or how many lines anything wraps to. */
   @media (max-width: 640px) {
     .hero__terminal {
       display: none;
@@ -580,6 +536,22 @@
       max-width: 100%;
       align-self: flex-end;
       padding-bottom: 2.75rem;
+      text-align: right;
+    }
+    /* Cut outright rather than shrunk to fit - a phone-width hero has room
+       for the headline, services, and the two CTAs; the eyebrow sentence
+       was one more line competing with the headline for the same tight
+       vertical space directly above it (confirmed via a real screenshot:
+       folding it plus the chips/terminal into flow read as crowded, not
+       just tight). */
+    .hero__eyebrow {
+      display: none;
+    }
+    .hero__services {
+      align-items: flex-end;
+    }
+    .hero__ctas {
+      justify-content: flex-end;
     }
     .hero__scrim {
       background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.4) 42%, rgba(10, 14, 23, 0.88) 62%, rgba(10, 14, 23, 0.95) 100%);
