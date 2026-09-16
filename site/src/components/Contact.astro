@@ -109,17 +109,20 @@ const socials = [
         status.textContent = "Message sent — thanks! I'll reply within a few days.";
         status.classList.add('contact__form-status--success');
         form.reset();
-        // Fires alongside the 'cta_click' from the submit button itself -
-        // that one only means the button was clicked, this one means the
-        // message actually reached the worker. Must be window.gtag, not a
-        // bare gtag() call: Astro wraps every inline <script> as its own ES
-        // module, so BaseLayout's `window.gtag = function gtag(){}` doesn't
-        // create a module-scoped binding this separate script could see -
-        // a bare call here previously threw "gtag is not defined" inside
-        // this try block, silently caught below and showing every real
-        // visitor a false "Something went wrong" error despite the email
-        // actually sending.
-        window.gtag('event', 'generate_lead', { method: 'contact_form', interest: payload.interest });
+        // Best-effort only, deliberately isolated in its own try/catch - a
+        // live retest on production (2026-09-16) found window.gtag can be
+        // undefined here even after BaseLayout's fix that made it a real
+        // window property: some browser privacy/ad-blocking extensions
+        // actively strip analytics globals like window.gtag sometime after
+        // page load, well before this async handler runs. Any failure here,
+        // for any reason, must never touch the success message above - the
+        // message really did send, and this call is not allowed to be why
+        // a visitor sees an error saying it didn't.
+        try {
+          window.gtag('event', 'generate_lead', { method: 'contact_form', interest: payload.interest });
+        } catch {
+          // Analytics only - swallow deliberately, see comment above.
+        }
       } else {
         status.textContent = result.error || 'Something went wrong. Please email directly instead.';
         status.classList.add('contact__form-status--error');

@@ -120,10 +120,18 @@ const websiteSchema = {
 			document.addEventListener('click', function (event) {
 				var el = event.target.closest('[data-cta]');
 				if (!el) return;
-				window.gtag('event', 'cta_click', {
-					cta_id: el.getAttribute('data-cta'),
-					cta_href: el.getAttribute('href') || '',
-				});
+				// Best-effort only: some privacy/ad-blocking extensions strip
+				// window.gtag sometime after page load (confirmed live,
+				// 2026-09-16 - see Contact.astro's generate_lead call for the
+				// user-visible failure mode that finding came from). A tracking
+				// miss must never throw uncaught here or interfere with the
+				// link's own real navigation.
+				try {
+					window.gtag('event', 'cta_click', {
+						cta_id: el.getAttribute('data-cta'),
+						cta_href: el.getAttribute('href') || '',
+					});
+				} catch {}
 			});
 		</script>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF"></script>
