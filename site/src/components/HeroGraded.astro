@@ -45,10 +45,14 @@
        with "portfolio") - a discovery path for the things easy to miss
        on first scroll, not a replacement for the CTA buttons. Lessons
        and private events both point at #contact since neither has its
-       own page yet - real inquiries for either go through that form. -->
+       own page yet - real inquiries for either go through that form. The
+       first item's text is pre-rendered server-side (matched exactly by
+       the script below) rather than starting blank and typing it in on
+       load - a crawler that doesn't run JS still gets real link text and
+       a real destination instead of an empty anchor. -->
   <a class="hero__terminal" id="hero-terminal" href="#listen">
     <span class="hero__terminal-prompt" aria-hidden="true">&gt;</span>
-    <span class="hero__terminal-text" id="hero-terminal-text"></span><span class="hero__terminal-cursor" aria-hidden="true"></span>
+    <span class="hero__terminal-text" id="hero-terminal-text">listen now  →</span><span class="hero__terminal-cursor" aria-hidden="true"></span>
   </a>
 </header>
 
@@ -88,6 +92,7 @@
 
     let index = 0;
     let paused = false;
+    let firstRun = true;
 
     function typeText(text, done) {
       let i = 0;
@@ -121,7 +126,8 @@
     function cycle() {
       const item = items[index];
       applyItem(item);
-      typeText(item.text, function () {
+
+      function holdThenAdvance() {
         const holdMs = Math.max(CYCLE_MS - item.text.length * TYPE_MS, 1500);
         setTimeout(function () {
           eraseText(item.text, function () {
@@ -129,7 +135,17 @@
             cycle();
           });
         }, holdMs);
-      });
+      }
+
+      // The first item's text ships pre-rendered in the markup (so it's
+      // visible without JS) - skip re-typing it from scratch on load and
+      // just hold what's already there before erasing into the cycle.
+      if (firstRun) {
+        firstRun = false;
+        holdThenAdvance();
+      } else {
+        typeText(item.text, holdThenAdvance);
+      }
     }
 
     // Pausing on hover/focus (rather than just letting the interval run)

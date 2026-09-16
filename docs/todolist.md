@@ -556,6 +556,40 @@ this project's own custom items and where it stands against them.
               changes, no inline `<script>` content touched). The 861–1010px desktop-nav
               scale-down from the earlier `fix-hero-nav-overlap` work is unaffected — screenshot-
               checked at 861px, still clear of the subject.
+      - [x] **SEO/GEO pass on the pivoted hero — branch `seo-geo-hero-fixes` (off `hero-riff-14`,
+            2026-09-14 overnight), not yet merged.** Doug asked for the site's title/meta/OG tags,
+            the `Person`/`WebSite` JSON-LD, and `llms.txt` — none of which mention web design/dev —
+            versus the hero's headline, which now leads entirely with it.
+            - `index.astro`'s `title`/`description` (flows into OG/Twitter tags automatically) now
+              lead with web design/development, keep the musician background as the second half
+              rather than dropping it.
+            - `BaseLayout.astro`'s `personSchema` gained `'Web Developer'` in `jobTitle` and
+              `https://dougrosenbergdev.com` in `sameAs` (the explicit machine-readable "same
+              entity" signal a body link alone doesn't give); `websiteSchema.description` updated
+              to match.
+            - `public/llms.txt` (the plain-text AI-orientation file) gained a line on the web
+              design/dev offering plus a `dougrosenbergdev.com` contact entry — previously 100%
+              music-focused.
+            - **Real bug found and fixed, not just copy:** the hero's rotating "command line"
+              widget (`HeroGraded.astro`, added in the commit above) shipped its text span
+              (`#hero-terminal-text`) empty in the server-rendered HTML — a vanilla-JS typewriter
+              filled it in after load. Googlebot renders JS, but `robots.txt` allows crawlers that
+              generally don't (GPTBot, ClaudeBot, PerplexityBot, CCBot, etc. — confirmed not
+              blocked), so those saw a link to `#listen` with no visible text at all. Fixed by
+              pre-rendering the first item's text (`listen now  →`) directly in the markup and
+              reworking the cycle so it holds/erases what's already there on first load instead of
+              blanking then re-typing it — verified via `curl` (static text present in raw HTML)
+              and in a real browser (cycle advances cleanly from the pre-rendered text into
+              "lessons →" with no flash/re-type).
+            - Regenerated CSP `script-src` hashes per `_headers`'s own instructions (`personSchema`/
+              `websiteSchema`'s JSON-LD content and the terminal script both changed → 3 of the 7
+              hashes changed; diffed against the previous set to confirm the other 4 were
+              untouched).
+            - Verified: full build succeeds, all 18 non-skipped E2E tests pass (including the
+              `<title>` regex and hero `<h1>` assertions), no console errors in a real browser.
+            - **Not done:** picking final marketing copy/positioning is Doug's call — this pass
+              only made the metadata consistent with copy he already shipped in the hero itself,
+              not a rewrite of that copy.
 - [x] **Before/after case study draft written and published** (draft: 2026-09-06 overnight, PR #20
       `case-study-draft`, this repo). Decided on the dev-portfolio framing: published as a real
       blog post on **dougrosenbergdev.com** (separate repo, `shalant/PortfolioNov25`) —
