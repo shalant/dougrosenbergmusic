@@ -83,6 +83,18 @@ const websiteSchema = {
 		     but real click and page data without reopening the consent-banner
 		     question this site deliberately doesn't have an answer for yet.
 
+		     Both the library itself and every hit are routed through the
+		     worker.js first-party proxy (/gtm/gtag/js, /gtm/g/collect) instead
+		     of loading straight from googletagmanager.com/google-analytics.com
+		     - confirmed via live network inspection that hostname-based ad-
+		     blocker/security-software filtering was silently eating real hits
+		     to those two hosts even though the tag, CSP, and GA4 config were
+		     all correct. transport_url + first_party_collection are gtag.js's
+		     own documented mechanism for this, not a hack: gtag keeps sending
+		     the same hit shape, just at our origin instead of Google's, and
+		     worker.js forwards it server-side where no browser-side blocker
+		     can intercept it.
+
 		     CTA clicks are sent as explicit 'cta_click' events on every element
 		     with a data-cta attribute, rather than relying on GA4 Enhanced
 		     Measurement's automatic "outbound click" tracking - most of the
@@ -103,7 +115,10 @@ const websiteSchema = {
 				analytics_storage: 'denied',
 			});
 			gtag('js', new Date());
-			gtag('config', 'G-BGSJ1FWPTF');
+			gtag('config', 'G-BGSJ1FWPTF', {
+				transport_url: 'https://dougrosenberg.com/gtm',
+				first_party_collection: true,
+			});
 
 			document.addEventListener('click', function (event) {
 				var el = event.target.closest('[data-cta]');
@@ -114,7 +129,7 @@ const websiteSchema = {
 				});
 			});
 		</script>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF"></script>
+		<script async src="/gtm/gtag/js?id=G-BGSJ1FWPTF"></script>
 	</head>
 	<body>
 		<Logo />
