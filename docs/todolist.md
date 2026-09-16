@@ -792,20 +792,30 @@ this project's own custom items and where it stands against them.
       setup, Documentation). Two real, live bugs found and fixed same night (see below); the rest
       logged as open gaps rather than fixed on the spot, since none were urgent:
       - [x] **Contact form silently showed a false "Something went wrong" error on every successful
-            submission — a regression from the fork-conversion pass above.** The `generate_lead`
-            gtag call added there threw `gtag is not defined`: Astro wraps every inline `<script>`
-            as its own ES module, so BaseLayout's `function gtag(){}` was scoped to that module,
-            never actually attached to `window` — a separate script (Contact's) calling bare
-            `gtag(...)` couldn't see it. The `ReferenceError` was swallowed by the surrounding
-            `catch {}` and overwrote the real success message. The email always sent correctly;
-            visitors just had no way to know it worked. **Fixed** in `BaseLayout.astro` by
-            explicitly assigning `window.gtag = function gtag(){...}` and calling `window.gtag(...)`
-            everywhere (both there and in `Contact.astro`), rather than relying on the classic
-            snippet's bare top-level function declaration, which only works in a non-module script.
-            Verified the fix at the source level (built `dist/index.html` has zero bare `gtag(`
-            calls, only `window.gtag(`) — live end-to-end verification in `wrangler dev` was
-            blocked by an unrelated local-only quirk (see next item), not attempted against
-            production to avoid another round of real test emails.
+            submission — a regression from the fork-conversion pass above. Took two PRs to actually
+            fix, logging both rather than just the final state.** The `generate_lead` gtag call
+            added there threw `gtag is not defined`: Astro wraps every inline `<script>` as its own
+            ES module, so BaseLayout's `function gtag(){}` was scoped to that module, never actually
+            attached to `window` — a separate script (Contact's) calling bare `gtag(...)` couldn't
+            see it. The `ReferenceError` was swallowed by the surrounding `catch {}` and overwrote
+            the real success message. The email always sent correctly; visitors just had no way to
+            know it worked.
+            - **PR #32's fix (window.gtag instead of a bare module-scoped function) was necessary
+              but not sufficient.** A live retest on production immediately after merging
+              reproduced the *exact same bug* — confirmed via the status element's className
+              carrying both `--success` and `--error` at once, proving it entered the success
+              branch and then still threw. Root cause this time: a browser extension (ad blocker/
+              privacy tool) can strip `window.gtag` sometime after page load — `dataLayer` already
+              had entries proving `gtag` ran fine at load, but `typeof window.gtag` was `undefined`
+              by the time the async submit handler tried to call it seconds later.
+            - **PR #33, same night, is the real fix:** wrapped the `generate_lead` call (and
+              `BaseLayout`'s `cta_click` listener, for the same reason) in its own `try/catch`, so a
+              tracking failure — for any reason, including this one — can never touch the real
+              success message. **Verified live on production after deploy:** resubmitted the real
+              form; status showed cleanly as "Message sent — thanks!..." with only the `--success`
+              class, even with `window.gtag` still `undefined` in that browser session at the time.
+              This is the one item in this whole audit that was actually confirmed working
+              end-to-end against production, not just at the source level.
       - [x] **Every 404 on the live site showed Cloudflare's raw error 1101 instead of the custom
             404 page — pre-existing, not from this session's work.** `wrangler.jsonc`'s `assets`
             block had no `"binding": "ASSETS"`, so `env.ASSETS` was `undefined` at runtime and
@@ -848,3 +858,7 @@ this project's own custom items and where it stands against them.
         session's `resize_window` tool didn't take effect — prior sessions' `chrome-launcher` +
         `puppeteer-core` workaround, see the mobile-hero-nav-polish entry above, wasn't re-run this
         time), and a full nav/footer 404 link sweep (only spot-checked).
+      - **Next up, not started yet (paused here for the night, 2026-09-16 ~3:30am CT):** the three
+        real gaps logged above, in no particular order — the 14 touch targets, GA4 Key Events +
+        internal-traffic filter, and the multi-CTA audit. Nothing blocking; just picking back up
+        whenever Doug's next back at this.
