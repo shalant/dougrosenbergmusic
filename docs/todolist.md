@@ -518,6 +518,44 @@ this project's own custom items and where it stands against them.
         some kind of split, or stays a parked exploration — a real product decision, not something
         to default on. Branch is pushed to `origin/hero-riff-14`; PR/merge held for Doug to do
         manually.
+      - [x] **Mobile/nav cleanup — branch `mobile-hero-nav-polish` (off `hero-riff-14`,
+            2026-09-14 overnight), not yet merged.** Doug flagged two things from a real
+            screenshot at 448×487: the hero looked "totally cluttered" on mobile, and the
+            hamburger dropdown was too translucent. Verified and fixed both with real headless-
+            Chrome screenshots at 375/390/448/641/768/861/1010/1024px (`chrome-launcher` +
+            `puppeteer-core`, same workaround this repo's own history already used for the
+            `resize_window` limitation), not eyeballed:
+            - **Dropdown translucency — root cause was `global.css`'s `--bg-elevated: #10162399`**
+              (~60% opacity), shared by `StaffNav.astro`'s mobile dropdown panel and its desktop
+              hover tooltip. Made it fully opaque (`#101623`) — screenshot-confirmed the dropdown
+              now reads as a solid card instead of the hero photo/title bleeding straight through
+              it.
+            - **Hero clutter, two separate real bugs, not one:**
+              1. `Logo.astro`'s fixed 104×104px mark had no mobile override, landing directly on
+                 top of the eyebrow/title text on any short viewport where `.hero__content`'s
+                 vertical centering pushed it up that far. Added a `≤640px` override matching the
+                 hamburger's own 44×44px size (still clears the 44px touch-target minimum this
+                 project already holds itself to elsewhere).
+              2. `.hero__content` was vertically centered over the full-bleed photo at every
+                 breakpoint including phone, putting the title/services list directly over Doug's
+                 face instead of beside it. Anchored it to the bottom on `≤640px` instead (reuses
+                 the scrim's already-strong bottom darkening, keeps the photo itself fully visible
+                 above it) and strengthened that breakpoint's scrim gradient to stay dark from ~42%
+                 down rather than ~55%, so it holds up regardless of how many lines the title wraps
+                 to.
+              - **A third, pre-existing bug found in the process, not part of Doug's original
+                report:** the four "now playing" chips (percentage-positioned for the desktop
+                absolute-overlay composition) landed squarely on top of the eyebrow text at 768px
+                once `.hero__content` drops into normal flow at the existing `≤1024px` tablet
+                breakpoint — confirmed via screenshot, not assumed. Moved the chips' existing
+                `display: none` up into the `≤1024px` query (was `≤640px` only) rather than
+                tuning per-breakpoint coordinates for four decorative elements already sacrificed
+                on phone.
+            - Verified: full build succeeds, all 32 non-skipped E2E tests pass (mobile-chrome
+              project's hamburger-menu specs included), no CSP hash regen needed (style-only
+              changes, no inline `<script>` content touched). The 861–1010px desktop-nav
+              scale-down from the earlier `fix-hero-nav-overlap` work is unaffected — screenshot-
+              checked at 861px, still clear of the subject.
 - [x] **Before/after case study draft written and published** (draft: 2026-09-06 overnight, PR #20
       `case-study-draft`, this repo). Decided on the dev-portfolio framing: published as a real
       blog post on **dougrosenbergdev.com** (separate repo, `shalant/PortfolioNov25`) —

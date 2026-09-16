@@ -1,6 +1,6 @@
 # Doug Rosenberg
 
-> Chicago-based saxophonist, composer, and educator. Debut album *Better Than TV* (2014); co-leader of Eastern Blok (*Underwater*, *Folk Tales*) and the Goran Ivanovic Group. Performed with Robert Glasper, Rakalam Bob Moses, Kendrick Scott, Danilo Pérez, Fareed Haque, and others.
+> Web designer and developer, and a Chicago-based saxophonist, composer, and educator. Builds websites (design, development, branding, ongoing support) at [dougrosenbergdev.com](https://dougrosenbergdev.com). Debut album *Better Than TV* (2014); co-leader of Eastern Blok (*Underwater*, *Folk Tales*) and the Goran Ivanovic Group. Performed with Robert Glasper, Rakalam Bob Moses, Kendrick Scott, Danilo Pérez, Fareed Haque, and others.
 
 "Fearlessness of spirit and a robustness of tone that seem likely to win him a devoted following." — Chicago Tribune
 
@@ -23,6 +23,7 @@
 
 ## Contact
 - Email: doug.rosenberg@gmail.com
+- Web design & development: https://dougrosenbergdev.com
 - Instagram: https://instagram.com/shalantdoro
 - YouTube: https://youtube.com/@dougrosenberg2361
 - LinkedIn: https://linkedin.com/in/douglasrosenberg

@@ -523,8 +523,15 @@
   }
 
   /* tablet: drop the overlap, pull the block into a plain right-hand
-     column instead of jumping straight to a full mobile stack */
+     column instead of jumping straight to a full mobile stack. The "now
+     playing" chips are hidden from here down too - their left/top percentages
+     are tuned for the desktop absolute-overlay composition and land
+     straight on top of the content block's text once .hero__content drops
+     into normal flow (confirmed via screenshot at 768px, not assumed). */
   @media (max-width: 1024px) {
+    .hero__chip {
+      display: none;
+    }
     .hero__content {
       position: relative;
       left: auto;
@@ -541,17 +548,25 @@
     }
   }
 
+  /* Phone: the content block was vertically centered over the full-bleed
+     photo like every wider breakpoint, which on a narrow/short viewport
+     put the title and services list directly over Doug's face instead of
+     beside it - unreadable and cluttered (confirmed via screenshot, not
+     assumed). Anchoring it to the bottom instead reuses the scrim's
+     already-strong bottom darkening, keeps his face fully visible above
+     it, and leaves it a plain dark band to sit on regardless of how many
+     lines the title wraps to at any given width. */
   @media (max-width: 640px) {
-    .hero__chip,
     .hero__terminal {
       display: none;
     }
     .hero__content {
       max-width: 100%;
-      padding-bottom: 5.5rem;
+      align-self: flex-end;
+      padding-bottom: 2.75rem;
     }
     .hero__scrim {
-      background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.22) 55%, rgba(10, 14, 23, 0.92) 97%);
+      background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.4) 42%, rgba(10, 14, 23, 0.88) 62%, rgba(10, 14, 23, 0.95) 100%);
     }
   }
 </style>

@@ -77,7 +77,10 @@
 
 :root {
   --bg: #0a0e17;
-  --bg-elevated: #10162399;
+  /* solid, not translucent - both consumers (StaffNav's hover tag and its
+     mobile dropdown panel) need to read as an opaque surface over whatever
+     photo/content sits behind them, not blend into it */
+  --bg-elevated: #101623;
   --surface: #131a26;
   --text: #e9edf5;
   --text-muted: rgba(233, 237, 245, 0.62);
