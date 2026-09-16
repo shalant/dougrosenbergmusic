@@ -481,7 +481,8 @@ this project's own custom items and where it stands against them.
             `contact@dougrosenberg.com`. If this doesn't improve with real usage over time, revisit
             then — not something to chase further right now.
 - [ ] **No branch protection on `master`** (checked 2026-09-07 via `gh api repos/.../branches/
-      master/protection` — 404, confirmed off). A real `SITE_QUALITY_CHECKLIST.md` Security item,
+      master/protection` — 404, confirmed off; re-checked and still off as of the 2026-09-16 full
+      checklist pass below). A real `SITE_QUALITY_CHECKLIST.md` Security item,
       but deliberately not enabled here without asking first — the wrong rule (e.g. "require an
       approving review") would block solo merging on a single-contributor repo like this one.
       Worth deciding what protection actually makes sense here (e.g. "require status checks to
@@ -767,3 +768,83 @@ this project's own custom items and where it stands against them.
             rather than leaving a now-dead toggle.
       - All 36 E2E tests still pass; full build verified in a real browser (favicon at actual tab
         size, logo's home link click-through, hover/focus states) before/after each change.
+- [x] **GA4 first-party proxy attempted, then reverted (2026-09-15/16, PRs #29/#30) — a real
+      lesson, not just churn.** After confirming GA4 had collected zero data for 48 hours despite
+      correct config, live network inspection found the actual `/g/collect` hits getting HTTP 503s
+      in this environment while a manually-replayed identical request succeeded — pointed at
+      hostname-based ad-blocker/security-software filtering in the browser, not a site bug. Tried
+      routing both the `gtag.js` library and every hit through `worker.js` as a first-party proxy
+      (`/gtm/gtag/js`, `/gtm/g/collect`) via `transport_url`/`first_party_collection`. **Reverted
+      after deploy**, once live testing showed the proxy traded one problem for a worse one: every
+      hit now originated from `worker.js`'s own server-side `fetch()`, so Google saw Cloudflare's
+      IP as the source instead of the visitor's — broke geolocation for every hit (a real visit
+      didn't show up under the visitor's own region) and plausibly explains why data still wasn't
+      landing, since Google's bot/datacenter-IP filtering is known to exclude traffic that looks
+      like it's coming from cloud/hosting-provider IPs. Back to direct browser-to-Google calls,
+      accepting the narrower ad-blocker gap as the lesser problem. **A real fix, if pursued later:**
+      Cloudflare Zaraz's built-in Google tag integration, designed to forward the real visitor IP
+      correctly — bigger, deliberate work (dashboard-side config + rewriting `cta_click`/
+      `generate_lead` against Zaraz's `zaraz.track()` API), not something to bolt on quickly.
+- [x] **Full `SITE_QUALITY_CHECKLIST.md` 75-item pass (2026-09-16)** — first full pass against this
+      project since the dev-services pivot/Cloudflare migration/GA4 saga above. Most of the 75
+      passed (Security's headers/CSP/secrets-scan, all of SEO, Accessibility's contrast/landmark,
+      the whole Design System category, most of Interaction & Polish, Testing/QA's real E2E+CI
+      setup, Documentation). Two real, live bugs found and fixed same night (see below); the rest
+      logged as open gaps rather than fixed on the spot, since none were urgent:
+      - [x] **Contact form silently showed a false "Something went wrong" error on every successful
+            submission — a regression from the fork-conversion pass above.** The `generate_lead`
+            gtag call added there threw `gtag is not defined`: Astro wraps every inline `<script>`
+            as its own ES module, so BaseLayout's `function gtag(){}` was scoped to that module,
+            never actually attached to `window` — a separate script (Contact's) calling bare
+            `gtag(...)` couldn't see it. The `ReferenceError` was swallowed by the surrounding
+            `catch {}` and overwrote the real success message. The email always sent correctly;
+            visitors just had no way to know it worked. **Fixed** in `BaseLayout.astro` by
+            explicitly assigning `window.gtag = function gtag(){...}` and calling `window.gtag(...)`
+            everywhere (both there and in `Contact.astro`), rather than relying on the classic
+            snippet's bare top-level function declaration, which only works in a non-module script.
+            Verified the fix at the source level (built `dist/index.html` has zero bare `gtag(`
+            calls, only `window.gtag(`) — live end-to-end verification in `wrangler dev` was
+            blocked by an unrelated local-only quirk (see next item), not attempted against
+            production to avoid another round of real test emails.
+      - [x] **Every 404 on the live site showed Cloudflare's raw error 1101 instead of the custom
+            404 page — pre-existing, not from this session's work.** `wrangler.jsonc`'s `assets`
+            block had no `"binding": "ASSETS"`, so `env.ASSETS` was `undefined` at runtime and
+            `worker.js`'s fallback `env.ASSETS.fetch(request)` threw for any path that wasn't an
+            exact static-file match. Real pages were unaffected (Cloudflare serves exact matches
+            before the Worker runs), so this only ever showed up on genuinely broken links. **Fixed**
+            by adding `"binding": "ASSETS"`. Verified via a clean local `wrangler dev`: a nonexistent
+            path now returns a real `404` status with the actual built 404 page content instead of
+            throwing, and `env.ASSETS` now appears in wrangler's own startup binding list (it didn't
+            before). Root page and `/api/contact`'s method gate re-confirmed unaffected.
+      - **Local-dev-only quirk found while verifying the above, worth remembering next time:**
+        `wrangler dev` synthesizes the `Origin` header as `http://<first configured custom_domain
+        route>` (here, `http://dougrosenberg.com`) regardless of what a real client actually sends
+        — confirmed via a temporary debug `console.log` of the received header. Not a bug in this
+        repo's code; it made every attempt to test the contact form's success path against
+        `127.0.0.1` fail with "Invalid origin" until temporarily allowlisting that synthesized
+        value locally (reverted before commit, `ALLOWED_ORIGINS` is back to just the two real
+        production origins). If a local success-path test is needed again, allowlist
+        `http://dougrosenberg.com` in `worker.js` temporarily rather than trying real-port origins.
+      - **Real gaps found, not fixed this session (logged for later, none urgent):**
+        - **14 of 112 interactive elements measured under the 44×44px touch-target minimum** —
+          hero "now playing" chips (28px), `DevServices`' channel-surf remote buttons (41×41, 3px
+          short), Contact footer social links (~24px/17px tall), `SheetMusicLibrary`'s search input
+          (38px) and interest `<select>` (42px tall). No sweep done on these specific elements since
+          they were built (the 2026-09-07 SEO/GEO pass fixed three *different* elements — the hero's
+          old "Now Playing" pill, `Gallery`'s filter pills, `SheetMusicLibrary`'s list items — this
+          is a fresh, non-overlapping set found on a fresh pass).
+        - **GA4 has no Key Events marked** (checked Admin → Events → Key Events: only unused GA4
+          template suggestions like `purchase`/`qualify_lead` are listed, neither `cta_click` nor
+          `generate_lead` marked) **and no internal-traffic filter exists** — relevant context: Doug
+          asked whether he'd accidentally blacklisted his own IP after not seeing a test visit show
+          up: he hadn't, there's just no filter configured either way.
+        - **4 outbound CTAs (2 Hero, 2 DevServices) plus Contact's mailto + real form** — worth a
+          deliberate audit against the checklist's "exactly one clear primary contact/booking path
+          per page" item, though Hero/DevServices arguably serve genuinely different funnels (music
+          booking vs. dev-services leads) rather than actually competing for the same ask.
+      - **Marked UNVERIFIED, not confirmed gaps** — tooling limits in this session, not known
+        problems: real Core Web Vitals/PageSpeed against the live URL, cross-browser favicon
+        rendering (only checked in this session's Chrome), true mobile-viewport rendering (this
+        session's `resize_window` tool didn't take effect — prior sessions' `chrome-launcher` +
+        `puppeteer-core` workaround, see the mobile-hero-nav-polish entry above, wasn't re-run this
+        time), and a full nav/footer 404 link sweep (only spot-checked).

@@ -111,9 +111,15 @@ const socials = [
         form.reset();
         // Fires alongside the 'cta_click' from the submit button itself -
         // that one only means the button was clicked, this one means the
-        // message actually reached the worker. gtag is declared in
-        // BaseLayout's inline script, which always renders before this one.
-        gtag('event', 'generate_lead', { method: 'contact_form', interest: payload.interest });
+        // message actually reached the worker. Must be window.gtag, not a
+        // bare gtag() call: Astro wraps every inline <script> as its own ES
+        // module, so BaseLayout's `window.gtag = function gtag(){}` doesn't
+        // create a module-scoped binding this separate script could see -
+        // a bare call here previously threw "gtag is not defined" inside
+        // this try block, silently caught below and showing every real
+        // visitor a false "Something went wrong" error despite the email
+        // actually sending.
+        window.gtag('event', 'generate_lead', { method: 'contact_form', interest: payload.interest });
       } else {
         status.textContent = result.error || 'Something went wrong. Please email directly instead.';
         status.classList.add('contact__form-status--error');

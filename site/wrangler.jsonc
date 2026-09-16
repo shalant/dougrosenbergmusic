@@ -40,8 +40,15 @@
 		// Without this, unmatched routes get a bare 404 with an empty body
 		// instead of the built dist/404.html — Workers static assets
 		// defaults to "none", unlike classic Pages which served 404.html
-		// automatically. (No custom 404.astro exists yet — see
-		// docs/todolist.md's checklist-pass item.)
-		"not_found_handling": "404-page"
+		// automatically.
+		"not_found_handling": "404-page",
+		// Required to expose the assets layer as env.ASSETS inside
+		// worker.js's fetch handler — without an explicit binding name,
+		// env.ASSETS is undefined and every request that falls through to
+		// worker.js's env.ASSETS.fetch(request) fallback throws, which in
+		// practice meant every 404 on the live site (any path that isn't an
+		// exact static-file match) showed Cloudflare's raw error 1101
+		// instead of the custom 404 page above.
+		"binding": "ASSETS"
 	}
 }
