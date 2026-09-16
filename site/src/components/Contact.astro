@@ -37,6 +37,13 @@ const socials = [
           <input type="email" id="contact-email" name="email" required maxlength="200" autocomplete="email" />
         </div>
         <div class="contact__field">
+          <label for="contact-interest">I&rsquo;m interested in</label>
+          <select id="contact-interest" name="interest">
+            <option value="music">Music booking or lessons</option>
+            <option value="web">A web project</option>
+          </select>
+        </div>
+        <div class="contact__field">
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" required maxlength="5000" rows="5"></textarea>
         </div>
@@ -54,6 +61,10 @@ const socials = [
   </div>
 
   <footer class="contact__footer">
+    <p class="contact__footer-proof">
+      This site — Astro, Cloudflare Workers, no bloat — is the portfolio.
+      <a href="https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro/" target="_blank" rel="noopener noreferrer">See how it was rebuilt →</a>
+    </p>
     <p>© {new Date().getFullYear()} Doug Rosenberg</p>
   </footer>
 </section>
@@ -73,6 +84,7 @@ const socials = [
       name: String(formData.get('name') ?? '').trim(),
       email: String(formData.get('email') ?? '').trim(),
       message: String(formData.get('message') ?? '').trim(),
+      interest: String(formData.get('interest') ?? ''),
       website: String(formData.get('website') ?? ''),
     };
 
@@ -196,6 +208,24 @@ const socials = [
     font-size: 0.72rem;
   }
 
+  .contact__footer-proof {
+    margin: 0 0 0.6rem;
+    color: var(--text-muted);
+  }
+
+  .contact__footer-proof a {
+    color: var(--glow);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease;
+  }
+
+  .contact__footer-proof a:hover,
+  .contact__footer-proof a:focus-visible {
+    border-color: var(--glow);
+  }
+
   /* the email address is long enough at the mono font's clamp() minimum that
      the pill's default padding pushes it past the viewport at ~320px-wide
      phones (confirmed via a real horizontal-scrollWidth check, not assumed) -
@@ -240,6 +270,7 @@ const socials = [
   }
 
   .contact__field input,
+  .contact__field select,
   .contact__field textarea {
     font: inherit;
     font-size: 0.95rem;
@@ -255,6 +286,7 @@ const socials = [
   }
 
   .contact__field input:focus-visible,
+  .contact__field select:focus-visible,
   .contact__field textarea:focus-visible {
     outline: none;
     border-color: var(--brass);
