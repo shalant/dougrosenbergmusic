@@ -9,11 +9,17 @@ test.describe('desktop staff nav', () => {
     await expect(page.locator('#contact')).toBeInViewport();
   });
 
+  test('the Dev note scroll-jumps to the dev section instead of leaving the page', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.staff-nav__note[data-target="dev"]').click();
+    await expect(page.locator('#dev')).toBeInViewport();
+  });
+
   test('the active note tracks scroll position', async ({ page }) => {
     await page.goto('/');
-    // Only hero/listen/about/credibility/contact have a corresponding nav
-    // note - performance/sheet-music/gallery are real sections but aren't
-    // linked from the corner nav.
+    // Only dev/listen/about/credibility/contact have a corresponding nav
+    // note - hero/performance/sheet-music/gallery are real sections but
+    // aren't linked from the corner nav.
     await page.locator('#credibility').scrollIntoViewIfNeeded();
     // IntersectionObserver needs a beat to fire after the programmatic scroll.
     await expect(page.locator('.staff-nav__note[data-target="credibility"]')).toHaveClass(/is-active/, {
@@ -40,10 +46,11 @@ test.describe('mobile hamburger nav', () => {
     await expect(page.locator('#about')).toBeInViewport();
   });
 
-  test('the Dev link in the mobile menu navigates away, not a scroll jump', async ({ page }) => {
+  test('the Dev item in the mobile menu scroll-jumps to the dev section, same as the others', async ({ page }) => {
     await page.goto('/');
     await page.locator('[data-menu-toggle]').click();
-    const devLink = page.locator('.staff-menu__item.note--dev');
-    await expect(devLink).toHaveAttribute('href', 'https://dougrosenbergdev.com');
+    await page.locator('.staff-menu__item[data-target="dev"]').click();
+    await expect(page.locator('[data-menu-panel]')).toBeHidden();
+    await expect(page.locator('#dev')).toBeInViewport();
   });
 });

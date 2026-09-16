@@ -2,6 +2,7 @@
 // Feather-style line icons (24x24, stroke=currentColor) - matches the thin
 // stroke look already used for the hero's scroll-cue chevron.
 const ICONS: Record<string, string> = {
+  code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
   music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
   user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
   award: '<circle cx="12" cy="8" r="6"/><path d="m8.5 13.5-1.5 8 5-3 5 3-1.5-8"/>',
@@ -10,15 +11,24 @@ const ICONS: Record<string, string> = {
 
 // hero/"Home" dropped as of the Logo component's top-left home link -
 // StaffNav no longer needs its own note for it.
+//
+// "dev" used to be a standalone `<a>` straight out to dougrosenbergdev.com,
+// styled differently from the rest of this list. Promoted to a real tracked
+// section (own scroll-active state, same staff-jump behavior as the others)
+// once a dedicated #dev section existed on the page to jump to - the pill's
+// job changed from "leave the site" to "jump to the pitch," so it belongs
+// in this list now, positioned first to match where #dev actually sits in
+// the page (right after the hero).
 const sections = [
-  { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 40, top: 50 },
-  { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 116, top: 50 },
-  { id: 'credibility', label: 'Highlights', icon: 'award', tone: 'cred', left: 192, top: 50 },
-  { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 268, top: 50 },
+  { id: 'dev', label: 'Dev', icon: 'code', tone: 'dev', left: 40, top: 50 },
+  { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 116, top: 50 },
+  { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 192, top: 50 },
+  { id: 'credibility', label: 'Highlights', icon: 'award', tone: 'cred', left: 268, top: 50 },
+  { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 344, top: 50 },
 ];
-
-const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougrosenbergdev.com', left: 344, top: 50 };
 ---
+
+<div class="header-scrim" data-header-scrim aria-hidden="true"></div>
 
 <nav class="staff-nav" aria-label="Section navigation" data-staff-nav>
   <div class="staff-nav__line" style="top: 26px;"></div>
@@ -40,16 +50,6 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
       <span class="staff-nav__tag">{s.label}</span>
     </button>
   ))}
-
-  <a
-    class={`staff-nav__note note--${devLink.tone}`}
-    href={devLink.href}
-    style={`left: ${devLink.left}px; top: ${devLink.top}px;`}
-    aria-label={devLink.label}
-  >
-    <span class="staff-nav__blob" aria-hidden="true">{devLink.abbr}</span>
-    <span class="staff-nav__tag">{devLink.label}</span>
-  </a>
 </nav>
 
 <button
@@ -77,16 +77,19 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
         </button>
       </li>
     ))}
-    <li>
-      <a class={`staff-menu__item note--${devLink.tone}`} href={devLink.href}>
-        <span class="staff-menu__dot" aria-hidden="true"></span>
-        <span class="staff-menu__label">{devLink.label}</span>
-      </a>
-    </li>
   </ul>
 </div>
 
 <style>
+  /* Solid background, not the glass-blur translucent panel this used to be:
+     as a position:fixed element it's on screen through the entire scroll,
+     and translucent chrome reads as a rendering glitch rather than
+     intentional UI once it lands over body text/images further down the
+     page (confirmed via real screenshots - the About pull-quote, the
+     "Professional Affiliations" heading, and a Gallery photo all showed
+     through it). Reuses --bg-elevated, the same opaque-surface token
+     StaffNav's own dropdown/tooltip already use, plus a stronger shadow
+     for clear separation from whatever's behind it. */
   .staff-nav {
     position: fixed;
     top: 12px;
@@ -94,11 +97,9 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     width: 380px;
     height: 100px;
     z-index: 40;
-    background: rgba(19, 26, 38, 0.38);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    background: var(--bg-elevated);
     border-radius: 28px;
-    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6);
   }
 
   .staff-nav__line {
@@ -255,6 +256,48 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     }
   }
 
+  /* Logo.astro and the top-right nav chrome (the desktop .staff-nav panel
+     above 860px, .staff-toggle below it) are independent fixed elements
+     with nothing behind the gap between them - every section's eyebrow/
+     heading text scrolls straight through that gap and shows up right at
+     the top edge, overlapping the corner chips. Confirmed on BOTH sides of
+     the 860px breakpoint via real screenshots: mobile showed "PERFORMANCE",
+     a name mid-list, "New Trier High School" bleeding through; desktop
+     showed the "Artists Performed With" name list doing the same thing
+     behind the wider top-right pill nav - same bug, not a mobile-only one,
+     so this isn't scoped to a breakpoint. A full-width bar would fix both,
+     but a permanently solid one would put a hard stripe across the top of
+     the hero photo, which the hero's own design deliberately keeps clear
+     (only the two corner chips sit over it). Transparent by default, solid
+     only once .is-scrolled is set (the script below toggles it exactly
+     when the hero has fully scrolled out of view) - covers the whole rest
+     of the page, where the bleed-through actually happens, without
+     touching the hero's look. Height differs by breakpoint because the
+     elements it's backing do: the desktop logo/staff-nav panel run ~100-
+     116px tall, the mobile logo/hamburger chips only ~56px. */
+  .header-scrim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 128px;
+    z-index: 39;
+    background: var(--bg-elevated);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .header-scrim.is-scrolled {
+    opacity: 1;
+  }
+
+  @media (max-width: 860px) {
+    .header-scrim {
+      height: 68px;
+    }
+  }
+
   /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
   .staff-toggle {
@@ -379,7 +422,7 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
 </style>
 
 <script>
-  const sectionIds = ['listen', 'about', 'credibility', 'contact'];
+  const sectionIds = ['dev', 'listen', 'about', 'credibility', 'contact'];
   const jumpButtons = Array.from(document.querySelectorAll<HTMLElement>('.staff-jump'));
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
@@ -446,4 +489,16 @@ const devLink = { label: 'Dev', abbr: 'DEV', tone: 'dev', href: 'https://dougros
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
+
+  const headerScrim = document.querySelector<HTMLElement>('[data-header-scrim]');
+  const hero = document.getElementById('hero');
+  if (headerScrim && hero) {
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        headerScrim.classList.toggle('is-scrolled', !entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    heroObserver.observe(hero);
+  }
 </script>

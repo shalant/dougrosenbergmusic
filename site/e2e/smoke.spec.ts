@@ -10,7 +10,7 @@ test.describe('smoke', () => {
 
   test('every major section renders', async ({ page }) => {
     await page.goto('/');
-    for (const id of ['hero', 'listen', 'about', 'performance', 'credibility', 'sheet-music', 'gallery', 'contact']) {
+    for (const id of ['hero', 'dev', 'listen', 'about', 'performance', 'credibility', 'sheet-music', 'gallery', 'contact']) {
       await expect(page.locator(`#${id}`)).toBeAttached();
     }
   });
@@ -26,9 +26,9 @@ test.describe('smoke', () => {
     await expect(page.locator('h1')).toContainText('off-book');
   });
 
-  test('Dev nav link points at dougrosenbergdev.com', async ({ page }) => {
+  test('the dev section has a real external portfolio link, since the nav pill now stays on-page', async ({ page }) => {
     await page.goto('/');
-    const devLink = page.locator('a.staff-nav__note.note--dev, a.staff-menu__item.note--dev').first();
-    await expect(devLink).toHaveAttribute('href', 'https://dougrosenbergdev.com');
+    const portfolioLink = page.locator('#dev a[href="https://dougrosenbergdev.com/webdesign"]');
+    await expect(portfolioLink).toHaveAttribute('target', '_blank');
   });
 });

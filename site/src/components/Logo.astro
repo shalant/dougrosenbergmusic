@@ -43,6 +43,15 @@
     width: 104px;
     height: 104px;
     border-radius: 10px;
+    /* The mark's own SVG plate doesn't fill its full bounding box (there's
+       transparent margin for the antenna-leg motif), so scrolled content
+       showed through around it as it passed underneath this fixed corner
+       (confirmed via screenshot: the hero's "See My Work" button visible
+       behind/beside the mark mid-scroll on mobile). Same opaque-surface
+       token as the nav panel, so this reads as one consistent "fixed UI
+       gets a solid backing" language rather than a one-off patch. */
+    background: var(--bg-elevated);
+    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6);
     transition: transform 0.2s ease;
   }
 
