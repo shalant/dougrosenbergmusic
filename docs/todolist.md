@@ -862,3 +862,30 @@ this project's own custom items and where it stands against them.
         real gaps logged above, in no particular order — the 14 touch targets, GA4 Key Events +
         internal-traffic filter, and the multi-CTA audit. Nothing blocking; just picking back up
         whenever Doug's next back at this.
+- [ ] **GA4 shows almost no real traffic — needs a clean-browser check before trusting the numbers
+      (found 2026-09-16 evening).** Checked the live property (`doug rosenberg music`,
+      `G-BGSJ1FWPTF`) directly in GA4: Realtime overview showed 0 active users in the last 30 min
+      and last 5 min, map empty, every breakdown "No data available." The Home snapshot's last-7-days
+      card (Sep 9–15) was just as bare — 0 active users (↓100%), 0 views (↓100%), 0 key events, only
+      **2 total events all week** — with GA4's own anomaly-warning icon lit next to it.
+      - **Confound found in the same session, not yet ruled out:** loading dougrosenberg.com through
+        Claude's browser-automation Chrome profile reproduces a client-side tracking failure —
+        `window.gtag` comes back `undefined` and `window.dataLayer` only holds stub `gtm.dom`/
+        `gtm.load` entries instead of the site's real `consent`/`js`/`config` pushes, so no
+        `/collect` request ever fires. This is the same "extension strips `window.gtag`" failure
+        mode already logged in the entry above (2026-09-16 checklist pass), except it repro'd on
+        *every* load this time, not intermittently. A stray console error from an unrelated
+        extension (`chrome-extension://necmnahhpjieeknfddniaagcnhlglgoa`) in that profile is the
+        likely culprit.
+      - **Not yet answered: is the 2-events/7-days number real, or is it the same extension
+        artifact showing up in whatever browser(s) generated that traffic?** Tried to settle this
+        with an incognito, extension-free load, but Claude's browser extension doesn't run inside
+        incognito windows (Chrome disables extensions there by default), so it couldn't drive or
+        read one. Two ways to close this out:
+        1. Doug opens a real incognito window himself, visits the site, and watches GA4 Realtime —
+           fastest, needs no setup.
+        2. Enable "Allow in Incognito" for the Claude extension in `chrome://extensions`, so a
+           future session can drive this check directly.
+      - **Why this matters before acting on anything else GA4-related:** the already-open "GA4 Key
+        Events + internal-traffic filter" item above assumes GA4 is receiving real hits to filter/
+        mark in the first place. Worth confirming that before spending time on it.
