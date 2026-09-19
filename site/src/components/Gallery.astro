@@ -263,7 +263,17 @@ const photos = [
       });
     });
 
-    function updateStack(velocity) {
+    // Coverflow tilt/brightness touches all 37 panels' inline styles and, at
+    // MAX_TILT's scale, moves too slowly per frame to need 60fps precision -
+    // the ambient drift this feeds runs indefinitely (that's the point of
+    // autoplay), so left uncapped this is 37 style writes forever, every
+    // frame, even at rest. Throttled to every 3rd frame (~20fps): still
+    // smooth for how slowly the tilt actually changes, roughly a third of
+    // the main-thread cost of the version that shipped without it.
+    const STACK_UPDATE_INTERVAL = 3;
+    let frameCount = 0;
+
+    function updateStack() {
       const stageCenter = stage.clientWidth / 2;
       let closest = 0;
       let closestDist = Infinity;
@@ -294,7 +304,12 @@ const photos = [
       if (progressFill) {
         progressFill.style.width = maxScroll > 0 ? `${(-currentX / maxScroll) * 100}%` : '0%';
       }
+    }
 
+    // Position and skew are one style write and need every frame to look
+    // smooth at drag/autoplay speed, so they stay uncoupled from the
+    // throttled panel pass above.
+    function updateReel(velocity) {
       const targetSkew = reduceMotion ? 0 : clamp(velocity * -0.7, -MAX_SKEW, MAX_SKEW);
       skewSmoothed += (targetSkew - skewSmoothed) * 0.25;
       reel.style.transform = `translate3d(${currentX}px, 0, 0) skewX(${skewSmoothed}deg)`;
@@ -310,7 +325,12 @@ const photos = [
 
       const prevX = currentX;
       currentX += (targetX - currentX) * (reduceMotion ? 1 : 0.14);
-      updateStack(currentX - prevX);
+      updateReel(currentX - prevX);
+
+      frameCount++;
+      if (reduceMotion || frameCount % STACK_UPDATE_INTERVAL === 0) {
+        updateStack();
+      }
       requestAnimationFrame(frame);
     }
 

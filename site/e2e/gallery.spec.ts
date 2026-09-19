@@ -6,31 +6,19 @@ test.describe('gallery', () => {
     await page.locator('#gallery').scrollIntoViewIfNeeded();
   });
 
-  test('filtering by category hides non-matching cards', async ({ page }) => {
-    const cards = page.locator('.gallery__card');
-    const totalCount = await cards.count();
+  // The reel's coverflow tilt (rotateY/translateZ inside a preserve-3d
+  // track) takes panels out of the browser's own hit-testing - a real click
+  // still opens the right photo because Gallery.astro resolves the panel
+  // from the event's coordinates at the stage level rather than relying on
+  // the click's target, but Playwright's actionability check doesn't know
+  // that and sees the track "covering" the button. force: true skips that
+  // check; it doesn't skip the coordinate-based click that actually happens.
 
-    await page.locator('.gallery__filter[data-category="Studio"]').click();
+  test('clicking a photo opens the lightbox with matching caption', async ({ page }) => {
+    const firstPanel = page.locator('.reel-panel').first();
+    const caption = await firstPanel.locator('.reel-panel__caption span').first().textContent();
 
-    const studioCards = page.locator('.gallery__card[data-category="Studio"]');
-    const studioCount = await studioCards.count();
-    expect(studioCount).toBeGreaterThan(0);
-    expect(studioCount).toBeLessThan(totalCount);
-
-    for (const card of await studioCards.all()) {
-      await expect(card).toBeVisible();
-    }
-    const nonStudioCards = page.locator('.gallery__card:not([data-category="Studio"])');
-    for (const card of await nonStudioCards.all()) {
-      await expect(card).toBeHidden();
-    }
-  });
-
-  test('clicking a card opens the lightbox with matching caption', async ({ page }) => {
-    const firstCard = page.locator('.gallery__card').first();
-    const caption = await firstCard.locator('.gallery__caption').textContent();
-
-    await firstCard.click();
+    await firstPanel.click({ force: true });
 
     const lightbox = page.locator('[data-lightbox]');
     await expect(lightbox).toBeVisible();
@@ -39,7 +27,7 @@ test.describe('gallery', () => {
   });
 
   test('Escape closes the lightbox', async ({ page }) => {
-    await page.locator('.gallery__card').first().click();
+    await page.locator('.reel-panel').first().click({ force: true });
     await expect(page.locator('[data-lightbox]')).toBeVisible();
 
     await page.keyboard.press('Escape');
@@ -47,7 +35,7 @@ test.describe('gallery', () => {
   });
 
   test('the right arrow key advances to the next photo', async ({ page }) => {
-    await page.locator('.gallery__card').first().click();
+    await page.locator('.reel-panel').first().click({ force: true });
     await expect(page.locator('[data-lightbox-counter]')).toHaveText(/1 \/ \d+/);
 
     await page.keyboard.press('ArrowRight');
@@ -55,8 +43,15 @@ test.describe('gallery', () => {
   });
 
   test('the close button closes the lightbox', async ({ page }) => {
-    await page.locator('.gallery__card').first().click();
+    await page.locator('.reel-panel').first().click({ force: true });
     await page.locator('[data-lightbox-close]').click();
     await expect(page.locator('[data-lightbox]')).toBeHidden();
+  });
+
+  test('a thumbnail click moves the reel without opening the lightbox', async ({ page }) => {
+    const thumb = page.locator('.reel-thumb').nth(5);
+    await thumb.click();
+    await expect(page.locator('[data-lightbox]')).toBeHidden();
+    await expect(thumb).toHaveClass(/active/);
   });
 });
