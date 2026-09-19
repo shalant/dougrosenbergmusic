@@ -112,7 +112,7 @@ const photos = [
     const canHover = window.matchMedia('(hover: hover)').matches;
 
     const AUTOPLAY_SPEED = 0.45;
-    const AUTOPLAY_DELAY = 1200;
+    const AUTOPLAY_DELAY = 450;
     const MAX_TILT = 18;
     const MAX_SKEW = 8;
 
@@ -167,13 +167,20 @@ const photos = [
       dragStartTarget = targetX;
       lastInteraction = performance.now();
       stage.classList.add('dragging');
-      stage.setPointerCapture(e.pointerId);
     });
 
     stage.addEventListener('pointermove', (e) => {
       if (!dragging) return;
       const dx = e.clientX - dragStartX;
-      if (Math.abs(dx) > 4) dragMoved = true;
+      // Capture only once this is a real drag, never on a plain press: a
+      // capture taken at pointerdown retargets the following click to the
+      // stage, so a panel's own click listener never fires and the photo
+      // can't be opened.
+      if (!dragMoved && Math.abs(dx) > 4) {
+        dragMoved = true;
+        stage.setPointerCapture(e.pointerId);
+      }
+      if (!dragMoved) return;
       targetX = clamp(dragStartTarget + dx, -maxScroll, 0);
       lastInteraction = performance.now();
       hideHint();
@@ -199,26 +206,60 @@ const photos = [
       thumb.addEventListener('click', () => goToIndex(i));
     });
 
-    if (canHover && !reduceMotion) {
+    // The panels' 3D transform (rotateY/translateZ inside the preserve-3d
+    // track) takes them out of hit testing entirely: pointer events land on
+    // the track, so a panel's own click/pointermove listeners and its :hover
+    // never fire. Everything per-panel is therefore resolved here, from the
+    // post-transform rects, and driven from stage-level listeners.
+    function panelAtPoint(x, y) {
+      let hit = null;
+      let hitDist = Infinity;
       panels.forEach((panel) => {
-        const img = panel.querySelector('.reel-panel__img');
-        panel.addEventListener('pointermove', (e) => {
-          if (dragging) return;
-          const r = panel.getBoundingClientRect();
-          const relX = (e.clientX - r.left) / r.width - 0.5;
-          const relY = (e.clientY - r.top) / r.height - 0.5;
-          img.style.transform = `translate(${-relX * 30}px, ${-relY * 14}px) scale(1.12)`;
-        });
-        panel.addEventListener('pointerleave', () => {
-          img.style.transform = 'translate(0, 0) scale(1.06)';
-        });
+        const r = panel.getBoundingClientRect();
+        if (x < r.left || x > r.right || y < r.top || y > r.bottom) return;
+        const dist = Math.abs(x - (r.left + r.width / 2));
+        if (dist < hitDist) { hitDist = dist; hit = panel; }
       });
+      return hit;
     }
 
+    let hovered = null;
+
+    function setHovered(panel) {
+      if (hovered === panel) return;
+      if (hovered) {
+        hovered.classList.remove('is-hovered');
+        hovered.querySelector('.reel-panel__img').style.transform = 'translate(0, 0) scale(1.06)';
+      }
+      hovered = panel;
+      if (hovered) hovered.classList.add('is-hovered');
+    }
+
+    stage.addEventListener('pointermove', (e) => {
+      if (dragging) { setHovered(null); return; }
+      const panel = panelAtPoint(e.clientX, e.clientY);
+      setHovered(panel);
+      if (!panel || !canHover || reduceMotion) return;
+      const r = panel.getBoundingClientRect();
+      const relX = (e.clientX - r.left) / r.width - 0.5;
+      const relY = (e.clientY - r.top) / r.height - 0.5;
+      panel.querySelector('.reel-panel__img').style.transform =
+        `translate(${-relX * 30}px, ${-relY * 14}px) scale(1.12)`;
+    });
+
+    stage.addEventListener('pointerleave', () => setHovered(null));
+
+    stage.addEventListener('click', (e) => {
+      if (dragMoved) return;
+      const panel = panelAtPoint(e.clientX, e.clientY);
+      if (panel) openLightbox(panels.indexOf(panel));
+    });
+
+    // Keyboard activation targets the button directly, where `detail` is 0 —
+    // pointer clicks are handled above and must not open twice.
     panels.forEach((panel, i) => {
-      panel.addEventListener('click', () => {
-        if (dragMoved) return;
-        openLightbox(i);
+      panel.addEventListener('click', (e) => {
+        if (e.detail === 0) openLightbox(i);
       });
     });
 
@@ -398,7 +439,7 @@ const photos = [
     text-align: left;
   }
 
-  .reel-panel:hover .reel-panel__caption,
+  .reel-panel.is-hovered .reel-panel__caption,
   .reel-panel:focus-visible .reel-panel__caption {
     opacity: 1;
     transform: translateY(0);
