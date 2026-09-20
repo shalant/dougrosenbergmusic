@@ -889,3 +889,99 @@ this project's own custom items and where it stands against them.
       - **Why this matters before acting on anything else GA4-related:** the already-open "GA4 Key
         Events + internal-traffic filter" item above assumes GA4 is receiving real hits to filter/
         mark in the first place. Worth confirming that before spending time on it.
+      - [x] **Resolved 2026-09-20 — the extension confound was a real, separate issue, but not the
+            actual root cause.** See the CSP hash-regen bug entry below: GA4's consent-mode
+            bootstrap script (the one that defines `window.gtag` and pushes `consent`/`js`/`config`
+            to `dataLayer`) had been silently CSP-blocked on production since GA4 was reinstalled
+            2026-09-15, in every browser, extension or not. Fixed and confirmed via a clean
+            Playwright probe against production: `window.gtag` is now a real function, `dataLayer`
+            carries the actual `consent`/`js`/`config` pushes (not just GTM's stub `gtm.dom`/
+            `gtm.load` entries), and a real hit fired to `google-analytics.com/g/collect` with the
+            correct `tid=G-BGSJ1FWPTF`. **Not yet confirmed: real data actually landing in the GA4
+            dashboard itself** — needs Doug's own login to check Realtime/reports after a few days
+            of live traffic now that hits are actually leaving the browser.
+- [x] **2026-09-20 session — gallery work, a real hash-regen tooling bug found and fixed, nav
+      redesign, and a section rename.** Session started from console errors pasted after deploying
+      the new gallery photos; ended up surfacing a bug that had been live since 2026-09-15.
+      - [x] **Gallery: 9 live-performance photos added, grid replaced with a horizontal parallax
+            reel** (drift/autoplay, coverflow-style tilt, click-to-open lightbox, thumbnail
+            filmstrip) — PR #36, merged before this session's CSP-fix work started.
+      - [x] **CSP script-src hash fixes, PR #37/#38** — the reel rewrite changed Gallery's inline
+            script content (and a follow-up fix changed it again), each time needing `_headers`'
+            hash regenerated per its own documented process. **A stranded-commit lesson learned
+            the hard way:** the first fix landed on `add-gallery-photos-band-shots`, whose PR (#36)
+            had *already merged* the day before — GitHub doesn't reopen a merged PR for new
+            commits, so it just sat there unmerged and unnoticed until caught. Re-landed via a
+            fresh branch + PR #37; the original stray commit's later PR (#39) was closed, not
+            merged, once it went stale/conflicting against master's moved-on `_headers`.
+      - [x] **Gallery bug: page auto-scrolled itself to the gallery section on every load/reload,
+            PR #38.** Root cause: `updateStack()` called `thumb.scrollIntoView({ block: 'nearest' })`
+            whenever the active thumbnail changed, including the very first animation frame after
+            load (`activeIndex` flipping from `-1` to `0` before any user interaction) —
+            `scrollIntoView()` walks every scrollable ancestor including the document, so with the
+            gallery below the fold (always, on load) it pulled the whole page down to it. Fixed by
+            scrolling only the thumbnail strip's own container instead.
+      - [x] **Nav redesign, PR #40:** made `StaffNav`'s desktop pill and mobile dropdown genuinely
+            glassy (translucent + blur) again, by explicit request — this reverses a prior decision
+            (see Round-1-era history above) that went solid specifically because translucent chrome
+            was bleeding into body content. Doug: wants the floating-glass look even with that
+            tradeoff. Also removed `header-scrim`, a separate full-width bar behind the nav/logo
+            that flipped opaque once the hero scrolled out of view (almost immediately, since "For
+            businesses" is the very next section) — it was sitting directly behind the translucent
+            pill and made the nav read as solid again for the rest of the page, defeating the
+            point. Also gave the "Highlights" section (`Credibility.astro` at the time) a real
+            `<h2>` heading — it previously had none, just an eyebrow line straight into a wall of
+            school names, so jumping to it from the nav landed with no visible confirmation of
+            where you'd arrived. Also swapped Gallery and SheetMusicLibrary's order (gallery first).
+      - [x] **`Credibility` renamed to `Career Highlights` everywhere, PR #40 (component) — Doug
+            disliked the word "credibility" specifically.** `Credibility.astro` →
+            `CareerHighlights.astro`, section id, every `.credibility__*` BEM class, the nav's
+            internal `tone: 'cred'` → `'highlights'`, the shared `--note-cred` CSS variable (also
+            consumed by `DevServices`/`Contact`) → `--note-highlights`, e2e selectors, and the two
+            living design docs (`DESIGN_NOTES.md`, `style-guide.md`). Left the dated journal-style
+            entries in this file and `case-study-draft.md` un-renamed — historical record, not
+            living documentation.
+      - [x] **Both READMEs updated, PR #41** — root README's status line still said "substantially
+            built, not deployed"; site README's structure diagram listed a `TestPatternBar`
+            component that no longer exists and called the highlights section by its old name.
+      - [x] **Real, previously-hidden bug found while just checking the Lighthouse score, PR #43 —
+            the exact CSP violation pasted into this session's very first message was never stale
+            cache or a browser extension; it was a genuine bug that's been live since 2026-09-15.**
+            `_headers`' own documented hash-regen snippet scans for `<script>` tags with a regex
+            that never strips HTML comments first. `BaseLayout.astro`'s own comment explaining why
+            the GA4 script needs `type="module"` contains the literal prose "every inline
+            `<script>`" — the un-stripped regex read that as a real opening tag and captured
+            everything from there through the *actual* GA4 script's closing tag as one garbled
+            blob, hashing that instead of the real script. The real script's true hash was never
+            produced by this process, so it was never in `_headers`, so GA4's consent-mode
+            bootstrap script — and therefore GA4 entirely, plus the delegated `data-cta` click
+            tracking — was silently CSP-blocked on every page load. Every "regenerate and verify"
+            pass done earlier in this same session looked clean only because verification re-ran
+            the same broken regex against its own output. Fixed by stripping HTML comments
+            (`.replace(/<!--[\s\S]*?-->/g, '')`) before the regex runs. Confirmed fixed via
+            Lighthouse (Best Practices 93 → 100, zero console errors) and a clean Playwright probe
+            (see the GA4 entry above).
+      - [x] **Gallery performance fix, PR #44 — found while re-checking the Lighthouse score after
+            the CSP fix.** Gallery's `requestAnimationFrame` loop (drift/tilt/autoplay) started
+            unconditionally at page load regardless of whether the gallery was anywhere near the
+            viewport, and runs forever once started, touching all 37 panels' styles every 3rd
+            frame. Lighthouse's `bootup-time` audit measured this page's own main-thread cost
+            during load at 8,208ms total / 1,236ms scripting; deferring the loop's start behind a
+            one-shot `IntersectionObserver` (200px `rootMargin`) on the gallery's stage dropped that
+            to 1,892ms total / 81ms scripting — over a 4x cut. Full e2e suite (33 tests) still
+            passes; thumbnail clicks and window resizing are unaffected since the existing
+            `ResizeObserver`s already set `maxScroll` correctly regardless of whether the loop has
+            started.
+      - **Net Lighthouse movement, live production:** Best Practices 93 → 100 (confirmed, console-
+        clean). Performance stayed roughly flat (71-77 across noisy local devtools-throttled runs)
+        despite the Gallery fix's large *measured* main-thread win — GA4 going from completely
+        CSP-blocked (0ms of its own cost) to actually running legitimately adds back real cost
+        (~400ms) that wasn't there before purely because it was broken; that's a correct trade; not
+        a regression to chase.
+      - **Not done this session, still worth deciding on purpose:** the branch-hygiene item from
+        2026-09-15 above is worse now — 7 more fully-merged branches accumulated on top of the 14
+        already flagged (`fix-csp-gallery-reel-hash`, `fix-gallery-thumb-scroll`,
+        `nav-glass-highlights-heading-gallery-order`, `update-readmes`, `fix-gallery-caption-mendes`,
+        `fix-csp-comment-regex-bug`, `defer-gallery-animation-loop`), plus `add-gallery-photos-
+        band-shots` (merged) and its stray unmerged/closed PR #39. None urgent; cheap to clean up
+        whenever.
