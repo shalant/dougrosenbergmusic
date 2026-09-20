@@ -81,15 +81,11 @@ const sections = [
 </div>
 
 <style>
-  /* Solid background, not the glass-blur translucent panel this used to be:
-     as a position:fixed element it's on screen through the entire scroll,
-     and translucent chrome reads as a rendering glitch rather than
-     intentional UI once it lands over body text/images further down the
-     page (confirmed via real screenshots - the About pull-quote, the
-     "Professional Affiliations" heading, and a Gallery photo all showed
-     through it). Reuses --bg-elevated, the same opaque-surface token
-     StaffNav's own dropdown/tooltip already use, plus a stronger shadow
-     for clear separation from whatever's behind it. */
+  /* Glass-blur translucent panel, by request - accepted tradeoff is that
+     body text/images scrolling underneath show through it (previously
+     reverted to a solid --bg-elevated background over this exact issue,
+     confirmed via screenshots of the About pull-quote, the "Professional
+     Affiliations" heading, and a Gallery photo bleeding through). */
   .staff-nav {
     position: fixed;
     top: 12px;
@@ -97,7 +93,10 @@ const sections = [
     width: 380px;
     height: 100px;
     z-index: 40;
-    background: var(--bg-elevated);
+    background: rgba(10, 14, 23, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(233, 237, 245, 0.12);
     border-radius: 28px;
     box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6);
   }
@@ -345,7 +344,7 @@ const sections = [
     right: 20px;
     z-index: 41;
     width: min(240px, calc(100vw - 40px));
-    background: var(--bg-elevated);
+    background: rgba(10, 14, 23, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(233, 237, 245, 0.1);
