@@ -23,7 +23,7 @@ const sections = [
   { id: 'dev', label: 'Dev', icon: 'code', tone: 'dev', left: 40, top: 50 },
   { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 116, top: 50 },
   { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 192, top: 50 },
-  { id: 'credibility', label: 'Highlights', icon: 'award', tone: 'cred', left: 268, top: 50 },
+  { id: 'career-highlights', label: 'Highlights', icon: 'award', tone: 'highlights', left: 268, top: 50 },
   { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 344, top: 50 },
 ];
 ---
@@ -167,8 +167,8 @@ const sections = [
   .staff-menu__item.note--listen .staff-menu__dot { background: var(--note-listen); }
   .staff-nav__note.note--about .staff-nav__blob,
   .staff-menu__item.note--about .staff-menu__dot { background: var(--note-about); }
-  .staff-nav__note.note--cred .staff-nav__blob,
-  .staff-menu__item.note--cred .staff-menu__dot { background: var(--note-cred); }
+  .staff-nav__note.note--highlights .staff-nav__blob,
+  .staff-menu__item.note--highlights .staff-menu__dot { background: var(--note-highlights); }
   .staff-nav__note.note--contact .staff-nav__blob,
   .staff-menu__item.note--contact .staff-menu__dot { background: var(--note-contact); }
   .staff-nav__note.note--dev .staff-nav__blob,
@@ -177,7 +177,7 @@ const sections = [
   .staff-nav__note.note--hero .staff-nav__blob { border-radius: 58% 42% 63% 37% / 41% 55% 45% 59%; animation-delay: 0s; }
   .staff-nav__note.note--listen .staff-nav__blob { border-radius: 42% 58% 37% 63% / 60% 38% 62% 40%; animation-delay: 0.9s; }
   .staff-nav__note.note--about .staff-nav__blob { border-radius: 65% 35% 45% 55% / 48% 62% 38% 52%; animation-delay: 1.8s; }
-  .staff-nav__note.note--cred .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
+  .staff-nav__note.note--highlights .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
   .staff-nav__note.note--contact .staff-nav__blob { border-radius: 60% 40% 40% 60% / 35% 60% 40% 65%; animation-delay: 3.6s; }
   .staff-nav__note.note--dev .staff-nav__blob { border-radius: 50% 50% 55% 45% / 45% 55% 50% 50%; animation-delay: 4.5s; }
 
@@ -421,7 +421,7 @@ const sections = [
 </style>
 
 <script>
-  const sectionIds = ['dev', 'listen', 'about', 'credibility', 'contact'];
+  const sectionIds = ['dev', 'listen', 'about', 'career-highlights', 'contact'];
   const jumpButtons = Array.from(document.querySelectorAll<HTMLElement>('.staff-jump'));
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');

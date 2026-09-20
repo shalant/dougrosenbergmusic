@@ -8,49 +8,49 @@ const schools = [
 ];
 ---
 
-<section id="credibility" class="credibility staff-lines--strong">
+<section id="career-highlights" class="career-highlights staff-lines--strong">
   <div class="wrap">
     <p class="eyebrow">Guest Artist / Visiting Instructor</p>
-    <h2 class="credibility__title">Highlights</h2>
-    <ul class="credibility__list">
+    <h2 class="career-highlights__title">Highlights</h2>
+    <ul class="career-highlights__list">
       {schools.map((school) => (
         <li>{school}</li>
       ))}
     </ul>
 
-    <div class="credibility__grid">
-      <div class="credibility__block">
-        <h3 class="credibility__heading">Teaching Experience</h3>
-        <p class="credibility__lead"><strong>Private Instructor &amp; Clinician</strong></p>
-        <p class="credibility__text">
+    <div class="career-highlights__grid">
+      <div class="career-highlights__block">
+        <h3 class="career-highlights__heading">Teaching Experience</h3>
+        <p class="career-highlights__lead"><strong>Private Instructor &amp; Clinician</strong></p>
+        <p class="career-highlights__text">
           Chicago-area schools including Evanston middle schools, Sears School, Glenview, Glencoe,
           Winnetka, Chicago Academy for the Arts, Oswego HS, and Plank MS.
         </p>
-        <ul class="credibility__bullets">
+        <ul class="career-highlights__bullets">
           <li>Private instruction in saxophone, clarinet, flute, jazz improvisation, and music theory</li>
           <li>Customized lesson plans for students from beginner to advanced</li>
           <li>Preparation for auditions, recitals, jazz ensemble placements, and honor bands</li>
         </ul>
       </div>
 
-      <div class="credibility__block">
-        <h3 class="credibility__heading">New Trier High School</h3>
-        <ul class="credibility__bullets">
+      <div class="career-highlights__block">
+        <h3 class="career-highlights__heading">New Trier High School</h3>
+        <ul class="career-highlights__bullets">
           <li>Freshman Jazz Ensemble Assistant (2005–2008)</li>
           <li>Jazz Improvisation Instructor (2003–2008)</li>
           <li>Saxophone Instructor (2007–2011)</li>
         </ul>
-        <p class="credibility__lead"><strong>Lake Forest Country Day School</strong> — Band Director (Fall 2012)</p>
+        <p class="career-highlights__lead"><strong>Lake Forest Country Day School</strong> — Band Director (Fall 2012)</p>
       </div>
 
-      <div class="credibility__block">
-        <h3 class="credibility__heading">Professional Affiliations</h3>
-        <ul class="credibility__bullets">
+      <div class="career-highlights__block">
+        <h3 class="career-highlights__heading">Professional Affiliations</h3>
+        <ul class="career-highlights__bullets">
           <li>Member, International Association of Jazz Educators (since 2005)</li>
           <li>Endorsed by Selmer Saxophones</li>
         </ul>
-        <h3 class="credibility__heading credibility__heading--spaced">Education</h3>
-        <ul class="credibility__bullets">
+        <h3 class="career-highlights__heading career-highlights__heading--spaced">Education</h3>
+        <ul class="career-highlights__bullets">
           <li><strong>New England Conservatory</strong> — Bachelor of Music, Jazz Performance (1997–2002)</li>
           <li><strong>BS in Chemistry</strong> (1997–2002)</li>
         </ul>
@@ -60,20 +60,20 @@ const schools = [
 </section>
 
 <style>
-  .credibility {
+  .career-highlights {
     padding-block: clamp(2.5rem, 5vw, 3.5rem);
     background: var(--surface);
     border-block: 1px solid rgba(233, 237, 245, 0.08);
   }
 
-  .credibility__title {
+  .career-highlights__title {
     font-family: var(--font-display);
     font-weight: 500;
     font-size: clamp(2rem, 4vw, 2.75rem);
     margin: 0.3rem 0 0;
   }
 
-  .credibility__list {
+  .career-highlights__list {
     list-style: none;
     margin: 1rem 0 0;
     padding: 0;
@@ -85,13 +85,13 @@ const schools = [
     color: var(--text-muted);
   }
 
-  .credibility__list li:not(:last-child)::after {
+  .career-highlights__list li:not(:last-child)::after {
     content: '·';
     margin-left: 1.4rem;
     color: var(--brass);
   }
 
-  .credibility__grid {
+  .career-highlights__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(2rem, 5vw, 3rem);
@@ -100,31 +100,31 @@ const schools = [
     border-top: 1px solid rgba(233, 237, 245, 0.1);
   }
 
-  .credibility__heading {
+  .career-highlights__heading {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1.05rem;
     margin: 0 0 0.9rem;
   }
 
-  .credibility__heading--spaced {
+  .career-highlights__heading--spaced {
     margin-top: 1.75rem;
   }
 
-  .credibility__lead {
+  .career-highlights__lead {
     margin: 0 0 0.4rem;
     font-size: 0.92rem;
     color: var(--text);
   }
 
-  .credibility__text {
+  .career-highlights__text {
     margin: 0 0 0.9rem;
     font-size: 0.88rem;
     color: var(--text-muted);
     line-height: 1.55;
   }
 
-  .credibility__bullets {
+  .career-highlights__bullets {
     margin: 0;
     padding-left: 1.1rem;
     font-size: 0.86rem;
@@ -132,17 +132,17 @@ const schools = [
     line-height: 1.6;
   }
 
-  .credibility__bullets li {
+  .career-highlights__bullets li {
     margin-bottom: 0.4rem;
   }
 
-  .credibility__bullets strong {
+  .career-highlights__bullets strong {
     color: var(--text);
     font-weight: 500;
   }
 
   @media (max-width: 900px) {
-    .credibility__grid {
+    .career-highlights__grid {
       grid-template-columns: 1fr;
     }
   }

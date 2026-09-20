@@ -17,12 +17,12 @@ test.describe('desktop staff nav', () => {
 
   test('the active note tracks scroll position', async ({ page }) => {
     await page.goto('/');
-    // Only dev/listen/about/credibility/contact have a corresponding nav
+    // Only dev/listen/about/career-highlights/contact have a corresponding nav
     // note - hero/performance/sheet-music/gallery are real sections but
     // aren't linked from the corner nav.
-    await page.locator('#credibility').scrollIntoViewIfNeeded();
+    await page.locator('#career-highlights').scrollIntoViewIfNeeded();
     // IntersectionObserver needs a beat to fire after the programmatic scroll.
-    await expect(page.locator('.staff-nav__note[data-target="credibility"]')).toHaveClass(/is-active/, {
+    await expect(page.locator('.staff-nav__note[data-target="career-highlights"]')).toHaveClass(/is-active/, {
       timeout: 3000,
     });
   });
