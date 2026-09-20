@@ -28,8 +28,6 @@ const sections = [
 ];
 ---
 
-<div class="header-scrim" data-header-scrim aria-hidden="true"></div>
-
 <nav class="staff-nav" aria-label="Section navigation" data-staff-nav>
   <div class="staff-nav__line" style="top: 26px;"></div>
   <div class="staff-nav__line" style="top: 38px;"></div>
@@ -255,48 +253,6 @@ const sections = [
     }
   }
 
-  /* Logo.astro and the top-right nav chrome (the desktop .staff-nav panel
-     above 860px, .staff-toggle below it) are independent fixed elements
-     with nothing behind the gap between them - every section's eyebrow/
-     heading text scrolls straight through that gap and shows up right at
-     the top edge, overlapping the corner chips. Confirmed on BOTH sides of
-     the 860px breakpoint via real screenshots: mobile showed "PERFORMANCE",
-     a name mid-list, "New Trier High School" bleeding through; desktop
-     showed the "Artists Performed With" name list doing the same thing
-     behind the wider top-right pill nav - same bug, not a mobile-only one,
-     so this isn't scoped to a breakpoint. A full-width bar would fix both,
-     but a permanently solid one would put a hard stripe across the top of
-     the hero photo, which the hero's own design deliberately keeps clear
-     (only the two corner chips sit over it). Transparent by default, solid
-     only once .is-scrolled is set (the script below toggles it exactly
-     when the hero has fully scrolled out of view) - covers the whole rest
-     of the page, where the bleed-through actually happens, without
-     touching the hero's look. Height differs by breakpoint because the
-     elements it's backing do: the desktop logo/staff-nav panel run ~100-
-     116px tall, the mobile logo/hamburger chips only ~56px. */
-  .header-scrim {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 128px;
-    z-index: 39;
-    background: var(--bg-elevated);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-  }
-
-  .header-scrim.is-scrolled {
-    opacity: 1;
-  }
-
-  @media (max-width: 860px) {
-    .header-scrim {
-      height: 68px;
-    }
-  }
-
   /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
   .staff-toggle {
@@ -488,16 +444,4 @@ const sections = [
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
-
-  const headerScrim = document.querySelector<HTMLElement>('[data-header-scrim]');
-  const hero = document.getElementById('hero');
-  if (headerScrim && hero) {
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        headerScrim.classList.toggle('is-scrolled', !entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-    heroObserver.observe(hero);
-  }
 </script>
