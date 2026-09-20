@@ -23,12 +23,10 @@ const sections = [
   { id: 'dev', label: 'Dev', icon: 'code', tone: 'dev', left: 40, top: 50 },
   { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 116, top: 50 },
   { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 192, top: 50 },
-  { id: 'credibility', label: 'Highlights', icon: 'award', tone: 'cred', left: 268, top: 50 },
+  { id: 'career-highlights', label: 'Highlights', icon: 'award', tone: 'highlights', left: 268, top: 50 },
   { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 344, top: 50 },
 ];
 ---
-
-<div class="header-scrim" data-header-scrim aria-hidden="true"></div>
 
 <nav class="staff-nav" aria-label="Section navigation" data-staff-nav>
   <div class="staff-nav__line" style="top: 26px;"></div>
@@ -81,15 +79,11 @@ const sections = [
 </div>
 
 <style>
-  /* Solid background, not the glass-blur translucent panel this used to be:
-     as a position:fixed element it's on screen through the entire scroll,
-     and translucent chrome reads as a rendering glitch rather than
-     intentional UI once it lands over body text/images further down the
-     page (confirmed via real screenshots - the About pull-quote, the
-     "Professional Affiliations" heading, and a Gallery photo all showed
-     through it). Reuses --bg-elevated, the same opaque-surface token
-     StaffNav's own dropdown/tooltip already use, plus a stronger shadow
-     for clear separation from whatever's behind it. */
+  /* Glass-blur translucent panel, by request - accepted tradeoff is that
+     body text/images scrolling underneath show through it (previously
+     reverted to a solid --bg-elevated background over this exact issue,
+     confirmed via screenshots of the About pull-quote, the "Professional
+     Affiliations" heading, and a Gallery photo bleeding through). */
   .staff-nav {
     position: fixed;
     top: 12px;
@@ -97,7 +91,10 @@ const sections = [
     width: 380px;
     height: 100px;
     z-index: 40;
-    background: var(--bg-elevated);
+    background: rgba(10, 14, 23, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(233, 237, 245, 0.12);
     border-radius: 28px;
     box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6);
   }
@@ -168,8 +165,8 @@ const sections = [
   .staff-menu__item.note--listen .staff-menu__dot { background: var(--note-listen); }
   .staff-nav__note.note--about .staff-nav__blob,
   .staff-menu__item.note--about .staff-menu__dot { background: var(--note-about); }
-  .staff-nav__note.note--cred .staff-nav__blob,
-  .staff-menu__item.note--cred .staff-menu__dot { background: var(--note-cred); }
+  .staff-nav__note.note--highlights .staff-nav__blob,
+  .staff-menu__item.note--highlights .staff-menu__dot { background: var(--note-highlights); }
   .staff-nav__note.note--contact .staff-nav__blob,
   .staff-menu__item.note--contact .staff-menu__dot { background: var(--note-contact); }
   .staff-nav__note.note--dev .staff-nav__blob,
@@ -178,7 +175,7 @@ const sections = [
   .staff-nav__note.note--hero .staff-nav__blob { border-radius: 58% 42% 63% 37% / 41% 55% 45% 59%; animation-delay: 0s; }
   .staff-nav__note.note--listen .staff-nav__blob { border-radius: 42% 58% 37% 63% / 60% 38% 62% 40%; animation-delay: 0.9s; }
   .staff-nav__note.note--about .staff-nav__blob { border-radius: 65% 35% 45% 55% / 48% 62% 38% 52%; animation-delay: 1.8s; }
-  .staff-nav__note.note--cred .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
+  .staff-nav__note.note--highlights .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
   .staff-nav__note.note--contact .staff-nav__blob { border-radius: 60% 40% 40% 60% / 35% 60% 40% 65%; animation-delay: 3.6s; }
   .staff-nav__note.note--dev .staff-nav__blob { border-radius: 50% 50% 55% 45% / 45% 55% 50% 50%; animation-delay: 4.5s; }
 
@@ -256,48 +253,6 @@ const sections = [
     }
   }
 
-  /* Logo.astro and the top-right nav chrome (the desktop .staff-nav panel
-     above 860px, .staff-toggle below it) are independent fixed elements
-     with nothing behind the gap between them - every section's eyebrow/
-     heading text scrolls straight through that gap and shows up right at
-     the top edge, overlapping the corner chips. Confirmed on BOTH sides of
-     the 860px breakpoint via real screenshots: mobile showed "PERFORMANCE",
-     a name mid-list, "New Trier High School" bleeding through; desktop
-     showed the "Artists Performed With" name list doing the same thing
-     behind the wider top-right pill nav - same bug, not a mobile-only one,
-     so this isn't scoped to a breakpoint. A full-width bar would fix both,
-     but a permanently solid one would put a hard stripe across the top of
-     the hero photo, which the hero's own design deliberately keeps clear
-     (only the two corner chips sit over it). Transparent by default, solid
-     only once .is-scrolled is set (the script below toggles it exactly
-     when the hero has fully scrolled out of view) - covers the whole rest
-     of the page, where the bleed-through actually happens, without
-     touching the hero's look. Height differs by breakpoint because the
-     elements it's backing do: the desktop logo/staff-nav panel run ~100-
-     116px tall, the mobile logo/hamburger chips only ~56px. */
-  .header-scrim {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 128px;
-    z-index: 39;
-    background: var(--bg-elevated);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-  }
-
-  .header-scrim.is-scrolled {
-    opacity: 1;
-  }
-
-  @media (max-width: 860px) {
-    .header-scrim {
-      height: 68px;
-    }
-  }
-
   /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
   .staff-toggle {
@@ -345,7 +300,7 @@ const sections = [
     right: 20px;
     z-index: 41;
     width: min(240px, calc(100vw - 40px));
-    background: var(--bg-elevated);
+    background: rgba(10, 14, 23, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(233, 237, 245, 0.1);
@@ -422,7 +377,7 @@ const sections = [
 </style>
 
 <script>
-  const sectionIds = ['dev', 'listen', 'about', 'credibility', 'contact'];
+  const sectionIds = ['dev', 'listen', 'about', 'career-highlights', 'contact'];
   const jumpButtons = Array.from(document.querySelectorAll<HTMLElement>('.staff-jump'));
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
@@ -489,16 +444,4 @@ const sections = [
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
-
-  const headerScrim = document.querySelector<HTMLElement>('[data-header-scrim]');
-  const hero = document.getElementById('hero');
-  if (headerScrim && hero) {
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        headerScrim.classList.toggle('is-scrolled', !entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-    heroObserver.observe(hero);
-  }
 </script>

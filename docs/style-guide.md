@@ -28,7 +28,7 @@ deliberate choice per `docs/DESIGN_NOTES.md`, tracked as a scoped future decisio
 | `--glow-soft` | `rgba(127, 176, 255, 0.16)` | Glow at low opacity |
 | `--staff-line` / `--staff-line-strong` | `rgba(233, 237, 245, 0.09)` / `0.16` | The staff-line background texture (see Component Patterns) |
 
-**Section note colors** (`--note-hero`, `--note-listen`, `--note-about`, `--note-cred`,
+**Section note colors** (`--note-hero`, `--note-listen`, `--note-about`, `--note-highlights`,
 `--note-contact`, `--note-dev`) — one muted jewel-tone per nav section, used by `StaffNav.astro`'s
 corner nav. `--note-hero`/`--note-listen` reuse `--glow`/`--brass`; the rest (`#e0794f` orange,
 `#4fb894` teal, `#b287df` purple, `#e05f6a` red for the external Dev link) are one-off hex values
@@ -52,7 +52,7 @@ how to add a new weight).
   italic 400/500, normal 500/600. Used almost everywhere in italic for section headings
   (`font-style: italic; font-weight: 500`), normal+600 for sub-headings/stat numbers.
 - `--font-body`: **Work Sans** — body copy. Weights: 400 (default), 500 (`<strong>` inside
-  `.credibility__bullets`), 700 (bare `<strong>` elsewhere, browser default bold).
+  `.career-highlights__bullets`), 700 (bare `<strong>` elsewhere, browser default bold).
 - `--font-mono`: **JetBrains Mono** — eyebrows, nav labels, captions, metadata. Weights: 400, 600.
 
 **Before adding a new weight/style combo**, check it's actually needed (a real rendered use, not
@@ -80,7 +80,7 @@ Section vertical rhythm, also `clamp()`-based (`padding-block`):
 | Role | Clamp | Where |
 |---|---|---|
 | Standard section | `4rem, 9vw, 7rem` | Default — most sections |
-| Compact/embedded band | `2.5rem, 5vw, 3.5rem` | `Credibility` (sits inside a bordered band, not full-bleed) |
+| Compact/embedded band | `2.5rem, 5vw, 3.5rem` | `CareerHighlights` (sits inside a bordered band, not full-bleed) |
 | Closing section | `5rem, 12vw, 8.5rem` (top only) | `Contact` — extra breathing room before the final CTA |
 
 Container width: `.wrap` (`global.css`) caps content at `max-width: 1180px`, horizontal padding
@@ -92,7 +92,7 @@ No shared breakpoint tokens — each component declares its own `@media (max-wid
 Current values in use: **640px** (`HeroGraded` — hides antenna/scroll-cue, stacks the now-playing
 pill), **700px** (`Performance`, `LeadSheetBarShape`), **800px** (`SheetMusicLibrary`, `About` —
 grids go single-column), **860px** (`StaffNav` — desktop nav hides, hamburger takes over), **900px**
-(`Credibility` — 3-column grid stacks). See `docs/todolist.md`'s round 2 part 6 for a structural
+(`CareerHighlights` — 3-column grid stacks). See `docs/todolist.md`'s round 2 part 6 for a structural
 read on why these being uncoordinated is lower-risk here than on a typical site (`StaffNav` is
 `position: fixed`, not competing for in-flow horizontal space with siblings) — but that was a code
 read, not a live-viewport check; treat new breakpoint additions as needing an actual resize test,
@@ -101,7 +101,7 @@ not just a plausible-sounding number.
 ## Component Patterns
 
 - **Buttons/pills/badges**: `border-radius: 999px` — the standard for any pill-shaped CTA, tag, or
-  badge (`.contact__cta`, `.gallery__filter`, `.credibility__list li`, nav notes' hover labels).
+  badge (`.contact__cta`, `.gallery__filter`, `.career-highlights__list li`, nav notes' hover labels).
 - **Cards/panels**: small radii, `5px`–`9px` (`.sheet-music__panel`, `.staff-menu`, gallery cards
   at `6px`). Not a hard rule, just the observed range — pick something in it rather than a much
   larger/smaller value that would read as a different design language.

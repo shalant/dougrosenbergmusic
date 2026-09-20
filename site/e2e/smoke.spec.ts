@@ -10,7 +10,7 @@ test.describe('smoke', () => {
 
   test('every major section renders', async ({ page }) => {
     await page.goto('/');
-    for (const id of ['hero', 'dev', 'listen', 'about', 'performance', 'credibility', 'sheet-music', 'gallery', 'contact']) {
+    for (const id of ['hero', 'dev', 'listen', 'about', 'performance', 'career-highlights', 'sheet-music', 'gallery', 'contact']) {
       await expect(page.locator(`#${id}`)).toBeAttached();
     }
   });
