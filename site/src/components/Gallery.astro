@@ -273,6 +273,16 @@ const photos = [
     const STACK_UPDATE_INTERVAL = 3;
     let frameCount = 0;
 
+    // Scrolls only the horizontal thumb strip's own scroll container, never
+    // the page: thumb.scrollIntoView() walks up through every scrollable
+    // ancestor, including the document, so on the very first frame (when
+    // activeIndex flips from -1 to 0 before the user has scrolled or
+    // interacted at all) it was yanking the whole page down to the gallery.
+    function centerThumb(thumb) {
+      const target = thumb.offsetLeft - (thumbsEl.clientWidth - thumb.offsetWidth) / 2;
+      thumbsEl.scrollTo({ left: target, behavior: 'smooth' });
+    }
+
     function updateStack() {
       const stageCenter = stage.clientWidth / 2;
       let closest = 0;
@@ -299,7 +309,7 @@ const photos = [
       if (closest !== activeIndex) {
         activeIndex = closest;
         thumbs.forEach((t, i) => t.classList.toggle('active', i === activeIndex));
-        thumbs[activeIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        centerThumb(thumbs[activeIndex]);
       }
       if (progressFill) {
         progressFill.style.width = maxScroll > 0 ? `${(-currentX / maxScroll) * 100}%` : '0%';
