@@ -344,10 +344,26 @@ const photos = [
       requestAnimationFrame(frame);
     }
 
-    requestAnimationFrame(() => {
-      recalc();
-      frame();
-    });
+    // The rAF loop below runs forever once started (that's how autoplay/drift
+    // works) and touches all 37 panels' styles every 3rd frame - started
+    // unconditionally at load, that's real main-thread cost competing with
+    // the initial page render for a carousel that's nowhere near the
+    // viewport yet (Lighthouse's bootup-time/mainthread-work-breakdown
+    // audits confirmed this: ~2s of Style & Layout work attributed to this
+    // page during load, driving Total Blocking Time to 760ms - TBT's the
+    // highest-weighted Core Web Vital in Lighthouse's performance score).
+    // Deferred to a one-shot IntersectionObserver so it only starts once the
+    // gallery is actually about to be scrolled into view.
+    const startObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        startObserver.disconnect();
+        recalc();
+        frame();
+      },
+      { rootMargin: '200px 0px' }
+    );
+    startObserver.observe(stage);
 
     window.addEventListener('resize', recalc);
 
