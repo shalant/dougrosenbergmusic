@@ -315,5 +315,16 @@ const pieces = [
         }
       });
     });
+
+    viewerLink.addEventListener('click', () => {
+      // Same best-effort/try-catch pattern as BaseLayout's cta_click listener:
+      // a blocked or missing gtag must never break the actual file link.
+      try {
+        (window as any).gtag?.('event', 'sheet_music_download', {
+          piece_title: viewerTitle.textContent ?? '',
+          file_name: viewerLink.href.split('/').pop() ?? '',
+        });
+      } catch {}
+    });
   }
 </script>
