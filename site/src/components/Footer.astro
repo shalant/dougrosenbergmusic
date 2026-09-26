@@ -1,0 +1,106 @@
+---
+// Composed out of two things that used to live buried inside Contact.astro:
+// the social links (previously sandwiched awkwardly between the email CTA
+// and the "or send a message directly" form) and the site's own case-study
+// credit line + copyright (previously a bare two-line <footer> nested
+// inside the #contact section rather than a real page-level landmark).
+const socials = [
+  { label: 'Instagram', href: 'https://instagram.com/shalantdoro' },
+  { label: 'YouTube', href: 'https://youtube.com/@dougrosenberg2361' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/douglasrosenberg' },
+  { label: 'GitHub', href: 'https://github.com/shalant' },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <p class="site-footer__name">Doug Rosenberg</p>
+
+    <nav class="site-footer__socials" aria-label="Social links">
+      {socials.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
+      ))}
+    </nav>
+
+    <p class="site-footer__proof">
+      This site — Astro, Cloudflare Workers, no bloat — is the portfolio. <a href="https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro/" target="_blank" rel="noopener noreferrer">See how it was rebuilt →</a>
+    </p>
+
+    <p class="site-footer__copyright">© {new Date().getFullYear()} Doug Rosenberg</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #060810;
+    border-top: 1px solid rgba(233, 237, 245, 0.08);
+    padding-block: clamp(2.5rem, 6vw, 3.5rem) clamp(1.75rem, 4vw, 2.25rem);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .site-footer__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .site-footer__socials {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .site-footer__socials a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .site-footer__socials a:hover,
+  .site-footer__socials a:focus-visible {
+    color: var(--text);
+    border-color: var(--brass);
+  }
+
+  .site-footer__proof {
+    margin: 0.5rem 0 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .site-footer__proof a {
+    color: var(--glow);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease;
+  }
+
+  .site-footer__proof a:hover,
+  .site-footer__proof a:focus-visible {
+    border-color: var(--glow);
+  }
+
+  .site-footer__copyright {
+    margin: 0;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+</style>

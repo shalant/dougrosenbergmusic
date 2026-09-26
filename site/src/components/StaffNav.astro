@@ -255,18 +255,21 @@ const sections = [
 
   /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
+  /* Matches Logo.astro's mobile size (56px) - the two fixed corner controls
+     read as one consistent pair rather than the logo looking bigger than
+     the nav trigger beside it. */
   .staff-toggle {
     display: none;
     position: fixed;
     top: 12px;
     right: 20px;
     z-index: 41;
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     background: rgba(10, 14, 23, 0.55);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -276,7 +279,7 @@ const sections = [
   }
 
   .staff-toggle__bar {
-    width: 18px;
+    width: 22px;
     height: 2px;
     background: var(--brass);
     border-radius: 1px;
@@ -284,19 +287,19 @@ const sections = [
   }
 
   .staff-toggle.is-open .staff-toggle__bar:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
   }
   .staff-toggle.is-open .staff-toggle__bar:nth-child(2) {
     opacity: 0;
   }
   .staff-toggle.is-open .staff-toggle__bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
   }
 
   .staff-menu {
     display: none;
     position: fixed;
-    top: 64px;
+    top: 76px;
     right: 20px;
     z-index: 41;
     width: min(240px, calc(100vw - 40px));
