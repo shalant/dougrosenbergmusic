@@ -62,7 +62,7 @@ const sections = [
   <span class="staff-toggle__bar"></span>
 </button>
 
-<div class="staff-menu" id="staff-menu-panel" data-menu-panel hidden>
+<div class="staff-menu" id="staff-menu-panel" data-menu-panel aria-hidden="true">
   <ul class="staff-menu__list">
     {sections.map((s) => (
       <li>
@@ -255,17 +255,18 @@ const sections = [
 
   /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
-  /* Matches Logo.astro's mobile size (56px) - the two fixed corner controls
+  /* Matches Logo.astro's mobile size (64px) - the two fixed corner controls
      read as one consistent pair rather than the logo looking bigger than
-     the nav trigger beside it. */
+     the nav trigger beside it. Bumped again from 56px after real-phone
+     feedback that it still read small. */
   .staff-toggle {
     display: none;
     position: fixed;
     top: 12px;
     right: 20px;
     z-index: 41;
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -279,27 +280,31 @@ const sections = [
   }
 
   .staff-toggle__bar {
-    width: 22px;
+    width: 24px;
     height: 2px;
     background: var(--brass);
     border-radius: 1px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
+  }
+
+  .staff-toggle.is-open {
+    transform: rotate(90deg);
   }
 
   .staff-toggle.is-open .staff-toggle__bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    transform: translateY(9px) rotate(45deg);
   }
   .staff-toggle.is-open .staff-toggle__bar:nth-child(2) {
     opacity: 0;
   }
   .staff-toggle.is-open .staff-toggle__bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-9px) rotate(-45deg);
   }
 
   .staff-menu {
     display: none;
     position: fixed;
-    top: 76px;
+    top: 84px;
     right: 20px;
     z-index: 41;
     width: min(240px, calc(100vw - 40px));
@@ -310,10 +315,6 @@ const sections = [
     border-radius: 14px;
     padding: 0.4rem;
     box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.7);
-  }
-
-  .staff-menu[hidden] {
-    display: none;
   }
 
   .staff-menu__list {
@@ -373,8 +374,34 @@ const sections = [
     .staff-toggle {
       display: flex;
     }
-    .staff-menu:not([hidden]) {
+    /* Rendered at all times at this breakpoint (never [hidden]/display:none)
+       so open/close can actually transition instead of popping instantly -
+       visibility is delayed on the way out (and instant on the way in) so
+       it's still out of the tab/AT order while closed, same as [hidden]
+       was, but without losing the animation that requires layout. */
+    .staff-menu {
       display: block;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px) scale(0.96);
+      transform-origin: top right;
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0.2s;
+    }
+    .staff-menu.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .staff-menu {
+        transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+        transform: none;
+      }
+      .staff-menu.is-open {
+        transition: opacity 0.15s ease, visibility 0s linear 0s;
+        transform: none;
+      }
     }
   }
 </style>
@@ -387,13 +414,15 @@ const sections = [
   const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
 
   function closeMenu() {
-    panel?.setAttribute('hidden', '');
+    panel?.classList.remove('is-open');
+    panel?.setAttribute('aria-hidden', 'true');
     toggle?.setAttribute('aria-expanded', 'false');
     toggle?.classList.remove('is-open');
   }
 
   function openMenu() {
-    panel?.removeAttribute('hidden');
+    panel?.classList.add('is-open');
+    panel?.setAttribute('aria-hidden', 'false');
     toggle?.setAttribute('aria-expanded', 'true');
     toggle?.classList.add('is-open');
   }
@@ -405,7 +434,7 @@ const sections = [
   });
 
   document.addEventListener('click', (e) => {
-    if (!panel || panel.hasAttribute('hidden')) return;
+    if (!panel || !panel.classList.contains('is-open')) return;
     const target = e.target as Node;
     if (panel.contains(target) || toggle?.contains(target)) return;
     closeMenu();

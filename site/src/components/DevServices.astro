@@ -34,7 +34,7 @@ const channels = [
       <h2 class="dev__heading">I also build sites like this one.</h2>
       <p class="dev__text">
         I design and build custom websites for small businesses — the same care that went into
-        every animation, form, and pixel on this page. Astro, Cloudflare, no bloat, no bolted-on
+        every animation, form, and pixel on this page. Fast, clean, no bloat, no bolted-on
         page builder.
       </p>
       <ul class="dev__services">
@@ -44,9 +44,15 @@ const channels = [
       </ul>
       <div class="dev__ctas">
         <a href="#contact" class="cta cta-primary" data-cta="dev-primary">Let&rsquo;s Talk About Your Site →</a>
-        <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary" data-cta="dev-secondary">See More of My Work</a>
       </div>
-      <!-- The "see how this site was built" case-study link used to live
+      <!-- A second "See More of My Work" CTA used to sit here - cut as
+           redundant (Doug's own call): Channel Surf, right next to this
+           text, already *is* "more of my work," six real clickable
+           projects, so a button repeating that in words was competing with
+           the one action this section actually wants (start a
+           conversation) instead of reinforcing it.
+
+           The "see how this site was built" case-study link used to live
            here too, verbatim duplicate of Contact.astro's footer link -
            cut rather than fixed twice. Channel Surf below is now the
            proof mechanism for this section (six real, clickable
@@ -216,11 +222,11 @@ const channels = [
     margin-top: 2.25rem;
   }
 
-  /* .cta-primary/.cta-secondary are shared with the hero, which sits one
-     screen above this section - reusing them as-is here read as the exact
-     same button pair repeated rather than this section's own call to
-     action. Recolored to --note-dev (this section's own accent, already
-     used on its eyebrow) instead of introducing a third button style. */
+  /* .cta-primary is shared with the hero, which sits one screen above this
+     section - reusing it as-is here read as the exact same button repeated
+     rather than this section's own call to action. Recolored to --note-dev
+     (this section's own accent, already used on its eyebrow) instead of
+     introducing a third button style. */
   .dev__ctas .cta-primary {
     background: var(--note-dev);
     color: var(--bg);
@@ -231,12 +237,6 @@ const channels = [
     background: var(--note-dev);
     filter: brightness(1.15);
     transform: translateY(-1px);
-  }
-
-  .dev__ctas .cta-secondary:hover,
-  .dev__ctas .cta-secondary:focus-visible {
-    border-color: var(--note-dev);
-    color: var(--note-dev);
   }
 
   /* ---- broadcast screen + clicker ---- */
