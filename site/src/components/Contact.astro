@@ -1,11 +1,5 @@
 ---
 const email = 'doug.rosenberg@gmail.com';
-const socials = [
-  { label: 'Instagram', href: 'https://instagram.com/shalantdoro' },
-  { label: 'YouTube', href: 'https://youtube.com/@dougrosenberg2361' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/douglasrosenberg' },
-  { label: 'GitHub', href: 'https://github.com/shalant' },
-];
 ---
 
 <section id="contact" class="contact">
@@ -18,12 +12,6 @@ const socials = [
       {email}
       <span aria-hidden="true">→</span>
     </a>
-
-    <nav class="contact__socials" aria-label="Social links">
-      {socials.map((s) => (
-        <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
-      ))}
-    </nav>
 
     <div class="contact__form-wrap">
       <p class="contact__form-label">Or send a message directly</p>
@@ -59,14 +47,6 @@ const socials = [
       </form>
     </div>
   </div>
-
-  <footer class="contact__footer">
-    <p class="contact__footer-proof">
-      This site — Astro, Cloudflare Workers, no bloat — is the portfolio.
-      <a href="https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro/" target="_blank" rel="noopener noreferrer">See how it was rebuilt →</a>
-    </p>
-    <p>© {new Date().getFullYear()} Doug Rosenberg</p>
-  </footer>
 </section>
 
 <script>
@@ -189,55 +169,6 @@ const socials = [
   .contact__cta:hover span,
   .contact__cta:focus-visible span {
     transform: translateX(3px);
-  }
-
-  .contact__socials {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 2.75rem;
-  }
-
-  .contact__socials a {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    letter-spacing: 0.03em;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-
-  .contact__socials a:hover {
-    color: var(--text);
-    border-color: var(--brass);
-  }
-
-  .contact__footer {
-    margin-top: 4.5rem;
-    text-align: center;
-    color: var(--text-faint);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-  }
-
-  .contact__footer-proof {
-    margin: 0 0 0.6rem;
-    color: var(--text-muted);
-  }
-
-  .contact__footer-proof a {
-    color: var(--glow);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 1px;
-    transition: border-color 0.2s ease;
-  }
-
-  .contact__footer-proof a:hover,
-  .contact__footer-proof a:focus-visible {
-    border-color: var(--glow);
   }
 
   /* the email address is long enough at the mono font's clamp() minimum that

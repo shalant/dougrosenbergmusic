@@ -78,7 +78,15 @@ const tracks = [
 <style>
   .hero {
     position: relative;
+    /* 100vh on mobile Safari/Chrome is measured against the viewport with
+       the address bar collapsed - taller than what's actually visible when
+       the bar is showing (the common case on load/scroll-up), so the
+       bottom-anchored content block below (padding-bottom, phone
+       breakpoint) sat partly below the visible fold, reading as "clipped."
+       100dvh tracks the real visible viewport; vh stays first as the
+       fallback for browsers without dvh support. */
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: flex-end;

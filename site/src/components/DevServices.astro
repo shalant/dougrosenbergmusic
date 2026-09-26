@@ -77,7 +77,14 @@ const channels = [
         <div class="dev__remote">
           <button class="dev__remote-btn" id="dev-ch-prev" type="button" aria-label="Previous channel">&lsaquo;</button>
           <div class="dev__remote-leds" id="dev-ch-leds">
-            {channels.map((_, i) => <span class={`dev__remote-led${i === 0 ? ' is-active' : ''}`} />)}
+            {channels.map((c, i) => (
+              <button
+                type="button"
+                class={`dev__remote-led${i === 0 ? ' is-active' : ''}`}
+                data-channel={i}
+                aria-label={`View ${c.name}`}
+              />
+            ))}
           </div>
           <button class="dev__remote-btn" id="dev-ch-next" type="button" aria-label="Next channel">&rsaquo;</button>
         </div>
@@ -136,6 +143,15 @@ const channels = [
     document.getElementById('dev-ch-prev').addEventListener('click', function () {
       i = (i - 1 + channels.length) % channels.length;
       render();
+    });
+    // LEDs were purely decorative status dots - on a 6-channel list that
+    // meant reaching the last channel took up to 5 taps of "next" on
+    // mobile. Made each one a real jump-to-channel control instead.
+    Array.from(leds).forEach(function (led, idx) {
+      led.addEventListener('click', function () {
+        i = idx;
+        render();
+      });
     });
   })();
 </script>
@@ -198,6 +214,29 @@ const channels = [
     flex-wrap: wrap;
     gap: 0.7rem;
     margin-top: 2.25rem;
+  }
+
+  /* .cta-primary/.cta-secondary are shared with the hero, which sits one
+     screen above this section - reusing them as-is here read as the exact
+     same button pair repeated rather than this section's own call to
+     action. Recolored to --note-dev (this section's own accent, already
+     used on its eyebrow) instead of introducing a third button style. */
+  .dev__ctas .cta-primary {
+    background: var(--note-dev);
+    color: var(--bg);
+  }
+
+  .dev__ctas .cta-primary:hover,
+  .dev__ctas .cta-primary:focus-visible {
+    background: var(--note-dev);
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+  }
+
+  .dev__ctas .cta-secondary:hover,
+  .dev__ctas .cta-secondary:focus-visible {
+    border-color: var(--note-dev);
+    color: var(--note-dev);
   }
 
   /* ---- broadcast screen + clicker ---- */
@@ -369,11 +408,11 @@ const channels = [
      on the TV, and it closes the dead space that row used to be. */
   .dev__remote {
     position: absolute;
-    bottom: -22px;
+    bottom: -25px;
     right: 28px;
     display: flex;
     align-items: center;
-    height: 52px;
+    height: 58px;
     border-radius: 999px;
     padding-inline: 0.4rem;
     gap: 0.6rem;
@@ -389,9 +428,12 @@ const channels = [
     transform: rotate(-5deg) scale(1.04);
   }
 
+  /* 44px - a real touch target, not the previous 38px (below the standard
+     44px minimum), now that this remote is the primary way to step through
+     channels on mobile (no hover state to lean on there). */
   .dev__remote-btn {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -417,19 +459,38 @@ const channels = [
 
   .dev__remote-leds {
     display: flex;
-    gap: 5px;
+    gap: 2px;
   }
 
+  /* Now real jump-to-channel buttons, not decorative dots - each gets a
+     18px tap target via padding while keeping the same small visible dot
+     (background-clip: content-box), so the touch area grows without the
+     row of dots visually ballooning. */
   .dev__remote-led {
-    width: 5px;
-    height: 5px;
+    width: 18px;
+    height: 18px;
+    padding: 6.5px;
+    border: none;
     border-radius: 50%;
-    background: rgba(233, 237, 245, 0.18);
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    background-color: rgba(233, 237, 245, 0.18);
+    background-clip: content-box;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dev__remote-led:hover,
+  .dev__remote-led:focus-visible {
+    background-color: rgba(233, 237, 245, 0.4);
+  }
+
+  .dev__remote-led:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
   }
 
   .dev__remote-led.is-active {
-    background: var(--note-highlights);
+    background-color: var(--note-highlights);
     box-shadow: 0 0 5px var(--note-highlights);
   }
 

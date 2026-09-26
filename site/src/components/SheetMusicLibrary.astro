@@ -46,7 +46,7 @@ const pieces = [
 ];
 ---
 
-<section id="sheet-music" class="sheet-music">
+<section id="sheet-music" class="sheet-music staff-lines">
   <div class="wrap">
     <p class="eyebrow">For My Students</p>
     <h2 class="sheet-music__heading">Sheet Music Library</h2>
@@ -68,6 +68,7 @@ const pieces = [
 
       <div class="sheet-music__viewer">
         <div class="sheet-music__viewer-empty" data-viewer-empty>
+          <span class="sheet-music__viewer-empty-icon" aria-hidden="true">&#9835;</span>
           <p>Select a piece from the list to view.</p>
         </div>
         <div class="sheet-music__viewer-active" data-viewer-active hidden>
@@ -183,12 +184,25 @@ const pieces = [
   .sheet-music__viewer-empty {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.85rem;
     color: var(--text-faint);
     font-size: 0.9rem;
-    border: 1px dashed rgba(233, 237, 245, 0.14);
+    border: 1px solid rgba(233, 237, 245, 0.1);
     border-radius: 8px;
+    /* Was a plain dashed wireframe box - reads as an unfinished/empty state
+       rather than a considered one. A soft brass glow behind a music-note
+       glyph borrows the accent color already used for eyebrows/section
+       marks elsewhere instead of introducing a new one. */
+    background: radial-gradient(circle at 50% 42%, var(--brass-soft), transparent 70%);
+  }
+
+  .sheet-music__viewer-empty-icon {
+    font-size: 2.75rem;
+    color: var(--brass);
+    opacity: 0.75;
   }
 
   .sheet-music__viewer-empty[hidden] {
