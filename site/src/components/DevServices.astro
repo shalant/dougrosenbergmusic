@@ -463,13 +463,14 @@ const channels = [
   }
 
   /* Now real jump-to-channel buttons, not decorative dots - each gets a
-     18px tap target via padding while keeping the same small visible dot
-     (background-clip: content-box), so the touch area grows without the
-     row of dots visually ballooning. */
+     24px tap target via padding (WCAG 2.5.8's minimum, confirmed against a
+     real Lighthouse CI failure at the previous 18px) while keeping the
+     same small visible dot (background-clip: content-box), so the touch
+     area grows without the row of dots visually ballooning. */
   .dev__remote-led {
-    width: 18px;
-    height: 18px;
-    padding: 6.5px;
+    width: 24px;
+    height: 24px;
+    padding: 9.5px;
     border: none;
     border-radius: 50%;
     background-color: rgba(233, 237, 245, 0.18);
