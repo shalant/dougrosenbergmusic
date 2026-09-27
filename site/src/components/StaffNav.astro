@@ -62,29 +62,31 @@ const sections = [
   <span class="staff-toggle__bar"></span>
 </button>
 
-<div class="staff-menu" id="staff-menu-panel" data-menu-panel aria-hidden="true">
-  <div class="staff-menu__staff" aria-hidden="true">
-    <div class="staff-menu__rule" style="left: 0;"></div>
-    <div class="staff-menu__rule" style="left: 13px;"></div>
-    <div class="staff-menu__rule" style="left: 26px;"></div>
-    <div class="staff-menu__rule" style="left: 39px;"></div>
-    <div class="staff-menu__rule" style="left: 52px;"></div>
+<div class="staff-menu staff-lines--strong" id="staff-menu-panel" data-menu-panel aria-hidden="true">
+  <div class="staff-menu__inner">
+    <div class="staff-menu__staff" aria-hidden="true">
+      <div class="staff-menu__rule" style="left: 0;"></div>
+      <div class="staff-menu__rule" style="left: 13px;"></div>
+      <div class="staff-menu__rule" style="left: 26px;"></div>
+      <div class="staff-menu__rule" style="left: 39px;"></div>
+      <div class="staff-menu__rule" style="left: 52px;"></div>
+    </div>
+    <ul class="staff-menu__list">
+      {sections.map((s) => (
+        <li>
+          <button
+            class={`staff-menu__item note--${s.tone} staff-jump`}
+            data-target={s.id}
+          >
+            <span class="staff-menu__dot" aria-hidden="true">
+              <svg class="staff-menu__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[s.icon]} />
+            </span>
+            <span class="staff-menu__label">{s.label}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
   </div>
-  <ul class="staff-menu__list">
-    {sections.map((s) => (
-      <li>
-        <button
-          class={`staff-menu__item note--${s.tone} staff-jump`}
-          data-target={s.id}
-        >
-          <span class="staff-menu__dot" aria-hidden="true">
-            <svg class="staff-menu__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[s.icon]} />
-          </span>
-          <span class="staff-menu__label">{s.label}</span>
-        </button>
-      </li>
-    ))}
-  </ul>
 </div>
 
 <style>
@@ -314,24 +316,38 @@ const sections = [
      genuinely undersized cramped into a 240px anchored dropdown on a real
      phone. Covers the whole viewport so the staff-toggle button (the close
      X) needs to out-rank it in z-index to stay clickable/visible. */
-  /* Solid, not glassy - the glass treatment lower on this file is a
-     deliberate call for the anchored desktop pill (see its own comment),
-     but a full-screen takeover sitting directly over the hero photo and
-     its headline needs to read as its own page, not a lens on the one
-     underneath it (the exact bleed-through problem solid already fixed
-     once for the old anchored dropdown). */
+  /* Glassy, like the desktop pill below - opaque enough that the hero
+     photo/headline behind it read as a soft blurred glow, not legible text
+     bleeding through (the problem solid fixed for the old *anchored*
+     dropdown; a full-bleed blur at this strength doesn't have that
+     problem, confirmed via screenshot). The staff-lines--strong texture
+     class (see global.css) is layered on top, using the same manuscript
+     motif the rest of the site already uses as a structural background -
+     fills what would otherwise be dead space rather than flat color. */
   .staff-menu {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 41;
     width: auto;
-    background: var(--bg-elevated);
+    background-color: rgba(9, 13, 21, 0.96);
+    backdrop-filter: blur(34px) saturate(140%);
+    -webkit-backdrop-filter: blur(34px) saturate(140%);
     border: none;
     border-radius: 0;
     padding: 0;
     box-shadow: none;
-    align-items: center;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  /* Fills the full height between the fixed header controls and the
+     bottom edge - previously the list clustered in the middle with big
+     empty bands above/below it; now it uses the whole screen. */
+  .staff-menu__inner {
+    position: relative;
+    width: min(400px, calc(100vw - 56px));
+    padding: 132px 0 56px;
   }
 
   /* A vertical staff (five lines, sheet-music pitch) running the height of
@@ -340,11 +356,10 @@ const sections = [
      its horizontal staff, just rotated to fit a stacked mobile list. */
   .staff-menu__staff {
     position: absolute;
-    left: max(28px, calc(50vw - 150px));
-    top: 50%;
+    left: 0;
+    top: 0;
+    bottom: 0;
     width: 53px;
-    height: calc(56px * 5 + 2.2rem * 4);
-    transform: translateY(-50%);
     pointer-events: none;
   }
 
@@ -359,12 +374,13 @@ const sections = [
   .staff-menu__list {
     position: relative;
     list-style: none;
-    margin: 0 auto;
-    padding: 0 28px 0 calc(28px + 53px + 1.1rem);
-    width: min(360px, calc(100vw - 56px));
+    margin: 0;
+    padding: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 2.2rem;
+    justify-content: space-evenly;
+    gap: 1.5rem;
   }
 
   .staff-menu__item {
