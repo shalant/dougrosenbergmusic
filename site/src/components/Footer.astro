@@ -65,6 +65,11 @@ const socials = [
     text-decoration-color: rgba(233, 237, 245, 0.35);
     text-underline-offset: 3px;
     transition: text-decoration-color 0.2s ease, color 0.2s ease;
+    /* Same 44px tap-target technique as .site-footer__socials a below -
+       measured 23px tall before. */
+    display: inline-block;
+    padding-block: 0.75rem;
+    margin-block: -0.75rem;
   }
 
   .site-footer__name a:hover,
@@ -86,8 +91,15 @@ const socials = [
     font-size: 0.85rem;
     letter-spacing: 0.03em;
     border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
     transition: color 0.2s ease, border-color 0.2s ease;
+    /* These are standalone nav items, not sentence-embedded text, so the
+       WCAG inline-link exception doesn't apply the way it does for
+       .site-footer__proof's link below - measured 24px tall before.
+       padding-block grows the real tap target to 44px; margin-block
+       cancels the layout footprint so the row's visual size is unchanged. */
+    padding-block: 0.72rem;
+    margin-block: -0.72rem;
+    display: inline-block;
   }
 
   .site-footer__socials a:hover,
