@@ -128,7 +128,10 @@ const pieces = [
     background: var(--bg);
     border: 1px solid rgba(233, 237, 245, 0.14);
     border-radius: 6px;
-    padding: 0.6rem 0.8rem;
+    /* padding-block bumped (0.6rem -> 0.85rem) to clear the 44px touch-
+       target minimum - measured 37px before, confirmed via getBoundingClientRect
+       in a real headless run, not assumed. */
+    padding: 0.85rem 0.8rem;
     margin-bottom: 0.9rem;
   }
 
@@ -242,6 +245,11 @@ const pieces = [
     color: var(--brass);
     text-decoration: none;
     white-space: nowrap;
+    /* Symmetric padding-block only - grows the real click/tap target to
+       44px without shifting the visible text, since the row's own
+       align-items: baseline keeps the glyph position fixed regardless. */
+    padding-block: 0.85rem;
+    margin-block: -0.85rem;
   }
 
   .sheet-music__viewer-head a:hover {

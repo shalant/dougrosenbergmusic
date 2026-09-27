@@ -168,7 +168,10 @@
     background: var(--surface);
     border: 1px solid rgba(233, 237, 245, 0.14);
     border-radius: 7px;
-    padding: 0.65rem 0.8rem;
+    /* 0.65rem measured 46px on <input> but only 43px on <select> (browsers
+       render select's own internal spacing differently even with identical
+       CSS padding) - bumped so the shortest of the three clears 44px. */
+    padding: 0.75rem 0.8rem;
   }
 
   .contact__field textarea {
