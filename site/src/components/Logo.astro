@@ -73,14 +73,14 @@
 
   /* Matches the hamburger's own size/corner on mobile (StaffNav.astro's
      .staff-toggle) instead of the full 104px desktop mark eating a quarter
-     of a narrow viewport's width. Bumped from the original 44px (bare
-     minimum touch target) to 56px - against a full-width phone screen the
-     smaller mark read as visually undersized/lost in the corner rather than
-     a legible brand mark, even though 44px was already tap-target-compliant. */
+     of a narrow viewport's width. Went 44px -> 56px -> 64px across two
+     rounds of real-phone feedback - both smaller sizes were already
+     tap-target-compliant but still read as visually undersized against a
+     full-width phone screen. */
   @media (max-width: 640px) {
     .logo {
-      width: 56px;
-      height: 56px;
+      width: 64px;
+      height: 64px;
     }
   }
 </style>

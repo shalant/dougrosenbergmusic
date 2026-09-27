@@ -84,17 +84,20 @@ const socials = [
     font-size: 0.72rem;
   }
 
+  /* This link sits inline in a sentence of body text - color alone (green
+     link vs. muted gray prose) isn't enough to mark it as a link (axe's
+     link-in-text-block rule, confirmed via a real Lighthouse CI failure).
+     Underlined by default now, not just on hover/focus. */
   .site-footer__proof a {
     color: var(--glow);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 1px;
-    transition: border-color 0.2s ease;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
   }
 
   .site-footer__proof a:hover,
   .site-footer__proof a:focus-visible {
-    border-color: var(--glow);
+    color: #9fe8cd;
   }
 
   .site-footer__copyright {

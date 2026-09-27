@@ -175,8 +175,15 @@ const photos = [
       // Capture only once this is a real drag, never on a plain press: a
       // capture taken at pointerdown retargets the following click to the
       // stage, so a panel's own click listener never fires and the photo
-      // can't be opened.
-      if (!dragMoved && Math.abs(dx) > 4) {
+      // can't be opened. 4px was tuned for a mouse, where a real click
+      // rarely drifts at all - a real finger tap routinely moves 5-15px
+      // even when the person means to tap, not drag (confirmed via a CDP
+      // touch-event reproduction: every jitter of 5px+ was misclassified as
+      // a drag, so the photo never opened - "the gallery clicker is
+      // broken" on a real phone). 10px is the common touch-slop tolerance
+      // (Android ~8dp, iOS ~10pt) and still catches an intentional mouse
+      // drag, which moves much farther than that before the next frame.
+      if (!dragMoved && Math.abs(dx) > 10) {
         dragMoved = true;
         stage.setPointerCapture(e.pointerId);
       }
@@ -422,7 +429,7 @@ const photos = [
 
   .reel-stage {
     position: relative;
-    height: clamp(260px, 42vh, 420px);
+    height: clamp(312px, 50vh, 504px);
     background: var(--bg);
     overflow: hidden;
     cursor: grab;

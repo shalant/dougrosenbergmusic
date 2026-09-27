@@ -62,20 +62,31 @@ const sections = [
   <span class="staff-toggle__bar"></span>
 </button>
 
-<div class="staff-menu" id="staff-menu-panel" data-menu-panel hidden>
-  <ul class="staff-menu__list">
-    {sections.map((s) => (
-      <li>
-        <button
-          class={`staff-menu__item note--${s.tone} staff-jump`}
-          data-target={s.id}
-        >
-          <span class="staff-menu__dot" aria-hidden="true"></span>
-          <span class="staff-menu__label">{s.label}</span>
-        </button>
-      </li>
-    ))}
-  </ul>
+<div class="staff-menu" id="staff-menu-panel" data-menu-panel aria-hidden="true">
+  <div class="staff-menu__inner">
+    <div class="staff-menu__staff" aria-hidden="true">
+      <div class="staff-menu__rule" style="left: 0;"></div>
+      <div class="staff-menu__rule" style="left: 11px;"></div>
+      <div class="staff-menu__rule" style="left: 22px;"></div>
+      <div class="staff-menu__rule" style="left: 33px;"></div>
+      <div class="staff-menu__rule" style="left: 44px;"></div>
+    </div>
+    <ul class="staff-menu__list">
+      {sections.map((s) => (
+        <li>
+          <button
+            class={`staff-menu__item note--${s.tone} staff-jump`}
+            data-target={s.id}
+          >
+            <span class="staff-menu__dot" aria-hidden="true">
+              <svg class="staff-menu__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[s.icon]} />
+            </span>
+            <span class="staff-menu__label">{s.label}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
 </div>
 
 <style>
@@ -255,17 +266,18 @@ const sections = [
 
   /* ---- mobile: hamburger + dropdown, same four notes; Logo.astro sits top-left independently ---- */
 
-  /* Matches Logo.astro's mobile size (56px) - the two fixed corner controls
+  /* Matches Logo.astro's mobile size (64px) - the two fixed corner controls
      read as one consistent pair rather than the logo looking bigger than
-     the nav trigger beside it. */
+     the nav trigger beside it. Bumped again from 56px after real-phone
+     feedback that it still read small. */
   .staff-toggle {
     display: none;
     position: fixed;
     top: 12px;
     right: 20px;
-    z-index: 41;
-    width: 56px;
-    height: 56px;
+    z-index: 42;
+    width: 64px;
+    height: 64px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -279,58 +291,96 @@ const sections = [
   }
 
   .staff-toggle__bar {
-    width: 22px;
+    width: 24px;
     height: 2px;
     background: var(--brass);
     border-radius: 1px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
+  }
+
+  .staff-toggle.is-open {
+    transform: rotate(90deg);
   }
 
   .staff-toggle.is-open .staff-toggle__bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    transform: translateY(9px) rotate(45deg);
   }
   .staff-toggle.is-open .staff-toggle__bar:nth-child(2) {
     opacity: 0;
   }
   .staff-toggle.is-open .staff-toggle__bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-9px) rotate(-45deg);
   }
 
+  /* Halfway between the corner card and the full-screen takeover - full
+     width (same 20px side gutter the toggle/logo already sit inside of),
+     but height still sized to its own content instead of stretching to
+     fill the viewport, so it stays a compact band under the header
+     controls rather than covering the page. Same transparency tuning as
+     the corner card - low enough that whatever section you're on stays
+     legible behind it. */
   .staff-menu {
     display: none;
     position: fixed;
-    top: 76px;
+    top: 88px;
+    left: 20px;
     right: 20px;
     z-index: 41;
-    width: min(240px, calc(100vw - 40px));
-    background: rgba(10, 14, 23, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(233, 237, 245, 0.1);
-    border-radius: 14px;
-    padding: 0.4rem;
+    background-color: rgba(10, 14, 23, 0.42);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(233, 237, 245, 0.12);
+    border-radius: 22px;
+    padding: 1.3rem 1.2rem;
     box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.7);
   }
 
-  .staff-menu[hidden] {
-    display: none;
+  .staff-menu__inner {
+    position: relative;
+  }
+
+  /* A vertical staff (five lines, sheet-music pitch) running the height of
+     the list, echoing the desktop nav's horizontal staff-and-note layout -
+     each item's notehead sits on it the same way each desktop note sits on
+     its horizontal staff, just rotated to fit a stacked mobile list. Sized
+     to the list's own auto content height (no fixed calc): it's absolutely
+     positioned inside the same auto-height wrapper as the list, so
+     top: 0 / bottom: 0 stretches it to match whatever that turns out to be. */
+  .staff-menu__staff {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    pointer-events: none;
+  }
+
+  .staff-menu__rule {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--staff-line-strong);
   }
 
   .staff-menu__list {
+    position: relative;
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
   }
 
   .staff-menu__item {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.9rem;
     background: none;
     border: none;
-    padding: 0.65rem 0.7rem;
-    border-radius: 9px;
+    padding: 0;
     cursor: pointer;
     font: inherit;
     text-align: left;
@@ -338,31 +388,52 @@ const sections = [
     color: inherit;
   }
 
-  .staff-menu__item:hover,
-  .staff-menu__item:focus-visible {
-    background: var(--staff-line);
+  .staff-menu__item:focus-visible .staff-menu__label {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
+  /* A real notehead: solid circle, icon inside, same per-tone color the
+     desktop blob uses - sized to fully cross (occlude) the five staff
+     lines behind it, same visual logic as a notehead sitting on a staff. */
   .staff-menu__dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
     flex-shrink: 0;
-    opacity: 0.55;
-    transition: opacity 0.2s ease;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    opacity: 0.7;
+    box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .staff-menu__icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .staff-menu__item:hover .staff-menu__dot,
+  .staff-menu__item:focus-visible .staff-menu__dot {
+    opacity: 0.8;
   }
 
   .staff-menu__item.is-active .staff-menu__dot {
     opacity: 1;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
   }
 
   .staff-menu__label {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
+    font-size: 0.92rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-muted);
+    transition: color 0.2s ease;
   }
 
   .staff-menu__item.is-active .staff-menu__label {
@@ -373,8 +444,34 @@ const sections = [
     .staff-toggle {
       display: flex;
     }
-    .staff-menu:not([hidden]) {
+    /* Rendered at all times at this breakpoint (never [hidden]/display:none)
+       so open/close can actually transition instead of popping instantly -
+       visibility is delayed on the way out (and instant on the way in) so
+       it's still out of the tab/AT order while closed, same as [hidden]
+       was, but without losing the animation that requires layout. */
+    .staff-menu {
       display: block;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px) scale(0.98);
+      transform-origin: top center;
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0.2s;
+    }
+    .staff-menu.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .staff-menu {
+        transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+        transform: none;
+      }
+      .staff-menu.is-open {
+        transition: opacity 0.15s ease, visibility 0s linear 0s;
+        transform: none;
+      }
     }
   }
 </style>
@@ -387,13 +484,15 @@ const sections = [
   const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
 
   function closeMenu() {
-    panel?.setAttribute('hidden', '');
+    panel?.classList.remove('is-open');
+    panel?.setAttribute('aria-hidden', 'true');
     toggle?.setAttribute('aria-expanded', 'false');
     toggle?.classList.remove('is-open');
   }
 
   function openMenu() {
-    panel?.removeAttribute('hidden');
+    panel?.classList.add('is-open');
+    panel?.setAttribute('aria-hidden', 'false');
     toggle?.setAttribute('aria-expanded', 'true');
     toggle?.classList.add('is-open');
   }
@@ -405,7 +504,7 @@ const sections = [
   });
 
   document.addEventListener('click', (e) => {
-    if (!panel || panel.hasAttribute('hidden')) return;
+    if (!panel || !panel.classList.contains('is-open')) return;
     const target = e.target as Node;
     if (panel.contains(target) || toggle?.contains(target)) return;
     closeMenu();

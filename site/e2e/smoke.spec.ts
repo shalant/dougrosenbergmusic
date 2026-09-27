@@ -28,7 +28,11 @@ test.describe('smoke', () => {
 
   test('the dev section has a real external portfolio link, since the nav pill now stays on-page', async ({ page }) => {
     await page.goto('/');
-    const portfolioLink = page.locator('#dev a[href="https://dougrosenbergdev.com/webdesign"]');
-    await expect(portfolioLink).toHaveAttribute('target', '_blank');
+    // The dedicated "See More of My Work" CTA was cut (redundant with the
+    // channel-surf screen right next to it) - the screen itself is now
+    // this section's real external link, defaulting to the first channel.
+    const screenLink = page.locator('#dev-screen');
+    await expect(screenLink).toHaveAttribute('href', /^https:\/\/dougrosenbergdev\.com\//);
+    await expect(screenLink).toHaveAttribute('target', '_blank');
   });
 });
