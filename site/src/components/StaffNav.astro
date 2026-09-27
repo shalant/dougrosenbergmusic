@@ -312,20 +312,20 @@ const sections = [
     transform: translateY(-9px) rotate(-45deg);
   }
 
-  /* Back to a corner card, not a full-screen takeover - full-screen solved
-     "too small" by overcorrecting into hiding the whole page behind it.
-     Genuinely transparent this time (not the full-bleed tuning above,
-     which had to fight a much bigger, higher-contrast area behind it) so
-     whatever section you're actually on stays visible around/through it -
-     the point of a glass nav is knowing where you are, not just looking
-     glassy. */
+  /* Halfway between the corner card and the full-screen takeover - full
+     width (same 20px side gutter the toggle/logo already sit inside of),
+     but height still sized to its own content instead of stretching to
+     fill the viewport, so it stays a compact band under the header
+     controls rather than covering the page. Same transparency tuning as
+     the corner card - low enough that whatever section you're on stays
+     legible behind it. */
   .staff-menu {
     display: none;
     position: fixed;
     top: 88px;
+    left: 20px;
     right: 20px;
     z-index: 41;
-    width: min(280px, calc(100vw - 40px));
     background-color: rgba(10, 14, 23, 0.42);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
@@ -453,8 +453,8 @@ const sections = [
       display: block;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-10px) scale(0.96);
-      transform-origin: top right;
+      transform: translateY(-10px) scale(0.98);
+      transform-origin: top center;
       transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0.2s;
     }
     .staff-menu.is-open {
