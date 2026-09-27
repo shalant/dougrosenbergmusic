@@ -14,7 +14,9 @@ const socials = [
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
-    <p class="site-footer__name">Doug Rosenberg</p>
+    <p class="site-footer__name">
+      <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer">Doug Rosenberg</a>
+    </p>
 
     <nav class="site-footer__socials" aria-label="Social links">
       {socials.map((s) => (
@@ -52,6 +54,23 @@ const socials = [
     font-size: 1.15rem;
     color: var(--text);
     margin: 0;
+  }
+
+  /* Byline links to dougrosenbergdev.com - underlined by default rather
+     than relying on color alone, same axe link-in-text-block reasoning
+     already applied to .site-footer__proof below. */
+  .site-footer__name a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(233, 237, 245, 0.35);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease, color 0.2s ease;
+  }
+
+  .site-footer__name a:hover,
+  .site-footer__name a:focus-visible {
+    color: var(--glow);
+    text-decoration-color: currentColor;
   }
 
   .site-footer__socials {
