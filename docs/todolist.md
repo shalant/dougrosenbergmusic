@@ -985,3 +985,59 @@ this project's own custom items and where it stands against them.
         `fix-csp-comment-regex-bug`, `defer-gallery-animation-loop`), plus `add-gallery-photos-
         band-shots` (merged) and its stray unmerged/closed PR #39. None urgent; cheap to clean up
         whenever.
+- [x] **2026-09-27 session — mobile nav redesign (several rounds of real feedback) and a new
+      section-divider motif, PR #49 merged into master.** Picked up from two commits
+      (`9d37c21`/`73b4131`, Lighthouse a11y fixes + a second round of real-phone feedback) that had
+      landed on `mobile-polish-pass` *after* its first PR (#48) already merged — stranded with no PR
+      of their own, same pattern as the `mobile-hero-nav-polish` lesson from 2026-09-14. Opened PR
+      #49 to cover them, then kept iterating in the same PR as Doug reviewed:
+      - **Real CSP bug found while regenerating hashes for an unrelated change:** `73b4131` had
+        already changed StaffNav/Gallery inline script content without regenerating `_headers`'
+        sha256 hashes — the same silent-script-block failure mode this project has now hit three
+        separate times (see the 2026-09-20 entry above for the first two in one session).
+        Regenerated the full set; confirmed live post-deploy that the new hash is actually present
+        in production's CSP header, not just committed.
+      - **Mobile hamburger menu redesigned across four real rounds**, each driven by direct
+        feedback rather than guessed in one shot:
+        1. Doug: expanded menu "too small... seems like common practice means this should expand a
+           lot more," and asked about integrating manuscript staff lines. Rebuilt as a full-screen
+           takeover: each item's colored notehead sits on a *vertical* five-line staff running the
+           list's height — the desktop nav's own horizontal staff-and-note layout, rotated to fit a
+           stacked mobile list.
+        2. Doug: "very cool, but... more compact and more transparent." Full-screen had
+           overcorrected — dropped back to an anchored top-right card, but the first transparency
+           pass left the hero headline/CTA legibly readable through it (confirmed via screenshot,
+           the same bleed-through class of bug `nav-dropdown-opacity` fixed back in the round-2
+           entry above, just rediscovered at full-screen scale). Retuned per-context: full-screen
+           needed near-opaque (0.96 alpha/34px blur) to read as a soft glow rather than legible
+           text; the smaller anchored card could go much lower (0.42 alpha/14px blur) since there's
+           far less high-contrast content behind a small corner footprint.
+        3. Doug: "i want halfway between the two... full width but not full height." Widened the
+           card to the same 20px side gutter the logo/toggle already sit inside of, keeping height
+           sized to content rather than the viewport.
+        - Verified at every round via real Playwright screenshots (Pixel 7 viewport, and a
+          mid-scroll shot on `CareerHighlights` specifically to confirm the transparency actually
+          shows the current section through the panel, which was the point of round 2's ask) — not
+          just described from the CSS. Full e2e suite (33 non-skipped tests) re-run and passing
+          after every round.
+      - **New `StaffDivider.astro` component**, added after Doug asked whether "a full staff with
+        the nav icon" would work as a section divider. Flagged the real precedent first — this site
+        already tried and cut almost exactly this (`LeadSheetBarShape.astro`, September) because a
+        full-width strip collided with the fixed logo/nav chrome while scrolling past. Prototyped a
+        narrower version (a single centered notehead on a full-width staff, rather than a wide
+        strip) on one section boundary first, screenshot-tested at the worst-case scroll position
+        (directly under the fixed logo/toggle on mobile, and under the fixed nav pill on desktop) on
+        both viewports before wiring it in anywhere else — centering the note means it structurally
+        can't collide with the corner-anchored controls regardless of scroll position, unlike the
+        old strip. Confirmed clean, then wired into exactly the five section boundaries `StaffNav`
+        itself tracks (dev/listen/about/career-highlights/contact) — deliberately not into
+        Performance/Gallery/SheetMusicLibrary, which have no nav note of their own, so the page's
+        visual section breaks now match the nav's own definition of a "section" rather than every
+        visual gap in the page.
+      - **Post-merge cleanup:** local `master` was 10 commits behind (the stale-local-master item
+        flagged back in the 2026-09-15 branch-hygiene entry) — fast-forwarded. `mobile-polish-pass`
+        deleted both locally and on origin now that PR #49 is merged, so it doesn't join the pile of
+        stale merged branches already flagged twice above as not-yet-cleaned-up.
+      - **Not done this session:** the standing branch-hygiene backlog (now ~21 stale merged
+        branches across the last three flags) is still untouched — still not urgent, still cheap to
+        clean up whenever someone decides to.
