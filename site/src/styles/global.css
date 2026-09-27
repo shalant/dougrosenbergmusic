@@ -136,6 +136,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* StaffNav's mobile menu is a full-screen takeover - lock background
+   scroll while it's open, same as any other takeover menu. */
+body.menu-open {
+  overflow: hidden;
+}
+
 img {
   max-width: 100%;
   display: block;

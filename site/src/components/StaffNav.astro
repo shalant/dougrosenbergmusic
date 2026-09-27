@@ -63,6 +63,13 @@ const sections = [
 </button>
 
 <div class="staff-menu" id="staff-menu-panel" data-menu-panel aria-hidden="true">
+  <div class="staff-menu__staff" aria-hidden="true">
+    <div class="staff-menu__rule" style="left: 0;"></div>
+    <div class="staff-menu__rule" style="left: 13px;"></div>
+    <div class="staff-menu__rule" style="left: 26px;"></div>
+    <div class="staff-menu__rule" style="left: 39px;"></div>
+    <div class="staff-menu__rule" style="left: 52px;"></div>
+  </div>
   <ul class="staff-menu__list">
     {sections.map((s) => (
       <li>
@@ -70,7 +77,9 @@ const sections = [
           class={`staff-menu__item note--${s.tone} staff-jump`}
           data-target={s.id}
         >
-          <span class="staff-menu__dot" aria-hidden="true"></span>
+          <span class="staff-menu__dot" aria-hidden="true">
+            <svg class="staff-menu__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[s.icon]} />
+          </span>
           <span class="staff-menu__label">{s.label}</span>
         </button>
       </li>
@@ -264,7 +273,7 @@ const sections = [
     position: fixed;
     top: 12px;
     right: 20px;
-    z-index: 41;
+    z-index: 42;
     width: 64px;
     height: 64px;
     align-items: center;
@@ -301,37 +310,71 @@ const sections = [
     transform: translateY(-9px) rotate(-45deg);
   }
 
+  /* Full-screen takeover, not a corner card - a 5-item list read as
+     genuinely undersized cramped into a 240px anchored dropdown on a real
+     phone. Covers the whole viewport so the staff-toggle button (the close
+     X) needs to out-rank it in z-index to stay clickable/visible. */
+  /* Solid, not glassy - the glass treatment lower on this file is a
+     deliberate call for the anchored desktop pill (see its own comment),
+     but a full-screen takeover sitting directly over the hero photo and
+     its headline needs to read as its own page, not a lens on the one
+     underneath it (the exact bleed-through problem solid already fixed
+     once for the old anchored dropdown). */
   .staff-menu {
     display: none;
     position: fixed;
-    top: 84px;
-    right: 20px;
+    inset: 0;
     z-index: 41;
-    width: min(240px, calc(100vw - 40px));
-    background: rgba(10, 14, 23, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(233, 237, 245, 0.1);
-    border-radius: 14px;
-    padding: 0.4rem;
-    box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.7);
+    width: auto;
+    background: var(--bg-elevated);
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    align-items: center;
+  }
+
+  /* A vertical staff (five lines, sheet-music pitch) running the height of
+     the list, echoing the desktop nav's horizontal staff-and-note layout -
+     each item's notehead sits on it the same way each desktop note sits on
+     its horizontal staff, just rotated to fit a stacked mobile list. */
+  .staff-menu__staff {
+    position: absolute;
+    left: max(28px, calc(50vw - 150px));
+    top: 50%;
+    width: 53px;
+    height: calc(56px * 5 + 2.2rem * 4);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .staff-menu__rule {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--staff-line-strong);
   }
 
   .staff-menu__list {
+    position: relative;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 auto;
+    padding: 0 28px 0 calc(28px + 53px + 1.1rem);
+    width: min(360px, calc(100vw - 56px));
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
   }
 
   .staff-menu__item {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 1.1rem;
     background: none;
     border: none;
-    padding: 0.65rem 0.7rem;
-    border-radius: 9px;
+    padding: 0;
     cursor: pointer;
     font: inherit;
     text-align: left;
@@ -339,31 +382,52 @@ const sections = [
     color: inherit;
   }
 
-  .staff-menu__item:hover,
-  .staff-menu__item:focus-visible {
-    background: var(--staff-line);
+  .staff-menu__item:focus-visible .staff-menu__label {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
+  /* A real notehead: solid circle, icon inside, same per-tone color the
+     desktop blob uses - sized to fully cross (occlude) the five staff
+     lines behind it, same visual logic as a notehead sitting on a staff. */
   .staff-menu__dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
     flex-shrink: 0;
-    opacity: 0.55;
-    transition: opacity 0.2s ease;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    opacity: 0.6;
+    box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .staff-menu__icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .staff-menu__item:hover .staff-menu__dot,
+  .staff-menu__item:focus-visible .staff-menu__dot {
+    opacity: 0.8;
   }
 
   .staff-menu__item.is-active .staff-menu__dot {
     opacity: 1;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
   }
 
   .staff-menu__label {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
+    font-size: 1.15rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-muted);
+    transition: color 0.2s ease;
   }
 
   .staff-menu__item.is-active .staff-menu__label {
@@ -380,17 +444,16 @@ const sections = [
        it's still out of the tab/AT order while closed, same as [hidden]
        was, but without losing the animation that requires layout. */
     .staff-menu {
-      display: block;
+      display: flex;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-10px) scale(0.96);
-      transform-origin: top right;
+      transform: scale(0.97);
       transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0.2s;
     }
     .staff-menu.is-open {
       opacity: 1;
       visibility: visible;
-      transform: translateY(0) scale(1);
+      transform: scale(1);
       transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0s;
     }
     @media (prefers-reduced-motion: reduce) {
@@ -418,6 +481,7 @@ const sections = [
     panel?.setAttribute('aria-hidden', 'true');
     toggle?.setAttribute('aria-expanded', 'false');
     toggle?.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
   }
 
   function openMenu() {
@@ -425,6 +489,9 @@ const sections = [
     panel?.setAttribute('aria-hidden', 'false');
     toggle?.setAttribute('aria-expanded', 'true');
     toggle?.classList.add('is-open');
+    // Full-screen panel now, unlike the old corner dropdown - lock
+    // background scroll while it's up, same as any takeover menu.
+    document.body.classList.add('menu-open');
   }
 
   toggle?.addEventListener('click', () => {
