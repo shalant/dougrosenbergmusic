@@ -1,0 +1,77 @@
+---
+// Marks the same section boundaries StaffNav tracks (dev/listen/about/
+// career-highlights/contact) - Performance/Gallery/SheetMusicLibrary have
+// no nav note, so no divider before them either. The note sits centered
+// horizontally rather than spanning full width like the old, cut
+// LeadSheetBarShape did - confirmed via screenshot at the worst-case
+// scroll position (right under the fixed logo/toggle/desktop-nav) that a
+// centered note never collides with those corner-anchored controls,
+// unlike a wide strip would.
+const ICONS: Record<string, string> = {
+  code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+  music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  award: '<circle cx="12" cy="8" r="6"/><path d="m8.5 13.5-1.5 8 5-3 5 3-1.5-8"/>',
+  mail: '<path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="m3 6 9 7 9-7"/>',
+};
+
+interface Props {
+  icon: keyof typeof ICONS;
+  tone: string;
+}
+const { icon, tone } = Astro.props;
+---
+
+<div class={`staff-divider note--${tone}`} aria-hidden="true">
+  <div class="staff-divider__line" style="top: 20px;"></div>
+  <div class="staff-divider__line" style="top: 32px;"></div>
+  <div class="staff-divider__line" style="top: 44px;"></div>
+  <div class="staff-divider__line" style="top: 56px;"></div>
+  <div class="staff-divider__line" style="top: 68px;"></div>
+  <span class="staff-divider__note">
+    <svg class="staff-divider__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[icon]} />
+  </span>
+</div>
+
+<style>
+  .staff-divider {
+    position: relative;
+    width: 100%;
+    height: 88px;
+    overflow: hidden;
+  }
+
+  .staff-divider__line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--staff-line-strong);
+  }
+
+  .staff-divider__note {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+  }
+
+  .staff-divider__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .staff-divider.note--dev .staff-divider__note { background: var(--note-dev); }
+  .staff-divider.note--listen .staff-divider__note { background: var(--note-listen); }
+  .staff-divider.note--about .staff-divider__note { background: var(--note-about); }
+  .staff-divider.note--highlights .staff-divider__note { background: var(--note-highlights); }
+  .staff-divider.note--contact .staff-divider__note { background: var(--note-contact); }
+</style>

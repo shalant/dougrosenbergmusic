@@ -10,6 +10,7 @@ import Gallery from '../components/Gallery.astro';
 import SheetMusicLibrary from '../components/SheetMusicLibrary.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import StaffDivider from '../components/StaffDivider.astro';
 ---
 
 <BaseLayout
@@ -17,13 +18,18 @@ import Footer from '../components/Footer.astro';
   description="Doug Rosenberg builds websites — design, development, branding, and ongoing support — and is also a Chicago-based saxophonist, composer, and educator with jazz recordings, performances, and private instruction."
 >
   <HeroGraded />
+  <StaffDivider icon="code" tone="dev" />
   <DevServices />
+  <StaffDivider icon="music" tone="listen" />
   <Listen />
+  <StaffDivider icon="user" tone="about" />
   <About />
   <Performance />
+  <StaffDivider icon="award" tone="highlights" />
   <CareerHighlights />
   <Gallery />
   <SheetMusicLibrary />
+  <StaffDivider icon="mail" tone="contact" />
   <Contact />
   <Footer />
 </BaseLayout>
