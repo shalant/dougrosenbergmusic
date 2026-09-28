@@ -654,16 +654,36 @@ this project's own custom items and where it stands against them.
         `ga4-first-party-proxy` (pushed, not reviewed or merged from this session), one commit,
         "Proxy GA4 through worker.js as a first-party endpoint." Not evaluated here; noting its
         existence so it isn't lost track of.
-      - **Update 2026-09-27 night:** that branch is still unmerged, and three siblings now exist
-        on `origin` - `fix-ga4-and-404-binding`, `ga4-sheet-music-download-event`, and, notably,
-        `revert-ga4-proxy` (suggesting the proxy attempt was tried and rolled back at some point).
-        Not investigated or touched here - this is clearly Doug's own active thread, not something
-        to guess at or merge from a cold read of one commit message each. Surfacing it because the
-        new 503-beacon finding below (GA4's real pageview beacon failing while a direct `fetch()` to
-        the identical endpoint succeeds) is exactly the kind of problem a first-party proxy through
-        `worker.js` is designed to route around - same-origin requests are much harder for an
-        extension/ad-blocker to selectively target than a request to `www.google-analytics.com`.
-        Worth Doug revisiting `ga4-first-party-proxy` with that specific finding in mind.
+      - **Update 2026-09-27 night — read in full, corrected the note above.** `ga4-first-party-proxy`
+        and a `revert-ga4-proxy` branch are **both already merged into `master`** (verified via
+        `git merge-base --is-ancestor`) — the "not evaluated, still unmerged" note above was wrong,
+        this is settled history, not an open thread:
+        1. The proxy commit itself confirms Doug independently hit the *exact same symptom* logged
+           below on 2026-09-27 — gtag.js's own hits to `google-analytics.com` coming back
+           blocked/altered while identical hits fired manually from the same page succeeded — back
+           on 2026-09-15, via live network inspection. Real corroboration this isn't purely a
+           one-off artifact of one session's browser profile, though it's unconfirmed whether that
+           2026-09-15 testing was itself done through the same kind of browser-automation tooling
+           or a real visitor browser.
+        2. The fix built for it was clean: route both the `gtag.js` library load and every
+           `/g/collect` hit through `worker.js` (`/gtm/gtag/js`, `/gtm/g/collect`) via gtag's own
+           documented `transport_url` + `first_party_collection` config — same-origin, CSP no
+           longer needed to allow the Google hosts at all.
+        3. **Deployed, live-tested, and reverted the same night** — it traded one problem for a
+           worse one. Every hit now originated from the Worker's own server-side `fetch()`, so
+           Google saw Cloudflare's IP instead of the visitor's (no parameter in GA4's collect
+           protocol can override this). Confirmed: a real visit's geolocation came back wrong, and
+           this plausibly explains why Data Streams kept reporting "no data received" even after
+           the proxy started returning clean 204s — Google's own bot/spam filtering is known to
+           exclude traffic that looks like it's from a cloud/hosting IP range.
+        4. Production has been back to direct-to-Google hits ever since (confirmed live 2026-09-27,
+           matches the 503-beacon finding below) — **a naive Worker-side reverse proxy is a known
+           dead end here, not something to re-attempt.** The revert commit names the actual correct
+           path: **Cloudflare Zaraz's own Google tag integration**, purpose-built for this exact
+           problem (edge-side tag execution, not a bare relay), explicitly flagged as "a separate,
+           bigger piece of work to take on deliberately." Not investigated or touched here - Zaraz
+           is a per-zone Cloudflare-dashboard feature to enable, same category as the Email Routing
+           step earlier in this doc, Doug's call to make.
 - [x] **`hero-fork-polish` deployed - PR #28 merged 2026-09-15 night, live and verified.** Branch
       consolidated `mobile-hero-nav-polish` + `seo-geo-hero-fixes` (both finished merges that had
       sat uncommitted) plus that night's own work into 7 commits: the DevServices/Channel Surf
@@ -964,11 +984,14 @@ this project's own custom items and where it stands against them.
               automation profile? Same unresolved gap as the 2026-09-16 entry above — needs Doug (or
               a real extension-free browser) to check DevTools → Network → filter `collect` on a
               real page load and confirm the pageview beacon returns `200`/`204`, not `503`.
-            - **If Doug confirms this is real** (not just an automation-profile artifact): this is
-              exactly the kind of problem a first-party proxy through `worker.js` is built to solve
-              (see the `ga4-first-party-proxy` branch note above) — routing the beacon same-origin
-              through `dougrosenberg.com` instead of `www.google-analytics.com` would sidestep
-              whatever is selectively targeting that third-party host.
+            - **If Doug confirms this is real** (not just an automation-profile artifact): **do not
+              re-attempt a naive Worker-side reverse proxy** — see the corrected
+              `ga4-first-party-proxy` note above, that exact approach was already tried 2026-09-15,
+              confirmed to break visitor geolocation (Google sees Cloudflare's IP, not the
+              visitor's, with no collect-protocol parameter to override it), and reverted the same
+              night. The revert commit's own recommended path is **Cloudflare Zaraz's Google tag
+              integration** (edge-side, not a bare relay) — a real, separate piece of work, not a
+              quick fix.
 - [x] **2026-09-20 session — gallery work, a real hash-regen tooling bug found and fixed, nav
       redesign, and a section rename.** Session started from console errors pasted after deploying
       the new gallery photos; ended up surfacing a bug that had been live since 2026-09-15.
