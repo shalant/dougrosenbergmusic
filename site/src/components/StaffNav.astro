@@ -326,9 +326,9 @@ const sections = [
     left: 20px;
     right: 20px;
     z-index: 41;
-    background-color: rgba(10, 14, 23, 0.42);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    background-color: rgba(10, 14, 23, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(233, 237, 245, 0.12);
     border-radius: 22px;
     padding: 1.3rem 1.2rem;
@@ -453,14 +453,15 @@ const sections = [
       display: block;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-10px) scale(0.98);
+      transform: translate3d(0, -10px, 0) scale(0.98);
       transform-origin: top center;
+      will-change: transform, opacity;
       transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0.2s;
     }
     .staff-menu.is-open {
       opacity: 1;
       visibility: visible;
-      transform: translateY(0) scale(1);
+      transform: translate3d(0, 0, 0) scale(1);
       transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0s;
     }
     @media (prefers-reduced-motion: reduce) {
