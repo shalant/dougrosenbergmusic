@@ -992,6 +992,29 @@ this project's own custom items and where it stands against them.
               night. The revert commit's own recommended path is **Cloudflare Zaraz's Google tag
               integration** (edge-side, not a bare relay) — a real, separate piece of work, not a
               quick fix.
+            - **Follow-up same night — narrowed to Google specifically, not analytics broadly.**
+              Captured a full page load's network requests: Cloudflare's own RUM beacon
+              (`cloudflareinsights.com/cdn-cgi/rum`) returned a clean **204** on the very same page
+              load where `google-analytics.com/g/collect` returned its usual **503**. Rules out "all
+              client-side analytics is broken here" - whatever this is, it's hostname-targeted at
+              Google's domains specifically, the classic signature of an ad-blocker/privacy-list rule
+              (`google-analytics.com`/`googletagmanager.com` are the most commonly blocklisted
+              analytics hosts on the internet; Cloudflare's beacon is newer and far less commonly
+              targeted).
+            - **Follow-up, cross-checked against Cloudflare Web Analytics (the actual apples-to-apples
+              comparison to GA4 - both require real browser JS execution, unlike the zone-level
+              "Unique Visitors" overview, which counts every bot/crawler/scanner hitting the edge over
+              raw HTTP with no JS requirement at all).** Doug checked it: **0 visits, 0 page views**
+              over the last 7 days - same near-zero picture as GA4, not the 1.13k the zone overview
+              showed for the same window. That 1.13k was overwhelmingly not human traffic.
+            - **Conclusion, Doug's call, 2026-09-27 night: likely just low real traffic, not (mainly) a
+              tracking bug.** For a personal site with no active marketing push yet, near-zero real
+              visitors is a perfectly reasonable actual state - not something to keep chasing via an
+              ad-blocker hunt. **Not closing the `503` finding as resolved, though** - it's still a
+              real, confirmed defect (reproduced 4 times total across two sessions) that will silently
+              undercount whatever real traffic does show up, including once the dev-services pivot's
+              SEO/marketing work (if pursued) starts driving real visitors. Deprioritized, not fixed;
+              revisit if/when traffic volume becomes worth the investigation cost again.
 - [x] **2026-09-20 session — gallery work, a real hash-regen tooling bug found and fixed, nav
       redesign, and a section rename.** Session started from console errors pasted after deploying
       the new gallery photos; ended up surfacing a bug that had been live since 2026-09-15.
