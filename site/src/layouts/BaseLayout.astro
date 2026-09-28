@@ -118,6 +118,7 @@ const websiteSchema = {
 			window.gtag('config', 'G-BGSJ1FWPTF');
 
 			document.addEventListener('click', function (event) {
+				if (!(event.target instanceof Element)) return;
 				var el = event.target.closest('[data-cta]');
 				if (!el) return;
 				// Best-effort only: some privacy/ad-blocking extensions strip

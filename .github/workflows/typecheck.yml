@@ -1,0 +1,42 @@
+name: Type Check
+
+# Same PR-time quality gate pattern as lighthouse.yml/e2e.yml - a separate
+# workflow so a type error can't get lost in a slower build/audit/test run,
+# and vice versa. Runs `astro check` (tsconfig.json already sets
+# astro/tsconfigs/strict), which nothing in CI ran before this - a type
+# error could previously ship indefinitely with nothing to catch it.
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: typecheck-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.12.0"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run astro check
+        run: npm run check
