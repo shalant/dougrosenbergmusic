@@ -16,7 +16,9 @@ const ogImageURL = new URL(`${import.meta.env.BASE_URL}images/og-image.jpg`, Ast
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': 'https://dougrosenberg.com/#person',
   name: 'Doug Rosenberg',
+  alternateName: 'Douglas Rosenberg',
   jobTitle: ['Web Developer', 'Saxophonist', 'Composer', 'Educator'],
   url: Astro.site?.toString(),
   image: new URL(`${import.meta.env.BASE_URL}images/hero.webp`, Astro.site).toString(),
