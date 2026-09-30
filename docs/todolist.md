@@ -408,6 +408,39 @@ this project's own custom items and where it stands against them.
          same trade-off haxbyte already accepted for the identical tool. Added `.lighthouseci/` to
          `.gitignore` (local report artifacts, shouldn't be committed).
 
+## SEO / GEO / AEO — goal: top notch (added 2026-09-29)
+
+Context: 2026-09-29 Search Console review. Legacy-URL 404s fixed in PR #55 (old
+`/sheetMusic/*.pdf`, `/photogallery.html`, etc. now 301); validation running on the 404, 5xx and
+crawled-not-indexed groups. Already in place: `Person` + `WebSite` JSON-LD, detailed `llms.txt`,
+semantic headings, title/meta description.
+
+- [ ] **Search Console follow-through**
+      - [ ] Check "Validate fix" results on the 404 / 5xx / crawled-not-indexed groups in 1-2 weeks
+            (`/index.html` will stay "not indexed" by design — it 307s to `/`)
+      - [ ] "Request indexing" for `https://dougrosenberg.com/`
+      - [x] Domain property `sc-domain:dougrosenberg.com` verified (2026-09-29), sitemap inherited
+      - [ ] Delete any stray half-filled `google-site-verification=` TXT record in Cloudflare DNS
+      - [ ] Review Performance report once data populates (query/page baseline, name searches)
+      - [ ] Confirm Manual actions and Security issues both clean
+- [ ] **Bing Webmaster Tools**: add dougrosenberg.com (Import from Google Search Console); check
+      AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations at 2026-09-29)
+- [ ] **Direct-answer intro** — 30-60 word plain statement of who Doug is and what he does,
+      near the top (h1 is currently the slogan "I make websites"). Copy needs Doug's approval.
+- [ ] **FAQ section + `FAQPage` schema** — "Who is Doug Rosenberg?", "What web services does he
+      offer?", "Does he teach saxophone in Chicago?"; conversational Q&A matching how people ask
+      assistants. Consider whether the web-services FAQ belongs on dougrosenbergdev.com instead.
+- [ ] **Richer schema** — `Person`: `knowsAbout`, `alumniOf` (New England Conservatory), `image`,
+      `worksFor`; `MusicAlbum` for the recordings; `dateModified`. `ProfessionalService` schema
+      belongs on dougrosenbergdev.com.
+- [ ] **Sheet-music PDFs as search content** — decide whether to make them rank ("Bach Arioso
+      trombone" style queries): would need real titles/text around each file, not just links.
+- [ ] **Off-site authority** — consistent bio/links on YouTube, Bandcamp/Spotify, Eastern Blok
+      pages; useful answers on Reddit/Quora where relevant.
+- [ ] **Freshness** — keep facts current, update `dateModified`, revisit periodically.
+- [ ] **Same audit on dougrosenbergdev.com** — 12/34 indexed, 7 redirect errors, 6 404s; needs its
+      own session in that repo.
+
 ## Custom items (this project specifically)
 
 - [ ] **Sheet Music Library is missing 7 pieces** that exist on the live dougrosenberg.com
