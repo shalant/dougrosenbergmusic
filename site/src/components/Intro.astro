@@ -1,0 +1,39 @@
+---
+// Plain-language "who/what" statement placed right under the hero, kept as
+// real visible text on purpose: the hero headline is a slogan, and search
+// engines / AI answer engines lift a short, self-contained answer far more
+// reliably than they infer one from marketing copy. Keep it ~30-60 words and
+// in sync with the Person schema in BaseLayout.astro and public/llms.txt.
+---
+
+<section id="intro" class="intro" aria-label="About Doug Rosenberg in brief">
+  <div class="wrap">
+    <p class="intro__text">
+      <strong>Doug Rosenberg</strong> is a Chicago-based web designer and developer who builds
+      websites for musicians and small businesses, covering design, development, branding, and
+      ongoing support. He is also a jazz saxophonist, composer, and educator, with the debut album
+      <em>Better Than TV</em> (2014) and a New England Conservatory degree.
+    </p>
+  </div>
+</section>
+
+<style>
+  .intro {
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    background: var(--bg);
+  }
+
+  .intro__text {
+    max-width: 46rem;
+    margin-inline: auto;
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    line-height: 1.65;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .intro__text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+</style>

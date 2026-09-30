@@ -5,8 +5,8 @@
 # of 'unsafe-inline' — Astro inlines each page-specific <script> directly into
 # the HTML rather than extracting it to an external file, so each one needs
 # its own hash here or it's silently blocked (the script still renders, it
-# just never runs). Current 8 hashes cover: BaseLayout's Person + WebSite
-# JSON-LD, BaseLayout's GA4 consent-mode bootstrap + delegated data-cta
+# just never runs). Current 11 hashes cover: BaseLayout's Person + WebSite
+# JSON-LD, index.astro's WebPage + MusicAlbum JSON-LD, Faq's FAQPage JSON-LD, BaseLayout's GA4 consent-mode bootstrap + delegated data-cta
 # click listener, StaffNav's scroll/menu handler, DevServices' channel-surf
 # clicker, SheetMusicLibrary's search/viewer handler, Gallery's
 # reel/lightbox handler (drift, ambient tilt, click-to-open — updated
@@ -74,7 +74,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-3vmrDsUfV0YGCh6TFpZuHplNF8I4jzLGISCmvwDah24=' 'sha256-I7xuILV2b4K0q/+nA1bJUkjUy0s9PBhNQrLtHA7xVuk=' 'sha256-Jgaq2nP+1ppXo0jydKZmWNdZp+5p9RAJGQXJ2BWamVk=' 'sha256-MjqgbBst2Sm+GuakXD8Hqqmixd14uV2MIC2BvZ8wnZI=' 'sha256-NbShJepZBJV3NtXfnhpsV4WgESR2RjnjRweWYr0TCnc=' 'sha256-rSyqRmBtOJvY9FJN5hPhhaczRnO3TBqgcKNXpzyP+ok=' 'sha256-votDdFOvqIaIYhcVNlTD7HiBcCqk1u4WhbUl2QkV1aY=' 'sha256-ztqAppOebbaBRNdI9olAyhYcYR/cbYZfMzGRefF/mqU=' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-3vmrDsUfV0YGCh6TFpZuHplNF8I4jzLGISCmvwDah24=' 'sha256-GPvuy5F41har+563VvNOMgFCUaLK/gTbHgh640FWIvU=' 'sha256-I7xuILV2b4K0q/+nA1bJUkjUy0s9PBhNQrLtHA7xVuk=' 'sha256-MjqgbBst2Sm+GuakXD8Hqqmixd14uV2MIC2BvZ8wnZI=' 'sha256-NbShJepZBJV3NtXfnhpsV4WgESR2RjnjRweWYr0TCnc=' 'sha256-QfxzmL/sIu3tEVL4glOy+j4gP6J2YPHIYl8eNHTHlKg=' 'sha256-l5lJdH+oL1TCt10RY+eZA7trbg9sh9CJR5Of/9SqhLI=' 'sha256-rSyqRmBtOJvY9FJN5hPhhaczRnO3TBqgcKNXpzyP+ok=' 'sha256-tzKiGBeDCFnorFxKTPoQd4ZalSqCCdIqUdf/qpbyicc=' 'sha256-votDdFOvqIaIYhcVNlTD7HiBcCqk1u4WhbUl2QkV1aY=' 'sha256-ztqAppOebbaBRNdI9olAyhYcYR/cbYZfMzGRefF/mqU=' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
 
 # Caching — Cloudflare Workers static-assets defaults every file to
 # `max-age=0, must-revalidate` regardless of content, confirmed via `curl -I`

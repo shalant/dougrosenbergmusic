@@ -1,0 +1,104 @@
+---
+// Visible FAQ (native <details>, no JS) plus matching FAQPage JSON-LD built
+// from the same array, so the markup and the schema can never drift apart.
+// Answers stay plain text on purpose - FAQPage schema doesn't want markup,
+// and the visible copy should read identically to what a crawler ingests.
+// Facts here mirror public/llms.txt; update both together.
+const faqs = [
+  {
+    q: 'Who is Doug Rosenberg?',
+    a: "Doug Rosenberg is a Chicago-based web designer and developer and a jazz saxophonist, composer, and educator. He has performed at Millennium Park, the Green Mill, Symphony Center, and Joe's Pub, and with Robert Glasper, Kendrick Scott, and Danilo Pérez.",
+  },
+  {
+    q: 'What web services does he offer?',
+    a: 'Web design, development, branding, and ongoing support, for musicians and small businesses. Examples of client and personal work are in the portfolio section above and at dougrosenbergdev.com.',
+  },
+  {
+    q: 'Does he teach saxophone?',
+    a: 'Yes. Doug teaches private lessons in saxophone, clarinet, flute, jazz improvisation, and music theory for beginner through advanced students. He was also the jazz improvisation and saxophone instructor at New Trier High School from 2003 to 2011. Use the contact form to ask about availability.',
+  },
+  {
+    q: 'What has he recorded?',
+    a: 'His debut album Better Than TV (2014), plus albums with Eastern Blok (Underwater and Folk Tales) and the Goran Ivanovic Group.',
+  },
+  {
+    q: 'How do I contact him?',
+    a: 'Use the contact form on this page, or email doug.rosenberg@gmail.com.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+
+<section id="faq" class="faq">
+  <div class="wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="faq__heading">Quick answers</h2>
+
+    <div class="faq__list">
+      {faqs.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</section>
+
+<style>
+  .faq {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+  }
+
+  .faq__heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0.25rem 0 2rem;
+  }
+
+  .faq__list {
+    max-width: 48rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .faq__item {
+    background: var(--surface);
+    border: 1px solid var(--staff-line-strong);
+    border-radius: 0.75rem;
+    padding: 0 1.25rem;
+  }
+
+  .faq__item summary {
+    cursor: pointer;
+    padding-block: 1rem;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .faq__item summary:focus-visible {
+    outline: 2px solid var(--glow);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  .faq__item p {
+    margin: 0 0 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+</style>
