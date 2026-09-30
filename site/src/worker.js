@@ -162,6 +162,7 @@ const LEGACY_REDIRECTS = {
 	"/contact": "/#contact",
 	"/education": "/#about",
 	"/listen": "/#listen",
+	"/photogallery.html": "/#gallery",
 	"/preview-graded-expand": "/",
 	"/preview-shape-antenna": "/",
 	"/preview-tv-leadsheet": "/",
@@ -220,6 +221,7 @@ const SHEET_MUSIC_FILES = {
 };
 const SHEET_MUSIC_ALIASES = {
 	wewishyouamerry34: "we-wish-you-a-merry-christmas.pdf",
+	adagioandallegrobyhandel: "adagio-and-allegro-handel.pdf",
 };
 
 function legacySheetMusicTarget(pathname) {
