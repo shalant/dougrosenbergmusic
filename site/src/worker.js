@@ -167,9 +167,83 @@ const LEGACY_REDIRECTS = {
 	"/preview-tv-leadsheet": "/",
 };
 
+// The pre-Astro site served sheet music from /sheetMusic/<CamelCaseName>.pdf;
+// files now live in /sheetmusic/ with kebab-case names. Google still has the
+// old URLs (Search Console 404s), so match on a normalized key (lowercase,
+// alphanumerics only) and 301 to the current file, with a few aliases where
+// the old name isn't just a re-spelling. Anything unmatched goes to the
+// sheet-music section rather than a dead end.
+const SHEET_MUSIC_FILES = {
+	adagioandallegrohandel: "adagio-and-allegro-handel.pdf",
+	aebersoldtrack6: "aebersold-track-6.png",
+	alegrettoarensky: "alegretto-arensky.pdf",
+	ariosobach: "arioso-bach.pdf",
+	ariososinfoniabach: "arioso-sinfonia-bach.pdf",
+	bachpreludepage2: "bach-prelude-page2.pdf",
+	bachprelude: "bach-prelude.pdf",
+	billiesbouncebb: "billies-bounce-bb.pdf",
+	chansondeprintempspage2: "chanson-de-printemps-page2.png",
+	concertinoguildhaud: "concertino-guildhaud.pdf",
+	cornbreadbb: "corn-bread-bb.pdf",
+	cornbreadleemorganeb: "corn-bread-lee-morgan-eb.pdf",
+	diversecharlieparker: "diverse-charlie-parker.pdf",
+	fantasypieceschumann: "fantasy-piece-schumann.pdf",
+	furelise: "fur-elise.pdf",
+	gbluesmelodies: "g-blues-melodies.jpg",
+	gblues: "g-blues.jpg",
+	habanera: "habanera.pdf",
+	handelsonateno1: "handel-sonate-no1.pdf",
+	hesapirate: "hes-a-pirate.pdf",
+	inthehallofthemountainking: "in-the-hall-of-the-mountain-king.pdf",
+	misamorescervantes: "mis-amores-cervantes.pdf",
+	musictheoryquizaebersold: "music-theory-quiz-aebersold.pdf",
+	nowsthetime: "nows-the-time.pdf",
+	ochristmastreecl: "o-christmas-tree-cl.pdf",
+	putyourrecordson: "put-your-records-on.pdf",
+	rainbowroad: "rainbow-road.pdf",
+	rhapsodyinbluecl: "rhapsody-in-blue-cl.pdf",
+	rhapsodypage1: "rhapsody-page1.pdf",
+	rigaudon: "rigaudon.pdf",
+	rubankbookofsolosintermediate: "rubank-book-of-solos-intermediate.pdf",
+	sleighride: "sleigh-ride.jpg",
+	spidermanbb: "spiderman-bb.pdf",
+	starwars: "star-wars.pdf",
+	supermarioeb: "super-mario-eb.pdf",
+	takemeouttotheballgame: "take-me-out-to-the-ballgame.pdf",
+	valsetristegliere: "valse-triste-gliere.pdf",
+	wewishyouamerrychristmas: "we-wish-you-a-merry-christmas.pdf",
+	wiithemebb: "wii-theme-bb.pdf",
+	wiithemeeb: "wii-theme-eb.pdf",
+	yaketysax: "yakety-sax.pdf",
+	youbelongwithme: "you-belong-with-me.jpg",
+	youvegotafriendinme: "youve-got-a-friend-in-me.jpg",
+};
+const SHEET_MUSIC_ALIASES = {
+	wewishyouamerry34: "we-wish-you-a-merry-christmas.pdf",
+};
+
+function legacySheetMusicTarget(pathname) {
+	const match = pathname.match(/^\/sheetMusic\/([^/]+)$/);
+	if (!match) return null;
+	let name;
+	try {
+		name = decodeURIComponent(match[1]);
+	} catch {
+		return "/#sheet-music";
+	}
+	const key = name.toLowerCase().replace(/\.[a-z]+$/, "").replace(/[^a-z0-9]/g, "");
+	const file = SHEET_MUSIC_ALIASES[key] ?? SHEET_MUSIC_FILES[key];
+	return file ? `/sheetmusic/${file}` : "/#sheet-music";
+}
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
+
+		const sheetMusicTarget = legacySheetMusicTarget(url.pathname);
+		if (sheetMusicTarget) {
+			return Response.redirect(new URL(sheetMusicTarget, url).href, 301);
+		}
 
 		const legacyPath = url.pathname.replace(/\/+$/, "");
 		if (legacyPath in LEGACY_REDIRECTS) {
