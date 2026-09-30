@@ -443,8 +443,21 @@ semantic headings, title/meta description.
       belongs on dougrosenbergdev.com.
 - [ ] **Sheet-music PDFs as search content** — decide whether to make them rank ("Bach Arioso
       trombone" style queries): would need real titles/text around each file, not just links.
-- [ ] **Off-site authority** — consistent bio/links on YouTube, Bandcamp/Spotify, Eastern Blok
-      pages; useful answers on Reddit/Quora where relevant.
+- [ ] **Off-site authority / entity consistency** — full checklist with profile URLs and the
+      canonical bio in `docs/entity-consistency-checklist.md`. Manual steps: align every profile's
+      bio + link, claim MusicBrainz/Discogs, collect third-party mentions, then add verified
+      profiles to `sameAs` (BaseLayout + llms.txt).
+- [ ] **Measure GEO/AEO monthly** — Bing AI Performance citations (dev site: 0 at 2026-09-29),
+      Search Console name-query position, and a manual "who is Doug Rosenberg" check across a few
+      assistants.
+- [ ] **Dev-site content shaped for questions** — case studies / articles on dougrosenbergdev.com
+      with a question as the heading and a direct answer first (e.g. what a band website costs),
+      plus `Article`/`HowTo`/`Service` schema where it fits.
+- [x] **Live check of intro/FAQ/schema deploy (2026-09-30)** — intro, FAQ, `FAQPage` JSON-LD and
+      contact toast are in the served page; CSP header carries all 11 hashes. Still to do by hand:
+      Rich Results Test on the live URL and a real send from a phone.
+- [x] **Mobile contact form (2026-09-30)** — fixed header no longer covers the Name field,
+      compact phone layout, success toast + scroll-to-top (shipped in PR #58).
 - [ ] **Freshness** — keep facts current, update `dateModified`, revisit periodically.
 - [ ] **Same audit on dougrosenbergdev.com** — 12/34 indexed, 7 redirect errors, 6 404s; needs its
       own session in that repo.
