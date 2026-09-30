@@ -419,12 +419,20 @@ semantic headings, title/meta description.
       - [ ] Check "Validate fix" results on the 404 / 5xx / crawled-not-indexed groups in 1-2 weeks
             (`/index.html` will stay "not indexed" by design — it 307s to `/`)
       - [ ] "Request indexing" for `https://dougrosenberg.com/`
+      - [x] "Validate fix" clicked on all three groups (2026-09-29); PR #55 is live and all 10
+            reported 404 URLs, the Star Wars 5xx path and `ochristmastreecl.pdf` verified by `curl`
       - [x] Domain property `sc-domain:dougrosenberg.com` verified (2026-09-29), sitemap inherited
       - [ ] Delete any stray half-filled `google-site-verification=` TXT record in Cloudflare DNS
       - [ ] Review Performance report once data populates (query/page baseline, name searches)
       - [ ] Confirm Manual actions and Security issues both clean
-- [ ] **Bing Webmaster Tools**: add dougrosenberg.com (Import from Google Search Console); check
-      AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations at 2026-09-29)
+- [ ] **Bing Webmaster Tools** (dougrosenberg.com wasn't set up before 2026-09-29)
+      - [x] Imported from Google Search Console (2026-09-29, Administrator role)
+      - [x] `sitemap-index.xml` came in with the import (shows "Processing" 2026-09-30); recheck
+            that it flips to Success with 1 URL discovered
+      - [ ] URL Submission for `https://dougrosenberg.com/`
+      - [ ] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
+            at 2026-09-29)
+      - [ ] Consider IndexNow (pings Bing when pages change)
 - [ ] **Direct-answer intro** — 30-60 word plain statement of who Doug is and what he does,
       near the top (h1 is currently the slogan "I make websites"). Copy needs Doug's approval.
 - [ ] **FAQ section + `FAQPage` schema** — "Who is Doug Rosenberg?", "What web services does he
