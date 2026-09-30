@@ -8,16 +8,44 @@ import Performance from '../components/Performance.astro';
 import CareerHighlights from '../components/CareerHighlights.astro';
 import Gallery from '../components/Gallery.astro';
 import SheetMusicLibrary from '../components/SheetMusicLibrary.astro';
+import Intro from '../components/Intro.astro';
+import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import StaffDivider from '../components/StaffDivider.astro';
+
+// Bump when page content meaningfully changes (not on every build) — feeds
+// WebPage.dateModified, which answer engines use as a freshness signal.
+const contentLastUpdated = '2026-09-30';
+
+const doug = { '@type': 'Person', name: 'Doug Rosenberg' };
+const recordings = [
+  { name: 'Better Than TV', byArtist: doug, datePublished: '2014', url: 'https://www.amazon.com/dp/B00G9Y8TPE' },
+  { name: 'Goran Ivanovic Group', byArtist: { '@type': 'MusicGroup', name: 'Goran Ivanovic Group' }, url: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C' },
+  { name: 'Underwater', byArtist: { '@type': 'MusicGroup', name: 'Eastern Blok' }, url: 'https://www.amazon.com/dp/B006HTEKHM' },
+  { name: 'Folk Tales', byArtist: { '@type': 'MusicGroup', name: 'Eastern Blok' }, url: 'https://www.amazon.com/dp/B00169L616' },
+].map((album) => ({ '@type': 'MusicAlbum', ...album }));
+
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Doug Rosenberg — Web Design & Development, Saxophonist & Composer',
+  url: Astro.site?.toString(),
+  dateModified: contentLastUpdated,
+  about: doug,
+};
+
+const albumsSchema = { '@context': 'https://schema.org', '@graph': recordings };
 ---
 
 <BaseLayout
   title="Doug Rosenberg — Web Design & Development, Saxophonist & Composer"
   description="Doug Rosenberg builds websites — design, development, branding, and ongoing support — and is also a Chicago-based saxophonist, composer, and educator with jazz recordings, performances, and private instruction."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(albumsSchema)} />
   <HeroGraded />
+  <Intro />
   <StaffDivider icon="code" tone="dev" />
   <DevServices />
   <StaffDivider icon="music" tone="listen" />
@@ -29,6 +57,8 @@ import StaffDivider from '../components/StaffDivider.astro';
   <CareerHighlights />
   <Gallery />
   <SheetMusicLibrary />
+  <StaffDivider icon="user" tone="about" />
+  <Faq />
   <StaffDivider icon="mail" tone="contact" />
   <Contact />
   <Footer />

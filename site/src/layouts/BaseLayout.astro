@@ -19,7 +19,10 @@ const personSchema = {
   name: 'Doug Rosenberg',
   jobTitle: ['Web Developer', 'Saxophonist', 'Composer', 'Educator'],
   url: Astro.site?.toString(),
+  image: new URL(`${import.meta.env.BASE_URL}images/hero.webp`, Astro.site).toString(),
   email: 'mailto:doug.rosenberg@gmail.com',
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'New England Conservatory' },
+  knowsAbout: ['Jazz saxophone', 'Jazz composition', 'Music education', 'Web design', 'Web development'],
   sameAs: [
     'https://dougrosenbergdev.com',
     'https://instagram.com/shalantdoro',
@@ -63,6 +66,7 @@ const websiteSchema = {
 
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+		<slot name="head" />
 
 		<!-- Cloudflare Web Analytics — chosen over GA4/Plausible for zero-config,
 		     no-cookie-consent-overhead reasons, same as haxbyte.com. Token isn't a
