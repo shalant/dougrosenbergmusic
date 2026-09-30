@@ -40,8 +40,13 @@ function sanitizeHeaderValue(value) {
 
 // RFC 2047 encoding so a name/subject with non-ASCII characters renders
 // correctly instead of being mangled by mail clients expecting ASCII headers.
+// btoa only accepts a Latin1/byte string, so the UTF-8 bytes are mapped to
+// one char each before encoding (the old unescape(encodeURIComponent())
+// trick does the same thing but unescape is deprecated).
 function encodeHeaderUtf8(value) {
-	return `=?UTF-8?B?${btoa(unescape(encodeURIComponent(value)))}?=`;
+	const bytes = new TextEncoder().encode(value);
+	const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join('');
+	return `=?UTF-8?B?${btoa(binary)}?=`;
 }
 
 // Whitelisted, not passed through raw - this drives both the subject-line
@@ -82,6 +87,17 @@ async function handleContact(request, env) {
 	const origin = request.headers.get("Origin");
 	if (origin && !ALLOWED_ORIGINS.includes(origin)) {
 		return json({ error: "Invalid origin" }, 403);
+	}
+
+	// CF-Connecting-IP is set by Cloudflare's edge on every request and can't
+	// be spoofed by the client - keying on it caps a scripted flood from one
+	// source without needing a session/cookie. Falls back to a shared key
+	// only in local dev (wrangler dev doesn't set the header), so this never
+	// throws on a missing binding there.
+	const clientIp = request.headers.get("CF-Connecting-IP") ?? "local-dev";
+	const { success } = await env.CONTACT_RATE_LIMITER.limit({ key: clientIp });
+	if (!success) {
+		return json({ error: "Too many requests — please try again in a minute." }, 429);
 	}
 
 	let body;
@@ -136,9 +152,29 @@ const GOOGLE_SITE_VERIFICATION = {
 	"/google1dc7e3b5d5d6c264.html": "google-site-verification: google1dc7e3b5d5d6c264.html\n",
 };
 
+// Legacy URLs Google still has on file: the pre-Astro site's Blazor nav
+// routes (which 404'd there too) and the deleted hero-exploration preview
+// pages. Permanent-redirected to the closest section so Search Console
+// stops reporting them as 404s and any residual link equity lands on the
+// real page.
+const LEGACY_REDIRECTS = {
+	"/about": "/#about",
+	"/contact": "/#contact",
+	"/education": "/#about",
+	"/listen": "/#listen",
+	"/preview-graded-expand": "/",
+	"/preview-shape-antenna": "/",
+	"/preview-tv-leadsheet": "/",
+};
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
+
+		const legacyPath = url.pathname.replace(/\/+$/, "");
+		if (legacyPath in LEGACY_REDIRECTS) {
+			return Response.redirect(new URL(LEGACY_REDIRECTS[legacyPath], url).href, 301);
+		}
 
 		if (url.pathname === "/api/contact") {
 			if (request.method !== "POST") {

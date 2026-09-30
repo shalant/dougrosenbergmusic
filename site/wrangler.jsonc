@@ -35,6 +35,19 @@
 			"destination_address": "doug.rosenberg@gmail.com"
 		}
 	],
+	// Cloudflare's native per-Worker rate limiting binding - no KV/external
+	// state needed. Caps POST /api/contact at 5 submissions per 60s per
+	// client IP (see src/worker.js), stopping a scripted flood from
+	// hammering the send_email binding or Doug's inbox; the honeypot field
+	// alone only stops naive bots. namespace_id just needs to be unique
+	// within this account - arbitrary here since there's only one.
+	"ratelimits": [
+		{
+			"name": "CONTACT_RATE_LIMITER",
+			"namespace_id": "1001",
+			"simple": { "limit": 5, "period": 60 }
+		}
+	],
 	"assets": {
 		"directory": "./dist",
 		// Without this, unmatched routes get a bare 404 with an empty body

@@ -646,10 +646,44 @@ this project's own custom items and where it stands against them.
             `type="text/partytown"`) - confirmed the single largest remaining *real* (not
             simulated) contributor. Estimated impact on the simulated score: modest, roughly
             +5-15 points, not transformative - the page is already fast for real users.
+            **Deliberately not done 2026-09-27 night** despite being on that session's list -
+            it directly touches the same GTM/gtag loading path as the still-open GA4
+            investigation below (see the new 503-beacon finding), and changing that path
+            mid-investigation would confound it further. Revisit once GA4 is actually resolved.
       - **Update, same night:** Doug pursued a different lever himself - branch
         `ga4-first-party-proxy` (pushed, not reviewed or merged from this session), one commit,
         "Proxy GA4 through worker.js as a first-party endpoint." Not evaluated here; noting its
         existence so it isn't lost track of.
+      - **Update 2026-09-27 night — read in full, corrected the note above.** `ga4-first-party-proxy`
+        and a `revert-ga4-proxy` branch are **both already merged into `master`** (verified via
+        `git merge-base --is-ancestor`) — the "not evaluated, still unmerged" note above was wrong,
+        this is settled history, not an open thread:
+        1. The proxy commit itself confirms Doug independently hit the *exact same symptom* logged
+           below on 2026-09-27 — gtag.js's own hits to `google-analytics.com` coming back
+           blocked/altered while identical hits fired manually from the same page succeeded — back
+           on 2026-09-15, via live network inspection. Real corroboration this isn't purely a
+           one-off artifact of one session's browser profile, though it's unconfirmed whether that
+           2026-09-15 testing was itself done through the same kind of browser-automation tooling
+           or a real visitor browser.
+        2. The fix built for it was clean: route both the `gtag.js` library load and every
+           `/g/collect` hit through `worker.js` (`/gtm/gtag/js`, `/gtm/g/collect`) via gtag's own
+           documented `transport_url` + `first_party_collection` config — same-origin, CSP no
+           longer needed to allow the Google hosts at all.
+        3. **Deployed, live-tested, and reverted the same night** — it traded one problem for a
+           worse one. Every hit now originated from the Worker's own server-side `fetch()`, so
+           Google saw Cloudflare's IP instead of the visitor's (no parameter in GA4's collect
+           protocol can override this). Confirmed: a real visit's geolocation came back wrong, and
+           this plausibly explains why Data Streams kept reporting "no data received" even after
+           the proxy started returning clean 204s — Google's own bot/spam filtering is known to
+           exclude traffic that looks like it's from a cloud/hosting IP range.
+        4. Production has been back to direct-to-Google hits ever since (confirmed live 2026-09-27,
+           matches the 503-beacon finding below) — **a naive Worker-side reverse proxy is a known
+           dead end here, not something to re-attempt.** The revert commit names the actual correct
+           path: **Cloudflare Zaraz's own Google tag integration**, purpose-built for this exact
+           problem (edge-side tag execution, not a bare relay), explicitly flagged as "a separate,
+           bigger piece of work to take on deliberately." Not investigated or touched here - Zaraz
+           is a per-zone Cloudflare-dashboard feature to enable, same category as the Email Routing
+           step earlier in this doc, Doug's call to make.
 - [x] **`hero-fork-polish` deployed - PR #28 merged 2026-09-15 night, live and verified.** Branch
       consolidated `mobile-hero-nav-polish` + `seo-geo-hero-fixes` (both finished merges that had
       sat uncommitted) plus that night's own work into 7 commits: the DevServices/Channel Surf
@@ -673,27 +707,55 @@ this project's own custom items and where it stands against them.
 - [ ] **Tech-debt / hygiene findings from a harsh code-quality + git-status review (2026-09-15),
       Doug asked for a cold grade — landed on a C+.** Not urgent, but real; parking here so they
       don't get lost. None of these were introduced by tonight's work, all pre-existing.
-      - [ ] **`"strict": true` in `tsconfig.json` is unenforced.** No `astro check`, no
-            `@astrojs/check` dependency, no type-checking step anywhere in CI (`.github/workflows/
-            e2e.yml` and `lighthouse.yml` both just build + test, never type-check). A type error
-            could ship indefinitely with nothing catching it.
-      - [ ] **No lint/format tooling at all** — no ESLint, no Prettier, no config for either.
-            Style consistency depends entirely on manual discipline, not anything enforced.
-      - [ ] **No rate limiting on `POST /api/contact`** (`site/src/worker.js`). The honeypot
-            stops naive bots; nothing stops a scripted flood of well-formed submissions from
-            hammering the `send_email` binding or Doug's inbox.
-      - [ ] **CSP hash maintenance is fully manual** — copy the one-liner from `_headers`'s own
-            comment, run it, hand-paste up to 8 hashes. Already silently broke a feature once
-            before (see Round 1 history above, `StaffNav`) with no build-time failure to catch it.
-      - [ ] **Dead code: `site/src/components/LeadSheetBar.astro`** (the chord-symbol sibling of
-            `LeadSheetBarShape.astro`, which *was* wired in until tonight) was never imported
-            anywhere — confirmed via grep. Shipped, unused, nobody noticed until this review.
-      - [ ] **No monitoring/alerting.** If `send_email` starts silently failing (quota,
-            misconfigured binding), the only signal is a visitor getting a generic error and
-            giving up — nobody gets paged.
-      - [ ] **`folk-tales.jpg` (album cover) has ~130KiB of easy savings** — wrong display size
-            for its actual dimensions, caught by a real Lighthouse run 2026-09-15. Unrelated to
-            tonight's hero work; just sitting on production.
+      - [x] **`"strict": true` in `tsconfig.json` is unenforced — fixed 2026-09-27 night**, branch
+            `tech-debt-cleanup-2026-09-27`. Added `@astrojs/check` + `typescript` (devDeps), an
+            `npm run check` script, and a new `.github/workflows/typecheck.yml` gate. Running it
+            cold surfaced 11 real errors (`window.gtag`/`window.dataLayer` untyped, an unnarrowed
+            `event.target.closest` in `BaseLayout.astro`'s delegated click handler) — not
+            hypothetical, `astro check` would have caught real bugs the whole time it wasn't
+            running. Added `src/env.d.ts` declaring the gtag globals and narrowed the event
+            handler; `npm run check` is now 0 errors.
+      - [x] **No lint/format tooling at all — partially fixed 2026-09-27 night.** Added ESLint 10
+            (flat config, `eslint-plugin-astro` + `@typescript-eslint/parser` for TS-in-frontmatter)
+            and Prettier (`prettier-plugin-astro`), `npm run lint`/`format`/`format:check` scripts,
+            and a `.github/workflows/lint.yml` gate running `eslint .` (currently 0 errors).
+            **Deliberately did not run a full-repo `prettier --write` pass** — checked first, and
+            it reflows a lot of hand-tuned Astro template markup (multi-line-izing long `<a>` tags,
+            inserting explicit `{' '}` whitespace nodes) into a ~32-file diff with no functional
+            benefit. That's a real, separate decision for Doug to make deliberately, not something
+            to bundle into a tech-debt pass silently — `format`/`format:check` are there whenever
+            he wants to pull that trigger.
+      - [x] **No rate limiting on `POST /api/contact` — fixed 2026-09-27 night.** Added Cloudflare's
+            native per-Worker rate-limiting binding (`ratelimits` in `wrangler.jsonc`, no KV/external
+            state needed) — 5 requests per 60s keyed on `CF-Connecting-IP`, returns 429 over the
+            limit. Declarative in `wrangler.jsonc`, no Cloudflare-dashboard step needed (unlike Email
+            Routing) — should Just Work on the next deploy, but only confirmable live after that.
+      - [x] **CSP hash maintenance is fully manual — fixed 2026-09-27 night.** New
+            `scripts/verify-csp-hashes.mjs` (`npm run verify-csp`, wired into `e2e.yml` right after
+            the build step) rebuilds the real hash set from the built HTML and diffs it against
+            `public/_headers`, failing CI on any mismatch instead of shipping a silently
+            CSP-blocked script — exactly the Round-1 `StaffNav` failure mode this item describes.
+            `--write` mode rewrites `_headers`' hash list in place. Caught immediately: this
+            session's own `BaseLayout.astro` edit (see the tsconfig item above) changed that
+            script's exact bytes, which changed its hash — verified the old/new hash sets, confirmed
+            the other 7 scripts' hashes were untouched (so the Round-1 bug really was already fixed,
+            not still silently live), and updated the one that changed.
+      - [x] **Dead code: `site/src/components/LeadSheetBar.astro`** — re-checked 2026-09-27, already
+            gone (`git log` shows it deleted in commit `7445650`, predates this session). No action
+            needed; closing this out.
+      - [ ] **No monitoring/alerting.** Investigated 2026-09-27 night — a real code-level fix here
+            (a paged alert) needs an external notification channel (Slack webhook URL, a monitoring
+            account, etc.) that only Doug can provide/authorize, same reasoning as the Email Routing
+            dashboard step above; not something to wire up silently. Concrete zero-code option worth
+            considering: Cloudflare dashboard → Notifications → add a "Workers" alert on this
+            Worker's error rate — `handleContact`'s `send_email` failure path already returns a real
+            502, which is exactly the signal that alert type keys on, so no code change is needed
+            for it to work, just a dashboard decision.
+      - [x] **`folk-tales.jpg` (album cover) has ~130KiB of easy savings — fixed 2026-09-27 night.**
+            Native size was 982×1000 vs. its three sibling covers' ~500×500 — resized to 500px wide
+            (matching the siblings) and recompressed (quality 85, stripped metadata): 231.8KB →
+            71.3KB (-155KB, beats the original ~130KiB estimate). Visually verified side-by-side,
+            no visible quality loss at its actual display size.
       - [ ] **Branch/git hygiene, checked 2026-09-15:** 13 of the repo's 17 branches on `origin`
             are already fully merged into `master` (confirmed via `git merge-base --is-ancestor`
             against `origin/master` for every branch) and just sitting there stale — candidates
@@ -900,6 +962,59 @@ this project's own custom items and where it stands against them.
             correct `tid=G-BGSJ1FWPTF`. **Not yet confirmed: real data actually landing in the GA4
             dashboard itself** — needs Doug's own login to check Realtime/reports after a few days
             of live traffic now that hits are actually leaving the browser.
+      - [ ] **New finding, 2026-09-27 night — the real pageview beacon gets HTTP 503, not 204.**
+            Loaded the live production site (`https://dougrosenberg.com`) in Claude's browser-
+            automation profile and captured network traffic directly (not just console state, this
+            time). `window.gtag`/`window.dataLayer` are correct this session (not stripped — the
+            extension confound above doesn't reproduce every time). The real GTM-fired pageview
+            beacon to `https://www.google-analytics.com/g/collect?...&en=page_view` **consistently
+            returns HTTP 503**, reproduced on 2 separate page loads with different client IDs. But a
+            manual `fetch()` from that same page's console to the identical `/g/collect` endpoint
+            (different query params, `en=test_direct_fetch`) got a clean **204**, with normal-looking
+            GA response headers (`cache-control: no-cache...`, `expires: Fri, 01 Jan 1990...`) — so
+            the endpoint itself is reachable and not rejecting this browser/IP outright. The pattern
+            (real gtag-initiated beacon fails, manual `fetch()` to the same endpoint succeeds)
+            strongly suggests something is intercepting the specific mechanism gtag.js uses to send
+            the beacon (likely `navigator.sendBeacon`) — consistent with the same
+            `chrome-extension://necmnahhpjieeknfddniaagcnhlglgoa` already implicated in the earlier
+            `window.gtag`-stripping confound, doing something different this time rather than a
+            server-side or site-config problem.
+            - **Not yet confirmed: does this reproduce in a real visitor's browser**, i.e. is this
+              actually why GA4 shows near-zero traffic, or is it once again specific to Claude's
+              automation profile? Same unresolved gap as the 2026-09-16 entry above — needs Doug (or
+              a real extension-free browser) to check DevTools → Network → filter `collect` on a
+              real page load and confirm the pageview beacon returns `200`/`204`, not `503`.
+            - **If Doug confirms this is real** (not just an automation-profile artifact): **do not
+              re-attempt a naive Worker-side reverse proxy** — see the corrected
+              `ga4-first-party-proxy` note above, that exact approach was already tried 2026-09-15,
+              confirmed to break visitor geolocation (Google sees Cloudflare's IP, not the
+              visitor's, with no collect-protocol parameter to override it), and reverted the same
+              night. The revert commit's own recommended path is **Cloudflare Zaraz's Google tag
+              integration** (edge-side, not a bare relay) — a real, separate piece of work, not a
+              quick fix.
+            - **Follow-up same night — narrowed to Google specifically, not analytics broadly.**
+              Captured a full page load's network requests: Cloudflare's own RUM beacon
+              (`cloudflareinsights.com/cdn-cgi/rum`) returned a clean **204** on the very same page
+              load where `google-analytics.com/g/collect` returned its usual **503**. Rules out "all
+              client-side analytics is broken here" - whatever this is, it's hostname-targeted at
+              Google's domains specifically, the classic signature of an ad-blocker/privacy-list rule
+              (`google-analytics.com`/`googletagmanager.com` are the most commonly blocklisted
+              analytics hosts on the internet; Cloudflare's beacon is newer and far less commonly
+              targeted).
+            - **Follow-up, cross-checked against Cloudflare Web Analytics (the actual apples-to-apples
+              comparison to GA4 - both require real browser JS execution, unlike the zone-level
+              "Unique Visitors" overview, which counts every bot/crawler/scanner hitting the edge over
+              raw HTTP with no JS requirement at all).** Doug checked it: **0 visits, 0 page views**
+              over the last 7 days - same near-zero picture as GA4, not the 1.13k the zone overview
+              showed for the same window. That 1.13k was overwhelmingly not human traffic.
+            - **Conclusion, Doug's call, 2026-09-27 night: likely just low real traffic, not (mainly) a
+              tracking bug.** For a personal site with no active marketing push yet, near-zero real
+              visitors is a perfectly reasonable actual state - not something to keep chasing via an
+              ad-blocker hunt. **Not closing the `503` finding as resolved, though** - it's still a
+              real, confirmed defect (reproduced 4 times total across two sessions) that will silently
+              undercount whatever real traffic does show up, including once the dev-services pivot's
+              SEO/marketing work (if pursued) starts driving real visitors. Deprioritized, not fixed;
+              revisit if/when traffic volume becomes worth the investigation cost again.
 - [x] **2026-09-20 session — gallery work, a real hash-regen tooling bug found and fixed, nav
       redesign, and a section rename.** Session started from console errors pasted after deploying
       the new gallery photos; ended up surfacing a bug that had been live since 2026-09-15.
@@ -1041,3 +1156,24 @@ this project's own custom items and where it stands against them.
       - **Not done this session:** the standing branch-hygiene backlog (now ~21 stale merged
         branches across the last three flags) is still untouched — still not urgent, still cheap to
         clean up whenever someone decides to.
+- [x] **2026-09-27 night — tech-debt cleanup pass, branch `tech-debt-cleanup-2026-09-27`.** Doug
+      asked to work through the 2026-09-15 C+ code-quality review's findings plus the deferred
+      Partytown item and the open GA4 loose end. Full detail is inline on each item above (search
+      "2026-09-27 night"); summary:
+      - [x] Type-checking (`@astrojs/check` + CI gate — caught 11 real pre-existing errors, all fixed)
+      - [x] Lint/format tooling (ESLint + Prettier configured and CI-gated; full-repo format pass
+            deliberately deferred as Doug's own call, not run silently)
+      - [x] Rate limiting on `/api/contact` (Cloudflare's native binding, 5/60s per IP)
+      - [x] CSP hash maintenance automated (`npm run verify-csp`, `--write` mode, CI-gated)
+      - [x] `folk-tales.jpg` recompressed (-155KB)
+      - [x] Dead-code item confirmed already resolved (predates this session)
+      - [ ] Monitoring/alerting — investigated, needs a Doug decision (dashboard notification or an
+            external channel), not something to wire up unilaterally
+      - **Deliberately not done:** GTM → Partytown migration — touches the same code path as the
+        still-open GA4 investigation, would confound it further
+      - **New finding, not a fix:** the live production GA4 pageview beacon returns HTTP 503 in
+        Claude's browser-automation profile while a manual `fetch()` to the identical endpoint
+        returns 204 — see the dated entry under "GA4 shows almost no real traffic" above for full
+        detail and the still-open question of whether this reproduces for real visitors.
+      - All local gates green before handing back: `npm run check`, `npm run lint`, `npm run build`,
+        `npm run verify-csp`, and the full Playwright suite (33 passed, 5 skipped as expected).

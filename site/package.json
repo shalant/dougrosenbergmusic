@@ -10,6 +10,11 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
+    "lint": "eslint .",
+    "verify-csp": "node scripts/verify-csp-hashes.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -20,8 +25,17 @@
     "esbuild": true
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.63.0",
-    "http-server": "^14.1.1"
+    "@typescript-eslint/parser": "^8.70.1",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^3.2.1",
+    "globals": "^17.12.0",
+    "http-server": "^14.1.1",
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.0",
+    "typescript": "^6.0.3"
   }
 }
