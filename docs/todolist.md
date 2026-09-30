@@ -459,8 +459,27 @@ semantic headings, title/meta description.
 - [x] **Mobile contact form (2026-09-30)** — fixed header no longer covers the Name field,
       compact phone layout, success toast + scroll-to-top (shipped in PR #58).
 - [ ] **Freshness** — keep facts current, update `dateModified`, revisit periodically.
-- [ ] **Same audit on dougrosenbergdev.com** — 12/34 indexed, 7 redirect errors, 6 404s; needs its
-      own session in that repo.
+- [ ] **Same audit on dougrosenbergdev.com** — repair already shipped separately (PR #28 in that
+      repo: 500s on unmatched URLs, robots.txt sitemap pointer); "Validate fix" started on Redirect
+      error and Not found (404) in Search Console. Live check 2026-09-30: all 24 sitemap URLs
+      return 200 with no redirects. Recheck validation ~2026-10-13.
+- [ ] **Decide name + positioning, then align both sites** — found 2026-09-30: dougrosenbergdev.com
+      says "Douglas Rosenberg — Full-Stack .NET Developer / ERP" (Person schema, meta author, titles);
+      dougrosenberg.com says "Doug Rosenberg", web designer for musicians and small businesses. Two
+      name forms and two headline jobs weakens entity resolution for search and AI assistants. Needs
+      Doug's call on the canonical name and headline before any change (see
+      `docs/entity-consistency-checklist.md`).
+- [ ] **Dev-site blog: per-post FAQs + `dateModified`** — only 1 of 9 posts defines `faqs`, none has
+      `dateModified` (schema code already supports both). FAQs are Doug's voice: draft for approval;
+      set `dateModified` only when a post is actually revised.
+- [ ] **Baseline metrics recorded 2026-09-30 (Google Search Console, last 28 days)** — recheck
+      ~2026-10-13 for before/after:
+      - dougrosenberg.com: 5 clicks, 78 impressions, avg position 5.9; only name queries
+        ("doug rosenberg" 40 impressions, "douglas rosenberg" 1); Domain property still processing
+      - dougrosenbergdev.com: 2 clicks, 11 impressions, avg position 9.3; only "doug rosenberg"
+      - Bing: dougrosenberg.com "check back in 48 hours"; dougrosenbergdev.com AI citations 0
+      - Reading: indexed and findable by name, but nothing yet for non-name queries ("jazz
+        saxophone lessons Chicago", "website for my band") — expected this early.
 
 ## Custom items (this project specifically)
 
