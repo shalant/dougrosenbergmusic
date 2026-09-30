@@ -152,9 +152,29 @@ const GOOGLE_SITE_VERIFICATION = {
 	"/google1dc7e3b5d5d6c264.html": "google-site-verification: google1dc7e3b5d5d6c264.html\n",
 };
 
+// Legacy URLs Google still has on file: the pre-Astro site's Blazor nav
+// routes (which 404'd there too) and the deleted hero-exploration preview
+// pages. Permanent-redirected to the closest section so Search Console
+// stops reporting them as 404s and any residual link equity lands on the
+// real page.
+const LEGACY_REDIRECTS = {
+	"/about": "/#about",
+	"/contact": "/#contact",
+	"/education": "/#about",
+	"/listen": "/#listen",
+	"/preview-graded-expand": "/",
+	"/preview-shape-antenna": "/",
+	"/preview-tv-leadsheet": "/",
+};
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
+
+		const legacyPath = url.pathname.replace(/\/+$/, "");
+		if (legacyPath in LEGACY_REDIRECTS) {
+			return Response.redirect(new URL(LEGACY_REDIRECTS[legacyPath], url).href, 301);
+		}
 
 		if (url.pathname === "/api/contact") {
 			if (request.method !== "POST") {
