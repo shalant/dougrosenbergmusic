@@ -96,3 +96,14 @@
 
 /sheetmusic/*
   Cache-Control: public, max-age=604800
+  # The sheet-music viewer embeds these PDFs in a same-origin <iframe>, but the
+  # global `X-Frame-Options: DENY` + CSP `frame-ancestors 'none'` above applied
+  # to them too, so browsers refused to render the frame (blank/blocked) and the
+  # only way to see a PDF was "Open in new tab". Detach both and re-allow
+  # same-origin framing only. Cloudflare merges matching rules' headers, so the
+  # CSP has to be detached (not overridden) or the global one still wins. These
+  # are static PDFs/images with no scripts, so dropping the page CSP here
+  # costs nothing, and it keeps the hash list in the global CSP the only one.
+  ! X-Frame-Options
+  ! Content-Security-Policy
+  X-Frame-Options: SAMEORIGIN

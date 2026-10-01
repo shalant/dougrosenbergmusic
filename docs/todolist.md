@@ -474,6 +474,16 @@ semantic headings, title/meta description.
       https://dougrosenberg.com and confirm it appears in the admin Leads table with the right
       Source (both a `music` and a `web` submission). Watch for 429s: the backend rate-limits
       5/min per `RemoteIpAddress`, which may be a shared Cloudflare/Azure egress IP.
+- [ ] **Sheet-music viewer didn't render PDFs inline (found 2026-09-30; fix in PR, NOT yet
+      verified live).** Picking a piece showed a blocked/blank frame; the PDF only worked via
+      "Open in new tab". Cause: `public/_headers`' global `X-Frame-Options: DENY` and CSP
+      `frame-ancestors 'none'` also applied to `/sheetmusic/*`, so the browser refused the
+      same-origin `<iframe>` (confirmed via `curl -I` on the live PDF; images were unaffected
+      because they use `<img>`). Fix: the `/sheetmusic/*` rule now detaches both headers and sets
+      `X-Frame-Options: SAMEORIGIN`; pages keep `DENY`. Verified locally with `wrangler dev` +
+      `curl -I` (PDF: `SAMEORIGIN`, no CSP; `/`: `DENY` + CSP intact). Added `src/headers.test.js`
+      (3 tests, fail against the old `_headers`). **Still to do:** after deploy, `curl -I` a PDF
+      and open the viewer in a real browser (headless Chromium can't render PDFs, so no e2e).
 - [ ] **Freshness** — keep facts current, update `dateModified`, revisit periodically.
 - [ ] **Same audit on dougrosenbergdev.com** — repair already shipped separately (PR #28 in that
       repo: 500s on unmatched URLs, robots.txt sitemap pointer); "Validate fix" started on Redirect
