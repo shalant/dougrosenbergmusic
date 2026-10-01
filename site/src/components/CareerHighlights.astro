@@ -20,20 +20,6 @@ const schools = [
 
     <div class="career-highlights__grid">
       <div class="career-highlights__block">
-        <h3 class="career-highlights__heading">Teaching Experience</h3>
-        <p class="career-highlights__lead"><strong>Private Instructor &amp; Clinician</strong></p>
-        <p class="career-highlights__text">
-          Chicago-area schools including Evanston middle schools, Sears School, Glenview, Glencoe,
-          Winnetka, Chicago Academy for the Arts, Oswego HS, and Plank MS.
-        </p>
-        <ul class="career-highlights__bullets">
-          <li>Private instruction in saxophone, clarinet, flute, jazz improvisation, and music theory</li>
-          <li>Customized lesson plans for students from beginner to advanced</li>
-          <li>Preparation for auditions, recitals, jazz ensemble placements, and honor bands</li>
-        </ul>
-      </div>
-
-      <div class="career-highlights__block">
         <h3 class="career-highlights__heading">New Trier High School</h3>
         <ul class="career-highlights__bullets">
           <li>Freshman Jazz Ensemble Assistant (2005–2008)</li>
@@ -93,7 +79,8 @@ const schools = [
 
   .career-highlights__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Two blocks since the private-lessons content moved to Lessons.astro. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(2rem, 5vw, 3rem);
     margin-top: 2.75rem;
     padding-top: 2.5rem;

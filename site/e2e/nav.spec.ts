@@ -15,9 +15,19 @@ test.describe('desktop staff nav', () => {
     await expect(page.locator('#dev')).toBeInViewport();
   });
 
+  test('the Lessons note jumps to the lessons section and the contact link still follows it', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.staff-nav__note')).toHaveCount(6);
+    await page.locator('.staff-nav__note[data-target="lessons"]').click();
+    await expect(page.locator('#lessons')).toBeInViewport();
+    await expect(page.locator('#lessons h2')).toHaveText('Private lessons');
+    await page.locator('#lessons .lessons__cta').click();
+    await expect(page.locator('#contact')).toBeInViewport();
+  });
+
   test('the active note tracks scroll position', async ({ page }) => {
     await page.goto('/');
-    // Only dev/listen/about/career-highlights/contact have a corresponding nav
+    // Only dev/listen/about/career-highlights/lessons/contact have a corresponding nav
     // note - hero/performance/sheet-music/gallery are real sections but
     // aren't linked from the corner nav.
     await page.locator('#career-highlights').scrollIntoViewIfNeeded();
