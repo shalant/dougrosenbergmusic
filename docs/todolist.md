@@ -458,6 +458,22 @@ semantic headings, title/meta description.
       Rich Results Test on the live URL and a real send from a phone.
 - [x] **Mobile contact form (2026-09-30)** — fixed header no longer covers the Name field,
       compact phone layout, success toast + scroll-to-top (shipped in PR #58).
+- [ ] **Contact form → customer-intake-backend Leads table (code done 2026-09-30, NOT yet
+      verified live).** Added `site/src/lead-forward.js`; `handleContact()` now runs a
+      best-effort `POST https://admin.dougrosenbergdev.com/api/leads` alongside the email send
+      (`Promise.allSettled`, 5s timeout, errors logged, never fatal — email stays the only
+      channel the visitor's response depends on; same pattern as dougrosenbergdev's worker). No
+      secret needed: a Worker fetch sends no Origin header, so the backend's CORS check doesn't
+      apply. `source` follows the interest dropdown: `music` → `MusicBooking`, `web` →
+      `DevServices` (the backend's only two `LeadSource` values); the interest is also
+      prepended to the message because the backend Lead has no interest field. Added the repo's
+      first unit tests (`npm test`, `node:test`, 6 tests) — they caught a real bug while
+      written (`"__proto__" in obj` matching the prototype for the interest lookup; fixed with
+      `Object.hasOwn`). Build, lint, `verify-csp`, `wrangler deploy --dry-run` and e2e (45
+      passed) all green. **Still to do:** after merge/deploy, submit one real message from
+      https://dougrosenberg.com and confirm it appears in the admin Leads table with the right
+      Source (both a `music` and a `web` submission). Watch for 429s: the backend rate-limits
+      5/min per `RemoteIpAddress`, which may be a shared Cloudflare/Azure egress IP.
 - [ ] **Freshness** — keep facts current, update `dateModified`, revisit periodically.
 - [ ] **Same audit on dougrosenbergdev.com** — repair already shipped separately (PR #28 in that
       repo: 500s on unmatched URLs, robots.txt sitemap pointer); "Validate fix" started on Redirect

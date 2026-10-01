@@ -14,8 +14,12 @@
 // settings (dashboard -> the zone -> Email -> Email Routing -> Destination
 // Addresses) — until both are done, sends will fail with an error from the
 // send_email binding.
+//
+// Each submission is also forwarded, best-effort, to customer-intake-backend's
+// POST /api/leads (see lead-forward.js) so it lands in the Leads table.
 
 import { EmailMessage } from "cloudflare:email";
+import { INTEREST_LABELS, resolveInterest, forwardLeadToErp } from "./lead-forward.js";
 
 const CONTACT_TO = "doug.rosenberg@gmail.com";
 const FROM_ADDRESS = "contact@dougrosenberg.com";
@@ -49,20 +53,13 @@ function encodeHeaderUtf8(value) {
 	return `=?UTF-8?B?${btoa(binary)}?=`;
 }
 
-// Whitelisted, not passed through raw - this drives both the subject-line
-// triage tag and gets echoed in the body, so an arbitrary value from a
-// direct API call (bypassing the <select>'s two real options) shouldn't
-// reach either.
-const INTEREST_LABELS = {
-	web: "Web Project",
-	music: "Music",
-};
-
 function buildRawEmail({ name, email, message, interest }) {
 	const safeName = sanitizeHeaderValue(name);
 	const safeEmail = sanitizeHeaderValue(email);
 	const encodedName = encodeHeaderUtf8(safeName);
-	const interestLabel = INTEREST_LABELS[interest] ?? INTEREST_LABELS.music;
+	// Whitelisted in lead-forward.js, not passed through raw - this drives the
+	// subject-line triage tag and is echoed in the body.
+	const interestLabel = INTEREST_LABELS[resolveInterest(interest)];
 
 	return [
 		`From: ${encodeHeaderUtf8("Doug Rosenberg Music — Contact Form")} <${FROM_ADDRESS}>`,
@@ -128,10 +125,16 @@ async function handleContact(request, env) {
 	const raw = buildRawEmail({ name, email, message, interest });
 	const emailMessage = new EmailMessage(FROM_ADDRESS, CONTACT_TO, raw);
 
-	try {
-		await env.CONTACT_EMAIL.send(emailMessage);
-	} catch (err) {
-		console.error("send_email error:", err);
+	// Email is the guaranteed channel - the visitor's response depends only on
+	// it. The Leads-table forward runs alongside it (not after) but is
+	// best-effort and never affects what the visitor sees; see lead-forward.js.
+	const [emailResult] = await Promise.allSettled([
+		env.CONTACT_EMAIL.send(emailMessage),
+		forwardLeadToErp({ name, email, message, interest }),
+	]);
+
+	if (emailResult.status === "rejected") {
+		console.error("send_email error:", emailResult.reason);
 		return json(
 			{ error: "Message could not be sent right now — please email directly instead." },
 			502,

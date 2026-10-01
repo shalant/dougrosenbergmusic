@@ -15,6 +15,7 @@
     "verify-csp": "node scripts/verify-csp-hashes.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "test": "node --test \"src/**/*.test.js\"",
     "test:e2e": "playwright test"
   },
   "dependencies": {
