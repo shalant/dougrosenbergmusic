@@ -16,7 +16,8 @@
 - [Listen](https://dougrosenberg.com/#listen): Recordings and album details
 - [About](https://dougrosenberg.com/#about): Biography and press
 - [Performance](https://dougrosenberg.com/#performance): Venues and artists performed with
-- [Highlights](https://dougrosenberg.com/#credibility): Teaching credentials, guest-artist history, education, affiliations
+- [Highlights](https://dougrosenberg.com/#career-highlights): Guest-artist history, New Trier High School, education, affiliations
+- [Lessons](https://dougrosenberg.com/#lessons): Private lessons in saxophone, clarinet, flute, jazz improvisation, and music theory
 - [Sheet Music Library](https://dougrosenberg.com/#sheet-music): Practice pieces for private students
 - [Gallery](https://dougrosenberg.com/#gallery): Photos
 - [Contact](https://dougrosenberg.com/#contact): Booking and inquiries

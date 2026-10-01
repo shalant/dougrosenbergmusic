@@ -1,0 +1,150 @@
+---
+// Only facts already published elsewhere on this site (CareerHighlights'
+// former "Private Instructor & Clinician" block, the FAQ's teaching answer).
+// Deliberately NOT stated anywhere here because nothing in the repo confirms
+// them: rates, in-person vs. online, studio location, availability. Add them
+// only once Doug supplies them. The CTA just points at the contact form,
+// matching the FAQ's "Use the contact form to ask about availability."
+const subjects = [
+  'Saxophone',
+  'Clarinet',
+  'Flute',
+  'Jazz improvisation',
+  'Music theory',
+];
+---
+
+<section id="lessons" class="lessons">
+  <div class="wrap lessons__grid">
+    <div class="lessons__body">
+      <p class="eyebrow">Teaching</p>
+      <h2 class="lessons__heading">Private lessons</h2>
+      <p class="lessons__lead">
+        Customized lesson plans for students from beginner to advanced, plus preparation
+        for auditions, recitals, jazz ensemble placements, and honor bands.
+      </p>
+      <p class="lessons__text">
+        Doug has taught and given clinics at Chicago-area schools including Evanston middle
+        schools, Sears School, Glenview, Glencoe, Winnetka, Chicago Academy for the Arts,
+        Oswego HS, and Plank MS, and was the jazz improvisation and saxophone instructor at
+        New Trier High School from 2003 to 2011.
+      </p>
+      <a class="cta cta-primary lessons__cta" href="#contact">Ask about lessons</a>
+    </div>
+
+    <div class="lessons__staff" aria-label="Subjects taught">
+      <p class="lessons__staff-label">Subjects</p>
+      <ol class="lessons__subjects">
+        {subjects.map((subject) => (
+          <li>
+            <span class="lessons__dot" aria-hidden="true"></span>
+            {subject}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lessons {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--bg);
+  }
+
+  .lessons__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .lessons__heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0.3rem 0 1.25rem;
+  }
+
+  .lessons__lead {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+    max-width: 38rem;
+  }
+
+  .lessons__text {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 1.75rem;
+    max-width: 38rem;
+  }
+
+  /* The five subjects sit on five ruled lines: the site's staff motif used
+     as the actual list structure rather than a background texture. The block
+     is nudged off-axis so it doesn't just mirror the text column. */
+  .lessons__staff {
+    position: relative;
+    justify-self: end;
+    width: min(100%, 22rem);
+    transform: translateY(1.25rem);
+  }
+
+  .lessons__staff-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 0.35rem;
+  }
+
+  .lessons__subjects {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--staff-line-strong);
+  }
+
+  .lessons__subjects li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.95rem 0.25rem;
+    border-bottom: 1px solid var(--staff-line-strong);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    transition: padding-left 0.25s ease;
+  }
+
+  .lessons__subjects li:hover {
+    padding-left: 0.9rem;
+  }
+
+  .lessons__dot {
+    flex: none;
+    width: 0.8rem;
+    height: 0.65rem;
+    border-radius: 55% 45% 40% 60% / 45% 58% 42% 55%;
+    background: var(--note-lessons);
+  }
+
+  @media (max-width: 760px) {
+    .lessons__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .lessons__staff {
+      justify-self: stretch;
+      width: 100%;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lessons__subjects li {
+      transition: none;
+    }
+  }
+</style>
