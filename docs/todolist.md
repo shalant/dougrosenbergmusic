@@ -474,6 +474,21 @@ semantic headings, title/meta description.
       https://dougrosenberg.com and confirm it appears in the admin Leads table with the right
       Source (both a `music` and a `web` submission). Watch for 429s: the backend rate-limits
       5/min per `RemoteIpAddress`, which may be a shared Cloudflare/Azure egress IP.
+- [ ] **Staff-divider micro-interaction + nav opacity (2026-09-30, in PR, not yet seen live).**
+      Each `StaffDivider` note now stretches from a 64px circle into a pill and slides out its
+      section name (Dev / Listen / About / Highlights / FAQ / Contact; new required `label`
+      prop) as the divider scrolls toward the middle of the viewport, with a small
+      squash-and-settle on the icon. Pure CSS scroll-driven animation (`view-timeline`), so no
+      new inline script and no CSP hash change (`verify-csp` still 11); browsers without
+      `animation-timeline` fall back to opening on hover; hover also tilts the icon;
+      `prefers-reduced-motion` turns the animation off. Gotcha found while building: the build's
+      minifier folded `animation-timeline` into the `animation` shorthand, which the browser
+      then rejected entirely, so the timeline longhands live in separate, more specific rules.
+      Checked with Playwright/Chromium screenshots at three scroll positions (width 64 → ~125px);
+      not checked in Safari/Firefox. Also raised the nav pill and menu toggle background from
+      `rgba(10,14,23,0.55)` to `0.65` (+10 points of alpha; Doug asked for "10% more opaque").
+      **Open question:** whether to add a dedicated Education section — see Doug's decision;
+      education currently lives under Career Highlights and the FAQ.
 - [ ] **Sheet-music viewer didn't render PDFs inline (found 2026-09-30; fix in PR, NOT yet
       verified live).** Picking a piece showed a blocked/blank frame; the PDF only worked via
       "Open in new tab". Cause: `public/_headers`' global `X-Frame-Options: DENY` and CSP
