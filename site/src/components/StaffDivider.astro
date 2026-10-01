@@ -18,8 +18,11 @@ const ICONS: Record<string, string> = {
 interface Props {
   icon: keyof typeof ICONS;
   tone: string;
+  // Short section name revealed beside the icon (see the reveal notes in the
+  // <style> block). Same wording as the matching StaffNav tag.
+  label: string;
 }
-const { icon, tone } = Astro.props;
+const { icon, tone, label } = Astro.props;
 ---
 
 <div class={`staff-divider note--${tone}`} aria-hidden="true">
@@ -30,6 +33,7 @@ const { icon, tone } = Astro.props;
   <div class="staff-divider__line" style="top: 68px;"></div>
   <span class="staff-divider__note">
     <svg class="staff-divider__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[icon]} />
+    <span class="staff-divider__label">{label}</span>
   </span>
 </div>
 
@@ -54,9 +58,13 @@ const { icon, tone } = Astro.props;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 64px;
+    min-width: 64px;
     height: 64px;
-    border-radius: 50%;
+    box-sizing: border-box;
+    /* 18 + 28px icon + 18 = 64: the resting circle is unchanged, but the open
+       pill gets even padding on both ends instead of the icon hugging the edge. */
+    padding-inline: 18px;
+    border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,8 +73,106 @@ const { icon, tone } = Astro.props;
   }
 
   .staff-divider__icon {
+    flex: none;
     width: 28px;
     height: 28px;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .staff-divider__note:hover .staff-divider__icon {
+    transform: rotate(-12deg) scale(1.12);
+  }
+
+  /* Micro-interaction: the blob stretches into a pill and the section name
+     slides out beside the icon. The label starts at zero width (and the pill
+     shrinks back to a 64px circle via min-width) so the resting state is
+     exactly the old static note.
+     - Where scroll-driven animations exist (Chromium, Safari 26+), it plays
+       as the divider scrolls in and then stays open. No JS, so no new inline
+       script and no CSP hash to regenerate; it also works on touch, where
+       hover doesn't exist.
+     - Elsewhere it falls back to opening on hover.
+     The divider is aria-hidden and decorative (StaffNav already names the
+     sections), so there's deliberately no focus/click behavior to add. */
+  .staff-divider__label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+  }
+
+  @supports (animation-timeline: view()) {
+    .staff-divider {
+      view-timeline-name: --divider;
+      view-timeline-axis: block;
+    }
+
+    .staff-divider__label {
+      animation: staff-divider-reveal linear both;
+    }
+
+    .staff-divider__icon {
+      animation: staff-divider-pop linear both;
+    }
+
+    /* Separate, more specific rules on purpose: the minifier folds
+       animation-timeline into the `animation` shorthand when they share a
+       rule, and shorthand-with-timeline isn't parsed everywhere that
+       supports the longhand, which silently dropped the whole animation. */
+    .staff-divider .staff-divider__label {
+      animation-timeline: --divider;
+      animation-range: entry 25% cover 50%;
+    }
+
+    .staff-divider .staff-divider__icon {
+      animation-timeline: --divider;
+      animation-range: entry 15% cover 40%;
+    }
+  }
+
+  @supports not (animation-timeline: view()) {
+    .staff-divider__label {
+      transition: max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease 0.1s, margin-left 0.45s ease;
+    }
+
+    .staff-divider__note:hover .staff-divider__label {
+      max-width: 9rem;
+      opacity: 1;
+      margin-left: 0.6rem;
+    }
+  }
+
+  @keyframes staff-divider-reveal {
+    to {
+      max-width: 9rem;
+      opacity: 1;
+      margin-left: 0.6rem;
+    }
+  }
+
+  /* A little squash-and-settle on the icon as the pill starts to open. */
+  @keyframes staff-divider-pop {
+    0% { transform: scale(0.8); }
+    60% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .staff-divider__label,
+    .staff-divider__icon {
+      animation: none;
+      transition: none;
+    }
+
+    .staff-divider__note:hover .staff-divider__icon {
+      transform: none;
+    }
   }
 
   .staff-divider.note--dev .staff-divider__note { background: var(--note-dev); }
