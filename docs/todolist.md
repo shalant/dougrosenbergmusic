@@ -474,6 +474,21 @@ semantic headings, title/meta description.
       https://dougrosenberg.com and confirm it appears in the admin Leads table with the right
       Source (both a `music` and a `web` submission). Watch for 429s: the backend rate-limits
       5/min per `RemoteIpAddress`, which may be a shared Cloudflare/Azure egress IP.
+- [ ] **Private Lessons section + nav note (2026-09-30, in PR stacked on the divider PR, not yet
+      seen live).** New `Lessons.astro` (`#lessons`, eyebrow "Teaching", h2 "Private lessons"),
+      placed after Gallery and before Sheet Music, with its own divider and a sixth nav note
+      (book icon, new `--note-lessons` blue). Subjects (saxophone, clarinet, flute, jazz
+      improvisation, music theory) sit on a five-line staff; CTA "Ask about lessons" jumps to
+      the contact form, which already defaults to the "music" interest. `StaffNav` widened
+      380 → 456px (the value the 861–1010px `scale(0.74)` comment already assumed), six notes at
+      76px spacing, `sectionIds` + mobile menu updated; the nav script changed so `_headers`'
+      CSP hash was regenerated (`verify-csp --write`, still 11). Content is only what the site
+      already said (former Career Highlights "Private Instructor & Clinician" block, moved here
+      so it isn't duplicated; Highlights grid is now 2 columns). **Not on the page because
+      nothing confirms it — needs Doug:** rates, in-person vs. online, studio location,
+      availability. Also fixed `llms.txt`'s Highlights link (`#credibility` → `#career-highlights`)
+      and added Lessons. Added e2e for the Lessons note + CTA and `lessons` in the smoke section
+      list. Checked with Chromium screenshots at 1280/900/390px; not Safari/Firefox.
 - [ ] **Staff-divider micro-interaction + nav opacity (2026-09-30, in PR, not yet seen live).**
       Each `StaffDivider` note now stretches from a 64px circle into a pill and slides out its
       section name (Dev / Listen / About / Highlights / FAQ / Contact; new required `label`
