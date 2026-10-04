@@ -493,6 +493,18 @@ semantic headings, title/meta description.
       `master`, unrelated). **Not yet merged or verified live:** after merge/deploy, submit a
       real `music` and `web` message and check `OriginSite = dougrosenberg.com` and the
       right `Source` in the Leads table.
+      **Live check 2026-10-03 (after PR #67 merged):** submitted one `music` and one `web`
+      message through the real form on https://dougrosenberg.com (both `POST /api/contact` →
+      200, success toast shown) and both appeared in the admin Leads table
+      (`admin.dougrosenbergdev.com/leads`) with the right `Source` — `web` → `DevServices`,
+      `music` → `MusicBooking` — and the `[Interested in: Web Project]` tag in the message.
+      The two test leads are named `TEST - Claude lead check (music|web) - delete`; delete them
+      from the Leads table. **Still unconfirmed:** `OriginSite = dougrosenberg.com` — neither
+      the Leads list nor the lead detail page displays that field, and `/api/leads/12` on the
+      admin host returns the app's Not Found page, so it needs a look at the backend/database.
+      The forward would have been rejected (400, logged only) on a bad value, but both leads
+      arrived, which is consistent with it being accepted. Not confirmed that PR #67 itself is
+      deployed to the live Worker (Cloudflare Version History not checked).
 - [ ] **Private Lessons section + nav note (2026-09-30, in PR stacked on the divider PR, not yet
       seen live).** New `Lessons.astro` (`#lessons`, eyebrow "Teaching", h2 "Private lessons"),
       placed after Gallery and before Sheet Music, with its own divider and a sixth nav note
