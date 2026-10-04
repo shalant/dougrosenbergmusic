@@ -9,6 +9,23 @@
 
 export const LEAD_INTAKE_URL = "https://admin.dougrosenbergdev.com/api/leads";
 
+// Which site sent the lead. Separate from Source (below) because Source is a
+// business line, not a site: this site sends both MusicBooking and
+// DevServices leads, so the backend can't infer the site from it. Must match
+// the backend's allowlist exactly (lowercase, no scheme) or the forward gets a
+// 400 that's only logged here and the lead is missing from the Leads table
+// (the email still arrives). A self-reported label, not an auth check.
+export const ORIGIN_SITE = "dougrosenberg.com";
+
+// Longest raw message the contact form may accept. The backend caps the stored
+// Lead.Message at 4000 characters, but buildLeadPayload below prepends an
+// "[Interested in: ...]" tag plus a blank line (30 characters for the longest
+// label, "Web Project"), and that prefixed text is what gets stored. 4000 - 30
+// = 3970. A message over this would be emailed fine but rejected by the
+// backend, and the failure is only logged. lead-forward.test.js checks the
+// prefixed length stays within 4000 for every interest.
+export const MAX_MESSAGE_LENGTH = 3970;
+
 // Whitelisted, not passed through raw — drives both the email subject tag and
 // the lead's Source, so an arbitrary value from a direct API call (bypassing
 // the <select>'s two real options) falls back to "music".
@@ -37,6 +54,7 @@ export function buildLeadPayload({ name, email, message, interest }) {
 		email,
 		// The backend Lead has no interest field, so keep it in the message text.
 		message: `[Interested in: ${INTEREST_LABELS[key]}]\n\n${message}`,
+		originSite: ORIGIN_SITE,
 	};
 }
 
