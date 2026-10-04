@@ -1,6 +1,13 @@
 import { test, mock } from "node:test";
 import assert from "node:assert/strict";
-import { buildLeadPayload, forwardLeadToErp, LEAD_INTAKE_URL } from "./lead-forward.js";
+import {
+	buildLeadPayload,
+	forwardLeadToErp,
+	INTEREST_LABELS,
+	LEAD_INTAKE_URL,
+	MAX_MESSAGE_LENGTH,
+	ORIGIN_SITE,
+} from "./lead-forward.js";
 
 const fields = { name: "Test Person", email: "test@example.com", message: "Hello there" };
 
@@ -22,6 +29,29 @@ test("missing or unknown interest falls back to MusicBooking", () => {
 	assert.equal(buildLeadPayload({ ...fields }).source, "MusicBooking");
 	assert.equal(buildLeadPayload({ ...fields, interest: "__proto__" }).source, "MusicBooking");
 	assert.equal(buildLeadPayload({ ...fields, interest: "evil" }).source, "MusicBooking");
+});
+
+test("every interest sends originSite dougrosenberg.com", () => {
+	// Asserting the literal as well as the constant: the backend's allowlist is an
+	// exact match, so a typo in ORIGIN_SITE would otherwise pass this test.
+	assert.equal(ORIGIN_SITE, "dougrosenberg.com");
+	for (const interest of ["music", "web"]) {
+		const p = buildLeadPayload({ ...fields, interest });
+		assert.equal(p.originSite, "dougrosenberg.com");
+	}
+});
+
+test("a message at the form's length cap still fits the backend's 4000 after the interest tag", () => {
+	// The backend caps Lead.Message at 4000 and stores the prefixed text, so the cap
+	// the form enforces (MAX_MESSAGE_LENGTH) has to leave room for the longest tag.
+	const atCap = "x".repeat(MAX_MESSAGE_LENGTH);
+	for (const interest of Object.keys(INTEREST_LABELS)) {
+		const p = buildLeadPayload({ ...fields, message: atCap, interest });
+		assert.ok(
+			p.message.length <= 4000,
+			`${interest}: prefixed message is ${p.message.length} characters, over the backend's 4000`,
+		);
+	}
 });
 
 test("forward POSTs JSON to the lead intake URL with a timeout signal", async () => {

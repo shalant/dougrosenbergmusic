@@ -474,6 +474,25 @@ semantic headings, title/meta description.
       https://dougrosenberg.com and confirm it appears in the admin Leads table with the right
       Source (both a `music` and a `web` submission). Watch for 429s: the backend rate-limits
       5/min per `RemoteIpAddress`, which may be a shared Cloudflare/Azure egress IP.
+      **Status 2026-10-03:** the forward itself was merged (PR #62) and deployed by
+      2026-10-01 (seen in Cloudflare's Version History); the live submission check above is
+      still not recorded as done.
+      **Follow-up (2026-10-03, branch `worker-origin-site-2026-10-03`): record which site
+      sent each lead.** The payload now also carries `originSite: "dougrosenberg.com"` (new
+      `ORIGIN_SITE` constant), because the backend's `Source` is a business line, not a site,
+      and this site sends both values. The backend (already live) validates it against an
+      exact-match allowlist, so a typo would 400 the forward silently (logged only; the email
+      still arrives). It is a self-reported label, not an auth check. Also fixed a length
+      trap: the form accepted messages up to 5000 characters, but the backend now caps the
+      stored `Message` at 4000 and the forward prepends an `[Interested in: ...]` tag (30
+      characters for "Web Project"), so the form's cap is now `MAX_MESSAGE_LENGTH` = 3970,
+      shared by `worker.js` and the tests. Added 2 unit tests (`originSite` for both
+      interests; a message at the cap stays within 4000 after the tag) and confirmed the cap
+      test fails with the naive cap of 4000 (`web: prefixed message is 4030 characters`).
+      `npm test`: 11 pass, 0 fail; eslint clean (prettier already flags these files on
+      `master`, unrelated). **Not yet merged or verified live:** after merge/deploy, submit a
+      real `music` and `web` message and check `OriginSite = dougrosenberg.com` and the
+      right `Source` in the Leads table.
 - [ ] **Private Lessons section + nav note (2026-09-30, in PR stacked on the divider PR, not yet
       seen live).** New `Lessons.astro` (`#lessons`, eyebrow "Teaching", h2 "Private lessons"),
       placed after Gallery and before Sheet Music, with its own divider and a sixth nav note

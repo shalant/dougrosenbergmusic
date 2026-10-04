@@ -19,7 +19,12 @@
 // POST /api/leads (see lead-forward.js) so it lands in the Leads table.
 
 import { EmailMessage } from "cloudflare:email";
-import { INTEREST_LABELS, resolveInterest, forwardLeadToErp } from "./lead-forward.js";
+import {
+	INTEREST_LABELS,
+	MAX_MESSAGE_LENGTH,
+	resolveInterest,
+	forwardLeadToErp,
+} from "./lead-forward.js";
 
 const CONTACT_TO = "doug.rosenberg@gmail.com";
 const FROM_ADDRESS = "contact@dougrosenberg.com";
@@ -118,7 +123,9 @@ async function handleContact(request, env) {
 	if (!isValidEmail(email)) {
 		return json({ error: "Enter a valid email address." }, 400);
 	}
-	if (name.length > 200 || email.length > 200 || message.length > 5000) {
+	// MAX_MESSAGE_LENGTH leaves room for the interest tag the ERP forward adds, so
+	// everything the form accepts also fits the backend's 4000-character limit.
+	if (name.length > 200 || email.length > 200 || message.length > MAX_MESSAGE_LENGTH) {
 		return json({ error: "One of the fields is too long." }, 400);
 	}
 
