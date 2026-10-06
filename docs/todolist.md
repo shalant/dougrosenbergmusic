@@ -1306,3 +1306,17 @@ semantic headings, title/meta description.
         detail and the still-open question of whether this reproduces for real visitors.
       - All local gates green before handing back: `npm run check`, `npm run lint`, `npm run build`,
         `npm run verify-csp`, and the full Playwright suite (33 passed, 5 skipped as expected).
+- [ ] **2026-10-04 — Eastern Blok / Goran Ivanovic Group press archive, branch
+      `eastern-blok-press-2026-10-04`.** Added `site/src/data/eastern-blok-press.json`: 12 items
+      (album reviews, previews, interviews, one fan concert recording), pull quotes only, each with
+      a `verified` flag and accessed date. Not yet wired into any page; nothing on the site reads it.
+      - [x] Found and read: AllAboutJazz reviews of *Goran Ivanovic Group* (2006) and *Folk Tales*
+            (2008), Scene Point Blank, WYCE, Obscure Sound, CityBeat, AnnArbor.com
+      - [ ] No independent *Underwater* (2011) review found; no post-show concert reviews found
+      - [ ] LA Times / Downbeat / Acoustic Guitar / Minor 7th quotes exist only in the band's own
+            2008 bio on AllAboutJazz; locate the originals before publishing them as verified
+      - [ ] Still unsearched: AllMusic (403), Amazon/CD Baby customer reviews, Chicago Reader and
+            Time Out Chicago archives, Doug's own press-kit files
+      - [ ] Folk Tales year conflict: reviews date from 2007, AllAboutJazz lists 2008. Confirm
+      - [ ] Decide whether and how to show a "Press" section (the 6/10 Scene Point Blank review
+            is part of the honest record)
