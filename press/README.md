@@ -8,18 +8,16 @@ As of 2026-10-05 no review of the CD *Better Than TV* has been found. A Wayback 
 
 ## Files
 
-- `candidates.json` is the index. Every entry starts `verified: false` until Doug confirms it.
-  - `about`: `this-cd` (the CD itself), `other-album` (Doug as a sideman on someone else's album), `person` (Doug generally, including live shows).
-  - `kind`: `review`, `preview`, `feature`, `listing` (retail or radio page, not a review), `quote` (source unknown).
-  - `namesDoug`: whether the text actually names him. Only entries where this is true can be used as credits.
-  - `quote`: short attributed pull-quotes only.
+- `candidates.json` is this session's index, in the shared schema. Field meanings, the merge rules and the multi-session workflow are in `SCHEMA.md`. `verified` means the page text was read on `accessed`; `approved` stays `false` until Doug OKs an entry for the public site.
+- `merge-press.cjs` merges the per-session JSON files into `press.json` (generated, not committed yet). `merge-press.test.cjs` tests it: `node --test press/merge-press.test.cjs`.
 
 ## What does not go in this repo
 
-Full page copies, screenshots and photos. The reviews are the publishers' copyright, and the repo may be public. Full snapshots go to a private store (Azure Blob, container not yet chosen) plus a Wayback Save Page Now link in `archiveUrl`. No storage account keys.
+Full page copies, screenshots and photos. The reviews are the publishers' copyright, and the repo is public. They go in the shared `press-archive/` folder next to the repos (see its README), and later a private Azure Blob backup. Each entry's `archive` field names its folder; `archiveUrl` holds a Wayback link. No storage account keys.
 
 ## Still to collect
 
 - Doug's own Chicago concert reviews (Bob Moses; Ernest Dawkins, Live the Spirit) and the reviews of a Robert "Baabe" Irving III album.
 - The original Chicago Tribune article behind the quote.
-- `archiveUrl` for every entry that has a live `url`.
+- Full copies in `press-archive/` and `archiveUrl` for every entry that has a live `url`.
+- Folding in the Goran Ivanovic / Eastern Blok index from the other session (`site/src/data/eastern-blok-press.json` on `eastern-blok-press-2026-10-04`) via the merge script.
