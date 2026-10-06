@@ -9,7 +9,7 @@ As of 2026-10-05 no review of the CD *Better Than TV* has been found. A Wayback 
 ## Files
 
 - `candidates.json` is this session's index, in the shared schema. Field meanings, the merge rules and the multi-session workflow are in `SCHEMA.md`. `verified` means the page text was read on `accessed`; `approved` stays `false` until Doug OKs an entry for the public site.
-- `press.json` is the combined index (generated; don't hand-edit). Last generated 2026-10-05: 36 entries, 6 rejected leads, 11 open leads. Regenerate after either source file changes: `node press/merge-press.cjs --out press/press.json press/candidates.json site/src/data/eastern-blok-press.json`. The two inputs are the sources of truth.
+- `press.json` is the combined index (generated; don't hand-edit). Counts aren't recorded here because they go stale; the merge prints them. Regenerate after either source file changes, and check that `git diff press/press.json` matches what you changed: `node press/merge-press.cjs --out press/press.json press/candidates.json site/src/data/eastern-blok-press.json`. The two inputs are the sources of truth.
 - `merge-press.cjs` merges the per-session JSON files; `merge-press.test.cjs` tests it: `node --test press/merge-press.test.cjs`.
 - `save-page.cjs` saves full copies into the shared `press-archive/` folder (see `SCHEMA.md`).
 
