@@ -54,6 +54,14 @@ git worktree add ../dougrosenbergmusic-press better-than-tv-reviews-2026-10-04
 
 Each worktree is a separate folder on its own branch. Stay in your own folder, and don't run `git checkout` or `git switch` in it.
 
+## Saving full copies
+
+```
+node press/save-page.cjs ../press-archive <your-index.json> [--skip id,id] [--only id,id]
+```
+
+For each entry with a `url` (or an `archiveUrl` when the original is unknown) it tries the live page, falls back to the Wayback Machine, writes `page.html`, `text.txt`, `images.txt` and `source.txt` into `press-archive/<id>/`, and sets the entry's `archive` field. It skips entries already saved. **Photos are not downloaded:** `images.txt` only lists image URLs, so pick the ones that matter and save them into `images/` by hand. Check `text.txt` after each run, because a login wall or error page can still return HTTP 200.
+
 ## Shared archive folder
 
 `C:\Users\digdr\Documents\coding\press-archive\` (outside every repo; see the README there). One subfolder per entry `id`: `page.html`, `text.txt`, `images/`, and `source.txt` with the URL and access date. A later step can back it up to a private Azure Blob container.
