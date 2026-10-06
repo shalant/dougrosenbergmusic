@@ -1352,3 +1352,25 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
         detail and the still-open question of whether this reproduces for real visitors.
       - All local gates green before handing back: `npm run check`, `npm run lint`, `npm run build`,
         `npm run verify-csp`, and the full Playwright suite (33 passed, 5 skipped as expected).
+- [ ] **2026-10-04 — Eastern Blok / Goran Ivanovic Group press archive, branch
+      `eastern-blok-press-2026-10-04`.** Added `site/src/data/eastern-blok-press.json`: 12 items
+      (album reviews, previews, interviews, one fan concert recording), pull quotes only, each with
+      a `verified` flag and accessed date. Not yet wired into any page; nothing on the site reads it.
+      - [x] Found and read: AllAboutJazz reviews of *Goran Ivanovic Group* (2006) and *Folk Tales*
+            (2008), Scene Point Blank, WYCE, Obscure Sound, CityBeat, AnnArbor.com
+      - [ ] No independent *Underwater* (2011) review found; no post-show concert reviews found
+      - [ ] LA Times / Downbeat / Acoustic Guitar / Minor 7th quotes exist only in the band's own
+            2008 bio on AllAboutJazz; locate the originals before publishing them as verified
+      - [ ] Still unsearched: AllMusic (403), Amazon/CD Baby customer reviews, Chicago Reader and
+            Time Out Chicago archives, Doug's own press-kit files
+      - [ ] Folk Tales year conflict: reviews date from 2007, AllAboutJazz lists 2008. Confirm
+      - [ ] Decide whether and how to show a "Press" section (the 6/10 Scene Point Blank review
+            is part of the honest record)
+      - [x] 2026-10-05: grew to 28 entries (added Chicago Reader, Minor 7th, Guitar One, DownBeat
+            2006, a 29-show gig log from Internet Archive recordings, and 2008 tour stops); moved the
+            file to the shared press schema (`kind`, `outlet`, `about`, `namesDoug`, `approved`,
+            `archive`; ids aligned with the other session's index). A dry-run merge with
+            `press/candidates.json` gave 36 entries and 0 warnings. Full-page copies of 14 verified
+            entries are in `../press-archive/` (outside git); all entries stay `approved: false`.
+      - [ ] Local-paper searches for the 2008 tour cities and the student-paper archives for the
+            campus stops are still to do; JazzPRESS Oct 2012 PDF still to open
