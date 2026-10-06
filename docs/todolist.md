@@ -1320,3 +1320,11 @@ semantic headings, title/meta description.
       - [ ] Folk Tales year conflict: reviews date from 2007, AllAboutJazz lists 2008. Confirm
       - [ ] Decide whether and how to show a "Press" section (the 6/10 Scene Point Blank review
             is part of the honest record)
+      - [x] 2026-10-05: grew to 28 entries (added Chicago Reader, Minor 7th, Guitar One, DownBeat
+            2006, a 29-show gig log from Internet Archive recordings, and 2008 tour stops); moved the
+            file to the shared press schema (`kind`, `outlet`, `about`, `namesDoug`, `approved`,
+            `archive`; ids aligned with the other session's index). A dry-run merge with
+            `press/candidates.json` gave 36 entries and 0 warnings. Full-page copies of 14 verified
+            entries are in `../press-archive/` (outside git); all entries stay `approved: false`.
+      - [ ] Local-paper searches for the 2008 tour cities and the student-paper archives for the
+            campus stops are still to do; JazzPRESS Oct 2012 PDF still to open

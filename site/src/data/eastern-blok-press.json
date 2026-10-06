@@ -1,20 +1,46 @@
 {
-  "_about": "Press, reviews, and coverage of the Goran Ivanovic Group / Eastern Blok (2004-2012). Pull quotes only, never full text. verified=true means the page text was read on the accessed date; false means the item is known only from a search snippet or the band's own promo copy. Null dates are unknown, not forgotten.",
+  "_about": "Press, reviews, and coverage of the Goran Ivanovic Group / Eastern Blok (2004-2012). Pull quotes only, never full text. verified=true means the page text was read on the accessed date; false means the item is known only from a search snippet or the band's own promo copy. Null dates are unknown, not forgotten. Field names follow press/SCHEMA.md (origin/better-than-tv-reviews-2026-10-04). namesDoug is true only where the page text read names him; false means not confirmed. approved stays false until Doug OKs an entry for the site.",
   "albums": [
-    { "id": "goran-ivanovic-group", "title": "Goran Ivanovic Group", "band": "Goran Ivanovic Group", "year": 2006, "label": "Balkan Song Records", "note": "Some sources say 2005; AllAboutJazz lists 2006." },
-    { "id": "folk-tales", "title": "Folk Tales", "band": "Eastern Blok", "year": 2007, "label": "Self Produced", "note": "Reviews date from Sept-Nov 2007, but AllAboutJazz lists 2008 (its review ran 2008-02-25)." },
-    { "id": "underwater", "title": "Underwater", "band": "Eastern Blok", "year": 2011, "label": "Self Produced", "note": "No independent review found as of 2026-10-04." }
+    {
+      "id": "goran-ivanovic-group",
+      "title": "Goran Ivanovic Group",
+      "band": "Goran Ivanovic Group",
+      "year": 2006,
+      "label": "Balkan Song Records",
+      "note": "Some sources say 2005; AllAboutJazz lists 2006."
+    },
+    {
+      "id": "folk-tales",
+      "title": "Folk Tales",
+      "band": "Eastern Blok",
+      "year": 2007,
+      "label": "Self Produced",
+      "note": "Reviews date from Sept-Nov 2007, but AllAboutJazz lists 2008 (its review ran 2008-02-25)."
+    },
+    {
+      "id": "underwater",
+      "title": "Underwater",
+      "band": "Eastern Blok",
+      "year": 2011,
+      "label": "Self Produced",
+      "note": "No independent review found as of 2026-10-04."
+    }
   ],
-  "items": [
+  "entries": [
     {
       "id": "aaj-goran-ivanovic-group-2006",
-      "type": "album-review",
+      "kind": "review",
+      "about": "other-album",
       "band": "Goran Ivanovic Group",
       "album": "goran-ivanovic-group",
-      "publication": "All About Jazz",
+      "title": "Goran Ivanovic Group (Balkan Song Records)",
+      "outlet": "All About Jazz",
       "author": "Budd Kopman",
       "date": "2006-03-11",
       "url": "https://www.allaboutjazz.com/goran-ivanovic-group-goran-ivanovic-balkan-song-records-review-by-budd-kopman",
+      "archiveUrl": null,
+      "archive": "aaj-goran-ivanovic-group-2006",
+      "namesDoug": true,
       "rating": null,
       "pullQuotes": [
         "The energy that pours out of the speakers will literally bowl you over before you know what happened.",
@@ -22,104 +48,152 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
+      "approved": false,
       "notes": "Misspells the leader's name in the last line."
     },
     {
-      "id": "obscuresound-2006",
-      "type": "feature",
+      "id": "obscuresound-goran-2006-12",
+      "kind": "feature",
+      "about": "other-album",
       "band": "Goran Ivanovic Group",
       "album": "goran-ivanovic-group",
-      "publication": "Obscure Sound",
+      "title": "Goran Ivanovic treasures his Balkan roots",
+      "outlet": "Obscure Sound",
       "author": "Mike Mineo",
       "date": "2006-12-12",
       "url": "https://www.obscuresound.com/2006/12/goran-ivanovic-treasures-his-balkan-roots/",
+      "archiveUrl": null,
+      "archive": "obscuresound-goran-2006-12",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [
         "...showing the world what an undiscovered treat Balkan music is."
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Feature that discusses the album."
+      "approved": false,
+      "notes": "Feature that discusses the album.",
+      "aliases": [
+        "obscuresound-2006"
+      ]
     },
     {
-      "id": "vindicator-2006",
-      "type": "feature",
+      "id": "vindicator-goran-2006-06",
+      "kind": "feature",
+      "about": "person",
       "band": "Goran Ivanovic Group",
       "album": null,
-      "publication": "The Vindicator (Youngstown, OH)",
+      "title": "WORLD MUSIC: Goran Ivanovic fuses Balkan folk, jazz",
+      "outlet": "The Vindicator (Youngstown, OH)",
       "author": "Guy D'Astolfo",
       "date": "2006-06-29",
       "url": "https://vindyarchives.com/news/2006/jun/29/world-music-goran-ivanovic-fuses-balkan-folk-jazz/",
+      "archiveUrl": null,
+      "archive": "vindicator-goran-2006-06",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Concert preview/profile of Goran; quotes are Goran's, not the writer's, so none are kept."
+      "approved": false,
+      "notes": "Concert preview/profile of Goran; quotes are Goran's, not the writer's, so none are kept.",
+      "aliases": [
+        "vindicator-2006"
+      ]
     },
     {
-      "id": "archive-org-st-sava-2006",
-      "type": "concert-recording",
+      "id": "ia-goran-ivanovic-group-st-sava-2006-04-08",
+      "kind": "concert-recording",
+      "about": "person",
       "band": "Goran Ivanovic Group",
       "album": null,
-      "publication": "Internet Archive Live Music Archive",
+      "title": "Goran Ivanovic [Group] Live at Serbian Cultural Club St. Sava, 2006-04-08",
+      "outlet": "Internet Archive Live Music Archive",
       "author": "Brian Skalinder (taper)",
       "date": "2006-04-08",
       "url": "https://archive.org/details/gorangroup2006-04-08.flac24",
+      "archiveUrl": null,
+      "archive": "ia-goran-ivanovic-group-st-sava-2006-04-08",
+      "namesDoug": true,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Fan-taped show at Serbian Cultural Club St. Sava, Chicago. Taper says the band stretched out more than usual. Not a review, but the only concert document found."
+      "approved": false,
+      "notes": "Fan-taped show at Serbian Cultural Club St. Sava, Chicago. Taper says the band stretched out more than usual. Not a review, but the only concert document found.",
+      "aliases": [
+        "archive-org-st-sava-2006"
+      ]
     },
     {
-      "id": "wyce-folk-tales-2007",
-      "type": "album-review",
+      "id": "wyce-folk-tales-2007-09",
+      "kind": "review",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "folk-tales",
-      "publication": "WYCE (Grand Rapids Community Media Center)",
+      "title": "EASTERN BLOK: Folk Tales",
+      "outlet": "WYCE (Grand Rapids Community Media Center)",
       "author": "Tim Pieri",
       "date": "2007-09-17",
       "url": "https://vintage.grcmc.org/wyce/Reviews/cart/genre/F/article/1526/ticklah-vs-axelrod-ticklah/article/1433/folk-tales-eastern-blok",
+      "archiveUrl": null,
+      "archive": "wyce-folk-tales-2007-09",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [
         "A wonderful collective of East European melody, along with Free Jazz out of Chicago."
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Quote lightly trimmed from the original sentence."
+      "approved": false,
+      "notes": "Quote lightly trimmed from the original sentence.",
+      "aliases": [
+        "wyce-folk-tales-2007"
+      ]
     },
     {
-      "id": "spb-folk-tales-2007",
-      "type": "album-review",
+      "id": "scenepointblank-folk-tales-2007-11",
+      "kind": "review",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "folk-tales",
-      "publication": "Scene Point Blank",
+      "title": "Eastern Blok: Folk Tales",
+      "outlet": "Scene Point Blank",
       "author": "Kevin Fitzpatrick",
       "date": "2007-11-29",
       "url": "https://www.scenepointblank.com/reviews/eastern-blok/folk-tales/",
-      "rating": { "value": 6.0, "scale": 10 },
+      "archiveUrl": null,
+      "archive": "scenepointblank-folk-tales-2007-11",
+      "namesDoug": false,
+      "rating": {
+        "value": 6,
+        "scale": 10
+      },
       "pullQuotes": [
         "The band are extremely talented."
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Lukewarm: the reviewer wanted vocals. Decide deliberately whether to display it; do not cherry-pick the rating."
+      "approved": false,
+      "notes": "Lukewarm: the reviewer wanted vocals. Decide deliberately whether to display it; do not cherry-pick the rating.",
+      "aliases": [
+        "spb-folk-tales-2007"
+      ]
     },
     {
       "id": "aaj-folk-tales-2008",
-      "type": "album-review",
+      "kind": "review",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "folk-tales",
-      "publication": "All About Jazz",
+      "title": "Folk Tales (Eastern Blok, self-produced)",
+      "outlet": "All About Jazz",
       "author": "Budd Kopman",
       "date": "2008-02-25",
       "url": "https://www.allaboutjazz.com/folk-tales-eastern-blok-self-produced-review-by-budd-kopman",
+      "archiveUrl": null,
+      "archive": "aaj-folk-tales-2008",
+      "namesDoug": true,
       "rating": null,
       "pullQuotes": [
         "Folk Tales is tighter and more complex than the first album, while retaining the earlier energy and abandon.",
@@ -127,18 +201,23 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
+      "approved": false,
       "notes": "Read in Chrome; WebFetch gets 403 from this site. A Wayback copy exists (snapshot 2022-05-17) but WebFetch cannot reach web.archive.org."
     },
     {
-      "id": "aaj-band-bio-promo-2008",
-      "type": "promo-bio",
+      "id": "aaj-eastern-blok-promo-bio-2008-02",
+      "kind": "promo-bio",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "folk-tales",
-      "publication": "All About Jazz (band-supplied bio)",
+      "title": "Eastern Blok (band-supplied biography)",
+      "outlet": "All About Jazz (band-supplied bio)",
       "author": null,
       "date": "2008-02-27",
       "url": "https://www.allaboutjazz.com/musicians/eastern-blok",
+      "archiveUrl": null,
+      "archive": "aaj-eastern-blok-promo-bio-2008-02",
+      "namesDoug": true,
       "rating": null,
       "pullQuotes": [
         "relentlessly innovative work (Los Angeles Times)",
@@ -148,165 +227,244 @@
       ],
       "verified": false,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Second-hand: the band's own bio quoting four outlets. The original LA Times, Downbeat, Acoustic Guitar, and Minor 7th pieces are NOT located; do not publish these quotes on the site as verified until they are. The same bio mentions NPR, Chicago Public Radio's Chicago Undercover, the 2005 John Lennon Songwriting Competition finalist, and the film Wanted."
+      "approved": false,
+      "notes": "Second-hand: the band's own bio quoting four outlets. The original LA Times, Downbeat, Acoustic Guitar, and Minor 7th pieces are NOT located; do not publish these quotes on the site as verified until they are. The same bio mentions NPR, Chicago Public Radio's Chicago Undercover, the 2005 John Lennon Songwriting Competition finalist, and the film Wanted.",
+      "aliases": [
+        "aaj-band-bio-promo-2008"
+      ]
     },
     {
-      "id": "citybeat-2010",
-      "type": "preview",
+      "id": "citybeat-eastern-blok-2010-08",
+      "kind": "preview",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "CityBeat (Cincinnati)",
+      "title": "Eastern Blok",
+      "outlet": "CityBeat (Cincinnati)",
       "author": "Brian Baker",
       "date": "2010-08-09",
       "url": "https://www.citybeat.com/music/eastern-blok-12175253",
+      "archiveUrl": null,
+      "archive": "citybeat-eastern-blok-2010-08",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [
         "An exotic favorite within the Chicago music scene."
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Event listing blurb, likely partly promo-derived. Calls Goran Serbian though other sources say Croatian-born."
+      "approved": false,
+      "notes": "Event listing blurb, likely partly promo-derived. Calls Goran Serbian though other sources say Croatian-born.",
+      "aliases": [
+        "citybeat-2010"
+      ]
     },
     {
-      "id": "annarbor-2010",
-      "type": "preview",
+      "id": "annarbor-eastern-blok-2010-08",
+      "kind": "preview",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "AnnArbor.com",
+      "title": "Eastern Blok bringing its distinctive sound to the Blind Pig",
+      "outlet": "AnnArbor.com",
       "author": "Kevin Ransom",
       "date": "2010-08-11",
       "url": "https://www.annarbor.com/entertainment/eastern-blok-preview/",
+      "archiveUrl": null,
+      "archive": "annarbor-eastern-blok-2010-08",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Preview for the Blind Pig, Ann Arbor, built on a Michael Caskey interview. Quotes are Caskey's; one says the new material is 'more thematic, and more developed', which is likely about Underwater."
+      "approved": false,
+      "notes": "Preview for the Blind Pig, Ann Arbor, built on a Michael Caskey interview. Quotes are Caskey's; one says the new material is 'more thematic, and more developed', which is likely about Underwater.",
+      "aliases": [
+        "annarbor-2010"
+      ]
     },
     {
-      "id": "workandworry-2010",
-      "type": "interview",
+      "id": "workandworry-goran-2010-09",
+      "kind": "interview",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "Work and Worry",
+      "title": "Interview: Goran Ivanovic",
+      "outlet": "Work and Worry",
       "author": "David Leicht",
       "date": "2010-09-30",
       "url": "https://workandworry.com/2010/09/30/interview-goran-ivanovic/",
+      "archiveUrl": null,
+      "archive": "workandworry-goran-2010-09",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Interview with Goran, mostly about the Kapsalis duo; low value."
+      "approved": false,
+      "notes": "Interview with Goran, mostly about the Kapsalis duo; low value.",
+      "aliases": [
+        "workandworry-2010"
+      ]
     },
     {
-      "id": "suntimes-elbel-retrospective",
-      "type": "retrospective",
+      "id": "suntimes-goran-trio-2016-03",
+      "kind": "retrospective",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "Chicago Sun-Times",
+      "title": "In the Music Spotlight: Goran Ivanovic Trio",
+      "outlet": "Chicago Sun-Times",
       "author": "Jeff Elbel",
       "date": null,
       "url": "https://chicago.suntimes.com/2016/3/9/18403314/in-the-music-spotlight-goran-ivanovic-trio",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Mentions Eastern Blok in passing as a former group (2016, Goran Ivanovic Trio piece). Text seen only as an excerpt on Goran's press page; URL is from a search result and the article was not opened."
+      "approved": false,
+      "notes": "Mentions Eastern Blok in passing as a former group (2016, Goran Ivanovic Trio piece). Text seen only as an excerpt on Goran's press page; URL is from a search result and the article was not opened.",
+      "aliases": [
+        "suntimes-elbel-retrospective"
+      ]
     },
     {
-      "id": "alarm-2010",
-      "type": "preview",
+      "id": "alarm-eastern-blok-2010-07",
+      "kind": "preview",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "underwater",
-      "publication": "ALARM Magazine",
+      "title": "Eastern Blok",
+      "outlet": "ALARM Magazine",
       "author": "Kyle Gilkeson",
       "date": "2010-07-30",
       "url": "https://alarm-magazine.com/eastern-blok",
+      "archiveUrl": null,
+      "archive": "alarm-eastern-blok-2010-07",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Tour announcement for a 14-date August 2010 tour featuring Matt Ulery's 'The Underwater Suite', the material that became the album. Page shows publication 2013-04-23 and update 2010-07-30; the 2010 date is used."
+      "approved": false,
+      "notes": "Tour announcement for a 14-date August 2010 tour featuring Matt Ulery's 'The Underwater Suite', the material that became the album. Page shows publication 2013-04-23 and update 2010-07-30; the 2010 date is used.",
+      "aliases": [
+        "alarm-2010"
+      ]
     },
     {
-      "id": "bennington-ulery-2011",
-      "type": "preview",
+      "id": "benningtonbanner-ulery-2011-11",
+      "kind": "preview",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "underwater",
-      "publication": "Bennington Banner (VT)",
+      "title": "Tasty Eastern Blok coffee",
+      "outlet": "Bennington Banner (VT)",
       "author": null,
       "date": "2011-11-30",
       "url": "https://www.benningtonbanner.com/local-news/tasty-eastern-blok-coffee",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "'Tasty Eastern Blok coffee', a Matt Ulery interview preview. Seen only as a Google snippet; the real URL has an ID suffix and was not opened. Search result dated 2011-12-01."
+      "approved": false,
+      "notes": "'Tasty Eastern Blok coffee', a Matt Ulery interview preview. Seen only as a Google snippet; the real URL has an ID suffix and was not opened. Search result dated 2011-12-01.",
+      "aliases": [
+        "bennington-ulery-2011"
+      ]
     },
     {
-      "id": "bennington-eweek-2011",
-      "type": "preview",
+      "id": "benningtonbanner-eweek-2011-12",
+      "kind": "preview",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "underwater",
-      "publication": "Bennington Banner (VT)",
+      "title": "E-week",
+      "outlet": "Bennington Banner (VT)",
       "author": null,
       "date": "2011-12-09",
       "url": "https://www.benningtonbanner.com/local-news/e-week",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "'E-week' listing. Google snippet says the band would play 'all original compositions, mostly from Underwater'. Confirms the album existed by Dec 2011. Page not opened (connection reset)."
+      "approved": false,
+      "notes": "'E-week' listing. Google snippet says the band would play 'all original compositions, mostly from Underwater'. Confirms the album existed by Dec 2011. Page not opened (connection reset).",
+      "aliases": [
+        "bennington-eweek-2011"
+      ]
     },
     {
-      "id": "aaj-jazz-this-week-stl-2012",
-      "type": "preview",
+      "id": "aaj-jazz-this-week-stl-2012-05",
+      "kind": "preview",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "underwater",
-      "publication": "All About Jazz / St. Louis Jazz Notes",
+      "title": "Jazz This Week: Frank Vignola and Vinny Raniolo, Madeleine Peyroux, Eastern Blok, Marcus Lewis, Miles Davis Jazz Festival, and More",
+      "outlet": "All About Jazz / St. Louis Jazz Notes",
       "author": "Dean Minderman",
       "date": "2012-05-17",
       "url": "https://www.allaboutjazz.com/news/jazz-this-week-frank-vignola-and-vinny-raniolo-madeleine-peyroux-eastern-blok-marcus-lewis-miles-davis-jazz-festival-and-more/",
+      "archiveUrl": null,
+      "archive": "aaj-jazz-this-week-stl-2012-05",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "Calls the show at Pop's Blue Moon (St. Louis) a celebration of the release of the new CD Underwater. Suggests the release party was May 2012, so the 2011 year may be wrong or just the first-copies date. Confirm."
+      "approved": false,
+      "notes": "Calls the show at Pop's Blue Moon (St. Louis) a celebration of the release of the new CD Underwater. Suggests the release party was May 2012, so the 2011 year may be wrong or just the first-copies date. Confirm.",
+      "aliases": [
+        "aaj-jazz-this-week-stl-2012"
+      ]
     },
     {
-      "id": "headfi-underwater-2018",
-      "type": "listener-comment",
+      "id": "headfi-underwater-2018-06",
+      "kind": "listener-comment",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "underwater",
-      "publication": "Head-Fi.org forum (thread 'For those of us with multiple headphones, which ones are you listening with now?')",
+      "title": "For those of us with multiple headphones, which ones are you listening with now? (forum post)",
+      "outlet": "Head-Fi.org forum (thread 'For those of us with multiple headphones, which ones are you listening with now?')",
       "author": null,
       "date": "2018-06-08",
       "url": "https://www.head-fi.org/threads/for-those-of-us-with-multiple-headphones-which-ones-are-you-listening-with-now.881631/",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "archiveUrl": null,
-      "notes": "The only listener write-up of Underwater found. A forum member (name not captured) discusses the album, praising Goran's 'understated classical guitar parts' per the Google snippet. The post sits on an unidentified page of a 1,600+ page thread; the snippet's page link now points to a 2024 page. Find the exact post and author before using."
-    }
-    ,
+      "approved": false,
+      "notes": "The only listener write-up of Underwater found. A forum member (name not captured) discusses the album, praising Goran's 'understated classical guitar parts' per the Google snippet. The post sits on an unidentified page of a 1,600+ page thread; the snippet's page link now points to a 2024 page. Find the exact post and author before using.",
+      "aliases": [
+        "headfi-underwater-2018"
+      ]
+    },
     {
-      "id": "reader-world-music-fest-2007",
-      "type": "album-review",
+      "id": "chireader-world-music-fest-2007-09",
+      "kind": "review",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "folk-tales",
-      "publication": "Chicago Reader",
+      "title": "The Reader's Guide to the World Music Festival",
+      "outlet": "Chicago Reader",
       "author": "Peter Margasak (signed 'PM')",
       "date": "2007-09-13",
       "url": "https://chicagoreader.com/arts-culture/the-readers-guide-to-the-world-music-festival/",
+      "archiveUrl": null,
+      "archive": "chireader-world-music-fest-2007-09",
+      "namesDoug": true,
       "rating": null,
       "pullQuotes": [
         "display an impressive mastery of the disparate genres that inform Ivanovic's tunes",
@@ -314,104 +472,149 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
-      "notes": "Short blurb in the Reader's World Music Festival guide (Chicago, Sept 14-20, 2007), on the 'brand-new Folk Tales'. Mixed: praises the players' command of the styles, but says they too often play with a 'proggy fussiness' that makes it hard to enjoy. Author initials from the page; the festival guide runs under several writers, so confirm Margasak. Both quotes are trimmed."
+      "approved": false,
+      "notes": "Short blurb in the Reader's World Music Festival guide (Chicago, Sept 14-20, 2007), on the 'brand-new Folk Tales'. Mixed: praises the players' command of the styles, but says they too often play with a 'proggy fussiness' that makes it hard to enjoy. Author initials from the page; the festival guide runs under several writers, so confirm Margasak. Both quotes are trimmed.",
+      "aliases": [
+        "reader-world-music-fest-2007"
+      ]
     },
     {
-      "id": "reader-the-list-2009-10-29",
-      "type": "listing",
+      "id": "chireader-the-list-2009-10",
+      "kind": "listing",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "Chicago Reader (The List)",
+      "title": "The List: October 29-November 4, 2009",
+      "outlet": "Chicago Reader (The List)",
       "author": "Peter Margasak",
       "date": "2009-10-29",
       "url": "https://chicagoreader.com/music/the-list-october-29-november-4-2009/",
+      "archiveUrl": null,
+      "archive": "chireader-the-list-2009-10",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
-      "notes": "Eastern Blok opens a show at the Old Town School of Folk Music (7 PM, $22). The entry's blurb is about the headliner, whose name was not captured. Mention only."
+      "approved": false,
+      "notes": "Eastern Blok opens a show at the Old Town School of Folk Music (7 PM, $22). The entry's blurb is about the headliner, whose name was not captured. Mention only.",
+      "aliases": [
+        "reader-the-list-2009-10-29"
+      ]
     },
     {
-      "id": "reader-katerinas-blog-2008",
-      "type": "preview",
+      "id": "chireader-katerinas-2008-07",
+      "kind": "preview",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "Chicago Reader (blog)",
+      "title": "Serb-o-riffic films and music",
+      "outlet": "Chicago Reader (blog)",
       "author": null,
       "date": "2008-07-16",
       "url": "https://chicagoreader.com/blogs/serb-o-riffic-films-and-music/",
+      "archiveUrl": null,
+      "archive": "chireader-katerinas-2008-07",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [
         "locals Eastern Blok will play their fluid and vivid Balkan-inspired jazz"
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
-      "notes": "'Serb-o-riffic films and music': Eastern Blok at Katerina's after Emir Kusturica screenings, on a Wednesday ('tonight') and Wednesday July 23. Year inferred as 2008 (July 23 was a Wednesday; page is tagged Vol. 37 No. 43). Posting date 2008-07-16 is therefore inferred. No byline shown on the page."
+      "approved": false,
+      "notes": "'Serb-o-riffic films and music': Eastern Blok at Katerina's after Emir Kusturica screenings, on a Wednesday ('tonight') and Wednesday July 23. Year inferred as 2008 (July 23 was a Wednesday; page is tagged Vol. 37 No. 43). Posting date 2008-07-16 is therefore inferred. No byline shown on the page.",
+      "aliases": [
+        "reader-katerinas-blog-2008"
+      ]
     },
     {
-      "id": "reader-trg-listings-2004",
-      "type": "listing",
+      "id": "chireader-trg-listings-2003-2004",
+      "kind": "listing",
+      "about": "person",
       "band": "Goran Ivanovic Group",
       "album": null,
-      "publication": "Chicago Reader (TRG Music Listings)",
+      "title": "TRG Music Listings (Goran Ivanovic Group dates)",
+      "outlet": "Chicago Reader (TRG Music Listings)",
       "author": null,
       "date": "2004-03-11",
       "url": null,
+      "archiveUrl": null,
+      "archive": "chireader-trg-listings-2003-2004",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
-      "notes": "Bare gig listings, seen only as Google snippets, for the Goran Ivanovic Group at HotHouse (2004-03-12, with Shooglenifty), Hideout/Jazz Showcase (Jazz Institute of Chicago Jazz Club Tour), Around the Coyote Fall Arts Festival, and others across 2004. Useful as a dated record of when the group formed and where it played. Individual URLs are on chicagoreader.com/news/trg-music-listings-NN; not opened."
+      "approved": false,
+      "notes": "Bare gig listings, seen only as Google snippets, for the Goran Ivanovic Group at HotHouse (2004-03-12, with Shooglenifty), Hideout/Jazz Showcase (Jazz Institute of Chicago Jazz Club Tour), Around the Coyote Fall Arts Festival, and others across 2004. Useful as a dated record of when the group formed and where it played. Individual URLs are on chicagoreader.com/news/trg-music-listings-NN; not opened.",
+      "aliases": [
+        "reader-trg-listings-2004"
+      ]
     },
     {
       "id": "minor7th-goran-ivanovic-group-2005-12",
-      "type": "album-review",
+      "kind": "review",
+      "about": "other-album",
       "band": "Goran Ivanovic Group",
       "album": "goran-ivanovic-group",
-      "publication": "Minor 7th",
+      "title": "Goran Ivanovic Group, The Goran Ivanovic Group",
+      "outlet": "Minor 7th",
       "author": "James Scott",
       "date": "2005-12",
       "url": "https://minor7th.com/m7_12_05.html",
+      "archiveUrl": null,
+      "archive": "minor7th-goran-ivanovic-group-2005-12",
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [
         "The passion and urgency at which this group plays is heard in every note."
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
+      "approved": false,
       "notes": "Nov/Dec 2005 issue of this acoustic-guitar review site. This is the source of the Minor 7th quote ('extraordinary pan-cultural ensemble...') in the band's bio and press copy, so that one is now sourced. Read through WebFetch summary; confirm the full text and the exact wording of the bio quote against the page before reuse."
     },
     {
-      "id": "guitar-one-2006-02",
-      "type": "album-review",
+      "id": "guitarone-goran-ivanovic-group-2006-02",
+      "kind": "review",
+      "about": "other-album",
       "band": "Goran Ivanovic Group",
       "album": "goran-ivanovic-group",
-      "publication": "Guitar One",
+      "title": "Goran Ivanovic Group (Balkan Song), Soundcheck",
+      "outlet": "Guitar One",
       "author": "Bob Keelaghan",
       "date": "2006-02",
       "url": "https://archive.org/stream/GuitarOneFeb2006Medium/Guitar_One_Feb_2006_Medium_djvu.txt",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [
         "navigates odd time signatures with speed, control, and taste"
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
-      "notes": "Short 'Soundcheck' item on Goran Ivanovic Group (Balkan Song) in the February 2006 issue, scanned on the Internet Archive. Read via a WebFetch summary of the scan's OCR text; confirm the quote against the scan. No rating."
+      "approved": false,
+      "notes": "Short 'Soundcheck' item on Goran Ivanovic Group (Balkan Song) in the February 2006 issue, scanned on the Internet Archive. Read via a WebFetch summary of the scan's OCR text; confirm the quote against the scan. No rating.",
+      "aliases": [
+        "guitar-one-2006-02"
+      ]
     },
     {
       "id": "minor7th-folk-tales-2007-10",
-      "type": "album-review",
+      "kind": "review",
+      "about": "other-album",
       "band": "Eastern Blok",
       "album": "folk-tales",
-      "publication": "Minor 7th",
+      "title": "Eastern Blok, Folk Tales",
+      "outlet": "Minor 7th",
       "author": "Patrick Ragains",
       "date": "2007-10",
       "url": "https://www.minor7th.com/m7_10_07.html",
+      "archiveUrl": null,
+      "archive": "minor7th-folk-tales-2007-10",
+      "namesDoug": true,
       "rating": null,
       "pullQuotes": [
         "The band sounds spontaneous and live on this well-balanced recording.",
@@ -419,139 +622,422 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
+      "approved": false,
       "notes": "Sept/Oct 2007 issue; read in full in Chrome. Positive. Also quotes DownBeat second-hand: 'offers up fire rather than ice, and the guitarist's amalgamation of flamenco, Balkan, classical, blues, and jazz keeps his band pushing forward almost all of the time.' That is probably from DownBeat's 2006 review of the first album (see downbeat-goran-ivanovic-group-2006-06). Calls the leader 'Serbian transplant'."
     },
     {
       "id": "klezmershack-makor-2006-03",
-      "type": "listing",
+      "kind": "listing",
+      "about": "other-album",
       "band": "Goran Ivanovic Group",
       "album": "goran-ivanovic-group",
-      "publication": "KlezmerShack calendar (Ari Davidow)",
+      "title": "KlezCalendar: Goran Ivanovic Group, NYC, Mar 27",
+      "outlet": "KlezmerShack calendar (Ari Davidow)",
       "author": "Ari Davidow",
       "date": "2006-03-27",
       "url": "https://www.klezmershack.com/calendar/cat_mus_middleeastern.php",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
+      "approved": false,
       "notes": "Calendar entry for the show at Makor, New York, Monday 2006-03-27, 7:30 PM, $12. Repeats the Minor 7th quote and cites the Chicago Tribune calling Goran a 'lightning-fingered guitarist': a second-hand Tribune reference; the original Tribune piece is not located and could be the source of the Tribune quote noted in other press copy."
     },
     {
       "id": "jazzpress-2012-10",
-      "type": "mention",
+      "kind": "mention",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "JazzPRESS (Poland)",
+      "title": "JazzPRESS, October 2012",
+      "outlet": "JazzPRESS (Poland)",
       "author": null,
       "date": "2012-10",
       "url": null,
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
+      "approved": false,
       "notes": "October 2012 issue (a PDF at jazzpress.pl). A Google snippet shows a passage on how Eastern Blok formed and its use of Balkan and Russian folk music, apparently in an interview with Matt Ulery. Seen only as a snippet; the PDF was not opened. Worth reading in full."
     },
     {
-      "id": "downbeat-goran-ivanovic-group-2006-06",
-      "type": "album-review",
+      "id": "downbeat-goran-ivanovic-2006-06",
+      "kind": "review",
+      "about": "other-album",
       "band": "Goran Ivanovic Group",
       "album": "goran-ivanovic-group",
-      "publication": "DownBeat",
+      "title": "Goran Ivanovic Group, 3 stars",
+      "outlet": "DownBeat",
       "author": "Mitch Myers",
       "date": "2006-06",
       "url": null,
-      "rating": { "value": 3, "scale": 5 },
+      "archiveUrl": "https://web.archive.org/web/20170826105849/http://dougrosenberg.com/press.html",
+      "archive": "downbeat-goran-ivanovic-2006-06",
+      "namesDoug": true,
+      "rating": {
+        "value": 3,
+        "scale": 5
+      },
       "pullQuotes": [
         "saxophonist Doug Rosenberg serves well as his instrumental foil."
       ],
       "verified": false,
       "accessed": "2026-10-05",
-      "archiveUrl": "https://web.archive.org/web/20170826105849/http://dougrosenberg.com/press.html",
-      "notes": "Only source is Doug's own old press page as captured by Wayback (2017). Taken from press/candidates.json (another session's index, 2026-10-05), not checked by me. The original DownBeat page or issue is not located. The first real DownBeat review of the band; the 2008 promo bio's DownBeat quote ('breakneck and consistently challenging') may come from a later review, since this quote differs. Star rating shown as 3 of 5 per that index."
+      "approved": false,
+      "notes": "Only source is Doug's own old press page as captured by Wayback (2017). Taken from press/candidates.json (another session's index, 2026-10-05), not checked by me. The original DownBeat page or issue is not located. The first real DownBeat review of the band; the 2008 promo bio's DownBeat quote ('breakneck and consistently challenging') may come from a later review, since this quote differs. Star rating shown as 3 of 5 per that index.",
+      "aliases": [
+        "downbeat-goran-ivanovic-group-2006-06"
+      ]
     },
     {
-      "id": "downbeat-2013-01-ulery-mention",
-      "type": "mention",
+      "id": "downbeat-eastern-blok-ulery-2013-01",
+      "kind": "mention",
+      "about": "person",
       "band": "Eastern Blok",
       "album": null,
-      "publication": "DownBeat",
+      "title": "DownBeat, January 2013 (mention)",
+      "outlet": "DownBeat",
       "author": null,
       "date": "2013-01",
       "url": null,
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-05",
-      "archiveUrl": null,
-      "notes": "DownBeat January 2013 issue (a Scribd copy). Snippet reads 'In the quartet Eastern Blok with guitarist Goran Ivanovic, all of the compositions are tied to Balkan traditions.' Probably in a feature on Matt Ulery. Seen only as a Google result titled 'Downbeat-January2013' on Scribd; the link was not captured. This is the first confirmed DownBeat mention; the page and author need finding, and it is a mention, not a review."
+      "approved": false,
+      "notes": "DownBeat January 2013 issue (a Scribd copy). Snippet reads 'In the quartet Eastern Blok with guitarist Goran Ivanovic, all of the compositions are tied to Balkan traditions.' Probably in a feature on Matt Ulery. Seen only as a Google result titled 'Downbeat-January2013' on Scribd; the link was not captured. This is the first confirmed DownBeat mention; the page and author need finding, and it is a mention, not a review.",
+      "aliases": [
+        "downbeat-2013-01-ulery-mention"
+      ]
+    }
+  ],
+  "rejected": [],
+  "unfetchedLeads": [
+    {
+      "url": "https://www.fredonia.edu/news/dynamic-balkan-fusion-ensemble-eastern-blok-performing-april-12",
+      "note": "SUNY Fredonia concert release (Tue April 12, probably 2011). 403 to the fetch tool; try Chrome or Wayback."
+    },
+    {
+      "url": "https://www.allmusic.com/album/goran-ivanovic-group-mw0001447204",
+      "note": "AllMusic page for the Goran Ivanovic Group album; 403, unknown whether it has a staff review."
+    },
+    {
+      "url": "https://www.amazon.com/dp/B006HTEKHM",
+      "note": "Amazon page for Underwater; Chrome has no read permission here. Customer reviews unchecked."
+    },
+    {
+      "url": "https://www.amazon.com/Folk-Tales-Eastern-Blok/dp/B000UE61NG",
+      "note": "Amazon page for Folk Tales; customer reviews unchecked."
+    },
+    {
+      "url": "https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C",
+      "note": "Amazon page for the Goran Ivanovic Group album; customer reviews unchecked."
+    },
+    {
+      "url": "https://www.jazzpress.pl/",
+      "note": "JazzPRESS (Poland) October 2012 PDF, likely a Matt Ulery interview mentioning Eastern Blok; exact PDF link not captured."
     }
   ],
   "campusAppearances": [
-    { "date": "2008-03-22", "venue": "Carnegie Mellon University, Pittsburgh PA", "source": "https://worldmusiccentral.org/eastern-blok-march-08-tour/", "studentPaperChecked": "The Tartan (not searched yet)" },
-    { "date": "2008-03-24", "venue": "Princeton University, Frist Campus Center (Cafe Viv), lecture and performance", "source": "https://worldmusiccentral.org/eastern-blok-march-08-tour/", "studentPaperChecked": "Daily Princetonian: Google site: search found nothing" },
-    { "date": "2008-03-31", "venue": "University of Michigan, Ann Arbor MI", "source": "https://worldmusiccentral.org/eastern-blok-march-08-tour/", "studentPaperChecked": "Michigan Daily: Google site: search found nothing" },
-    { "date": "2008-10-10", "venue": "Krannert Center, Urbana IL", "source": "https://worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/", "studentPaperChecked": "Daily Illini: Google site: search found nothing" },
-    { "date": "2008-10-13", "venue": "University of Nebraska Omaha, Milo Bail Student Center, lecture and concert", "source": "https://worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/", "studentPaperChecked": "The Gateway: Google site: search found nothing" },
-    { "date": "2008-10-20", "venue": "Elgin Community College, IL, two morning lectures", "source": "https://worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/", "studentPaperChecked": null },
-    { "date": "2011-04-12", "venue": "SUNY Fredonia, Rosch Recital Hall, free concert", "source": "https://www.fredonia.edu/news/dynamic-balkan-fusion-ensemble-eastern-blok-performing-april-12", "studentPaperChecked": "Fredonia Leader: Google site: search found nothing", "note": "Year inferred: April 12 was a Tuesday in 2011. Page itself returned 403 so the year is unconfirmed." },
-    { "date": null, "venue": "Cornell University", "source": "Doug (user report); Goran's bio lists Cornell as a guest-artist stop", "studentPaperChecked": "Cornell Daily Sun: Google site: search found nothing" }
+    {
+      "date": "2008-03-22",
+      "venue": "Carnegie Mellon University, Pittsburgh PA",
+      "source": "https://worldmusiccentral.org/eastern-blok-march-08-tour/",
+      "studentPaperChecked": "The Tartan (not searched yet)"
+    },
+    {
+      "date": "2008-03-24",
+      "venue": "Princeton University, Frist Campus Center (Cafe Viv), lecture and performance",
+      "source": "https://worldmusiccentral.org/eastern-blok-march-08-tour/",
+      "studentPaperChecked": "Daily Princetonian: Google site: search found nothing"
+    },
+    {
+      "date": "2008-03-31",
+      "venue": "University of Michigan, Ann Arbor MI",
+      "source": "https://worldmusiccentral.org/eastern-blok-march-08-tour/",
+      "studentPaperChecked": "Michigan Daily: Google site: search found nothing"
+    },
+    {
+      "date": "2008-10-10",
+      "venue": "Krannert Center, Urbana IL",
+      "source": "https://worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/",
+      "studentPaperChecked": "Daily Illini: Google site: search found nothing"
+    },
+    {
+      "date": "2008-10-13",
+      "venue": "University of Nebraska Omaha, Milo Bail Student Center, lecture and concert",
+      "source": "https://worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/",
+      "studentPaperChecked": "The Gateway: Google site: search found nothing"
+    },
+    {
+      "date": "2008-10-20",
+      "venue": "Elgin Community College, IL, two morning lectures",
+      "source": "https://worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/",
+      "studentPaperChecked": null
+    },
+    {
+      "date": "2011-04-12",
+      "venue": "SUNY Fredonia, Rosch Recital Hall, free concert",
+      "source": "https://www.fredonia.edu/news/dynamic-balkan-fusion-ensemble-eastern-blok-performing-april-12",
+      "studentPaperChecked": "Fredonia Leader: Google site: search found nothing",
+      "note": "Year inferred: April 12 was a Tuesday in 2011. Page itself returned 403 so the year is unconfirmed."
+    },
+    {
+      "date": null,
+      "venue": "Cornell University",
+      "source": "Doug (user report); Goran's bio lists Cornell as a guest-artist stop",
+      "studentPaperChecked": "Cornell Daily Sun: Google site: search found nothing"
+    }
   ],
   "gigLog": {
     "_about": "Dated shows of the Goran Ivanovic Group / Eastern Blok, taken from the titles of fan recordings in the Internet Archive Live Music Archive (taper Brian Skalinder and others), pulled 2026-10-05 via archive.org advancedsearch. Title metadata only; no audio or text copied. The search reported 75 results but only about 50 were readable and many were duplicate formats, so this list is incomplete. Archive page for any entry: https://archive.org/details/<archiveId>. Dates and venues are as the uploaders titled them and are not independently confirmed.",
     "shows": [
-      { "date": "2005-03-27", "venue": "The Darkroom", "archiveId": "gorangroup2005-03-27flac16" },
-      { "date": "2005-06-24", "venue": "HotHouse, Chicago", "archiveId": "gorangroup2005-06-24-c414.flac16", "note": "Taped three ways (c414, mk21, multi)." },
-      { "date": "2005-09-09", "venue": "Martyrs', Chicago", "archiveId": "gorangroup2005-09-09.mk21.v3.flac16" },
-      { "date": "2005-09-24", "venue": "Park West", "archiveId": "gorangroup2005-09-24.flac16" },
-      { "date": "2005-12-09", "venue": "Double Door, Chicago", "archiveId": "gorangroup2005-12-09.flac24" },
-      { "date": "2006-01-14", "venue": "Martyrs', Chicago", "archiveId": "gorangroup2006-01-14.flac24" },
-      { "date": "2006-02-03", "venue": "Metro, Chicago", "archiveId": "gorangroup2006-02-03.flac24" },
-      { "date": "2006-03-22", "venue": "Katerina's, Chicago", "archiveId": "gorangroup2006-03-22.flac24" },
-      { "date": "2006-03-28", "venue": "The Puppet House", "archiveId": "gorangroup2006-03-28.flac16" },
-      { "date": "2006-03-29", "venue": "Johnny D's", "archiveId": "GoranGroup2006-03-29.flac16" },
-      { "date": "2006-04-01", "venue": "The Underground, Carnegie Mellon University", "archiveId": "gorangroup2006-04-01" },
-      { "date": "2006-04-08", "venue": "Serbian Cultural Club St. Sava, Chicago", "archiveId": "gorangroup2006-04-08.flac24" },
-      { "date": "2006-04-27", "venue": "CSPS", "archiveId": "EBlok2006-04-27" },
-      { "date": "2006-06-09", "venue": "Serbian Cultural Club St. Sava, Chicago", "archiveId": "gorangroup2006-06-09.flac24" },
-      { "date": "2006-06-15", "venue": "Hideout, Chicago", "archiveId": "gorangroup2006-06-15.multi.flac24" },
-      { "date": "2006-07-05", "venue": "Johnny D's", "archiveId": "GoranGroup2006-07-05.MG270.flac16" },
-      { "date": "2006-07-19", "venue": "The Mill", "archiveId": "EasternBlok2006-07-19" },
-      { "date": "2006-11-10", "venue": "Mezzanotte Lounge", "archiveId": "eblok2006-11-10.flac16" },
-      { "date": "2006-12-15", "venue": "HotHouse, Chicago", "archiveId": "eblok2006-12-15.flac24", "note": "Two sets, about 2 hr 4 min. Listing says the group had by then taken the name Eastern Blok. Sound engineer credited: Gene Nemirovsky." },
-      { "date": "2007-03-30", "venue": "Cyber Cafe West", "archiveId": "eblok2007-03-30.flac16" },
-      { "date": "2007-09-26", "venue": "Johnny D's", "archiveId": "givanovic2007-09-26" },
-      { "date": "2007-09-29", "venue": "Pancho Villa's upstairs lounge", "archiveId": "easternblok2007-09-29.multitrack.ackerman.flac24" },
-      { "date": "2008-03-22", "venue": "The Underground, Carnegie Mellon University", "archiveId": "eblok2008-03-22.cm1k.flac16" },
-      { "date": "2009-03-25", "venue": "Johnny D's", "archiveId": "gorangroup2009-03-25.flac24" },
-      { "date": "2009-03-29", "venue": "Your Inner Vagabond", "archiveId": "givanovic2009-03-29.rodent6o" },
-      { "date": "2010-08-13", "venue": "The Blue Wisp", "archiveId": "eblok2010-08-13.flac24" },
-      { "date": "2011-09-17", "venue": "Spinoza's", "archiveId": "gorangroup2011-09-17.flac24" },
-      { "date": "2011-12-01", "venue": "Spinoza's", "archiveId": "eblok2011-12-01.flac24" },
-      { "date": "2011-12-11", "venue": "The Beachland Tavern", "archiveId": "eblok2011-12-11.flac16" }
+      {
+        "date": "2005-03-27",
+        "venue": "The Darkroom",
+        "archiveId": "gorangroup2005-03-27flac16"
+      },
+      {
+        "date": "2005-06-24",
+        "venue": "HotHouse, Chicago",
+        "archiveId": "gorangroup2005-06-24-c414.flac16",
+        "note": "Taped three ways (c414, mk21, multi)."
+      },
+      {
+        "date": "2005-09-09",
+        "venue": "Martyrs', Chicago",
+        "archiveId": "gorangroup2005-09-09.mk21.v3.flac16"
+      },
+      {
+        "date": "2005-09-24",
+        "venue": "Park West",
+        "archiveId": "gorangroup2005-09-24.flac16"
+      },
+      {
+        "date": "2005-12-09",
+        "venue": "Double Door, Chicago",
+        "archiveId": "gorangroup2005-12-09.flac24"
+      },
+      {
+        "date": "2006-01-14",
+        "venue": "Martyrs', Chicago",
+        "archiveId": "gorangroup2006-01-14.flac24"
+      },
+      {
+        "date": "2006-02-03",
+        "venue": "Metro, Chicago",
+        "archiveId": "gorangroup2006-02-03.flac24"
+      },
+      {
+        "date": "2006-03-22",
+        "venue": "Katerina's, Chicago",
+        "archiveId": "gorangroup2006-03-22.flac24"
+      },
+      {
+        "date": "2006-03-28",
+        "venue": "The Puppet House",
+        "archiveId": "gorangroup2006-03-28.flac16"
+      },
+      {
+        "date": "2006-03-29",
+        "venue": "Johnny D's",
+        "archiveId": "GoranGroup2006-03-29.flac16"
+      },
+      {
+        "date": "2006-04-01",
+        "venue": "The Underground, Carnegie Mellon University",
+        "archiveId": "gorangroup2006-04-01"
+      },
+      {
+        "date": "2006-04-08",
+        "venue": "Serbian Cultural Club St. Sava, Chicago",
+        "archiveId": "gorangroup2006-04-08.flac24"
+      },
+      {
+        "date": "2006-04-27",
+        "venue": "CSPS",
+        "archiveId": "EBlok2006-04-27"
+      },
+      {
+        "date": "2006-06-09",
+        "venue": "Serbian Cultural Club St. Sava, Chicago",
+        "archiveId": "gorangroup2006-06-09.flac24"
+      },
+      {
+        "date": "2006-06-15",
+        "venue": "Hideout, Chicago",
+        "archiveId": "gorangroup2006-06-15.multi.flac24"
+      },
+      {
+        "date": "2006-07-05",
+        "venue": "Johnny D's",
+        "archiveId": "GoranGroup2006-07-05.MG270.flac16"
+      },
+      {
+        "date": "2006-07-19",
+        "venue": "The Mill",
+        "archiveId": "EasternBlok2006-07-19"
+      },
+      {
+        "date": "2006-11-10",
+        "venue": "Mezzanotte Lounge",
+        "archiveId": "eblok2006-11-10.flac16"
+      },
+      {
+        "date": "2006-12-15",
+        "venue": "HotHouse, Chicago",
+        "archiveId": "eblok2006-12-15.flac24",
+        "note": "Two sets, about 2 hr 4 min. Listing says the group had by then taken the name Eastern Blok. Sound engineer credited: Gene Nemirovsky."
+      },
+      {
+        "date": "2007-03-30",
+        "venue": "Cyber Cafe West",
+        "archiveId": "eblok2007-03-30.flac16"
+      },
+      {
+        "date": "2007-09-26",
+        "venue": "Johnny D's",
+        "archiveId": "givanovic2007-09-26"
+      },
+      {
+        "date": "2007-09-29",
+        "venue": "Pancho Villa's upstairs lounge",
+        "archiveId": "easternblok2007-09-29.multitrack.ackerman.flac24"
+      },
+      {
+        "date": "2008-03-22",
+        "venue": "The Underground, Carnegie Mellon University",
+        "archiveId": "eblok2008-03-22.cm1k.flac16"
+      },
+      {
+        "date": "2009-03-25",
+        "venue": "Johnny D's",
+        "archiveId": "gorangroup2009-03-25.flac24"
+      },
+      {
+        "date": "2009-03-29",
+        "venue": "Your Inner Vagabond",
+        "archiveId": "givanovic2009-03-29.rodent6o"
+      },
+      {
+        "date": "2010-08-13",
+        "venue": "The Blue Wisp",
+        "archiveId": "eblok2010-08-13.flac24"
+      },
+      {
+        "date": "2011-09-17",
+        "venue": "Spinoza's",
+        "archiveId": "gorangroup2011-09-17.flac24"
+      },
+      {
+        "date": "2011-12-01",
+        "venue": "Spinoza's",
+        "archiveId": "eblok2011-12-01.flac24"
+      },
+      {
+        "date": "2011-12-11",
+        "venue": "The Beachland Tavern",
+        "archiveId": "eblok2011-12-11.flac16"
+      }
     ],
     "tourStops": {
       "_about": "Out-of-town stops from the band's 2008 tour announcements on World Music Central, plus the Makor listing. Venues here are places where a local paper or alt-weekly may have run a preview or review. None of these have been matched to coverage yet.",
       "stops": [
-        { "date": "2006-03-27", "venue": "Makor, New York NY", "source": "KlezmerShack calendar" },
-        { "date": "2008-03-25", "venue": "Drom, New York NY", "source": "worldmusiccentral.org/eastern-blok-march-08-tour/" },
-        { "date": "2008-03-26", "venue": "World Cafe Live, Philadelphia PA", "source": "worldmusiccentral.org/eastern-blok-march-08-tour/" },
-        { "date": "2008-03-27", "venue": "Night Eagle Cafe, Binghamton NY", "source": "worldmusiccentral.org/eastern-blok-march-08-tour/" },
-        { "date": "2008-03-30", "venue": "Village Idiot, Maumee OH", "source": "worldmusiccentral.org/eastern-blok-march-08-tour/" },
-        { "date": "2008-09-25", "venue": "Village Idiot, Maumee OH", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-09-26", "venue": "New York Gypsy Fest at Drom, New York NY", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-09", "venue": "Katerina's, Chicago IL", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-11", "venue": "The Gramophone, St. Louis MO", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-15", "venue": "Dazzle, Denver CO", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-17", "venue": "Everyday Joe's, Fort Collins CO", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-18", "venue": "Mick's, Omaha NE", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-28", "venue": "Frequency, Madison WI (with Snarky Puppy)", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2008-10-29", "venue": "The Jazz Estate, Milwaukee WI", "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/" },
-        { "date": "2010-08-10", "venue": "Blind Pig, Ann Arbor MI", "source": "annarbor.com preview" },
-        { "date": "2010-08-13", "venue": "The Blue Wisp, Cincinnati OH", "source": "Internet Archive recording" },
-        { "date": "2012-05-17", "venue": "Pop's Blue Moon, St. Louis MO (Underwater release show)", "source": "All About Jazz, St. Louis Jazz Notes" }
+        {
+          "date": "2006-03-27",
+          "venue": "Makor, New York NY",
+          "source": "KlezmerShack calendar"
+        },
+        {
+          "date": "2008-03-25",
+          "venue": "Drom, New York NY",
+          "source": "worldmusiccentral.org/eastern-blok-march-08-tour/"
+        },
+        {
+          "date": "2008-03-26",
+          "venue": "World Cafe Live, Philadelphia PA",
+          "source": "worldmusiccentral.org/eastern-blok-march-08-tour/"
+        },
+        {
+          "date": "2008-03-27",
+          "venue": "Night Eagle Cafe, Binghamton NY",
+          "source": "worldmusiccentral.org/eastern-blok-march-08-tour/"
+        },
+        {
+          "date": "2008-03-30",
+          "venue": "Village Idiot, Maumee OH",
+          "source": "worldmusiccentral.org/eastern-blok-march-08-tour/"
+        },
+        {
+          "date": "2008-09-25",
+          "venue": "Village Idiot, Maumee OH",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-09-26",
+          "venue": "New York Gypsy Fest at Drom, New York NY",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-09",
+          "venue": "Katerina's, Chicago IL",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-11",
+          "venue": "The Gramophone, St. Louis MO",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-15",
+          "venue": "Dazzle, Denver CO",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-17",
+          "venue": "Everyday Joe's, Fort Collins CO",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-18",
+          "venue": "Mick's, Omaha NE",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-28",
+          "venue": "Frequency, Madison WI (with Snarky Puppy)",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2008-10-29",
+          "venue": "The Jazz Estate, Milwaukee WI",
+          "source": "worldmusiccentral.org/eastern-blok-heads-west-for-its-fall-tour-2008/"
+        },
+        {
+          "date": "2010-08-10",
+          "venue": "Blind Pig, Ann Arbor MI",
+          "source": "annarbor.com preview"
+        },
+        {
+          "date": "2010-08-13",
+          "venue": "The Blue Wisp, Cincinnati OH",
+          "source": "Internet Archive recording"
+        },
+        {
+          "date": "2012-05-17",
+          "venue": "Pop's Blue Moon, St. Louis MO (Underwater release show)",
+          "source": "All About Jazz, St. Louis Jazz Notes"
+        }
       ]
     }
   },
