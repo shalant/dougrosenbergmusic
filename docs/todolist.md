@@ -1385,3 +1385,52 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             the AllAboutJazz musician bio (404).
       - [ ] Local-paper searches for the 2008 tour cities and the student-paper archives for the
             campus stops are still to do
+- [ ] **2026-10-05 — Press and review archive for Doug (the CD *Better Than TV*, sideman work, live
+      shows), branches `better-than-tv-reviews-2026-10-04` and `press-json-regen-2026-10-05`.**
+      Started from "collect every review of *Better Than TV* in one place." Everything lives in
+      `press/`: `candidates.json` (this session's index), `site/src/data/eastern-blok-press.json`
+      (the Eastern Blok session's index), the generated `press/press.json`, `SCHEMA.md`,
+      `merge-press.cjs` and `save-page.cjs`. Full-page copies are in `../press-archive/` (outside
+      git; the repo is public and the pages are the publishers' copyright). Nothing on the site
+      reads any of it yet.
+      - [x] Swept: Wayback Machine for dougrosenberg.com (press, music, bio, products, 2013-2017),
+            CD Baby (2014, 2016), Bandcamp, the Chicago Reader's own site search (36 hits, 31 weekly
+            gig listings 2003-2004), HotHouse, and several rounds of web search
+      - [x] Result: **no review of *Better Than TV* has been found.** What exists is sideman and
+            band coverage, listings and promo copy, each tagged `about` (`this-cd`, `other-album`,
+            `person`) so none is mistaken for a CD review
+      - [ ] Find the original Chicago Tribune article behind the bio quote ("fearlessness of spirit
+            and a robustness of tone..."). It was already in use by 2013-11-03, so it predates the
+            CD and is not a review of it. Chicago Public Library card gives free Tribune and
+            Sun-Times archives; try 2008-2013
+      - [ ] Gmail search for reviews and press clips: the connector signed in but every search
+            failed with "Insufficient scope". Disconnect and reconnect in `/mcp`, and if that fails
+            remove the app at myaccount.google.com/permissions and re-consent with every box ticked
+      - [ ] Doug's own concert reviews (Bob Moses; Ernest Dawkins' Live the Spirit) and the
+            reviews of a Robert "Baabe" Irving III album. Web search found nothing that names Doug
+            (the AllAboutJazz Irving piece mentions Marlene Rosenberg, not Doug; he is not on the
+            *Our Space in Time* personnel). Needs links or files from Doug
+      - [ ] Open leads are in `press/press.json` under `unfetchedLeads` (Constellation 404,
+            Chicago Collections is a JavaScript page, AAJ Eastern Blok artist page, others)
+      - [ ] 29 of the 31 Reader weekly-listing pages were only matched by name, not read; the
+            saved pages are in `../press-archive/chireader-trg-listings-2003-2004/pages/`
+      - [ ] Print-era coverage that web search can't reach: Chicago Reader print archive, local
+            and student papers, anything Doug has as scans or press-kit files
+      - [ ] **Back up `../press-archive/`.** Only on this disk (about 13 MB and growing). Plan: a
+            private Azure Blob container, `az login` or a SAS token scoped to that one container,
+            no storage account keys. Pick the storage account first. A copy into a cloud-synced
+            folder works as a stopgap
+      - [ ] Photos: `save-page.cjs` saves `images.txt` (URLs only), no images. Pick the ones that
+            matter (band shots, album art) and save them into `press-archive/<id>/images/`
+      - [ ] No entry has an `archiveUrl` of its own yet. Submitting URLs to the Wayback Machine's
+            Save Page Now is an outward action; do it with Doug's OK
+      - [ ] Every entry is `approved: false`. Doug needs to choose which can be used publicly and
+            how much quoting is acceptable before any of it reaches the site
+      - [ ] Decide whether and how to show a "Press" section (shared with the Eastern Blok item
+            above). The merged `press.json` is built to feed it
+      - [ ] Housekeeping: open or skip a PR for `press-json-regen-2026-10-05`; remove the extra
+            worktrees (`dougrosenbergmusic-press`, `dougrosenbergmusic-eb2`) with
+            `git worktree remove`; delete merged remote press branches
+      - **Deliberate rule for this archive:** several other Rosenbergs show up in results (bassist
+        Marlene, guitarist Jimmy, reedist Scott). Check the text names Doug before adding an
+        entry, and record collisions under `rejected`. Quotes stay short and attributed.
