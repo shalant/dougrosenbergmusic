@@ -433,11 +433,15 @@ semantic headings, title/meta description.
       - [ ] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
             at 2026-09-29)
       - [ ] Consider IndexNow (pings Bing when pages change)
-- [ ] **Direct-answer intro** — 30-60 word plain statement of who Doug is and what he does,
+- [x] **Direct-answer intro** — 30-60 word plain statement of who Doug is and what he does,
       near the top (h1 is currently the slogan "I make websites"). Copy needs Doug's approval.
-- [ ] **FAQ section + `FAQPage` schema** — "Who is Doug Rosenberg?", "What web services does he
+      *Shipped; confirmed in the served page by the 2026-09-30 live check below. Checkbox
+      ticked 2026-10-04 (it had been left unchecked).*
+- [x] **FAQ section + `FAQPage` schema** — "Who is Doug Rosenberg?", "What web services does he
       offer?", "Does he teach saxophone in Chicago?"; conversational Q&A matching how people ask
       assistants. Consider whether the web-services FAQ belongs on dougrosenbergdev.com instead.
+      *Shipped (`Faq.astro` emits the `FAQPage` JSON-LD); confirmed by the 2026-09-30 live
+      check below. Checkbox ticked 2026-10-04. Rich Results Test on the live URL still not run.*
 - [ ] **Richer schema** — `Person`: `knowsAbout`, `alumniOf` (New England Conservatory), `image`,
       `worksFor`; `MusicAlbum` for the recordings; `dateModified`. `ProfessionalService` schema
       belongs on dougrosenbergdev.com.
@@ -567,6 +571,17 @@ semantic headings, title/meta description.
       - Bing: dougrosenberg.com "check back in 48 hours"; dougrosenbergdev.com AI citations 0
       - Reading: indexed and findable by name, but nothing yet for non-name queries ("jazz
         saxophone lessons Chicago", "website for my band") — expected this early.
+
+**Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
+`llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
+near zero — GSC only shows name queries, Bing AI citations are 0, GA4/Cloudflare Web Analytics show
+almost no visits. The baseline recheck is **2026-10-13**; nothing done before then will show up in
+it. Doable without waiting: IndexNow, richer `Person` schema (`knowsAbout`/`alumniOf`/`image`/
+`worksFor`/`dateModified`), Rich Results Test, GSC Manual actions/Security check, Bing sitemap
+status. Needs Doug: entity-consistency profile claiming, sheet-music ranking decision plus the 7
+missing PDFs, monitoring/alerting decision. **Correction:** `/api/contact` already has a rate
+limit (5/60s per IP, `CONTACT_RATE_LIMITER`, fixed 2026-09-27); a handoff note from the
+dougrosenbergdev repo claiming this site had the same gap was wrong.
 
 ## Custom items (this project specifically)
 
