@@ -316,17 +316,17 @@
       "title": "In the Music Spotlight: Goran Ivanovic Trio",
       "outlet": "Chicago Sun-Times",
       "author": "Jeff Elbel",
-      "date": null,
+      "date": "2016-03-09",
       "url": "https://chicago.suntimes.com/2016/3/9/18403314/in-the-music-spotlight-goran-ivanovic-trio",
       "archiveUrl": null,
-      "archive": null,
+      "archive": "suntimes-goran-trio-2016-03",
       "namesDoug": false,
       "rating": null,
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
       "approved": false,
-      "notes": "Mentions Eastern Blok in passing as a former group (2016, Goran Ivanovic Trio piece). Text seen only as an excerpt on Goran's press page; URL is from a search result and the article was not opened.",
+      "notes": "Mentions Eastern Blok in passing as a former group (2016, Goran Ivanovic Trio piece). Text seen only as an excerpt on Goran's press page; URL is from a search result and the article was not opened. Date taken from the URL path (2016/3/9). EuroCircle's 2017 profile reprints the piece as 'CHICAGO SUN-TIMES, October 21, 2016, Jeff Elbel', so the dates disagree; confirm on the live page. The text says Goran shared the stage with Michael Caskey 'in the pair's former group Eastern Blok'.",
       "aliases": [
         "suntimes-elbel-retrospective"
       ]
@@ -374,7 +374,7 @@
       "verified": false,
       "accessed": "2026-10-04",
       "approved": false,
-      "notes": "'Tasty Eastern Blok coffee', a Matt Ulery interview preview. Seen only as a Google snippet; the real URL has an ID suffix and was not opened. Search result dated 2011-12-01.",
+      "notes": "'Tasty Eastern Blok coffee', a Matt Ulery interview preview. Seen only as a Google snippet; the real URL has an ID suffix and was not opened. Search result dated 2011-12-01. Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "aliases": [
         "bennington-ulery-2011"
       ]
@@ -398,7 +398,7 @@
       "verified": false,
       "accessed": "2026-10-04",
       "approved": false,
-      "notes": "'E-week' listing. Google snippet says the band would play 'all original compositions, mostly from Underwater'. Confirms the album existed by Dec 2011. Page not opened (connection reset).",
+      "notes": "'E-week' listing. Google snippet says the band would play 'all original compositions, mostly from Underwater'. Confirms the album existed by Dec 2011. Page not opened (connection reset). Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "aliases": [
         "bennington-eweek-2011"
       ]
@@ -446,7 +446,7 @@
       "verified": false,
       "accessed": "2026-10-04",
       "approved": false,
-      "notes": "The only listener write-up of Underwater found. A forum member (name not captured) discusses the album, praising Goran's 'understated classical guitar parts' per the Google snippet. The post sits on an unidentified page of a 1,600+ page thread; the snippet's page link now points to a 2024 page. Find the exact post and author before using.",
+      "notes": "The only listener write-up of Underwater found. A forum member (name not captured) discusses the album, praising Goran's 'understated classical guitar parts' per the Google snippet. The post sits on an unidentified page of a 1,600+ page thread; the snippet's page link now points to a 2024 page. Find the exact post and author before using. Not saved: the stored URL is page 1 of a 1,600+ page thread, so a copy would not contain the post.",
       "aliases": [
         "headfi-underwater-2018"
       ]
@@ -596,7 +596,7 @@
       "verified": true,
       "accessed": "2026-10-05",
       "approved": false,
-      "notes": "Short 'Soundcheck' item on Goran Ivanovic Group (Balkan Song) in the February 2006 issue, scanned on the Internet Archive. Read via a WebFetch summary of the scan's OCR text; confirm the quote against the scan. No rating.",
+      "notes": "Short 'Soundcheck' item on Goran Ivanovic Group (Balkan Song) in the February 2006 issue, scanned on the Internet Archive. Read via a WebFetch summary of the scan's OCR text; confirm the quote against the scan. No rating. Not saved: the URL is the OCR text of a whole magazine issue.",
       "aliases": [
         "guitar-one-2006-02"
       ]
@@ -644,28 +644,30 @@
       "verified": true,
       "accessed": "2026-10-05",
       "approved": false,
-      "notes": "Calendar entry for the show at Makor, New York, Monday 2006-03-27, 7:30 PM, $12. Repeats the Minor 7th quote and cites the Chicago Tribune calling Goran a 'lightning-fingered guitarist': a second-hand Tribune reference; the original Tribune piece is not located and could be the source of the Tribune quote noted in other press copy."
+      "notes": "Calendar entry for the show at Makor, New York, Monday 2006-03-27, 7:30 PM, $12. Repeats the Minor 7th quote and cites the Chicago Tribune calling Goran a 'lightning-fingered guitarist': a second-hand Tribune reference; the original Tribune piece is not located and could be the source of the Tribune quote noted in other press copy. Not saved: the URL is a rolling calendar category page, not the 2006 entry."
     },
     {
       "id": "jazzpress-2012-10",
-      "kind": "mention",
-      "about": "person",
+      "kind": "interview",
+      "about": "other-album",
       "band": "Eastern Blok",
-      "album": null,
-      "title": "JazzPRESS, October 2012",
+      "album": "underwater",
+      "title": "JazzPRESS, October 2012: interview with Matt Ulery (Wywiady, pp. 78-80)",
       "outlet": "JazzPRESS (Poland)",
-      "author": null,
+      "author": "Interviewer signed \"RG\" (full name not captured)",
       "date": "2012-10",
-      "url": null,
+      "url": "https://www.jazzpress.pl/storage/app/media/pdfy/jazzpress1012-.pdf",
       "archiveUrl": null,
-      "archive": null,
+      "archive": "jazzpress-2012-10",
       "namesDoug": false,
       "rating": null,
-      "pullQuotes": [],
-      "verified": false,
+      "pullQuotes": [
+        "(translated from Polish) \"Part of the music was written by Goran Ivanovic, and part is mine.\""
+      ],
+      "verified": true,
       "accessed": "2026-10-05",
       "approved": false,
-      "notes": "October 2012 issue (a PDF at jazzpress.pl). A Google snippet shows a passage on how Eastern Blok formed and its use of Balkan and Russian folk music, apparently in an interview with Matt Ulery. Seen only as a snippet; the PDF was not opened. Worth reading in full."
+      "notes": "Not a review: an interview with bassist Matt Ulery in the Polish web magazine's October 2012 issue (113-page PDF). Pages 78 and 80 discuss Eastern Blok: Ulery says the band listened to a lot of Balkan, Russian and Polish folk music when it started, and that Underwater was recorded in a Chicago studio with engineer Anthony Gravino (who made all his records) and is 'my second self'. The interviewer admits he has not yet heard Underwater. Translations are by Claude, not the publisher; check the Polish before quoting. Doug Rosenberg is not named on the pages found."
     },
     {
       "id": "downbeat-goran-ivanovic-2006-06",
@@ -719,33 +721,104 @@
       "aliases": [
         "downbeat-2013-01-ulery-mention"
       ]
+    },
+    {
+      "id": "allmusic-goran-ivanovic-group-2005",
+      "kind": "review",
+      "about": "other-album",
+      "band": "Goran Ivanovic Group",
+      "album": "goran-ivanovic-group",
+      "title": "Goran Ivanovic Group (AllMusic review by Chris Nickson)",
+      "outlet": "AllMusic",
+      "author": "Chris Nickson",
+      "date": null,
+      "url": "https://www.allmusic.com/album/goran-ivanovic-group-mw0001447204",
+      "archiveUrl": null,
+      "archive": "allmusic-goran-ivanovic-group-2005",
+      "namesDoug": false,
+      "rating": null,
+      "pullQuotes": [
+        "a killer jazz disc",
+        "has far more in common with jazz than its roots"
+      ],
+      "verified": true,
+      "accessed": "2026-10-05",
+      "approved": false,
+      "notes": "Staff review read in Chrome. Mixed-to-positive: praises Ivanovic's inventive guitar and the writing, but warns that listeners wanting gypsy music will not get it. No publication date on the page. The star rating is graphical and was not captured; check the page. Page lists the album as 2005, recorded July 2005 at B-Side Audio. The AllMusic page for Folk Tales shows no review. Does not name Doug in the text read."
+    },
+    {
+      "id": "eurocircle-goran-2017-07",
+      "kind": "feature",
+      "about": "person",
+      "band": "Eastern Blok",
+      "album": null,
+      "title": "Meet Croatian-born guitarist Goran Ivanovic from Chicago",
+      "outlet": "EuroCircle",
+      "author": "Kaisa Kokkonen",
+      "date": "2017-07-24",
+      "url": "https://www.eurocircle.com/euro/meet-croatian-born-guitarist-goran-ivanovic/",
+      "archiveUrl": null,
+      "archive": "eurocircle-goran-2017-07",
+      "namesDoug": true,
+      "rating": null,
+      "pullQuotes": [],
+      "verified": true,
+      "accessed": "2026-10-05",
+      "approved": false,
+      "notes": "Profile of Goran written years after the band ended. Names Eastern Blok as 'a key member of the quartet' with Matt Ulery, Doug Rosenberg and Michael Caskey, a combo that 'deftly surveys the folk music of Macedonia, Bulgaria, and Serbia'. The same text appears on the All About Jazz musician page, so it is probably Goran's own bio. Reprints a Jeff Elbel Sun-Times piece as 'October 21, 2016' (see suntimes-goran-trio-2016-03). The first URL in the leads list (.../meet-croatian-born-guitarist-goran-ivanovic-from-chicago/) was a 404."
+    },
+    {
+      "id": "aaj-goran-ivanovic-musician-bio-2020",
+      "kind": "promo-bio",
+      "about": "person",
+      "band": "Eastern Blok",
+      "album": null,
+      "title": "Goran Invanovic (All About Jazz musician page; sic)",
+      "outlet": "All About Jazz",
+      "author": null,
+      "date": "2020-10-28",
+      "url": "https://www.allaboutjazz.com/musicians/goran-invanovic",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": true,
+      "rating": null,
+      "pullQuotes": [],
+      "verified": true,
+      "accessed": "2026-10-05",
+      "approved": false,
+      "notes": "Band-supplied biography, last updated 2020-10-28 per the page. Identical to the EuroCircle profile text. Names Doug Rosenberg. Not independent coverage; low value beyond showing how the band was described later. Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive."
     }
   ],
-  "rejected": [],
+  "rejected": [
+    {
+      "url": "https://www.allmusic.com/album/folk-tales-mw0001598245",
+      "reason": "AllMusic Folk Tales page: no staff review and no user reviews (read 2026-10-05)."
+    },
+    {
+      "url": "https://www.pointofdeparture.org/PoD69/PoD69Ulery.html",
+      "reason": "Point of Departure interview with Matt Ulery: no mention of Eastern Blok, Goran Ivanovic, Doug Rosenberg or Underwater."
+    }
+  ],
   "unfetchedLeads": [
     {
       "url": "https://www.fredonia.edu/news/dynamic-balkan-fusion-ensemble-eastern-blok-performing-april-12",
-      "note": "SUNY Fredonia concert release (Tue April 12, probably 2011). 403 to the fetch tool; try Chrome or Wayback."
-    },
-    {
-      "url": "https://www.allmusic.com/album/goran-ivanovic-group-mw0001447204",
-      "note": "AllMusic page for the Goran Ivanovic Group album; 403, unknown whether it has a staff review."
+      "note": "SUNY Fredonia concert release (Tue April 12, probably 2011). Access Denied even in Chrome (2026-10-05); try Wayback Save Page Now or the university news office."
     },
     {
       "url": "https://www.amazon.com/dp/B006HTEKHM",
-      "note": "Amazon page for Underwater; Chrome has no read permission here. Customer reviews unchecked."
+      "note": "Customer reviews unchecked: Amazon returns 500 / connection reset to the fetch tool and Chrome has no read permission here. Check by hand."
     },
     {
       "url": "https://www.amazon.com/Folk-Tales-Eastern-Blok/dp/B000UE61NG",
-      "note": "Amazon page for Folk Tales; customer reviews unchecked."
+      "note": "Customer reviews unchecked: Amazon returns 500 / connection reset to the fetch tool and Chrome has no read permission here. Check by hand."
     },
     {
       "url": "https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C",
-      "note": "Amazon page for the Goran Ivanovic Group album; customer reviews unchecked."
+      "note": "Customer reviews unchecked: Amazon returns 500 / connection reset to the fetch tool and Chrome has no read permission here. Check by hand."
     },
     {
-      "url": "https://www.jazzpress.pl/",
-      "note": "JazzPRESS (Poland) October 2012 PDF, likely a Matt Ulery interview mentioning Eastern Blok; exact PDF link not captured."
+      "url": "https://chamber-music.org/member/eastern-blok",
+      "note": "Chamber Music America member page for Eastern Blok. Certificate error in the fetch tool and Chrome (2026-10-05); not bypassed. Check by hand or via Wayback."
     }
   ],
   "campusAppearances": [

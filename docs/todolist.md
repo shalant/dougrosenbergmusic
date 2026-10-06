@@ -1372,5 +1372,16 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             `archive`; ids aligned with the other session's index). A dry-run merge with
             `press/candidates.json` gave 36 entries and 0 warnings. Full-page copies of 14 verified
             entries are in `../press-archive/` (outside git); all entries stay `approved: false`.
+      - [x] 2026-10-05 (branch `eastern-blok-press-2-2026-10-05`): read the remaining leads and added
+            3 entries (31 total): AllMusic review of the *Goran Ivanovic Group* album by Chris
+            Nickson, the 2017 EuroCircle profile, and the AllAboutJazz musician bio. Opened the
+            JazzPRESS October 2012 PDF: it is an interview with Matt Ulery (not a review) that
+            discusses Eastern Blok and *Underwater*, so the entry is now `verified`. Saved copies of
+            4 more entries; 24 of 31 now have an `archive`. Dry-run merge with `press/candidates.json`:
+            39 entries, 0 warnings.
+      - [ ] Still open: the Fredonia release (Access Denied in Chrome too), the three Amazon pages
+            (customer reviews; blocked to the tools, check by hand), chamber-music.org (certificate
+            error, not bypassed). No save for Bennington (404), the Head-Fi post (no exact page), or
+            the AllAboutJazz musician bio (404).
       - [ ] Local-paper searches for the 2008 tour cities and the student-paper archives for the
-            campus stops are still to do; JazzPRESS Oct 2012 PDF still to open
+            campus stops are still to do
