@@ -423,6 +423,15 @@ semantic headings, title/meta description.
             reported 404 URLs, the Star Wars 5xx path and `ochristmastreecl.pdf` verified by `curl`
       - [x] Domain property `sc-domain:dougrosenberg.com` verified (2026-09-29), sitemap inherited
       - [x] Stray `google-site-verification=` TXT check — none; the one record has a full token (2026-09-29)
+      - [x] 2026-10-07 Search Console "New reasons prevent pages from being indexed" email
+            reviewed: 26 × 404 (mostly old `/sheetMusic/*.pdf`, already 301 since PR #55), 8 ×
+            redirect, 1 × 5xx (`/sheetMusic/starwars.pdf`, crawled 2026-09-14 before the
+            redirects; now 301 → 200), 1 × alternate canonical, 3 × crawled-not-indexed. Only
+            `/bio.html`, `/contact.html`, `/teaching.html` still 404'd; added them to
+            `LEGACY_REDIRECTS` in `worker.js` as 301 → `/` (Doug's call: home page, not the
+            sections) with `src/legacy-redirects.test.js` (fails against the old worker.js).
+            Verified with `wrangler dev` + `curl`. **Still to do:** after deploy, `curl -I` the
+            three live URLs, then "Validate fix" on the 404 group again.
       - [ ] Review Performance report once data populates (query/page baseline, name searches)
       - [ ] Confirm Manual actions and Security issues both clean
 - [ ] **Bing Webmaster Tools** (dougrosenberg.com wasn't set up before 2026-09-29)

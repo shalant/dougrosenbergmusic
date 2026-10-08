@@ -163,15 +163,19 @@ const GOOGLE_SITE_VERIFICATION = {
 };
 
 // Legacy URLs Google still has on file: the pre-Astro site's Blazor nav
-// routes (which 404'd there too) and the deleted hero-exploration preview
-// pages. Permanent-redirected to the closest section so Search Console
-// stops reporting them as 404s and any residual link equity lands on the
-// real page.
+// routes (which 404'd there too), the even older static .html pages, and the
+// deleted hero-exploration preview pages. Permanent-redirected to the closest
+// section so Search Console stops reporting them as 404s and any residual
+// link equity lands on the real page. The old .html pages go to the home page
+// (decided 2026-10-07), not their sections.
 const LEGACY_REDIRECTS = {
 	"/about": "/#about",
 	"/contact": "/#contact",
 	"/education": "/#about",
 	"/listen": "/#listen",
+	"/bio.html": "/",
+	"/contact.html": "/",
+	"/teaching.html": "/",
 	"/photogallery.html": "/#gallery",
 	"/preview-graded-expand": "/",
 	"/preview-shape-antenna": "/",
