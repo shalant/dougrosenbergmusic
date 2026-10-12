@@ -13,10 +13,16 @@ const { title, description } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(`${import.meta.env.BASE_URL}images/og-image.jpg`, Astro.site);
 
+// Stable @ids let the WebSite, WebPage and MusicAlbum blocks (separate
+// <script>s, one per component) point at this one Person entity instead of
+// each describing an anonymous "Doug Rosenberg" stub.
+const personId = 'https://dougrosenberg.com/#person';
+const websiteId = 'https://dougrosenberg.com/#website';
+
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  '@id': 'https://dougrosenberg.com/#person',
+  '@id': personId,
   name: 'Doug Rosenberg',
   alternateName: 'Douglas Rosenberg',
   jobTitle: ['Web Developer', 'Saxophonist', 'Composer', 'Educator'],
@@ -37,8 +43,10 @@ const personSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': websiteId,
   name: 'Doug Rosenberg',
   url: Astro.site?.toString(),
+  publisher: { '@id': personId },
   description: 'Doug Rosenberg — web design and development, plus a saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
 };
 ---
