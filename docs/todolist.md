@@ -623,6 +623,14 @@ semantic headings, title/meta description.
           makes an engagement-time comparison unreliable too. Decision: stop tuning GA4; judge
           performance from Search Console, Bing, and Cloudflare Web Analytics (beacon already in
           `BaseLayout.astro`), and treat GA4 as a rough check only.
+        - Cloudflare Web Analytics (bots excluded), last 30 days as of 2026-10-11: the music site
+          (dougrosenberg.com + www, tracked under the `dougrosenbergmusic.doug-rosenberg.workers.dev`
+          site entry that the layout's beacon token belongs to) had 380 visits / 420 page views;
+          dougrosenbergdev.com had 150 visits / 250 page views (GA4 showed about 6,400 views for
+          the same site, roughly 25x more). The separate "dougrosenberg.com" automatic-setup entry
+          shows 0 and can be ignored. These are the first usable human-traffic numbers for the
+          music site; I did not check country or page breakdowns. Use these as the baseline for
+          future rechecks alongside Search Console.
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
