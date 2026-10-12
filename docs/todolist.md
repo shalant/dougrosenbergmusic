@@ -580,6 +580,49 @@ semantic headings, title/meta description.
       - Bing: dougrosenberg.com "check back in 48 hours"; dougrosenbergdev.com AI citations 0
       - Reading: indexed and findable by name, but nothing yet for non-name queries ("jazz
         saxophone lessons Chicago", "website for my band") — expected this early.
+      - **2026-10-10 check (read-only, via signed-in Chrome):**
+        - Search Console, dougrosenberg.com Domain property (2026-09-28 to 2026-10-08): 3 clicks,
+          28 impressions, 10.7% CTR, avg position 6.1; only query "doug rosenberg" (1 click, 11
+          impressions). Same name-only pattern as the baseline.
+        - Bing, dougrosenberg.com: 0 clicks/0 impressions 2026-10-01 to 2026-10-08. Sitemap index
+          imported and crawled 2026-09-30 but only 1 URL discovered; Site Explorer shows 13
+          indexed / 1 error / 27 warnings / 4 excluded, and the home page's last crawl is
+          2026-06-09 (old Blazor site), so Bing hasn't recrawled the rebuild.
+        - GA4 (property DougRosenbergDev, `G-BGSJ1FWPTF`; its page titles are dougrosenbergdev.com's
+          pages, a separate repo, so this is the dev site's traffic and says nothing about
+          dougrosenberg.com, which has one sitemap URL, `/`, already submitted to Bing
+          2026-09-29), last 28 days: 5,383 users but 5.64%
+          engagement rate and 0s avg engagement time. About 85% of users come from data-center
+          cities (Flint Hill, Des Moines, San Jose, Phoenix, Boydton, Cheyenne, Moses Lake,
+          Quebec City); 521 of 524 sessions in the last 7 days were "direct". Treat GA4 totals and
+          key events (including the 2026-10-02/03 spikes) as bot traffic, not visitors. GA4 already
+          filters known bots and its filters are IP-based, so use a city-exclusion comparison to
+          read real traffic.
+      - **2026-10-11 follow-up:**
+        - GA4 has one web stream (`dougrosenbergdev.com`) and every page path in the 28-day report
+          is a dev-site page. This repo's `BaseLayout.astro` loads the same `G-BGSJ1FWPTF` tag, so
+          dougrosenberg.com hits may also land here; not confirmed (no hostname breakdown checked).
+          Don't read GA4 as dougrosenberg.com's performance until that's confirmed.
+        - Bing, dougrosenbergdev.com: sitemap index crawled 2026-10-07 (24 URLs discovered);
+          6 indexed / 0 error / 1 warning / 1 excluded; home page last crawled 2026-10-05. The
+          warning is an old `/portfolio` path that still 404s (not in the sitemap); the exclusion
+          is the `http://` root (Bing logged a 301 in Aug, but a live check showed 200 on http, so
+          the http-to-https redirect may be missing at the host; unchecked).
+        - Submitted 5 dev-site URLs via Bing URL Submission on 2026-10-11 (`/services/`,
+          `/musician-websites/`, `/chicago-web-design/`, `/webdesign/`, `/consulting/`; quota 100
+          to 95). Recheck their indexing in Site Explorer in a few days.
+        - GA4 city-exclusion comparison: building it by hand in the GA4 UI (Add comparison > City
+          does not exactly match the 8 data-center cities, Apply, don't Save). Built and applied
+          2026-10-11. Result: the exclusion works mechanically, but the remaining traffic
+          still has the same bot-shaped spikes, and Chicago (616 users) shows the same profile as
+          the data-center cities (6.47% engagement rate, 0.06 engaged sessions per user, 3s
+          avg engagement). Across all cities, 6,350 users gave only 430 engaged sessions; best
+          city engagement rate is 14%. Conclusion: no city filter recovers a real-visitor signal.
+          Also, Consent Mode is denied site-wide (cookieless pings), so GA4 counts nearly every
+          user as new (6,303 of 6,350) and engagement metrics may undercount real visitors, which
+          makes an engagement-time comparison unreliable too. Decision: stop tuning GA4; judge
+          performance from Search Console, Bing, and Cloudflare Web Analytics (beacon already in
+          `BaseLayout.astro`), and treat GA4 as a rough check only.
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
