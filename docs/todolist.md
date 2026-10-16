@@ -1572,6 +1572,30 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             page canonical stays `/`). `verify-csp` now reads every built page (12 hashes).
             Verified: build, check, lint, `npm test` (40 pass), `npm run test:e2e` (64 pass,
             6 skipped as before; 18 new), screenshots at 1280px and Pixel 7
+      - [x] **2026-10-15, branch `easternblok-shows-2026-10-15`: show history on
+            `/easternblok`.** Doug asked to recreate the concert list from the band's old site,
+            easternblok.net (now a spam blog). Pulled the 14 Wayback snapshots of its calendar
+            (past-dates tables from 2007-07, 2008-12 and 2012-01, ten "upcoming" pages, one RSS
+            feed) into `../press-archive/easternblok-net-calendar/` (outside git) and wrote
+            `press/easternblok-shows.cjs` to parse and merge them with the Internet Archive
+            fan-recording log. Result, `site/src/data/eastern-blok-shows.json`: 253 shows,
+            2005-03-27 to 2012-06-23 (214 on the band's own past-dates lists, 18 only ever
+            announced, 21 known only from a recording; 29 link to a recording). Capitalization
+            and state names are tidied; the original text is kept in `raw`. One typo fixed and
+            labeled: Restaurant Magnus listed as "Madison, IL" twice, the site's other listings
+            say WI. New `ShowLog.astro` replaces the Shows placeholder with one expandable list
+            per year (all rows in the HTML), "announced" tags, "Listen" links, and a note on
+            sources and gaps. Also added a unit-test step to `.github/workflows/e2e.yml`: CI
+            had only run the E2E suite, so `site/src/*.test.js` and `press/*.test.cjs` had only
+            run locally. Fixed a spacing bug found in screenshots (Astro dropped the space where
+            a line break met `{expr}` or a link; "Poland.29 have") and added an e2e check for it.
+            Verified: build, verify-csp (12), check, lint, `npm test` (48 pass), press tests
+            (26 pass), `npm run test:e2e` (72 pass, 6 skipped as before), screenshots
+      - [ ] **Show history gaps:** no calendar was saved for December 2008 to mid-June 2009,
+            and pre-2007 Goran Ivanovic Group shows are known only from recordings (the 2003-04
+            Chicago Reader listings in `press/candidates.json` aren't merged in yet). 65 shows
+            have no city because the old site listed only the venue. Doug's flyers, emails or
+            a gig spreadsheet could fill these
       - [ ] **Before the two pages go public:** both are `draft` (noindex, left out of the
             sitemap via `DRAFT_PAGES` in `astro.config.mjs`). When Doug's text replaces the
             placeholders: drop `draft`, remove the path from `DRAFT_PAGES`, add the pages to

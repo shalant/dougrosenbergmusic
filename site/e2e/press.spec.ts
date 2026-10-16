@@ -39,6 +39,35 @@ test.describe('press timeline and archive pages', () => {
     await expect(page.locator('.placeholder').first()).toBeVisible();
   });
 
+  test('/easternblok lists the show history by year, ending with the 2011 Schubas show', async ({ page }) => {
+    await page.goto('/easternblok');
+    const years = page.locator('.showlog .year');
+    await expect(years).toHaveCount(8);
+    await expect(years.first().locator('.year__label')).toHaveText('2005');
+    // Rows are in the HTML even while their year is closed.
+    await expect(page.locator('.gig')).toHaveCount(253);
+    const year2011 = years.filter({ has: page.locator('.year__label', { hasText: '2011' }) });
+    await year2011.locator('summary').click();
+    await expect(year2011.locator('.gig').last().locator('.gig__venue')).toHaveText('Schubas');
+    await expect(year2011.locator('.gig').last()).toBeVisible();
+  });
+
+  test('/easternblok show recordings link to the Internet Archive', async ({ page }) => {
+    await page.goto('/easternblok');
+    const listen = page.locator('.gig__listen');
+    await expect(listen).toHaveCount(29);
+    await expect(listen.first()).toHaveAttribute('href', /^https:\/\/archive\.org\/details\//);
+    await expect(page.locator('.gig__tag', { hasText: 'announced' })).toHaveCount(18);
+  });
+
+  test('/easternblok show-log notes keep their spaces', async ({ page }) => {
+    // Regression: Astro dropped the space where a line break met {expr} or a link.
+    await page.goto('/easternblok');
+    await expect(page.locator('.showlog__summary')).toContainText('and Poland. 29 have');
+    await expect(page.locator('.showlog__source')).toContainText('saved by the Wayback Machine');
+    await expect(page.locator('.showlog__source')).toContainText('to June 2009. 18 shows');
+  });
+
   test('/easternblok links the band to Doug in its structured data', async ({ page }) => {
     await page.goto('/easternblok');
     const schemas = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((s) => JSON.parse(s));

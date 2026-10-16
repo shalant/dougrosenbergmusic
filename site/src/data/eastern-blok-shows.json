@@ -1,0 +1,3987 @@
+{
+	"_about": "Eastern Blok / Goran Ivanovic Group show history, rebuilt 2026-10-15 by press/easternblok-shows.cjs from the Wayback Machine's copies of the band's own site (easternblok.net calendar pages) plus the Internet Archive fan-recording log. status: past = on the band's own past-dates list; announced = only ever listed as upcoming (may not have happened); recorded = known only from a fan recording. Venue names are tidied for capitalization only; raw keeps the original text. Generated; don't hand-edit.",
+	"sources": [
+		{
+			"id": "20070709015327_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20070709015327/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 16
+		},
+		{
+			"id": "20070709015334_calendar_showcal_past",
+			"page": "calendar.html?showcal=past",
+			"wayback": "https://web.archive.org/web/20070709015334/http://www.easternblok.net/calendar.html?showcal=past",
+			"kind": "past",
+			"shows": 25
+		},
+		{
+			"id": "20080828180144_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20080828180144/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 14
+		},
+		{
+			"id": "20081006155239_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20081006155239/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 12
+		},
+		{
+			"id": "20081207022957_calendar_showcal_past",
+			"page": "calendar.html?showcal=past",
+			"wayback": "https://web.archive.org/web/20081207022957/http://www.easternblok.net/calendar.html?showcal=past",
+			"kind": "past",
+			"shows": 114
+		},
+		{
+			"id": "20090619111852_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20090619111852/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 15
+		},
+		{
+			"id": "20091016014105_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20091016014105/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 5
+		},
+		{
+			"id": "20091116061036_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20091116061036/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 0
+		},
+		{
+			"id": "20100110014815_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20100110014815/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 5
+		},
+		{
+			"id": "20110619015254_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20110619015254/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 4
+		},
+		{
+			"id": "20110818120431_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20110818120431/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 0
+		},
+		{
+			"id": "20120126054245_calendar",
+			"page": "calendar.html",
+			"wayback": "https://web.archive.org/web/20120126054245/http://www.easternblok.net/calendar.html",
+			"kind": "upcoming",
+			"shows": 0
+		},
+		{
+			"id": "20120127200419_calendar-past",
+			"page": "calendar-past.html",
+			"wayback": "https://web.archive.org/web/20120127200419/http://www.easternblok.net/calendar-past.html",
+			"kind": "past",
+			"shows": 100
+		},
+		{
+			"id": "20120127200450_calendar",
+			"page": "calendar.xml",
+			"wayback": "https://web.archive.org/web/20120127200450/http://www.easternblok.net/calendar.xml",
+			"kind": "rss",
+			"shows": 7
+		}
+	],
+	"shows": [
+		{
+			"date": "2005-03-27",
+			"venue": "The Darkroom",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2005-03-27flac16",
+			"raw": "The Darkroom",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2005-06-24",
+			"venue": "HotHouse",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2005-06-24-c414.flac16",
+			"raw": "HotHouse, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2005-09-09",
+			"venue": "Martyrs'",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2005-09-09.mk21.v3.flac16",
+			"raw": "Martyrs', Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2005-09-24",
+			"venue": "Park West",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2005-09-24.flac16",
+			"raw": "Park West",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2005-12-09",
+			"venue": "Double Door",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2005-12-09.flac24",
+			"raw": "Double Door, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-01-14",
+			"venue": "Martyrs'",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-01-14.flac24",
+			"raw": "Martyrs', Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-02-03",
+			"venue": "Metro",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-02-03.flac24",
+			"raw": "Metro, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-03-22",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-03-22.flac24",
+			"raw": "Katerina's, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-03-28",
+			"venue": "The Puppet House",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-03-28.flac16",
+			"raw": "The Puppet House",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-03-29",
+			"venue": "Johnny D's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "GoranGroup2006-03-29.flac16",
+			"raw": "Johnny D's",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-04-01",
+			"venue": "The Underground",
+			"city": "Carnegie Mellon University",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-04-01",
+			"raw": "The Underground, Carnegie Mellon University",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-04-08",
+			"venue": "Serbian Cultural Club St. Sava",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-04-08.flac24",
+			"raw": "Serbian Cultural Club St. Sava, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-04-27",
+			"venue": "CSPS",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "EBlok2006-04-27",
+			"raw": "CSPS",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-06-09",
+			"venue": "Serbian Cultural Club St. Sava",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-06-09.flac24",
+			"raw": "Serbian Cultural Club St. Sava, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-06-15",
+			"venue": "Hideout",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2006-06-15.multi.flac24",
+			"raw": "Hideout, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-07-05",
+			"venue": "Johnny D's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "GoranGroup2006-07-05.MG270.flac16",
+			"raw": "Johnny D's",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-07-19",
+			"venue": "The Mill",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "EasternBlok2006-07-19",
+			"raw": "The Mill",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-11-10",
+			"venue": "Mezzanotte Lounge",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "eblok2006-11-10.flac16",
+			"raw": "Mezzanotte Lounge",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2006-12-15",
+			"venue": "HotHouse",
+			"city": "Chicago",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "eblok2006-12-15.flac24",
+			"raw": "HotHouse, Chicago",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2007-03-02",
+			"venue": "Redstone Room",
+			"city": "Davenport",
+			"region": "IA",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Redstone Room / Davenport / IA",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-03",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-14",
+			"venue": "Schaumberg High School",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Schaumberg High School",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-15",
+			"venue": "Katerina's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-16",
+			"venue": "The Firefly",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Firefly",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-17",
+			"venue": "The Acorn Theater",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Acorn Theater",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-18",
+			"venue": "Isn't This Nice?",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Isn't This Nice?",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-19",
+			"venue": "Grand Valley State University",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Grand Valley State University",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-21",
+			"venue": "Pacchia",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pacchia",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-22",
+			"venue": "IOTA Club & Cafe",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "IOTA Club & Cafe",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-23",
+			"venue": "Tazza Caffe",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Tazza Caffe",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-27",
+			"venue": "The Cutting Room",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Cutting Room",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-28",
+			"venue": "Makor",
+			"city": "New York",
+			"region": "NY",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Makor / New York / NY",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-29",
+			"venue": "Empire State College",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Empire State College",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-30",
+			"venue": "Cyberwest Cafe",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": "eblok2007-03-30.flac16",
+			"raw": "Cyberwest Cafe",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-03-31",
+			"venue": "701",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "701",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-04-01",
+			"venue": "Iron Post",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Iron Post",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-04-20",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-04-26",
+			"venue": "Inferno",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Inferno / Madison / WI",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-04-27",
+			"venue": "Kryptonite Bar",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Kryptonite Bar / Rockford / IL",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-06-02",
+			"venue": "The Chicago International Business & Artists Club",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Chicago International Business & Artists Club",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-06-07",
+			"venue": "Pops For Champagne",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pops For Champagne",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-06-22",
+			"venue": "HotHouse",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "HotHouse",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-06-28",
+			"venue": "Katerina's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-07-05",
+			"venue": "Katerina's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's",
+			"sources": [
+				"20070709015334_calendar_showcal_past",
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-07-12",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-07-14",
+			"venue": "\"Celebrate Clark Street\" Festival",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "\"Celebrate Clark Street\" Festival",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-07-19",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-07-26",
+			"venue": "The Union",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Union",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-07-27",
+			"venue": "The Union",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Union",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-07-28",
+			"venue": "Sights & Sounds at Ryerson Woods",
+			"city": "Deerfield",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Sights & Sounds at Ryerson Woods",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-08-02",
+			"venue": "Pops For Champagne Feat. Special Guest Zach Brock",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pops For Champagne Feat. Special Guest Zach Brock",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-08-04",
+			"venue": "Serbfest",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Serbfest",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-08-17",
+			"venue": "Pacchia",
+			"city": "Dayton",
+			"region": "OH",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pacchia",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-08-18",
+			"venue": "Pacchia",
+			"city": "Dayton",
+			"region": "OH",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pacchia",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-08-23",
+			"venue": "Pops For Champagne",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pops For Champagne",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-09-01",
+			"venue": "On The Waterfront Festival",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "On The Waterfront Festival",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-09-06",
+			"venue": "Pops For Champagne Feat. Special Guest Grazyna Auguscik",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pops For Champagne Feat. Special Guest Grazyna Auguscik",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-09-19",
+			"venue": "WORLD MUSIC FESTIVAL - CD RELEASE SHOW!!",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "WORLD MUSIC FESTIVAL - CD RELEASE SHOW!!",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-20",
+			"venue": "Founders Brewing Company",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Founders Brewing Company",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-21",
+			"venue": "Howard's Club H",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Howard's Club H",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-22",
+			"venue": "Haverford College",
+			"city": "Haverford",
+			"region": "PA",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Haverford College",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-09-23",
+			"venue": "Folk Dance Council",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Folk Dance Council",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-25",
+			"venue": "Trumansburg High School",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Trumansburg High School",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-26",
+			"venue": "Johnny D's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": "http://www.johnnyds.com",
+			"note": null,
+			"status": "past",
+			"recording": "givanovic2007-09-26",
+			"raw": "Johnny D's",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-27",
+			"venue": "Mehanata",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mehanata",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-28",
+			"venue": "Cornell University",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Cornell University",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-29",
+			"venue": "Crossing Borders",
+			"city": "Ithaca",
+			"region": "NY",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": "easternblok2007-09-29.multitrack.ackerman.flac24",
+			"raw": "Crossing Borders / Ithaca / NY",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-09-30",
+			"venue": "Caffe Lena",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Caffe Lena",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-10-01",
+			"venue": "Chris Jazz Cafe",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Chris Jazz Cafe",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-10-03",
+			"venue": "Blues Alley",
+			"city": "Washington D.C.",
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Blues Alley",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-10-04",
+			"venue": "Arab American National Museum",
+			"city": "Dearborn",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Arab American National Museum",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-10-05",
+			"venue": "The Firefly",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Firefly",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-11-01",
+			"venue": "The Redstone Room",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Redstone Room",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-11-02",
+			"venue": "The DuKum Upp",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The DuKum Upp",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-11-02",
+			"venue": "Truman State University",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Truman State University",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-11-03",
+			"venue": "Pop's Blue Moon",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pop's Blue Moon",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-11-09",
+			"venue": "MAJIC Festival",
+			"city": "Grand Rapids",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "MAJIC Festival / Grand Rapids / MI",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20070709015327_calendar"
+			]
+		},
+		{
+			"date": "2007-11-21",
+			"venue": "Katerina's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-11-24",
+			"venue": "The Copernicus Center",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Copernicus Center",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-12-15",
+			"venue": "Ethno Night @ St. Sava",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Ethno Night @ St. Sava",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2007-12-31",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-01-23",
+			"venue": "Double Door",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Double Door",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-01-24",
+			"venue": "Rossi's Blue Star Room",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Rossi's Blue Star Room",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-01-25",
+			"venue": "Rossi's Blue Star Room",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Rossi's Blue Star Room",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-01-26",
+			"venue": "der Rathskeller",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "der Rathskeller",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-02-29",
+			"venue": "Kryptonite Bar",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Kryptonite Bar",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-18",
+			"venue": "Martyr's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.martyrslive.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Martyr's / Chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-20",
+			"venue": "Lecture on The Music of the Balkans @ Carnegie Mellon University",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Lecture on The Music of the Balkans @ Carnegie Mellon University",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-21",
+			"venue": "Private Event",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Private Event",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-22",
+			"venue": "Underground Cafe @ Carnegie Mellon University",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": "eblok2008-03-22.cm1k.flac16",
+			"raw": "Underground Cafe @ Carnegie Mellon University",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-24",
+			"venue": "Cafe Viv at Princeton University",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Cafe Viv at Princeton University",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-25",
+			"venue": "Drom",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": "http://www.dromnyc.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Drom",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-26",
+			"venue": "World Cafe Live-Upstairs",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": "http://www.worldcafelive.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "World Cafe Live-Upstairs",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-27",
+			"venue": "Night Eagle Cafe",
+			"city": "Binghamton",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://www.nighteaglecafe.org/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "night eagle cafe / binghamton / ny",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-30",
+			"venue": "The Village Idiot",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Village Idiot",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-03-31",
+			"venue": "University of Michigan - Ann Arbor",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "University of Michigan - Ann Arbor",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-04-03",
+			"venue": "Uncommon Ground",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Uncommon Ground / chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-03",
+			"venue": "St Sava",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://stsavachicago.org",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "St Sava / Chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-07",
+			"venue": "Uncommon Ground",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.uncommonground.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Uncommon Ground / Chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-21",
+			"venue": "Canal St Tavern",
+			"city": "Dayton",
+			"region": "OH",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Canal St Tavern / Dayton / OH",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-22",
+			"venue": "Village Idiot",
+			"city": "Maumee",
+			"region": "OH",
+			"country": null,
+			"venueUrl": "http://http://www.villageidiotmaumee.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Village Idiot / Maumee / OH",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-23",
+			"venue": "Winchester",
+			"city": "Cleveland",
+			"region": "OH",
+			"country": null,
+			"venueUrl": "http://http://www.thewinchester.net",
+			"note": "http://consumer.discoverohio.com/searchdetails.aspx?detail=63524 http://www.objektiv.us/",
+			"status": "past",
+			"recording": null,
+			"raw": "Winchester / Cleveland / OH",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-24",
+			"venue": "Marriot",
+			"city": "Boston",
+			"region": "MA",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Marriot / Boston / MA",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-26",
+			"venue": "Joe's Pub",
+			"city": "New York",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://www.joespub.com",
+			"note": "http://www.joespub.com/component/option,com_shows/task,view/Itemid,40/id,3952",
+			"status": "past",
+			"recording": null,
+			"raw": "Joe's Pub / New York / NY",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-29",
+			"venue": "Twins Jazz",
+			"city": "Washington D.C.",
+			"region": null,
+			"country": null,
+			"venueUrl": "http://http://www.twinsjazz.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Twins Jazz / Washington D.C.",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-30",
+			"venue": "Chris Jazz Cafe",
+			"city": "Philadelphia",
+			"region": "PA",
+			"country": null,
+			"venueUrl": "http://www.chrisjazzcafe.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Chris Jazz Cafe / Philadelphia / PA",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-05-31",
+			"venue": "Fireplace",
+			"city": "Brooklyn",
+			"region": "NY",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Fireplace / Brooklyn / NY",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-06-01",
+			"venue": "Club Cafe with Grazyna Auguscik",
+			"city": "Pittsburgh",
+			"region": "PA",
+			"country": null,
+			"venueUrl": "http://www.ticketweb.com/snl/VenueListings.action?venueId=clubcafe",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Club Cafe with Grazyna Auguscik / Pittsburgh / PA",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-06-05",
+			"venue": "Founder's Brewery",
+			"city": "Grand Rapids",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://http://www.foundersbrewing.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Founder's Brewery / Grand Rapids / MI",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-06-06",
+			"venue": "Fire Fly Club",
+			"city": "Ann Arbor",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Fire Fly Club / Ann Arbor / MI",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-07-16",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-07-23",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-09-08",
+			"venue": "Northeastern Illinois University",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "northeastern illinois university / chicago / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar"
+			]
+		},
+		{
+			"date": "2008-09-10",
+			"venue": "Roosevelt University",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "roosevelt university / chicago / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar"
+			]
+		},
+		{
+			"date": "2008-09-20",
+			"venue": "Magnus Restaurant",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Magnus Restaurant / Madison / WI",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar"
+			]
+		},
+		{
+			"date": "2008-09-25",
+			"venue": "Village Idiot",
+			"city": "Maumee (Toledo)",
+			"region": "OH",
+			"country": null,
+			"venueUrl": "http://www.villageidiotmaumee.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "village idiot / maumee (toledo) / oh",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar"
+			]
+		},
+		{
+			"date": "2008-09-26",
+			"venue": "New York Gypsy Fest at Drom",
+			"city": "New York",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://www.dromagypsyfest.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "New York Gypsy Fest at Drom / New York / NY",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar"
+			]
+		},
+		{
+			"date": "2008-10-09",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / chicago / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-10",
+			"venue": "Krannert Center",
+			"city": "Urbana",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.krannertcenter.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Krannert Center / Urbana / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-11",
+			"venue": "The Gramophone",
+			"city": "St. Louis",
+			"region": "MO",
+			"country": null,
+			"venueUrl": "http://thegramophonelive.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Gramophone / St. Louis / MO",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-15",
+			"venue": "Dazzle",
+			"city": "Denver",
+			"region": "CO",
+			"country": null,
+			"venueUrl": "http://www.dazzlejazz.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Dazzle / Denver / co",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-16",
+			"venue": "B-Side Lounge",
+			"city": "Boulder",
+			"region": "CO",
+			"country": null,
+			"venueUrl": "http://www.thebsidelounge.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "b-side lounge / 2017 13th st. / boulder / co / 303-473-9463",
+			"sources": [
+				"20080828180144_calendar"
+			]
+		},
+		{
+			"date": "2008-10-17",
+			"venue": "Everyday Joe's",
+			"city": "Fort Collins",
+			"region": "CO",
+			"country": null,
+			"venueUrl": "http://www.everydayjoes.org/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Everyday Joe's / Fort Collins / co",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-18",
+			"venue": "Mick's",
+			"city": "Omaha",
+			"region": "NE",
+			"country": null,
+			"venueUrl": "http://www.micksomaha.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mick's / omaha / ne",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-19",
+			"venue": "The Record Bar",
+			"city": "Kansas City",
+			"region": "KS",
+			"country": "usa",
+			"venueUrl": "http://www.therecordbar.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "the record bar / kansas city / ks / usa",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-10-20",
+			"venue": "Elgin Community College",
+			"city": "Elgin",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Elgin Community College / Elgin / IL",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-10-28",
+			"venue": "Frequency",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://madisonfrequency.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Frequency / Madison / wi",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-10-29",
+			"venue": "The Jazz Estate",
+			"city": "Milwaukee",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://www.jazzestate.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Jazz Estate / Milwaukee / wi",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-11-07",
+			"venue": "Firefly Club",
+			"city": "Ann Arbor",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://www.fireflyclub.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "firefly club / ann arbor / mi",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2008-11-08",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-11-13",
+			"venue": "Darkroom",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.darkroombar.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Darkroom / Chicago / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-11-14",
+			"venue": "Mary's Place",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.marysplacebar.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mary's Place / Rockford / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20080828180144_calendar",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-11-15",
+			"venue": "Wrongdaddy's",
+			"city": "Kirksville",
+			"region": "MO",
+			"country": null,
+			"venueUrl": "http://www.kirksvillerocks.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Wrongdaddy's / Kirksville / MO",
+			"sources": [
+				"20081207022957_calendar_showcal_past",
+				"20081006155239_calendar"
+			]
+		},
+		{
+			"date": "2008-11-19",
+			"venue": "New Trier High School",
+			"city": "Winnetka",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "new trier high school / winnetka / il",
+			"sources": [
+				"20081207022957_calendar_showcal_past"
+			]
+		},
+		{
+			"date": "2009-03-25",
+			"venue": "Johnny D's",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "gorangroup2009-03-25.flac24",
+			"raw": "Johnny D's",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2009-03-29",
+			"venue": "Your Inner Vagabond",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "recorded",
+			"recording": "givanovic2009-03-29.rodent6o",
+			"raw": "Your Inner Vagabond",
+			"sources": [
+				"internet-archive"
+			]
+		},
+		{
+			"date": "2009-06-19",
+			"venue": "Restaurant Magnus",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://www.restaurantmagnus.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "restaurant magnus / 120 e. wilson / madison / il",
+			"sources": [
+				"20090619111852_calendar"
+			],
+			"corrected": "Listed as Madison, IL; the site's other Restaurant Magnus listings say Madison, WI."
+		},
+		{
+			"date": "2009-06-20",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "katerina's / 1920 w. irving park / chicago / il",
+			"sources": [
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-06-21",
+			"venue": "Henry W. Maier Festival Park",
+			"city": "Milwaukee",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://www.polishfest.org",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "henry w. maier festival park / 200 n. harbour drive / milwaukee / wi / 53202",
+			"sources": [
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-07-09",
+			"venue": "Czar's",
+			"city": "St. Joseph",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://www.czars.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "czar's / 505 pleasant st. / st. joseph / mi",
+			"sources": [
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-07-31",
+			"venue": "Mary's Place",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.marysplacebar.net",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "mary's place / rockford / il",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-08-22",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "katerina's / chicago / il",
+			"sources": [
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-08-28",
+			"venue": "St. Louis Art Museum",
+			"city": "St. Louis",
+			"region": "MO",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "St. Louis Art Museum / St. Louis / MO",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-09-04",
+			"venue": "Sugar Maple",
+			"city": "Milwaukee",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://www.myspace.com/sugarmaplebayview",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "sugar maple / milwaukee / wi",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-09-05",
+			"venue": "Restaurant Magnus",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "restaurant magnus / madison / wi",
+			"sources": [
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-09-06",
+			"venue": "On The Waterfront Festival",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "on the waterfront festival / rockford / il",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-09-16",
+			"venue": "Kalamazoo Public Library",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "kalamazoo public library / kalamazoo / mi",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-09-17",
+			"venue": "Minnesota State U",
+			"city": null,
+			"region": "MN",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "minnesota state u / mn",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-09-18",
+			"venue": "U Of Minnesota, Moorhead Campus",
+			"city": null,
+			"region": "MN",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "u of minnesota, moorhead campus / mn",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-09-20",
+			"venue": "Riverssance Festival",
+			"city": "Davenport",
+			"region": "IA",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "riverssance festival / davenport / ia",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-09-26",
+			"venue": "Greene Square Park",
+			"city": "Cedar Rapids",
+			"region": "IA",
+			"country": null,
+			"venueUrl": "http://www.legionarts.org",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Greene Square Park / Cedar Rapids / IA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-09-27",
+			"venue": "Mahoney's",
+			"city": "Cedar Rapids",
+			"region": "IA",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "mahoney's / cedar rapids / ia",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-09-28",
+			"venue": "Kennedy High School",
+			"city": "Cedar Rapids",
+			"region": "IA",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "kennedy high school / cedar rapids / ia",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-10-01",
+			"venue": "Bell's Brewery",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Bell's Brewery / Kalamazoo / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-10-03",
+			"venue": "Founder's",
+			"city": "Grand Rapids",
+			"region": "MI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "founder's / grand rapids / mi",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar"
+			]
+		},
+		{
+			"date": "2009-10-04",
+			"venue": "Quennect4 Gallery",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Quennect4 Gallery / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-10-09",
+			"venue": "Pacchia",
+			"city": "Dayton",
+			"region": "OH",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Pacchia / Dayton / OH",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-10-18",
+			"venue": "Private Event",
+			"city": "Glencoe",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "private event / glencoe / il",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar",
+				"20091016014105_calendar"
+			]
+		},
+		{
+			"date": "2009-10-30",
+			"venue": "Mary's Place",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Mary's Place / Rockford / IL",
+			"sources": [
+				"20091016014105_calendar"
+			]
+		},
+		{
+			"date": "2009-10-31",
+			"venue": "Old Town School Of Folk Music",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "old town school of folk music / chicago / il",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20090619111852_calendar",
+				"20091016014105_calendar"
+			]
+		},
+		{
+			"date": "2009-11-01",
+			"venue": "Sugar Maple",
+			"city": "Milwaukee",
+			"region": "WI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Sugar Maple / Milwaukee / WI",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20091016014105_calendar"
+			]
+		},
+		{
+			"date": "2009-11-05",
+			"venue": "Poland",
+			"city": null,
+			"region": null,
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "poland",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20091016014105_calendar"
+			]
+		},
+		{
+			"date": "2009-11-06",
+			"venue": "Jazz Café",
+			"city": "Warszawa, Lomianki",
+			"region": "Poland",
+			"country": null,
+			"venueUrl": "http://www.jazzcafe.com.pl/koncerty.php",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Jazz Café / Warszawa, Lomianki / Poland",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-11-08",
+			"venue": "Centrum Kultury Dwor Artusa",
+			"city": "Torun",
+			"region": "Poland",
+			"country": null,
+			"venueUrl": "http://www.artus.torun.pl/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Centrum Kultury Dwor Artusa / Torun / Poland",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-11-09",
+			"venue": "Filharmonia im H. Wieniawskiego",
+			"city": "Lublin",
+			"region": "Poland",
+			"country": null,
+			"venueUrl": "http://filharmonialubelska.pl/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Filharmonia im H. Wieniawskiego / Lublin / Poland",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-11-11",
+			"venue": "Teatr Rondo",
+			"city": "Slupsk",
+			"region": "Poland",
+			"country": null,
+			"venueUrl": "http://www.rondo.sok.slupsk.pl/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Teatr Rondo / Slupsk / Poland",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-11-12",
+			"venue": "Stacja Prunia",
+			"city": "Gdansk",
+			"region": "Poland",
+			"country": null,
+			"venueUrl": "http://www.gak.gda.pl/newss/news/grazyna-auguscik-i-eastern-blok",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Stacja Prunia / Gdansk / Poland",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-12-09",
+			"venue": "The Dance Center of Columbia College Chicago",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Dance Center of Columbia College Chicago / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2009-12-31",
+			"venue": "Hothouse event at St Paul Church",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.hothouse.net",
+			"note": "for tickets go to :  http://www.brownpapertickets.com/event/93129",
+			"status": "past",
+			"recording": null,
+			"raw": "Hothouse event at St Paul Church / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-01-09",
+			"venue": "Mary's",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Mary's / Rockford / IL",
+			"sources": [
+				"20100110014815_calendar"
+			]
+		},
+		{
+			"date": "2010-01-13",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Katerina's / 1920 w irving park rd / chicago / il",
+			"sources": [
+				"20100110014815_calendar"
+			]
+		},
+		{
+			"date": "2010-02-08",
+			"venue": "Jazz Showcase",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://http://www.jazzshowcase.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Jazz Showcase / 806 S. Plymouth Ct. / Chicago / IL / (312) 360-0234",
+			"sources": [
+				"20100110014815_calendar"
+			]
+		},
+		{
+			"date": "2010-02-13",
+			"venue": "Restaurant Magnus",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "restaurant magnus / madison / wi",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20100110014815_calendar"
+			]
+		},
+		{
+			"date": "2010-02-19",
+			"venue": "Kryptonite Bar",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Kryptonite Bar / Rockford / IL",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20100110014815_calendar"
+			]
+		},
+		{
+			"date": "2010-02-26",
+			"venue": "Serbian Cultural and Arts Center",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://stsavachicago.org/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Serbian Cultural and Arts Center / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-04-09",
+			"venue": "Chicago Cultural Center",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.cityofchicago.org",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Chicago Cultural Center / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-04-20",
+			"venue": "Jazz Showcase",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://http://www.jazzshowcase.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Jazz Showcase / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-05-01",
+			"venue": "The Cave",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.stsavachicago.org",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Cave / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-05-22",
+			"venue": "Mary's Place",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mary's Place / Rockford / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-05-27",
+			"venue": "The Whistler",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.whistlerchicago.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "the whistler / chicago / il",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-06-12",
+			"venue": "Rustle Hill Winery",
+			"city": "Cobden",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.rustlehillwinery.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Rustle Hill Winery / Cobden / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-06-13",
+			"venue": "Iron Post",
+			"city": "Champaign",
+			"region": "IL",
+			"country": "USA",
+			"venueUrl": "http://http://www.theironpost.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Iron Post / Champaign / IL / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-06-18",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / chicago / il",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-06-19",
+			"venue": "Magnus",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Magnus / Madison / WI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-07-02",
+			"venue": "Mary's Place Bar",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://http://www.marysplacebar.net/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mary's Place Bar / Rockford / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-07-14",
+			"venue": "Jazz Showcase",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.jazzshowcase.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Jazz Showcase / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-07-15",
+			"venue": "Wicker Well",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Wicker Well / chicago / il",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-02",
+			"venue": "Melody Inn",
+			"city": "Indianapolis",
+			"region": "IN",
+			"country": "usa",
+			"venueUrl": "http://www.melodyindy.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Melody Inn / Indianapolis / IN / usa",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-04",
+			"venue": "Nietzsches",
+			"city": "Buffalo",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://http://www.nietzsches.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Nietzsches / Buffalo / NY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-05",
+			"venue": "Mojo's",
+			"city": "Jamestown",
+			"region": "NY",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mojo's / Jamestown / NY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-06",
+			"venue": "Castaways",
+			"city": "Ithaca",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://www.castawaysithaca.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Castaways / Ithaca / NY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-07",
+			"venue": "Bullfrog Brewery",
+			"city": "Williamsport",
+			"region": "PA",
+			"country": null,
+			"venueUrl": "http://www.bullfrogbrewery.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Bullfrog Brewery / Williamsport / PA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-08",
+			"venue": "The Arts Block",
+			"city": "Greenfield",
+			"region": "MA",
+			"country": "USA",
+			"venueUrl": "http://www.theartsblock.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Arts Block / Greenfield / MA / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-09",
+			"venue": "The Beehive",
+			"city": "Boston",
+			"region": "MA",
+			"country": null,
+			"venueUrl": "http://www.beehiveboston.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Beehive / Boston / MA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-10",
+			"venue": "Branded",
+			"city": "Brooklyn",
+			"region": "NY",
+			"country": "USA",
+			"venueUrl": "http://brandedsaloon.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Branded / Brooklyn / NY / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-11",
+			"venue": "Thunderbird Cafe",
+			"city": "Pittsburgh",
+			"region": "PA",
+			"country": null,
+			"venueUrl": "http://www.thunderbirdcafe.net/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Thunderbird Cafe / Pittsburgh / PA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-12",
+			"venue": "Spinoza's",
+			"city": "Beavercreek",
+			"region": "OH",
+			"country": null,
+			"venueUrl": "http://www.spinozas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Spinoza's / Beavercreek / OH",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-13",
+			"venue": "Blue Wisp",
+			"city": "Cincinnati",
+			"region": "OH",
+			"country": null,
+			"venueUrl": "http://www.thebluewisp.com/",
+			"note": null,
+			"status": "past",
+			"recording": "eblok2010-08-13.flac24",
+			"raw": "Blue Wisp / Cincinnati / OH",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-14",
+			"venue": "Blind Pig",
+			"city": "Ann Arbor",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://www.blindpigmusic.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Blind Pig / Ann Arbor / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-15",
+			"venue": "Mexicains Sans Frontiers (alternative artspace)",
+			"city": "Grand Rapids",
+			"region": "MI",
+			"country": "usa",
+			"venueUrl": "http://www.myspace.com/mexicianssansfrontieres",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mexicains Sans Frontiers (alternative artspace) / Grand Rapids / MI / usa",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-08-17",
+			"venue": "The Strutt",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://www.thestrutt.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Strutt / Kalamazoo / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-10-30",
+			"venue": "Restaurant Magnus",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://www.restaurantmagnus.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Restaurant Magnus / madison / il",
+			"sources": [
+				"20120127200419_calendar-past"
+			],
+			"corrected": "Listed as Madison, IL; the site's other Restaurant Magnus listings say Madison, WI."
+		},
+		{
+			"date": "2010-12-03",
+			"venue": "Campbell Steele Art Gallery",
+			"city": "Marion",
+			"region": "IA",
+			"country": null,
+			"venueUrl": "http://http://www.campbellsteele.com/index.php",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Campbell Steele Art Gallery / Marion / IA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-12-04",
+			"venue": "Magnus",
+			"city": "Madison",
+			"region": "WI",
+			"country": null,
+			"venueUrl": "http://www.restaurantmagnus.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Magnus / Madison / WI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-12-08",
+			"venue": "Mayne Stage",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://http://www.maynestage.com/Eastern-Blok.aspx",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mayne Stage / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-12-09",
+			"venue": "Cliff Bell's",
+			"city": "Detroit",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://http://www.cliffbells.com/index.html",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Cliff Bell's / Detroit / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2010-12-10",
+			"venue": "The Strutt",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://http://www.thestrutt.com/index.php",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Strutt / Kalamazoo / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-02-11",
+			"venue": "Bethlehem Church Sanctuary",
+			"city": "Grand Rapids",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://http://grmajic.org/current-season/feb-11-eastern-blok/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Bethlehem Church Sanctuary / Grand Rapids / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-02-14",
+			"venue": "U Minnesota- Mankato",
+			"city": "Mankato",
+			"region": "MN",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "u minnesota- mankato / mankato / mn",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-02-18",
+			"venue": "Cranky Pat's",
+			"city": "Neenah",
+			"region": "WI",
+			"country": "USA",
+			"venueUrl": "http://www.crankypats.com/locations.html",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Cranky Pat's / Neenah / WI / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-03-29",
+			"venue": "Mayne Stage",
+			"city": "Chicago",
+			"region": "IL",
+			"country": "USA",
+			"venueUrl": "http://www.maynestage.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mayne Stage / Chicago / IL / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-03-30",
+			"venue": "The Rudyard Kipling",
+			"city": "Louisville",
+			"region": "KY",
+			"country": null,
+			"venueUrl": "http://www.therudyardkipling.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Rudyard Kipling / Louisville / KY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-01",
+			"venue": "Hailey's",
+			"city": "Denton",
+			"region": "TX",
+			"country": null,
+			"venueUrl": "http://www.haileysclub.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Hailey's / Denton / TX",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-02",
+			"venue": "The Prophet Bar",
+			"city": "Dallas",
+			"region": "TX",
+			"country": null,
+			"venueUrl": "http://theprophetbar.com/home",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Prophet Bar / Dallas / TX",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-04",
+			"venue": "Artmosphere",
+			"city": "Lafayette",
+			"region": "LA",
+			"country": null,
+			"venueUrl": "http://www.myspace.com/artmosphere",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "artmosphere / lafayette / la",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-06",
+			"venue": "The Blue Nile",
+			"city": "New Orleans",
+			"region": "LA",
+			"country": null,
+			"venueUrl": "http://www.bluenilelive.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Blue Nile / New Orleans / LA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-07",
+			"venue": "Thirsty Hippo",
+			"city": "Hattiesburg",
+			"region": "MS",
+			"country": null,
+			"venueUrl": "http://www.thirstyhippo.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Thirsty Hippo / Hattiesburg / MS",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-08",
+			"venue": "Thirsty Hippo",
+			"city": "Hattiesburg",
+			"region": "MS",
+			"country": null,
+			"venueUrl": "http://www.thirstyhippo.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Thirsty Hippo / Hattiesburg / MS",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-04-12",
+			"venue": "SUNY-Fredonia, Rosch Hall",
+			"city": "Fredonia",
+			"region": "NY",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "SUNY-Fredonia, Rosch Hall / Fredonia / NY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-06-23",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20110619015254_calendar"
+			]
+		},
+		{
+			"date": "2011-06-24",
+			"venue": "Mary's Place",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://http:/www.marysplacebar.net/index.cfm",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mary's Place / Rockford / IL",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20110619015254_calendar"
+			]
+		},
+		{
+			"date": "2011-07-05",
+			"venue": "Jazz Showcase",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.jazzshowcase.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "jazz showcase / chicago / il",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20110619015254_calendar"
+			]
+		},
+		{
+			"date": "2011-07-20",
+			"venue": "Katerina's",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.katerinas.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Katerina's / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-08-31",
+			"venue": "Whistler",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.whistlerchicago.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Whistler / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-09-01",
+			"venue": "The Strutt",
+			"city": "Kalamazoo",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://thestrutt.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Strutt / Kalamazoo / MI",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-09-03",
+			"venue": "Martyrs",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://martyrslive.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Martyrs / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past",
+				"20110619015254_calendar"
+			]
+		},
+		{
+			"date": "2011-09-08",
+			"venue": "Founders Brewing Co.",
+			"city": "Grand Rapids",
+			"region": "MI",
+			"country": "US",
+			"venueUrl": "http://www.foundersbrewing.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Founders Brewing Co. / Grand Rapids / Michigan / US",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-09-11",
+			"venue": "High Noon Saloon",
+			"city": "Madison",
+			"region": "WI",
+			"country": "USA",
+			"venueUrl": "http://www.high-noon.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "High Noon Saloon / Madison / WI / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-09-17",
+			"venue": "Spinoza's",
+			"city": "Dayton",
+			"region": "OH",
+			"country": "USA",
+			"venueUrl": "http://spinozas.com",
+			"note": null,
+			"status": "past",
+			"recording": "gorangroup2011-09-17.flac24",
+			"raw": "Spinoza's / Dayton / OH / USA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-09-19",
+			"venue": "Lemon Grove Cafe",
+			"city": "Youngstown",
+			"region": "OH",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Lemon Grove Cafe / Youngstown / OH",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-09-28",
+			"venue": "Jazz Showcase",
+			"city": "Chicago",
+			"region": "IL",
+			"country": "US",
+			"venueUrl": "http://www.jazz-showcase.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Jazz Showcase / Chicago / Illinois / US",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-10-06",
+			"venue": "Reggie's Rock Club",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.reggieslive.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Reggie's Rock Club / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-10-22",
+			"venue": "The Cave",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Cave / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-11-07",
+			"venue": "All Souls Jazz Fest",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "All Souls Jazz Fest / Chicago / IL",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-01",
+			"venue": "Spinoza's",
+			"city": "Dayton",
+			"region": "OH",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": "eblok2011-12-01.flac24",
+			"raw": "Spinoza's / Dayton / OH",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-02",
+			"venue": "Lemon Grove",
+			"city": "Youngstown",
+			"region": "OH",
+			"country": null,
+			"venueUrl": "http://http://www.lemongrovecafe.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Lemon Grove / Youngstown / OH",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-03",
+			"venue": "House concert",
+			"city": "Buffalo",
+			"region": "NY",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "House concert / Buffalo / NY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-04",
+			"venue": "The Rongovian Embassy",
+			"city": "Trumansburg",
+			"region": "NY",
+			"country": "US",
+			"venueUrl": "http://www.rongo.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Rongovian Embassy / Trumansburg / New York / US",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-05",
+			"venue": "Mojo's",
+			"city": "Jamestown",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://716.720.4621",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mojo's / Jamestown / NY",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-06",
+			"venue": "the Way Station",
+			"city": "Prospect Heights, Brooklyn",
+			"region": "NY",
+			"country": null,
+			"venueUrl": "http://waystationbk.blogspot.com/",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "the Way Station / Prospect Heights, Brooklyn / New York",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-07",
+			"venue": "Johnny D's",
+			"city": "Boston",
+			"region": "MA",
+			"country": null,
+			"venueUrl": "http://www.johnnyds.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Johnny D's / Boston / MA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-08",
+			"venue": "South Street Cafe",
+			"city": "Bennington",
+			"region": "VT",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "South Street Cafe / Bennington / VT",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-09",
+			"venue": "Mt. Anthony Union High School",
+			"city": "Bennington",
+			"region": "VT",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "Mt. Anthony Union High School / Bennington / VT",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-09",
+			"venue": "The Bullfrog Brewery",
+			"city": "Williamsport",
+			"region": "PA",
+			"country": null,
+			"venueUrl": "http://www.bullfrogbrewery.com",
+			"note": null,
+			"status": "past",
+			"recording": null,
+			"raw": "The Bullfrog Brewery / Williamsport / PA",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-11",
+			"venue": "Beachland Ballroom/Tavern",
+			"city": "Cleveland",
+			"region": "OH",
+			"country": "US",
+			"venueUrl": "http://www.beachlandballroom.com",
+			"note": null,
+			"status": "past",
+			"recording": "eblok2011-12-11.flac16",
+			"raw": "Beachland Ballroom/Tavern / Cleveland / Ohio / US",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2011-12-21",
+			"venue": "Schubas",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.schubas.com",
+			"note": "this will sell out, and it's not to be missed!",
+			"status": "past",
+			"recording": null,
+			"raw": "schubas / chicago / il",
+			"sources": [
+				"20120127200419_calendar-past"
+			]
+		},
+		{
+			"date": "2012-02-04",
+			"venue": "Art Gallery Kafe",
+			"city": "Wood Dale",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://www.artgallerykafe.com/about2.html",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Feb 4, 2012 - Wood Dale, IL",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		},
+		{
+			"date": "2012-02-17",
+			"venue": "An Evening with Eastern Blok",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://cafeprague.us/",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Feb 17, 2012 - An Evening with Eastern Blok - Chicago, Illinois",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		},
+		{
+			"date": "2012-02-18",
+			"venue": "Kryptonite",
+			"city": "Rockford",
+			"region": "IL",
+			"country": null,
+			"venueUrl": "http://kryptonitebar.com/",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Feb 18, 2012 - Rockford, IL",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		},
+		{
+			"date": "2012-03-22",
+			"venue": "Arab American Museum",
+			"city": "Dearborn",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://www.arabamericanmuseum.org/Home.id.2.htm",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Mar 22, 2012 - Dearborn, MI",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		},
+		{
+			"date": "2012-05-19",
+			"venue": "Private Wedding",
+			"city": "Chicago",
+			"region": "IL",
+			"country": null,
+			"venueUrl": null,
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "May 19, 2012 - Chicago, Illinois",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		},
+		{
+			"date": "2012-06-09",
+			"venue": "Burlington Jazz Festival",
+			"city": "Burlington",
+			"region": "VT",
+			"country": null,
+			"venueUrl": "http://www.liveatnectars.com",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Jun 9, 2012 - Burlington Jazz Festival - Burlington, VT",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		},
+		{
+			"date": "2012-06-23",
+			"venue": "CD-release party!",
+			"city": "Ann Arbor",
+			"region": "MI",
+			"country": null,
+			"venueUrl": "http://www.theark.org",
+			"note": null,
+			"status": "announced",
+			"recording": null,
+			"raw": "Jun 23, 2012 - CD-release party! - Ann Arbor, MI",
+			"sources": [
+				"20120127200450_calendar"
+			]
+		}
+	]
+}

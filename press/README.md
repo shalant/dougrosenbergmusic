@@ -12,6 +12,7 @@ As of 2026-10-05 no review of the CD *Better Than TV* has been found. A Wayback 
 - `press.json` is the combined index (generated; don't hand-edit). Counts aren't recorded here because they go stale; the merge prints them. Regenerate after either source file changes, and check that `git diff press/press.json` matches what you changed: `node press/merge-press.cjs --out press/press.json press/candidates.json site/src/data/eastern-blok-press.json`. The two inputs are the sources of truth.
 - `merge-press.cjs` merges the per-session JSON files; `merge-press.test.cjs` tests it: `node --test press/merge-press.test.cjs`.
 - `save-page.cjs` saves full copies into the shared `press-archive/` folder (see `SCHEMA.md`).
+- `easternblok-shows.cjs` rebuilds Eastern Blok's show history from the Wayback copies of the band's old site (easternblok.net, later taken over by a spam blog) saved in `../press-archive/easternblok-net-calendar/`, merged with the fan-recording log. It writes `site/src/data/eastern-blok-shows.json`, which feeds the Shows section on `/easternblok`: `node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json`. Tests: `node --test press/easternblok-shows.test.cjs`. Added 2026-10-15.
 
 ## What does not go in this repo
 

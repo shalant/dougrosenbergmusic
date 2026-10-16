@@ -1,0 +1,234 @@
+---
+// Eastern Blok / Goran Ivanovic Group show history for /easternblok, one
+// expandable list per year. Data: src/data/eastern-blok-shows.json, generated
+// by press/easternblok-shows.cjs from the Wayback copies of the band's old
+// site (easternblok.net) plus the Internet Archive fan-recording log. Every
+// row is in the HTML at load (closed <details>, not fetched later), so search
+// engines and AI crawlers see the full list.
+import data from '../data/eastern-blok-shows.json';
+
+type Show = (typeof data.shows)[number];
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const shortDate = (iso: string) => `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
+const place = (show: Show) => [show.city, show.region].filter(Boolean).join(', ');
+
+const years = Object.entries(
+  data.shows.reduce<Record<string, Show[]>>((acc, show) => {
+    (acc[show.date.slice(0, 4)] ??= []).push(show);
+    return acc;
+  }, {}),
+);
+
+const count = (status: string) => data.shows.filter((s) => s.status === status).length;
+const usStates = new Set(data.shows.map((s) => s.region).filter((r): r is string => !!r && /^[A-Z]{2}$/.test(r)));
+const recorded = data.shows.filter((s) => s.recording).length;
+const first = data.shows[0].date.slice(0, 4);
+const last = data.shows[data.shows.length - 1].date.slice(0, 4);
+---
+
+<div class="showlog">
+  <p class="showlog__summary">
+    <strong>{data.shows.length} shows</strong>, {first}–{last}, in {usStates.size} states and Poland.{' '}
+    {recorded} have a fan recording on the Internet Archive.
+  </p>
+
+  <div class="showlog__years">
+    {years.map(([year, shows]) => (
+      <details class="year">
+        <summary>
+          <span class="year__label">{year}</span>
+          <span class="year__count">{shows.length} {shows.length === 1 ? 'show' : 'shows'}</span>
+        </summary>
+        <ol class="year__list">
+          {shows.map((show) => (
+            <li class="gig">
+              <time class="gig__date" datetime={show.date}>{shortDate(show.date)}</time>
+              <span class="gig__venue">{show.venue}</span>
+              <span class="gig__place">{place(show)}</span>
+              <span class="gig__extra">
+                {show.status === 'announced' && <span class="gig__tag" title="Listed as upcoming on the band's site, but never on its past-dates list">announced</span>}
+                {show.recording && (
+                  <a class="gig__listen" href={`https://archive.org/details/${show.recording}`} target="_blank" rel="noopener noreferrer">
+                    Listen<span class="visually-hidden"> to the {shortDate(show.date)}, {year} recording (opens in a new tab)</span>
+                  </a>
+                )}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </details>
+    ))}
+  </div>
+
+  <p class="showlog__source">
+    Rebuilt from the band's old website, easternblok.net, as saved by the{' '}
+    <a href="https://web.archive.org/web/20120127200419/http://www.easternblok.net/calendar-past.html" target="_blank" rel="noopener noreferrer">Wayback Machine</a>,
+    plus fan recordings on the{' '}
+    <a href="https://archive.org/search?query=%22goran+ivanovic%22" target="_blank" rel="noopener noreferrer">Internet Archive</a>.{' '}
+    It's incomplete: shows before 2007 are known only from recordings, and no calendar was saved for December 2008 to June 2009.{' '}
+    {count('announced')} shows marked "announced" were listed as upcoming but never appeared on the band's past-dates list.
+  </p>
+</div>
+
+<style>
+  .showlog {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .showlog__summary {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--text-muted);
+  }
+
+  .showlog__summary strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .showlog__years {
+    border-top: 1px solid var(--staff-line-strong);
+  }
+
+  .year {
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  .year summary {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    min-height: 44px;
+    padding-block: 0.9rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .year summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .year summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: var(--font-mono);
+    color: var(--brass);
+  }
+
+  .year[open] summary::after {
+    content: '−';
+  }
+
+  .year summary:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+
+  .year__label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1;
+    font-variant-numeric: lining-nums;
+  }
+
+  .year__count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+  }
+
+  .year__list {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+
+  .gig {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1.3fr) minmax(0, 1fr) 7rem;
+    gap: 0.15rem 1rem;
+    align-items: baseline;
+    padding-block: 0.45rem;
+    border-top: 1px solid rgba(233, 237, 245, 0.05);
+    font-size: 0.92rem;
+  }
+
+  .gig__date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gig__venue {
+    color: var(--text);
+  }
+
+  .gig__place {
+    color: var(--text-muted);
+  }
+
+  .gig__extra {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+    align-items: baseline;
+  }
+
+  .gig__tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    border: 1px dashed var(--staff-line-strong);
+    padding: 0.05rem 0.35rem;
+  }
+
+  .gig__listen {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--glow);
+    text-underline-offset: 3px;
+  }
+
+  .gig__listen::after {
+    content: ' ↗';
+  }
+
+  .gig__listen:hover,
+  .gig__listen:focus-visible {
+    color: var(--text);
+  }
+
+  .showlog__source {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 0.85rem;
+    color: var(--text-faint);
+  }
+
+  .showlog__source a {
+    color: var(--text-muted);
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 700px) {
+    .gig {
+      grid-template-columns: 3.75rem minmax(0, 1fr) auto;
+    }
+
+    .gig__place {
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 0.82rem;
+    }
+
+    .gig__extra {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
+  }
+</style>
