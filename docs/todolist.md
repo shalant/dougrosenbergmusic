@@ -665,6 +665,17 @@ semantic headings, title/meta description.
           shared link is plausible but unconfirmed. Core Web Vitals: LCP 100% good (P75 785ms), CLS
           100% good, INP 83% good / 17% poor (10 hits on `html>body`, 2,792ms, likely slow-device
           taps); avg page load 1,024ms.
+        - **Cloudflare visits breakdown (30 days, pulled later 2026-10-15; counts are rounded to
+          the nearest 10): 210 of the 400 visits have host `localhost`, i.e. local dev traffic
+          (the beacon fires from `npm run dev`). Real visits are about 190: `dougrosenberg.com` 160,
+          `www.dougrosenberg.com` 30. So the 380 / 400 baselines above overstate human traffic by
+          roughly half; filter Host to the two real hostnames for future rechecks. Sources: direct
+          380, `l.facebook.com` 10, `scriblihelp.com` 10. Countries: US 340, China 40, Netherlands
+          10, Canada 10 (the China visits may be bots that Cloudflare didn't exclude). Devices: 250
+          desktop / 150 mobile; Chrome 240, ChromeMobile 90. Not broken down by host: the
+          last-24-hour spike, so whether it is dev traffic (likely, given the branch work) is
+          unconfirmed. Possible fix: skip the beacon when the host is `localhost` in
+          `BaseLayout.astro` (not done).**
         - GA4 (28 days, 2026-09-17 to 10-14): about 7,400 views / 7,300 users, 1.02 views per user,
           ~0s engagement; every page title is a dougrosenbergdev.com page, same bot-shaped profile as
           10-10/10-11. GA4 flagged `/` views falling to 1 on 2026-10-09 (expected 151), all
@@ -675,8 +686,10 @@ semantic headings, title/meta description.
           recrawled the rebuild six days after the 10-10 check and about 2.5 weeks after the sitemap
           import. Search Performance on the Bing home page: 0 clicks / 0 impressions for 2026-09-07
           to 10-13. Site Explorer's 6-month view shows 5 clicks / 57 impressions, all from before
-          the rebuild. Fix to try: Request indexing / URL Submission for `/` (it was submitted
-          2026-09-29, with no recrawl since).
+          the rebuild. Submitted `/`, `/easternblok` and `/press` through Bing URL Submission on
+          2026-10-15 at 23:21 CT (Bing confirmed "3 URLs submitted"; `/` had also been submitted
+          2026-09-29 with no recrawl since). Recheck Site Explorer in a few days for a new last-crawl
+          date on `/`.
         - Bing, dougrosenbergdev.com: 7 indexed / 0 error / 1 warning / 1 excluded (10-11: 6 / 0 / 1
           / 1); home page recrawled 2026-10-11 (106.2KB, 200). I did not check whether the 5 URLs
           submitted 2026-10-11 are the new indexed one.
