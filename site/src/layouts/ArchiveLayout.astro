@@ -1,0 +1,97 @@
+---
+// Shared shell for the pages reached from the home page's Press timeline
+// (/press, /easternblok): page header, sections, and a link back to the
+// timeline. Both pages are drafts as of 2026-10-15 (placeholder text marked
+// with <Placeholder>), so they default to noindex; flip `draft` off once
+// Doug's own text is in, and remove the page from the sitemap filter in
+// astro.config.mjs at the same time.
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  draft?: boolean;
+}
+
+const { title, description, eyebrow, heading, draft = true } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} home={false} noindex={draft}>
+  <slot name="head" slot="head" />
+  <article class="archive">
+    <div class="wrap">
+      <header class="archive__header">
+        <a class="archive__back" href="/#press">&larr; Back to dougrosenberg.com</a>
+        <p class="eyebrow">{eyebrow}</p>
+        <h1 class="archive__title">{heading}</h1>
+        <slot name="lead" />
+      </header>
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .archive {
+    padding-block: clamp(6rem, 12vw, 8rem) clamp(3rem, 6vw, 5rem);
+    min-height: 100vh;
+  }
+
+  .archive__header {
+    display: grid;
+    gap: 0.6rem;
+    max-width: 62ch;
+  }
+
+  .archive__back {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .archive__back:hover,
+  .archive__back:focus-visible {
+    color: var(--brass);
+  }
+
+  .archive__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
+    line-height: 1;
+    margin: 0;
+  }
+
+  .archive :global(.archive__lead) {
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  .archive :global(.archive__section) {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .archive :global(.archive__section h2) {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0;
+  }
+
+  .archive :global(.archive__section > p) {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--text-muted);
+  }
+</style>

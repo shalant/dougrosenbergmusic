@@ -1,0 +1,111 @@
+---
+// One row per approved quote: year, quote, then the source. Used by the home
+// page's PressTimeline and by the /press and /easternblok pages. Quotes come
+// from src/data/press-timeline.js, which is tested against press/press.json.
+// The outlet link opens the original review; a quote without a live page
+// shows the outlet as plain text.
+import { quoteParts, type PressQuote } from '../data/press-timeline.js';
+
+interface Props {
+  quotes: PressQuote[];
+}
+
+const { quotes } = Astro.props;
+---
+
+<ol class="ledger">
+  {quotes.map((quote) => (
+    <li class="ledger__row">
+      <span class="ledger__year">{quote.year}</span>
+      <blockquote class="ledger__quote">
+        <p>
+          &ldquo;{quoteParts(quote).map((part) => (part.highlight ? <span class="ledger__name">{part.text}</span> : part.text))}&rdquo;
+        </p>
+        <footer class="ledger__cite">
+          {quote.url ? (
+            <a href={quote.url} target="_blank" rel="noopener noreferrer">{quote.outlet}<span class="visually-hidden"> (opens in a new tab)</span></a>
+          ) : (
+            <span>{quote.outlet}</span>
+          )}
+          {quote.author && <span> · {quote.author}</span>}
+          {quote.detail && <span> · {quote.detail}</span>}
+        </footer>
+      </blockquote>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .ledger {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--staff-line-strong);
+  }
+
+  .ledger__row {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: 0.35rem 1.5rem;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  .ledger__year {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.2rem;
+  }
+
+  .ledger__quote {
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .ledger__quote p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+
+  .ledger__name {
+    color: var(--brass);
+  }
+
+  .ledger__cite {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    line-height: 1.55;
+    color: var(--text-faint);
+  }
+
+  .ledger__cite a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-decoration-color: rgba(233, 237, 245, 0.2);
+    text-underline-offset: 3px;
+  }
+
+  .ledger__cite a::after {
+    content: ' ↗';
+    color: var(--text-faint);
+  }
+
+  .ledger__cite a:hover,
+  .ledger__cite a:focus-visible {
+    color: var(--text);
+    text-decoration-color: var(--text-muted);
+  }
+
+  @media (max-width: 860px) {
+    .ledger__row {
+      grid-template-columns: 3.25rem minmax(0, 1fr);
+    }
+  }
+</style>

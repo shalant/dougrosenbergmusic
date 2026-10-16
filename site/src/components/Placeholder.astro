@@ -1,0 +1,39 @@
+---
+// Visible marker for text Doug hasn't written or confirmed yet. Per the
+// coding baseline, unconfirmed details on a site are flagged on the page,
+// never filled in with guesses. Remove each one as the real text arrives.
+interface Props {
+  label?: string;
+}
+
+const { label = 'To come' } = Astro.props;
+---
+
+<div class="placeholder">
+  <span class="placeholder__label">{label}</span>
+  <p class="placeholder__text"><slot /></p>
+</div>
+
+<style>
+  .placeholder {
+    display: grid;
+    gap: 0.35rem;
+    max-width: 62ch;
+    padding: 1rem 1.25rem;
+    border: 1px dashed var(--staff-line-strong);
+  }
+
+  .placeholder__label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .placeholder__text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+</style>

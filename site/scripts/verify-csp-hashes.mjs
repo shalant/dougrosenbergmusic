@@ -16,10 +16,15 @@
 // silently. Pass --write to rewrite public/_headers' script-src hash list
 // in place instead of just reporting.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 
-const BUILT_FILES = ["dist/index.html", "dist/404.html"];
+// Every built page, not a fixed list: the site stopped being one page plus a
+// 404 on 2026-10-15 (/press, /easternblok), and a hard-coded list would have
+// silently skipped any new page's inline scripts.
+const BUILT_FILES = readdirSync("dist", { recursive: true })
+	.map((file) => `dist/${String(file).replace(/\\/g, "/")}`)
+	.filter((file) => file.endsWith(".html"));
 const HEADERS_FILE = "public/_headers";
 const WRITE = process.argv.includes("--write");
 

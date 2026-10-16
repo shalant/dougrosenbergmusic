@@ -1,0 +1,51 @@
+---
+// Doug's own press. Generic layout as of 2026-10-15: one approved quote so
+// far, the rest waits on approvals (see docs/todolist.md, "Press on the
+// site"). Band press lives on /easternblok only, so it isn't kept in two
+// places. Reached only from the home page's Press timeline for now.
+import ArchiveLayout from '../layouts/ArchiveLayout.astro';
+import QuoteLedger from '../components/QuoteLedger.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { leaderQuotes } from '../data/press-timeline.js';
+---
+
+<ArchiveLayout
+  title="Press — Doug Rosenberg"
+  description="Reviews and coverage of saxophonist Doug Rosenberg: concerts as a leader, his own recordings, and his years with Eastern Blok."
+  eyebrow="Press"
+  heading="On record"
+>
+  <p slot="lead" class="archive__lead">Reviews and coverage of Doug Rosenberg's playing, in date order.</p>
+
+  <section class="archive__section" aria-labelledby="leader">
+    <h2 id="leader">As leader</h2>
+    <QuoteLedger quotes={leaderQuotes} />
+    <Placeholder>More concerts and recordings as a leader, including <cite>Better Than TV</cite> (2014), once Doug approves the entries.</Placeholder>
+  </section>
+
+  <section class="archive__section" aria-labelledby="band">
+    <h2 id="band">With Eastern Blok</h2>
+    <p>Most of Doug's press comes from his years in Eastern Blok, which began as the Goran Ivanovic Group. The reviews, albums and the band's history are in the archive.</p>
+    <a class="band-link" href="/easternblok" data-cta="press-to-easternblok">The Eastern Blok archive &rarr;</a>
+  </section>
+</ArchiveLayout>
+
+<style>
+  .band-link {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brass);
+    text-underline-offset: 5px;
+  }
+
+  .band-link:hover,
+  .band-link:focus-visible {
+    color: var(--text);
+  }
+</style>

@@ -1,0 +1,183 @@
+---
+// Eastern Blok archive. Generic layout as of 2026-10-15: the albums and the
+// approved press are real; the story, the full lineup and the show log wait
+// on Doug (see docs/todolist.md, "Press on the site", step 3). Reached only
+// from the home page's Press timeline for now.
+import ArchiveLayout from '../layouts/ArchiveLayout.astro';
+import QuoteLedger from '../components/QuoteLedger.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { easternBlokQuotes } from '../data/press-timeline.js';
+import bandArchive from '../data/eastern-blok-press.json';
+
+const covers: Record<string, { src: string; width: number; height: number }> = {
+  'goran-ivanovic-group': { src: '/images/albums/goran-ivanovic-group.jpg', width: 522, height: 474 },
+  'folk-tales': { src: '/images/albums/folk-tales.jpg', width: 500, height: 509 },
+  underwater: { src: '/images/albums/underwater.jpg', width: 500, height: 500 },
+};
+
+// Release years the sources disagree on, shown on the page until Doug confirms.
+const yearToConfirm: Record<string, string> = {
+  'goran-ivanovic-group': 'some sources say 2005',
+  'folk-tales': 'All About Jazz lists 2008',
+};
+
+const albums = bandArchive.albums.map((album) => ({ ...album, cover: covers[album.id], yearNote: yearToConfirm[album.id] }));
+
+const bandSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MusicGroup',
+  '@id': 'https://dougrosenberg.com/easternblok#band',
+  name: 'Eastern Blok',
+  alternateName: 'Goran Ivanovic Group',
+  url: new URL('/easternblok', Astro.site).toString(),
+  location: { '@type': 'Place', name: 'Chicago, Illinois' },
+  dissolutionDate: '2012',
+  member: [{ '@id': 'https://dougrosenberg.com/#person' }],
+  album: albums.map((album) => ({
+    '@type': 'MusicAlbum',
+    name: album.title,
+    datePublished: String(album.year),
+  })),
+};
+---
+
+<ArchiveLayout
+  title="Eastern Blok — Doug Rosenberg"
+  description="An archive of Eastern Blok, the Chicago band that began as the Goran Ivanovic Group: albums, press and history, through 2012."
+  eyebrow="Archive · Chicago · until 2012"
+  heading="Eastern Blok"
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(bandSchema)} />
+  <p slot="lead" class="archive__lead">
+    The Chicago band that started as the Goran Ivanovic Group and played until 2012. Doug Rosenberg played saxophone.
+  </p>
+
+  <section class="archive__section" aria-labelledby="story">
+    <h2 id="story">The story</h2>
+    <Placeholder>How the band started, the change from the Goran Ivanovic Group to Eastern Blok, the touring years, and how it ended in 2012. Doug is writing this.</Placeholder>
+  </section>
+
+  <section class="archive__section" aria-labelledby="members">
+    <h2 id="members">Members</h2>
+    <ul class="members">
+      <li><span class="members__name">Goran Ivanovic</span><span class="members__role">guitar</span></li>
+      <li><span class="members__name">Doug Rosenberg</span><span class="members__role">saxophone</span></li>
+    </ul>
+    <Placeholder>The rest of the lineup, for each era of the band.</Placeholder>
+  </section>
+
+  <section class="archive__section" aria-labelledby="albums">
+    <h2 id="albums">Albums</h2>
+    <ul class="albums">
+      {albums.map((album) => (
+        <li class="album">
+          {album.cover && (
+            <img class="album__cover" src={album.cover.src} width={album.cover.width} height={album.cover.height} alt={`${album.title} album cover`} loading="lazy" />
+          )}
+          <div class="album__body">
+            <h3 class="album__title">{album.title}</h3>
+            <p class="album__meta">{album.year} · {album.label === 'Self Produced' ? 'self-released' : album.label}{album.band !== 'Eastern Blok' && ` · as the ${album.band}`}</p>
+            {album.yearNote && <p class="album__note">Year to confirm: {album.yearNote}</p>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="archive__section" aria-labelledby="press">
+    <h2 id="press">Press</h2>
+    <QuoteLedger quotes={easternBlokQuotes} />
+    <Placeholder>More reviews, previews and interviews from the press archive, once Doug approves them.</Placeholder>
+  </section>
+
+  <section class="archive__section" aria-labelledby="shows">
+    <h2 id="shows">Shows</h2>
+    <Placeholder>A dated show log, including the March 2008 campus tour, with links to fan recordings on the Internet Archive.</Placeholder>
+  </section>
+</ArchiveLayout>
+
+<style>
+  .members {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.5rem;
+  }
+
+  .members li {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .members__name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+  }
+
+  .members__role {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+  }
+
+  .albums {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .album {
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+  }
+
+  .album__cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 1px solid var(--staff-line-strong);
+  }
+
+  .album__body {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .album__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+
+  .album__meta,
+  .album__note {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+  }
+
+  .album__note {
+    color: var(--brass);
+  }
+
+  @media (max-width: 860px) {
+    .albums {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .albums {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

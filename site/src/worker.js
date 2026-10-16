@@ -180,6 +180,9 @@ const LEGACY_REDIRECTS = {
 	"/preview-graded-expand": "/",
 	"/preview-shape-antenna": "/",
 	"/preview-tv-leadsheet": "/",
+	// Not legacy: the hyphenated spelling of the Eastern Blok archive
+	// (/easternblok, chosen 2026-10-15), so either one people type works.
+	"/eastern-blok": "/easternblok",
 };
 
 // The pre-Astro site served sheet music from /sheetMusic/<CamelCaseName>.pdf;
