@@ -18,7 +18,7 @@
       "provenance": "Text read 2026-10-05 from a Wayback copy (live page returned 403 to the fetch tool).",
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "archive": "aaj-folk-tales-2008"
     },
     {
@@ -37,7 +37,7 @@
       "provenance": "Text read 2026-10-05 from a Wayback copy.",
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "archive": "aaj-goran-ivanovic-group-2006"
     },
     {
@@ -57,7 +57,7 @@
       "provenance": "Reproduced on Doug's own old press page (Wayback, 2013-2017). Original DownBeat URL unknown.",
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "archive": "downbeat-goran-ivanovic-2006-06"
     },
     {
@@ -97,7 +97,7 @@
       "provenance": "Reproduced on Doug's own old press page. Original jazzreview.com URL unknown.",
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "archive": "jazzreview-moses-velvet-lounge-2004-04"
     },
     {
