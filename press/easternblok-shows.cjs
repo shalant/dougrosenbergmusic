@@ -229,8 +229,11 @@ function applyOverrides(shows, overrides) {
 			unmatched.push(o);
 			continue;
 		}
+		// "New Haven, CT" typed into city is split into city + region.
+		const split = typeof o.city === "string" ? o.city.match(/^(.+?),\s*([A-Za-z]{2})$/) : null;
+		const edit = split ? { ...o, city: split[1], region: o.region ?? split[2] } : o;
 		for (const field of ["city", "region", "status", "confirmed"]) {
-			if (o[field] != null) show[field] = field === "region" ? tidyRegion(o[field]) : o[field];
+			if (edit[field] != null) show[field] = field === "region" ? tidyRegion(edit[field]) : edit[field];
 		}
 	}
 	return unmatched;

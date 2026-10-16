@@ -46,37 +46,37 @@
 		{
 			"date": "2005-03-27",
 			"venue": "The Darkroom",
-			"city": null,
+			"city": "Chicago",
 			"region": null
 		},
 		{
 			"date": "2005-09-24",
 			"venue": "Park West",
-			"city": null,
+			"city": "Chicago",
 			"region": null
 		},
 		{
 			"date": "2006-03-28",
 			"venue": "The Puppet House",
-			"city": null,
+			"city": "Bradford, CT",
 			"region": null
 		},
 		{
 			"date": "2006-03-29",
 			"venue": "Johnny D's",
-			"city": null,
+			"city": "Boston, MA",
 			"region": null
 		},
 		{
 			"date": "2006-04-27",
 			"venue": "CSPS",
-			"city": null,
+			"city": "Chicago",
 			"region": null
 		},
 		{
 			"date": "2006-07-05",
 			"venue": "Johnny D's",
-			"city": null,
+			"city": "Boston, MA",
 			"region": null
 		},
 		{
@@ -94,25 +94,25 @@
 		{
 			"date": "2007-03-14",
 			"venue": "Schaumberg High School",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-03-15",
 			"venue": "Katerina's",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-03-16",
 			"venue": "The Firefly",
-			"city": null,
+			"city": "Ann Arbor, MI",
 			"region": null
 		},
 		{
 			"date": "2007-03-17",
 			"venue": "The Acorn Theater",
-			"city": null,
+			"city": "Three Oaks, MI",
 			"region": null
 		},
 		{
@@ -124,7 +124,7 @@
 		{
 			"date": "2007-03-19",
 			"venue": "Grand Valley State University",
-			"city": null,
+			"city": "Grand Rapids, MI",
 			"region": null
 		},
 		{
@@ -142,19 +142,19 @@
 		{
 			"date": "2007-03-23",
 			"venue": "Tazza Caffe",
-			"city": null,
+			"city": "New Haven, CT",
 			"region": null
 		},
 		{
 			"date": "2007-03-27",
 			"venue": "The Cutting Room",
-			"city": null,
+			"city": "New York, NY",
 			"region": null
 		},
 		{
 			"date": "2007-03-29",
 			"venue": "Empire State College",
-			"city": null,
+			"city": "Saratoga Springs, NY",
 			"region": null
 		},
 		{
@@ -172,61 +172,61 @@
 		{
 			"date": "2007-04-01",
 			"venue": "Iron Post",
-			"city": null,
+			"city": "Champaign, IL",
 			"region": null
 		},
 		{
 			"date": "2007-06-02",
 			"venue": "The Chicago International Business & Artists Club",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-06-07",
 			"venue": "Pops For Champagne",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-06-22",
 			"venue": "HotHouse",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-06-28",
 			"venue": "Katerina's",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-07-05",
 			"venue": "Katerina's",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-07-14",
 			"venue": "\"Celebrate Clark Street\" Festival",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-08-04",
 			"venue": "Serbfest",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-09-19",
 			"venue": "WORLD MUSIC FESTIVAL - CD RELEASE SHOW!!",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-09-20",
 			"venue": "Founders Brewing Company",
-			"city": null,
+			"city": "Grand Rapids, MI",
 			"region": null
 		},
 		{
@@ -244,43 +244,43 @@
 		{
 			"date": "2007-09-25",
 			"venue": "Trumansburg High School",
-			"city": null,
+			"city": "Ithaca, NY",
 			"region": null
 		},
 		{
 			"date": "2007-09-26",
 			"venue": "Johnny D's",
-			"city": null,
+			"city": "Boston, MA",
 			"region": null
 		},
 		{
 			"date": "2007-09-27",
 			"venue": "Mehanata",
-			"city": null,
+			"city": "New York, NY",
 			"region": null
 		},
 		{
 			"date": "2007-09-28",
 			"venue": "Cornell University",
-			"city": null,
+			"city": "Ithaca, NY",
 			"region": null
 		},
 		{
 			"date": "2007-09-30",
 			"venue": "Caffe Lena",
-			"city": null,
+			"city": "Saratoga Springs, NY",
 			"region": null
 		},
 		{
 			"date": "2007-10-01",
 			"venue": "Chris Jazz Cafe",
-			"city": null,
+			"city": "Philadelphia, PA",
 			"region": null
 		},
 		{
 			"date": "2007-10-05",
 			"venue": "The Firefly",
-			"city": null,
+			"city": "Ann Arbor, MI",
 			"region": null
 		},
 		{
@@ -304,31 +304,31 @@
 		{
 			"date": "2007-11-03",
 			"venue": "Pop's Blue Moon",
-			"city": null,
+			"city": "St Louis, MO",
 			"region": null
 		},
 		{
 			"date": "2007-11-21",
 			"venue": "Katerina's",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-11-24",
 			"venue": "The Copernicus Center",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2007-12-15",
 			"venue": "Ethno Night @ St. Sava",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
 			"date": "2008-01-23",
 			"venue": "Double Door",
-			"city": null,
+			"city": "Chicago, IL",
 			"region": null
 		},
 		{
@@ -352,13 +352,13 @@
 		{
 			"date": "2008-02-29",
 			"venue": "Kryptonite Bar",
-			"city": null,
+			"city": "Rockford, IL",
 			"region": null
 		},
 		{
 			"date": "2008-03-20",
 			"venue": "Lecture on The Music of the Balkans @ Carnegie Mellon University",
-			"city": null,
+			"city": "Pittsburgh, PA",
 			"region": null
 		},
 		{
@@ -370,43 +370,43 @@
 		{
 			"date": "2008-03-22",
 			"venue": "Underground Cafe @ Carnegie Mellon University",
-			"city": null,
+			"city": "Pittsburgh, PA",
 			"region": null
 		},
 		{
 			"date": "2008-03-24",
 			"venue": "Cafe Viv at Princeton University",
-			"city": null,
+			"city": "Princeton, NJ",
 			"region": null
 		},
 		{
 			"date": "2008-03-25",
 			"venue": "Drom",
-			"city": null,
+			"city": "New York, NY",
 			"region": null
 		},
 		{
 			"date": "2008-03-26",
 			"venue": "World Cafe Live-Upstairs",
-			"city": null,
+			"city": "Philadelphia, PA",
 			"region": null
 		},
 		{
 			"date": "2008-03-30",
 			"venue": "The Village Idiot",
-			"city": null,
+			"city": "Toledo, OH",
 			"region": null
 		},
 		{
 			"date": "2008-03-31",
 			"venue": "University of Michigan - Ann Arbor",
-			"city": null,
+			"city": "Ann Arbor, MI",
 			"region": null
 		},
 		{
 			"date": "2009-03-25",
 			"venue": "Johnny D's",
-			"city": null,
+			"city": "Boston, MA",
 			"region": null
 		},
 		{
@@ -418,13 +418,13 @@
 		{
 			"date": "2009-09-17",
 			"venue": "Minnesota State U",
-			"city": null,
+			"city": "Mankato",
 			"region": "MN"
 		},
 		{
 			"date": "2009-09-18",
 			"venue": "U Of Minnesota, Moorhead Campus",
-			"city": null,
+			"city": "Moorhead",
 			"region": "MN"
 		},
 		{

@@ -189,3 +189,10 @@ test("applyOverrides fills blanks, confirms shows, and reports unmatched entries
 	assert.equal(shows[1].region, "IL");
 	assert.deepEqual(unmatched.map((o) => o.venue), ["Katerina's", "Nowhere"]);
 });
+
+test("applyOverrides splits a city typed as 'City, ST' into city and region", () => {
+	const shows = [{ date: "2007-03-23", venue: "Tazza Caffe", city: null, region: null }];
+	applyOverrides(shows, [{ date: "2007-03-23", venue: "Tazza Caffe", city: "New Haven, CT", region: null }]);
+	assert.equal(shows[0].city, "New Haven");
+	assert.equal(shows[0].region, "CT");
+});
