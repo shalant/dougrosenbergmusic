@@ -1530,10 +1530,34 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             `MusicGroup` with members, `dissolutionDate`, albums, and reviews linked to the album
             they cover. This is the strongest SEO/GEO piece here: the band's coverage online is
             thin and decaying, so a sourced page could become the main reference for it
+      - [x] **2026-10-15, branch `press-timeline-section-2026-10-15`: home timeline plus generic
+            `/press` and `/easternblok` pages.** `PressTimeline.astro` (section `#press`, after
+            `CareerHighlights`) shows the six approved quotes in two eras with bracket links;
+            `QuoteLedger.astro` renders the rows for all three places. Quotes live in
+            `src/data/press-timeline.js`; `src/press-timeline.test.js` fails if a quote isn't
+            approved in `press/press.json`, isn't word for word, or links somewhere else. The two
+            pages use `ArchiveLayout.astro` (no StaffNav, logo links to `/`, "Back" goes to
+            `/#press`) and mark missing text with `Placeholder.astro`. `/easternblok` has the
+            three albums (year conflicts shown as "Year to confirm"), Goran and Doug as members,
+            the five band quotes, and `MusicGroup` JSON-LD tied to `#person`. `/eastern-blok`
+            301s to `/easternblok` (worker). Build now uses `format: 'file'` so pages serve
+            without a trailing slash; `BaseLayout` strips `.html` from the canonical (the home
+            page canonical stays `/`). `verify-csp` now reads every built page (12 hashes).
+            Verified: build, check, lint, `npm test` (40 pass), `npm run test:e2e` (64 pass,
+            6 skipped as before; 18 new), screenshots at 1280px and Pixel 7
+      - [ ] **Before the two pages go public:** both are `draft` (noindex, left out of the
+            sitemap via `DRAFT_PAGES` in `astro.config.mjs`). When Doug's text replaces the
+            placeholders: drop `draft`, remove the path from `DRAFT_PAGES`, add the pages to
+            `llms.txt`, update the e2e noindex/sitemap assertions, then run IndexNow after deploy
+      - [ ] **Merge note:** PR #78 (IndexNow, JSON-LD `@id` links) also changes the CSP hash
+            list and `index.astro`'s schema; whichever merges second needs
+            `npm run build && npm run verify-csp -- --write`
       - [ ] **4. Decide on `/press`** after the band page exists: build it only if enough isn't
             already on the band page. If both exist, each entry lives in one place (band press on
             the band page, `/press` links to it) so there aren't two copies to maintain
-      - [ ] **Multi-page groundwork (needed for 3 and 4).** The site is one page plus `404.astro`.
+      - [x] **Multi-page groundwork (needed for 3 and 4).** Done 2026-10-15 in the branch above
+            (layout, nav, canonicals, sitemap filter, CSP checker, e2e); `llms.txt` and IndexNow
+            wait until the pages leave draft. Original note: the site was one page plus `404.astro`.
             New pages need: nav that works off the home page (`StaffNav` links are in-page
             anchors), shared layout/meta per page, sitemap entries, per-page JSON-LD and CSP
             hashes, `llms.txt` update, e2e coverage, and an IndexNow run after deploy

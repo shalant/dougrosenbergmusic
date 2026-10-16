@@ -15,3 +15,7 @@ for (const path of ["/bio.html", "/contact.html", "/teaching.html"]) {
 		assert.match(block, new RegExp(`^\\s*"${path.replace(".", "\\.")}": "/",\\s*$`, "m"));
 	});
 }
+
+test("/eastern-blok redirects to the Eastern Blok archive at /easternblok", () => {
+	assert.match(block, /^\s*"\/eastern-blok": "\/easternblok",\s*$/m);
+});

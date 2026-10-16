@@ -6,6 +6,7 @@ import Listen from '../components/Listen.astro';
 import About from '../components/About.astro';
 import Performance from '../components/Performance.astro';
 import CareerHighlights from '../components/CareerHighlights.astro';
+import PressTimeline from '../components/PressTimeline.astro';
 import Gallery from '../components/Gallery.astro';
 import Lessons from '../components/Lessons.astro';
 import SheetMusicLibrary from '../components/SheetMusicLibrary.astro';
@@ -56,6 +57,7 @@ const albumsSchema = { '@context': 'https://schema.org', '@graph': recordings };
   <Performance />
   <StaffDivider icon="award" tone="highlights" label="Highlights" />
   <CareerHighlights />
+  <PressTimeline />
   <Gallery />
   <StaffDivider icon="book" tone="lessons" label="Lessons" />
   <Lessons />

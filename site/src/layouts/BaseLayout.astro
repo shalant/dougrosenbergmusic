@@ -6,11 +6,21 @@ import StaffNav from '../components/StaffNav.astro';
 interface Props {
   title: string;
   description: string;
+  // false on pages other than the home page: StaffNav's notes are in-page
+  // jumps to home-page sections, so those pages get the logo (linking to "/")
+  // and no StaffNav.
+  home?: boolean;
+  // true keeps a page out of search results while it is still a draft with
+  // placeholder text. Also drop it from the sitemap (astro.config.mjs).
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, home = true, noindex = false } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// astro.config.mjs builds with format 'file', so Astro.url.pathname ends in
+// .html (/index.html, /easternblok.html). The live URLs don't, so strip it.
+const pagePath = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
+const canonicalURL = new URL(pagePath, Astro.site);
 const ogImageURL = new URL(`${import.meta.env.BASE_URL}images/og-image.jpg`, Astro.site);
 
 const personSchema = {
@@ -49,6 +59,7 @@ const websiteSchema = {
 		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex" />}
 		<link rel="canonical" href={canonicalURL} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -144,8 +155,8 @@ const websiteSchema = {
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF"></script>
 	</head>
 	<body>
-		<Logo />
-		<StaffNav />
+		<Logo home={home} />
+		{home && <StaffNav />}
 		<main>
 			<slot />
 		</main>
