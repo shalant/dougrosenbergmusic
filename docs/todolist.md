@@ -1424,8 +1424,8 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       - [ ] Still unsearched: AllMusic (403), Amazon/CD Baby customer reviews, Chicago Reader and
             Time Out Chicago archives, Doug's own press-kit files
       - [ ] Folk Tales year conflict: reviews date from 2007, AllAboutJazz lists 2008. Confirm
-      - [ ] Decide whether and how to show a "Press" section (the 6/10 Scene Point Blank review
-            is part of the honest record)
+      - [x] Decide whether and how to show a "Press" section (the 6/10 Scene Point Blank review
+            is part of the honest record). Decided 2026-10-15, see "Press on the site" below
       - [x] 2026-10-05: grew to 28 entries (added Chicago Reader, Minor 7th, Guitar One, DownBeat
             2006, a 29-show gig log from Internet Archive recordings, and 2008 tour stops); moved the
             file to the shared press schema (`kind`, `outlet`, `about`, `namesDoug`, `approved`,
@@ -1486,11 +1486,48 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             Save Page Now is an outward action; do it with Doug's OK
       - [ ] Every entry is `approved: false`. Doug needs to choose which can be used publicly and
             how much quoting is acceptable before any of it reaches the site
-      - [ ] Decide whether and how to show a "Press" section (shared with the Eastern Blok item
-            above). The merged `press.json` is built to feed it
+      - [x] Decide whether and how to show a "Press" section (shared with the Eastern Blok item
+            above). The merged `press.json` is built to feed it. Decided 2026-10-15, see "Press on
+            the site" below
       - [ ] Housekeeping: open or skip a PR for `press-json-regen-2026-10-05`; remove the extra
             worktrees (`dougrosenbergmusic-press`, `dougrosenbergmusic-eb2`) with
             `git worktree remove`; delete merged remote press branches
       - **Deliberate rule for this archive:** several other Rosenbergs show up in results (bassist
         Marlene, guitarist Jimmy, reedist Scott). Check the text names Doug before adding an
         entry, and record collisions under `rejected`. Quotes stay short and attributed.
+- [ ] **2026-10-15 — Press on the site: a home-page section, an Eastern Blok archive page, maybe a
+      `/press` page.** Decided with Doug 2026-10-15. Of the 39 entries in `press/press.json`, 31 are
+      about Eastern Blok or the Goran Ivanovic Group and 8 are about Doug alone; 18 name Doug. So
+      the band page is the natural home for most of the press, and a separate `/press` page would
+      mostly repeat it. Search position on the page doesn't matter for SEO/GEO/AEO (crawlers read
+      the whole page); the value is in short attributed quotes, links to the sources, and schema
+      tying each review to Doug and the band. Steps, in order:
+      - [ ] **1. Approve entries.** Go through the entries that name Doug with their pull quotes;
+            Doug sets `approved: true` on the ones that can be shown. Nothing reaches the site
+            before this. Regenerate `press/press.json` after
+      - [ ] **2. Home-page Press section** with 4-6 approved quotes that name Doug (outlet, year,
+            link each) and a "More press" link once a page exists. Placed after `CareerHighlights`
+            (with the music credibility material, not between FAQ and Contact). No carousel or
+            auto-scroll: hidden quotes go unread and are weaker for AI engines. Needs a
+            `StaffDivider`, a nav decision, schema for the reviews, CSP hash regen if any inline
+            script or JSON-LD changes, and an e2e test
+      - [ ] **3. Eastern Blok archive page** (`/eastern-blok`): the band's story, members, albums
+            (*Folk Tales*, *Underwater*; *Folk Tales* year conflict above), photos, and its press.
+            The band ended in 2012. Needs Doug's own account of the band first; nothing gets
+            invented, and anything unconfirmed is marked on the page. Tell Goran and the other
+            members before it goes live (it will show up in searches for the band; they may also
+            have photos and corrections). Photos only if Doug owns them or has permission. Schema:
+            `MusicGroup` with members, `dissolutionDate`, albums, and reviews linked to the album
+            they cover. This is the strongest SEO/GEO piece here: the band's coverage online is
+            thin and decaying, so a sourced page could become the main reference for it
+      - [ ] **4. Decide on `/press`** after the band page exists: build it only if enough isn't
+            already on the band page. If both exist, each entry lives in one place (band press on
+            the band page, `/press` links to it) so there aren't two copies to maintain
+      - [ ] **Multi-page groundwork (needed for 3 and 4).** The site is one page plus `404.astro`.
+            New pages need: nav that works off the home page (`StaffNav` links are in-page
+            anchors), shared layout/meta per page, sitemap entries, per-page JSON-LD and CSP
+            hashes, `llms.txt` update, e2e coverage, and an IndexNow run after deploy
+      - [ ] **The live "Chicago Tribune" quote** in `site/src/components/About.astro` has no
+            located source (see the Tribune item above). Doug to choose: find the article, remove
+            the quote, or reword the citation so it doesn't read as a review of the CD. Settle it
+            before the Press section goes up next to sourced quotes
