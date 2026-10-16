@@ -48,7 +48,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Misspells the leader's name in the last line."
     },
     {
@@ -201,7 +201,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Read in Chrome; WebFetch gets 403 from this site. A Wayback copy exists (snapshot 2022-05-17) but WebFetch cannot reach web.archive.org."
     },
     {
@@ -472,7 +472,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Short blurb in the Reader's World Music Festival guide (Chicago, Sept 14-20, 2007), on the 'brand-new Folk Tales'. Mixed: praises the players' command of the styles, but says they too often play with a 'proggy fussiness' that makes it hard to enjoy. Author initials from the page; the festival guide runs under several writers, so confirm Margasak. Both quotes are trimmed.",
       "aliases": [
         "reader-world-music-fest-2007"
@@ -622,7 +622,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Sept/Oct 2007 issue; read in full in Chrome. Positive. Also quotes DownBeat second-hand: 'offers up fire rather than ice, and the guitarist's amalgamation of flamenco, Balkan, classical, blues, and jazz keeps his band pushing forward almost all of the time.' That is probably from DownBeat's 2006 review of the first album (see downbeat-goran-ivanovic-group-2006-06). Calls the leader 'Serbian transplant'."
     },
     {
@@ -692,7 +692,7 @@
       ],
       "verified": false,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Only source is Doug's own old press page as captured by Wayback (2017). Taken from press/candidates.json (another session's index, 2026-10-05), not checked by me. The original DownBeat page or issue is not located. The first real DownBeat review of the band; the 2008 promo bio's DownBeat quote ('breakneck and consistently challenging') may come from a later review, since this quote differs. Star rating shown as 3 of 5 per that index.",
       "aliases": [
         "downbeat-goran-ivanovic-group-2006-06"
