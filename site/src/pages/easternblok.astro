@@ -6,6 +6,7 @@
 import ArchiveLayout from '../layouts/ArchiveLayout.astro';
 import QuoteLedger from '../components/QuoteLedger.astro';
 import Placeholder from '../components/Placeholder.astro';
+import ShowLog from '../components/ShowLog.astro';
 import { easternBlokQuotes } from '../data/press-timeline.js';
 import bandArchive from '../data/eastern-blok-press.json';
 
@@ -92,7 +93,7 @@ const bandSchema = {
 
   <section class="archive__section" aria-labelledby="shows">
     <h2 id="shows">Shows</h2>
-    <Placeholder>A dated show log, including the March 2008 campus tour, with links to fan recordings on the Internet Archive.</Placeholder>
+    <ShowLog />
   </section>
 </ArchiveLayout>
 

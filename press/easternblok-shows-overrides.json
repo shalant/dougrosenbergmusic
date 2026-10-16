@@ -1,0 +1,437 @@
+{
+	"_about": "Hand edits applied on top of the generated show list by press/easternblok-shows.cjs. Match is by date + venue exactly as it appears in site/src/data/eastern-blok-shows.json. Fill in city (and region, as a postal code like IL) for the shows below; null means not filled yet and is ignored. status: past marks an announced show as played; confirmed says who confirmed it and when. After editing, rerun: node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json",
+	"shows": [
+		{
+			"date": "2012-02-04",
+			"venue": "Art Gallery Kafe",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2012-02-17",
+			"venue": "An Evening with Eastern Blok",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2012-02-18",
+			"venue": "Kryptonite",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2012-03-22",
+			"venue": "Arab American Museum",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2012-05-19",
+			"venue": "Private Wedding",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2012-06-09",
+			"venue": "Burlington Jazz Festival",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2012-06-23",
+			"venue": "CD-release party!",
+			"status": "past",
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
+		},
+		{
+			"date": "2005-03-27",
+			"venue": "The Darkroom",
+			"city": "Chicago",
+			"region": null
+		},
+		{
+			"date": "2005-09-24",
+			"venue": "Park West",
+			"city": "Chicago",
+			"region": null
+		},
+		{
+			"date": "2006-03-28",
+			"venue": "The Puppet House",
+			"city": "Bradford, CT",
+			"region": null
+		},
+		{
+			"date": "2006-03-29",
+			"venue": "Johnny D's",
+			"city": "Boston, MA",
+			"region": null
+		},
+		{
+			"date": "2006-04-27",
+			"venue": "CSPS",
+			"city": "Chicago",
+			"region": null
+		},
+		{
+			"date": "2006-07-05",
+			"venue": "Johnny D's",
+			"city": "Boston, MA",
+			"region": null
+		},
+		{
+			"date": "2006-07-19",
+			"venue": "The Mill",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2006-11-10",
+			"venue": "Mezzanotte Lounge",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-03-14",
+			"venue": "Schaumberg High School",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-03-15",
+			"venue": "Katerina's",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-03-16",
+			"venue": "The Firefly",
+			"city": "Ann Arbor, MI",
+			"region": null
+		},
+		{
+			"date": "2007-03-17",
+			"venue": "The Acorn Theater",
+			"city": "Three Oaks, MI",
+			"region": null
+		},
+		{
+			"date": "2007-03-18",
+			"venue": "Isn't This Nice?",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-03-19",
+			"venue": "Grand Valley State University",
+			"city": "Grand Rapids, MI",
+			"region": null
+		},
+		{
+			"date": "2007-03-21",
+			"venue": "Pacchia",
+			"city": "Dayton",
+			"region": "OH"
+		},
+		{
+			"date": "2007-03-22",
+			"venue": "IOTA Club & Cafe",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-03-23",
+			"venue": "Tazza Caffe",
+			"city": "New Haven, CT",
+			"region": null
+		},
+		{
+			"date": "2007-03-27",
+			"venue": "The Cutting Room",
+			"city": "New York, NY",
+			"region": null
+		},
+		{
+			"date": "2007-03-29",
+			"venue": "Empire State College",
+			"city": "Saratoga Springs, NY",
+			"region": null
+		},
+		{
+			"date": "2007-03-30",
+			"venue": "Cyberwest Cafe",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-03-31",
+			"venue": "701",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-04-01",
+			"venue": "Iron Post",
+			"city": "Champaign, IL",
+			"region": null
+		},
+		{
+			"date": "2007-06-02",
+			"venue": "The Chicago International Business & Artists Club",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-06-07",
+			"venue": "Pops For Champagne",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-06-22",
+			"venue": "HotHouse",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-06-28",
+			"venue": "Katerina's",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-07-05",
+			"venue": "Katerina's",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-07-14",
+			"venue": "\"Celebrate Clark Street\" Festival",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-08-04",
+			"venue": "Serbfest",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-09-19",
+			"venue": "WORLD MUSIC FESTIVAL - CD RELEASE SHOW!!",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-09-20",
+			"venue": "Founders Brewing Company",
+			"city": "Grand Rapids, MI",
+			"region": null
+		},
+		{
+			"date": "2007-09-21",
+			"venue": "Howard's Club H",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-09-23",
+			"venue": "Folk Dance Council",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-09-25",
+			"venue": "Trumansburg High School",
+			"city": "Ithaca, NY",
+			"region": null
+		},
+		{
+			"date": "2007-09-26",
+			"venue": "Johnny D's",
+			"city": "Boston, MA",
+			"region": null
+		},
+		{
+			"date": "2007-09-27",
+			"venue": "Mehanata",
+			"city": "New York, NY",
+			"region": null
+		},
+		{
+			"date": "2007-09-28",
+			"venue": "Cornell University",
+			"city": "Ithaca, NY",
+			"region": null
+		},
+		{
+			"date": "2007-09-30",
+			"venue": "Caffe Lena",
+			"city": "Saratoga Springs, NY",
+			"region": null
+		},
+		{
+			"date": "2007-10-01",
+			"venue": "Chris Jazz Cafe",
+			"city": "Philadelphia, PA",
+			"region": null
+		},
+		{
+			"date": "2007-10-05",
+			"venue": "The Firefly",
+			"city": "Ann Arbor, MI",
+			"region": null
+		},
+		{
+			"date": "2007-11-01",
+			"venue": "The Redstone Room",
+			"city": "Davenport",
+			"region": "IA"
+		},
+		{
+			"date": "2007-11-02",
+			"venue": "The DuKum Upp",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-11-02",
+			"venue": "Truman State University",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2007-11-03",
+			"venue": "Pop's Blue Moon",
+			"city": "St. Louis, MO",
+			"region": null
+		},
+		{
+			"date": "2007-11-21",
+			"venue": "Katerina's",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-11-24",
+			"venue": "The Copernicus Center",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2007-12-15",
+			"venue": "Ethno Night @ St. Sava",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2008-01-23",
+			"venue": "Double Door",
+			"city": "Chicago, IL",
+			"region": null
+		},
+		{
+			"date": "2008-01-24",
+			"venue": "Rossi's Blue Star Room",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2008-01-25",
+			"venue": "Rossi's Blue Star Room",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2008-01-26",
+			"venue": "der Rathskeller",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2008-02-29",
+			"venue": "Kryptonite Bar",
+			"city": "Rockford, IL",
+			"region": null
+		},
+		{
+			"date": "2008-03-20",
+			"venue": "Lecture on The Music of the Balkans @ Carnegie Mellon University",
+			"city": "Pittsburgh, PA",
+			"region": null
+		},
+		{
+			"date": "2008-03-21",
+			"venue": "Private Event",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2008-03-22",
+			"venue": "Underground Cafe @ Carnegie Mellon University",
+			"city": "Pittsburgh, PA",
+			"region": null
+		},
+		{
+			"date": "2008-03-24",
+			"venue": "Cafe Viv at Princeton University",
+			"city": "Princeton, NJ",
+			"region": null
+		},
+		{
+			"date": "2008-03-25",
+			"venue": "Drom",
+			"city": "New York, NY",
+			"region": null
+		},
+		{
+			"date": "2008-03-26",
+			"venue": "World Cafe Live-Upstairs",
+			"city": "Philadelphia, PA",
+			"region": null
+		},
+		{
+			"date": "2008-03-30",
+			"venue": "The Village Idiot",
+			"city": "Toledo, OH",
+			"region": null
+		},
+		{
+			"date": "2008-03-31",
+			"venue": "University of Michigan - Ann Arbor",
+			"city": "Ann Arbor, MI",
+			"region": null
+		},
+		{
+			"date": "2009-03-25",
+			"venue": "Johnny D's",
+			"city": "Boston, MA",
+			"region": null
+		},
+		{
+			"date": "2009-03-29",
+			"venue": "Your Inner Vagabond",
+			"city": null,
+			"region": null
+		},
+		{
+			"date": "2009-09-17",
+			"venue": "Minnesota State U",
+			"city": "Mankato",
+			"region": "MN"
+		},
+		{
+			"date": "2009-09-18",
+			"venue": "U Of Minnesota, Moorhead Campus",
+			"city": "Moorhead",
+			"region": "MN"
+		},
+		{
+			"date": "2009-11-05",
+			"venue": "Poland",
+			"city": null,
+			"region": null
+		}
+	]
+}
