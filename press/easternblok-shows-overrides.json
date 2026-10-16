@@ -130,8 +130,8 @@
 		{
 			"date": "2007-03-21",
 			"venue": "Pacchia",
-			"city": null,
-			"region": null
+			"city": "Dayton",
+			"region": "OH"
 		},
 		{
 			"date": "2007-03-22",
@@ -286,8 +286,8 @@
 		{
 			"date": "2007-11-01",
 			"venue": "The Redstone Room",
-			"city": null,
-			"region": null
+			"city": "Davenport",
+			"region": "IA"
 		},
 		{
 			"date": "2007-11-02",
@@ -304,7 +304,7 @@
 		{
 			"date": "2007-11-03",
 			"venue": "Pop's Blue Moon",
-			"city": "St Louis, MO",
+			"city": "St. Louis, MO",
 			"region": null
 		},
 		{

@@ -1594,7 +1594,7 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       - [x] 2026-10-15: Doug confirmed the seven 2012 shows (only ever announced on the old
             site) happened. Recorded in `press/easternblok-shows-overrides.json` with a
             `confirmed` note; counts are now 221 played, 11 announced, 21 recording-only
-      - [ ] **Missing cities (Doug):** 18 shows still have no city (Doug filled in 47 of 65 on
+      - [ ] **Missing cities (Doug):** 16 shows still have no city (Doug filled in 49 of 65 on
             2026-10-15; "City, ST" typed into `city` is split automatically). The old site
             listed only the venue. They're listed with `"city": null` in
             `press/easternblok-shows-overrides.json`; fill in city and region, then run
