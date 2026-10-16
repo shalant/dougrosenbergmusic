@@ -430,10 +430,13 @@ semantic headings, title/meta description.
             `/bio.html`, `/contact.html`, `/teaching.html` still 404'd; added them to
             `LEGACY_REDIRECTS` in `worker.js` as 301 → `/` (Doug's call: home page, not the
             sections) with `src/legacy-redirects.test.js` (fails against the old worker.js).
-            Verified with `wrangler dev` + `curl`. **Still to do:** after deploy, `curl -I` the
-            three live URLs, then "Validate fix" on the 404 group again.
+            Verified with `wrangler dev` + `curl`. After deploy, `curl` of the three live URLs
+            confirmed 301 → `/` on 2026-10-11 (also `/index.html` 307 → `/`, `/photogallery.html`
+            301 → `/#gallery`). **Still to do:** "Validate fix" on the 404 group again (button
+            in Search Console).
       - [ ] Review Performance report once data populates (query/page baseline, name searches)
-      - [ ] Confirm Manual actions and Security issues both clean
+      - [x] Confirm Manual actions and Security issues both clean — both "No issues detected"
+            on the domain property (2026-10-11)
 - [ ] **Bing Webmaster Tools** (dougrosenberg.com wasn't set up before 2026-09-29)
       - [x] Imported from Google Search Console (2026-09-29, Administrator role)
       - [x] `sitemap-index.xml` came in with the import (shows "Processing" 2026-09-30); recheck
@@ -441,7 +444,15 @@ semantic headings, title/meta description.
       - [x] URL Submission for `https://dougrosenberg.com/` (2026-09-29)
       - [ ] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
             at 2026-09-29)
-      - [ ] Consider IndexNow (pings Bing when pages change)
+      - [ ] IndexNow (pings Bing when pages change) — code added 2026-10-11 on branch
+            `cloudflare-baseline-todo-2026-10-11`: key file `site/public/<key>.txt`,
+            `site/scripts/indexnow.mjs` (`npm run indexnow`, `-- --dry-run` to preview), 4 unit
+            tests. Submits the sitemap URLs (just `/`) to `api.indexnow.org`; Bing, Yandex, Seznam
+            and Naver participate, Google doesn't. **Still to do after merge/deploy:** `curl` the
+            key URL (`https://dougrosenberg.com/d9dfce984872d86601855f63a4980a65.txt` must return
+            the key with a 200), then run `npm run build && npm run indexnow` and expect 200/202.
+            Not wired into deploy on purpose: a manual run after meaningful content changes keeps
+            it from pinging on every build.
 - [x] **Direct-answer intro** — 30-60 word plain statement of who Doug is and what he does,
       near the top (h1 is currently the slogan "I make websites"). Copy needs Doug's approval.
       *Shipped; confirmed in the served page by the 2026-09-30 live check below. Checkbox
@@ -450,10 +461,20 @@ semantic headings, title/meta description.
       offer?", "Does he teach saxophone in Chicago?"; conversational Q&A matching how people ask
       assistants. Consider whether the web-services FAQ belongs on dougrosenbergdev.com instead.
       *Shipped (`Faq.astro` emits the `FAQPage` JSON-LD); confirmed by the 2026-09-30 live
-      check below. Checkbox ticked 2026-10-04. Rich Results Test on the live URL still not run.*
+      check below. Checkbox ticked 2026-10-04. Rich Results Test run on the live URL
+      2026-10-11: "No items detected", which is expected (the tool only lists types that unlock
+      Google rich results, and Google stopped showing FAQ rich results for most sites in 2023).
+      The Schema Markup Validator (validator.schema.org) on the live URL the same day: 0 errors,
+      0 warnings, 8 items (WebPage, 4 MusicAlbum, WebSite, Person, FAQPage).*
 - [ ] **Richer schema** — `Person`: `knowsAbout`, `alumniOf` (New England Conservatory), `image`,
       `worksFor`; `MusicAlbum` for the recordings; `dateModified`. `ProfessionalService` schema
-      belongs on dougrosenbergdev.com.
+      belongs on dougrosenbergdev.com. *Status 2026-10-11: `knowsAbout`, `alumniOf`, `image`,
+      `MusicAlbum` and `WebPage.dateModified` were already shipped (this item was stale). Added
+      stable `@id`s so the separate JSON-LD blocks link up: `WebSite.publisher`,
+      `WebPage.isPartOf`/`mainEntity`/`about` and each album's `byArtist` now reference the one
+      `#person` entity instead of anonymous stubs (e2e test added; CSP hashes regenerated, still
+      11). **Not added:** `worksFor` — nothing on the site confirms an employer or organisation,
+      so it needs Doug's call (e.g. whether to point it at dougrosenbergdev.com).*
 - [ ] **Sheet-music PDFs as search content** — decide whether to make them rank ("Bach Arioso
       trombone" style queries): would need real titles/text around each file, not just links.
 - [ ] **Off-site authority / entity consistency** — full checklist with profile URLs and the
@@ -642,6 +663,12 @@ status. Needs Doug: entity-consistency profile claiming, sheet-music ranking dec
 missing PDFs, monitoring/alerting decision. **Correction:** `/api/contact` already has a rate
 limit (5/60s per IP, `CONTACT_RATE_LIMITER`, fixed 2026-09-27); a handoff note from the
 dougrosenbergdev repo claiming this site had the same gap was wrong.
+- [ ] **Internal dev comments ship in the live HTML (found 2026-10-11, low priority)** — 7 HTML
+      comments (BaseLayout's Cloudflare/GA4 notes, the hero/dev-screen/contact comments) are
+      served to visitors and crawlers: 5,244 of 116,782 bytes (~4.5%, small after gzip). Harmless
+      to SEO but it is internal reasoning on a public page. Fix: turn them into Astro `{/* */}`
+      comments (stripped at build). `verify-csp` already strips HTML comments before hashing, so
+      hashes shouldn't change, but re-run `npm run build && npm run verify-csp` to confirm.
 
 ## Custom items (this project specifically)
 
