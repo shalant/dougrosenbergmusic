@@ -652,6 +652,34 @@ semantic headings, title/meta description.
           shows 0 and can be ignored. These are the first usable human-traffic numbers for the
           music site; I did not check country or page breakdowns. Use these as the baseline for
           future rechecks alongside Search Console.
+      - **2026-10-15 recheck (read-only, via signed-in Chrome):**
+        - Search Console, dougrosenberg.com Domain property (2026-09-28 to 2026-10-13): 3 clicks,
+          34 impressions, 8.8% CTR, avg position 6.6 (10-10 check: 3 / 28 / 10.7% / 6.1). Still one
+          query, "doug rosenberg" (1 click, 17 impressions). Impressions crept up; nothing for
+          non-name queries yet.
+        - Cloudflare Web Analytics (bots excluded), music site entry: 400 visits / 440 page views
+          over the last 30 days (10-11 baseline: 380 / 420). The last 24 hours alone had 78 visits /
+          81 page views, about 20% of the 30-day total (+7.7k% vs the prior period), on
+          `/easternblok`, `/`, `/press`, and a www `/sheetMusic/...` page. Cause not checked (no
+          referrer or country breakdown pulled); the Eastern Blok and press pages are new, so a
+          shared link is plausible but unconfirmed. Core Web Vitals: LCP 100% good (P75 785ms), CLS
+          100% good, INP 83% good / 17% poor (10 hits on `html>body`, 2,792ms, likely slow-device
+          taps); avg page load 1,024ms.
+        - GA4 (28 days, 2026-09-17 to 10-14): about 7,400 views / 7,300 users, 1.02 views per user,
+          ~0s engagement; every page title is a dougrosenbergdev.com page, same bot-shaped profile as
+          10-10/10-11. GA4 flagged `/` views falling to 1 on 2026-10-09 (expected 151), all
+          Safari/Apple; read as a bot wave ending, not verified. Still not usable for this site.
+        - Bing, dougrosenberg.com (Site Explorer, after signing in): crawl info unchanged at 13
+          indexed / 1 error / 20 warnings / 6 excluded (10-10: 13 / 1 / 27 / 4). The home page's
+          last crawl is still 2026-06-09 (5.1KB document, the old Blazor site), so Bing has not
+          recrawled the rebuild six days after the 10-10 check and about 2.5 weeks after the sitemap
+          import. Search Performance on the Bing home page: 0 clicks / 0 impressions for 2026-09-07
+          to 10-13. Site Explorer's 6-month view shows 5 clicks / 57 impressions, all from before
+          the rebuild. Fix to try: Request indexing / URL Submission for `/` (it was submitted
+          2026-09-29, with no recrawl since).
+        - Bing, dougrosenbergdev.com: 7 indexed / 0 error / 1 warning / 1 excluded (10-11: 6 / 0 / 1
+          / 1); home page recrawled 2026-10-11 (106.2KB, 200). I did not check whether the 5 URLs
+          submitted 2026-10-11 are the new indexed one.
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
