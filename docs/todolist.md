@@ -694,6 +694,48 @@ semantic headings, title/meta description.
           / 1); home page recrawled 2026-10-11 (106.2KB, 200). I did not check whether the 5 URLs
           submitted 2026-10-11 are the new indexed one.
 
+- [ ] **2026-10-15 — Getting more traffic (plan after the recheck above).** Real traffic is about
+      190 visits / 30 days, nearly all direct or name searches. Off-site links and mentions
+      will move that more than on-site tweaks. Status:
+      - [x] **Stop counting localhost.** The Cloudflare beacon and gtag.js are now injected by the
+            inline script in `BaseLayout.astro` only when the hostname isn't `localhost`,
+            `127.0.0.1` or `[::1]`. Regenerated the CSP hashes (`npm run build && npm run
+            verify-csp -- --write`; `verify-csp` passes, 12 hashes). Added two e2e tests in
+            `e2e/smoke.spec.ts` (no analytics scripts on localhost; both injected on
+            `site.localhost`); confirmed the localhost test fails against the pre-fix build and
+            passes after. Unit tests (48) and the full e2e suite pass. Not live until merged and
+            deployed; check Cloudflare's Host breakdown afterward to confirm `localhost` stops
+            growing.
+      - [x] **Google "Request indexing" for `/easternblok` was rejected (2026-10-15)**, correctly:
+            `/press` and `/easternblok` are deliberate drafts (`noindex`, left out of the sitemap
+            via `DRAFT_PAGES` in `astro.config.mjs`) until Doug's own text is in. Not changed,
+            since it's recorded as deliberate. The 2026-10-15 Bing URL Submission of those two
+            pages was therefore wasted (Bing will see `noindex`); `/` is the useful submission.
+            Search Console's URL Inspection also says Google doesn't know `/easternblok` at all.
+            **Don't request indexing for either until `DRAFT_PAGES` is emptied.**
+      - [ ] **Share the new pages where people already are** (needs Doug; I can't post). Facebook
+            already sent visits. Eastern Blok's own channels, Chicago/Balkan music groups, venues
+            and bandmates linking to the show history. Blocked on `/easternblok` leaving draft,
+            since it carries `noindex` (sharing the link still works, it just won't rank).
+      - [ ] **Claim and align profiles** (needs Doug): same name, bio and site link on LinkedIn,
+            GitHub, Bandcamp, Discogs, MusicBrainz, All About Jazz musician pages (the archive has
+            AAJ pages for Eastern Blok and Goran Ivanovic whose bios may allow a website link).
+      - [ ] **Pick 3-5 non-name searches to target.** Today only "doug rosenberg" shows up.
+            Candidates: sheet music titles (the `/sheetMusic/` page already gets visits; the 7
+            missing PDFs and the ranking decision are still open), "Eastern Blok Chicago",
+            "jazz saxophone lessons Chicago", "website for my band".
+      - [ ] **Turn the press archive into links** (needs Doug to send). The archive has 39
+            entries; the ones worth asking for a link to dougrosenberg.com (or `/easternblok` once
+            it's live) are live pages that name Doug: All About Jazz (reviews and the Eastern Blok
+            musician page), Minor7th, WBEZ Morning Show, Chicago Reader, Sun-Times, Jazz Review.
+            Nothing was sent. A published link on a review matters more than any on-site change.
+            Also depends on deciding the `/press` page's draft status.
+      - [ ] **Decide the site's primary goal:** music (Eastern Blok, sheet music, lessons) or dev
+            services. The audiences and search terms differ; traffic grows faster with one.
+      - [ ] **Recheck in ~1 week:** Bing Site Explorer last-crawl date for `/` (submitted
+            2026-10-15 23:21 CT), Search Console, and Cloudflare filtered to the two real hostnames
+            (`dougrosenberg.com`, `www.dougrosenberg.com`).
+
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
 near zero — GSC only shows name queries, Bing AI citations are 0, GA4/Cloudflare Web Analytics show

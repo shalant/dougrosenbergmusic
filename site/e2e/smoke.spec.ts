@@ -8,6 +8,25 @@ test.describe('smoke', () => {
     await expect(page.locator('h1')).toContainText('sound like you');
   });
 
+  // 210 of 400 Cloudflare Web Analytics visits in the 30 days to 2026-10-15
+  // had host `localhost`: the analytics scripts ran during dev and test runs.
+  test('analytics scripts are not loaded on localhost', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('script[src*="cloudflareinsights.com"]')).toHaveCount(0);
+    await expect(page.locator('script[src*="googletagmanager.com"]')).toHaveCount(0);
+  });
+
+  test('analytics scripts are loaded on a real hostname', async ({ page, baseURL }) => {
+    // Chrome resolves *.localhost to loopback, and "site.localhost" is not
+    // "localhost", so it stands in for a production hostname here.
+    const url = new URL(baseURL ?? 'http://localhost');
+    url.hostname = 'site.localhost';
+    await page.route(/cloudflareinsights\.com|googletagmanager\.com/, (route) => route.abort());
+    await page.goto(url.toString());
+    await expect(page.locator('script[src*="cloudflareinsights.com"]')).toHaveCount(1);
+    await expect(page.locator('script[src*="googletagmanager.com"]')).toHaveCount(1);
+  });
+
   test('every major section renders', async ({ page }) => {
     await page.goto('/');
     for (const id of ['hero', 'dev', 'listen', 'about', 'performance', 'career-highlights', 'press', 'lessons', 'sheet-music', 'gallery', 'contact']) {
