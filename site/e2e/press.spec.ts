@@ -57,7 +57,7 @@ test.describe('press timeline and archive pages', () => {
     const listen = page.locator('.gig__listen');
     await expect(listen).toHaveCount(29);
     await expect(listen.first()).toHaveAttribute('href', /^https:\/\/archive\.org\/details\//);
-    await expect(page.locator('.gig__tag', { hasText: 'announced' })).toHaveCount(18);
+    await expect(page.locator('.gig__tag', { hasText: 'announced' })).toHaveCount(11);
   });
 
   test('/easternblok show-log notes keep their spaces', async ({ page }) => {
@@ -65,7 +65,7 @@ test.describe('press timeline and archive pages', () => {
     await page.goto('/easternblok');
     await expect(page.locator('.showlog__summary')).toContainText('and Poland. 29 have');
     await expect(page.locator('.showlog__source')).toContainText('saved by the Wayback Machine');
-    await expect(page.locator('.showlog__source')).toContainText('to June 2009. 18 shows');
+    await expect(page.locator('.showlog__source')).toContainText('to June 2009. 11 shows');
   });
 
   test('/easternblok links the band to Doug in its structured data', async ({ page }) => {

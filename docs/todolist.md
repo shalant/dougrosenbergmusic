@@ -1591,11 +1591,17 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             a line break met `{expr}` or a link; "Poland.29 have") and added an e2e check for it.
             Verified: build, verify-csp (12), check, lint, `npm test` (48 pass), press tests
             (26 pass), `npm run test:e2e` (72 pass, 6 skipped as before), screenshots
+      - [x] 2026-10-15: Doug confirmed the seven 2012 shows (only ever announced on the old
+            site) happened. Recorded in `press/easternblok-shows-overrides.json` with a
+            `confirmed` note; counts are now 221 played, 11 announced, 21 recording-only
+      - [ ] **Missing cities (Doug, eventually):** 65 shows have no city because the old site
+            listed only the venue. They're listed with `"city": null` in
+            `press/easternblok-shows-overrides.json`; fill in city and region, then run
+            `node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json`
       - [ ] **Show history gaps:** no calendar was saved for December 2008 to mid-June 2009,
             and pre-2007 Goran Ivanovic Group shows are known only from recordings (the 2003-04
-            Chicago Reader listings in `press/candidates.json` aren't merged in yet). 65 shows
-            have no city because the old site listed only the venue. Doug's flyers, emails or
-            a gig spreadsheet could fill these
+            Chicago Reader listings in `press/candidates.json` aren't merged in yet). Doug's
+            flyers, emails or a gig spreadsheet could fill these
       - [ ] **Before the two pages go public:** both are `draft` (noindex, left out of the
             sitemap via `DRAFT_PAGES` in `astro.config.mjs`). When Doug's text replaces the
             placeholders: drop `draft`, remove the path from `DRAFT_PAGES`, add the pages to

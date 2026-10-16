@@ -215,6 +215,27 @@ function applyCorrections(shows) {
 	return shows;
 }
 
+/**
+ * Doug's hand edits from press/easternblok-shows-overrides.json, matched by
+ * date + venue as they appear in the output. Null fields are blanks still to
+ * fill and are skipped. Returns the overrides that matched no show, so a typo
+ * in the file is reported instead of silently ignored.
+ */
+function applyOverrides(shows, overrides) {
+	const unmatched = [];
+	for (const o of overrides) {
+		const show = shows.find((s) => s.date === o.date && s.venue === o.venue);
+		if (!show) {
+			unmatched.push(o);
+			continue;
+		}
+		for (const field of ["city", "region", "status", "confirmed"]) {
+			if (o[field] != null) show[field] = field === "region" ? tidyRegion(o[field]) : o[field];
+		}
+	}
+	return unmatched;
+}
+
 function venueKey(venue) {
 	return (venue ?? "").toLowerCase().replace(/^the\s+/, "").replace(/[^a-z0-9]/g, "").slice(0, 10);
 }
@@ -318,10 +339,13 @@ function main() {
 
 	const bandData = JSON.parse(fs.readFileSync(path.join(__dirname, "../site/src/data/eastern-blok-press.json"), "utf8"));
 	const shows = mergeShows(snapshots, bandData.gigLog.shows);
+	const overrides = JSON.parse(fs.readFileSync(path.join(__dirname, "easternblok-shows-overrides.json"), "utf8")).shows;
+	const unmatched = applyOverrides(shows, overrides);
+	for (const o of unmatched) console.warn(`warning: override matched no show: ${o.date} ${o.venue}`);
 
 	const result = {
 		_about:
-			"Eastern Blok / Goran Ivanovic Group show history, rebuilt 2026-10-15 by press/easternblok-shows.cjs from the Wayback Machine's copies of the band's own site (easternblok.net calendar pages) plus the Internet Archive fan-recording log. status: past = on the band's own past-dates list; announced = only ever listed as upcoming (may not have happened); recorded = known only from a fan recording. Venue names are tidied for capitalization only; raw keeps the original text. Generated; don't hand-edit.",
+			"Eastern Blok / Goran Ivanovic Group show history, rebuilt 2026-10-15 by press/easternblok-shows.cjs from the Wayback Machine's copies of the band's own site (easternblok.net calendar pages) plus the Internet Archive fan-recording log. status: past = on the band's own past-dates list, or confirmed by Doug (see confirmed); announced = only ever listed as upcoming (may not have happened); recorded = known only from a fan recording. Venue names are tidied for capitalization only; raw keeps the original text. Generated; don't hand-edit. Hand edits go in press/easternblok-shows-overrides.json.",
 		sources: snapshots.map(({ id, page, wayback, kind, shows: s }) => ({ id, page, wayback, kind, shows: s.length })),
 		shows,
 	};
@@ -335,4 +359,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { parseDate, tidyCase, tidyRegion, cityRegion, parsePastTable, parseUpcomingEntries, parseRss, mergeShows, venueKey };
+module.exports = { parseDate, tidyCase, tidyRegion, cityRegion, parsePastTable, parseUpcomingEntries, parseRss, mergeShows, applyOverrides, venueKey };

@@ -9,6 +9,7 @@ const {
 	parseUpcomingEntries,
 	parseRss,
 	mergeShows,
+	applyOverrides,
 } = require("./easternblok-shows.cjs");
 
 // Fixtures are short excerpts in the exact markup of the archived
@@ -169,4 +170,22 @@ test("mergeShows fixes the Restaurant Magnus state typo and says so", () => {
 	const [merged] = mergeShows([{ id: "p", file: "p_calendar-past.html", shows: [show({ venue: "Restaurant Magnus", city: "Madison", region: "IL" })] }]);
 	assert.equal(merged.region, "WI");
 	assert.match(merged.corrected, /Madison, WI/);
+});
+
+test("applyOverrides fills blanks, confirms shows, and reports unmatched entries", () => {
+	const shows = [
+		{ date: "2012-02-04", venue: "Art Gallery Kafe", city: "Wood Dale", region: "IL", status: "announced" },
+		{ date: "2007-03-14", venue: "Schaumberg High School", city: null, region: null, status: "past" },
+	];
+	const unmatched = applyOverrides(shows, [
+		{ date: "2012-02-04", venue: "Art Gallery Kafe", status: "past", confirmed: "Doug Rosenberg, 2026-10-15" },
+		{ date: "2007-03-14", venue: "Schaumberg High School", city: "Schaumburg", region: "il" },
+		{ date: "2007-03-15", venue: "Katerina's", city: null, region: null },
+		{ date: "1999-01-01", venue: "Nowhere", city: "X" },
+	]);
+	assert.equal(shows[0].status, "past");
+	assert.equal(shows[0].confirmed, "Doug Rosenberg, 2026-10-15");
+	assert.equal(shows[1].city, "Schaumburg");
+	assert.equal(shows[1].region, "IL");
+	assert.deepEqual(unmatched.map((o) => o.venue), ["Katerina's", "Nowhere"]);
 });

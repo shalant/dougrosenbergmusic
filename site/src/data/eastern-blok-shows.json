@@ -1,5 +1,5 @@
 {
-	"_about": "Eastern Blok / Goran Ivanovic Group show history, rebuilt 2026-10-15 by press/easternblok-shows.cjs from the Wayback Machine's copies of the band's own site (easternblok.net calendar pages) plus the Internet Archive fan-recording log. status: past = on the band's own past-dates list; announced = only ever listed as upcoming (may not have happened); recorded = known only from a fan recording. Venue names are tidied for capitalization only; raw keeps the original text. Generated; don't hand-edit.",
+	"_about": "Eastern Blok / Goran Ivanovic Group show history, rebuilt 2026-10-15 by press/easternblok-shows.cjs from the Wayback Machine's copies of the band's own site (easternblok.net calendar pages) plus the Internet Archive fan-recording log. status: past = on the band's own past-dates list, or confirmed by Doug (see confirmed); announced = only ever listed as upcoming (may not have happened); recorded = known only from a fan recording. Venue names are tidied for capitalization only; raw keeps the original text. Generated; don't hand-edit. Hand edits go in press/easternblok-shows-overrides.json.",
 	"sources": [
 		{
 			"id": "20070709015327_calendar",
@@ -3886,12 +3886,13 @@
 			"country": null,
 			"venueUrl": "http://www.artgallerykafe.com/about2.html",
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "Feb 4, 2012 - Wood Dale, IL",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		},
 		{
 			"date": "2012-02-17",
@@ -3901,12 +3902,13 @@
 			"country": null,
 			"venueUrl": "http://cafeprague.us/",
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "Feb 17, 2012 - An Evening with Eastern Blok - Chicago, Illinois",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		},
 		{
 			"date": "2012-02-18",
@@ -3916,12 +3918,13 @@
 			"country": null,
 			"venueUrl": "http://kryptonitebar.com/",
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "Feb 18, 2012 - Rockford, IL",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		},
 		{
 			"date": "2012-03-22",
@@ -3931,12 +3934,13 @@
 			"country": null,
 			"venueUrl": "http://www.arabamericanmuseum.org/Home.id.2.htm",
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "Mar 22, 2012 - Dearborn, MI",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		},
 		{
 			"date": "2012-05-19",
@@ -3946,12 +3950,13 @@
 			"country": null,
 			"venueUrl": null,
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "May 19, 2012 - Chicago, Illinois",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		},
 		{
 			"date": "2012-06-09",
@@ -3961,12 +3966,13 @@
 			"country": null,
 			"venueUrl": "http://www.liveatnectars.com",
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "Jun 9, 2012 - Burlington Jazz Festival - Burlington, VT",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		},
 		{
 			"date": "2012-06-23",
@@ -3976,12 +3982,13 @@
 			"country": null,
 			"venueUrl": "http://www.theark.org",
 			"note": null,
-			"status": "announced",
+			"status": "past",
 			"recording": null,
 			"raw": "Jun 23, 2012 - CD-release party! - Ann Arbor, MI",
 			"sources": [
 				"20120127200450_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-15: the 2012 shows happened"
 		}
 	]
 }
