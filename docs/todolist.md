@@ -1505,15 +1505,23 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       - [ ] **1. Approve entries.** Go through the entries that name Doug with their pull quotes;
             Doug sets `approved: true` on the ones that can be shown. Nothing reaches the site
             before this. Regenerate `press/press.json` after
+      - [x] 2026-10-15: Doug approved six entries (All About Jazz 2006 and 2008, DownBeat 2006,
+            jazzreview.com 2004, Chicago Reader 2007, Minor 7th 2007)
       - [ ] **2. Home-page Press section** with 4-6 approved quotes that name Doug (outlet, year,
-            link each) and a "More press" link once a page exists. Placed after `CareerHighlights`
+            link each) and a "More press" link once a page exists. Layout direction chosen
+            2026-10-15: the "Ledger" (one row per quote in date order: year, quote, source), with
+            outlet links going to the original review and project links going to `/press` or
+            `/eastern-blok`. Prototypes are in two private claude.ai artifacts ("Press Section
+            Options", "Press Ledger Variations"); the final variation isn't picked yet. Placed after `CareerHighlights`
             (with the music credibility material, not between FAQ and Contact). No carousel or
             auto-scroll: hidden quotes go unread and are weaker for AI engines. Needs a
             `StaffDivider`, a nav decision, schema for the reviews, CSP hash regen if any inline
             script or JSON-LD changes, and an e2e test
       - [ ] **3. Eastern Blok archive page** (`/eastern-blok`): the band's story, members, albums
             (*Folk Tales*, *Underwater*; *Folk Tales* year conflict above), photos, and its press.
-            The band ended in 2012. Needs Doug's own account of the band first; nothing gets
+            The band ended in 2012. **The Goran Ivanovic Group became Eastern Blok** (confirmed by
+            Doug 2026-10-15), so the Goran Ivanovic Group press and album belong on this page as
+            its early chapter, not on `/press`. Needs Doug's own account of the band first; nothing gets
             invented, and anything unconfirmed is marked on the page. Tell Goran and the other
             members before it goes live (it will show up in searches for the band; they may also
             have photos and corrections). Photos only if Doug owns them or has permission. Schema:
