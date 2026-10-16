@@ -41,6 +41,21 @@ test.describe('smoke', () => {
     expect(types).toEqual(expect.arrayContaining(['Person', 'WebSite', 'WebPage', 'FAQPage', 'MusicAlbum']));
   });
 
+  test('structured data entities link to one Person via @id', async ({ page }) => {
+    await page.goto('/');
+    const schemas = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((s) => JSON.parse(s));
+    const nodes = schemas.flatMap((s) => (s['@graph'] ? s['@graph'] : [s]));
+    const person = nodes.find((n) => n['@type'] === 'Person' && n.sameAs);
+    const website = nodes.find((n) => n['@type'] === 'WebSite');
+    const webpage = nodes.find((n) => n['@type'] === 'WebPage');
+    expect(person['@id']).toBe('https://dougrosenberg.com/#person');
+    expect(website.publisher['@id']).toBe(person['@id']);
+    expect(webpage.isPartOf['@id']).toBe(website['@id']);
+    expect(webpage.mainEntity['@id']).toBe(person['@id']);
+    const betterThanTv = nodes.find((n) => n['@type'] === 'MusicAlbum' && n.name === 'Better Than TV');
+    expect(betterThanTv.byArtist['@id']).toBe(person['@id']);
+  });
+
   test('single <main> landmark exists', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('main')).toHaveCount(1);

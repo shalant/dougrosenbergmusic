@@ -19,7 +19,8 @@ import StaffDivider from '../components/StaffDivider.astro';
 // WebPage.dateModified, which answer engines use as a freshness signal.
 const contentLastUpdated = '2026-09-30';
 
-const doug = { '@type': 'Person', name: 'Doug Rosenberg' };
+// References the full Person in BaseLayout (same @id) rather than a bare stub.
+const doug = { '@type': 'Person', '@id': 'https://dougrosenberg.com/#person', name: 'Doug Rosenberg' };
 const recordings = [
   { name: 'Better Than TV', byArtist: doug, datePublished: '2014', url: 'https://www.amazon.com/dp/B00G9Y8TPE' },
   { name: 'Goran Ivanovic Group', byArtist: { '@type': 'MusicGroup', name: 'Goran Ivanovic Group' }, url: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C' },
@@ -30,10 +31,13 @@ const recordings = [
 const pageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
+  '@id': 'https://dougrosenberg.com/#webpage',
   name: 'Doug Rosenberg — Web Design & Development, Saxophonist & Composer',
   url: Astro.site?.toString(),
   dateModified: contentLastUpdated,
+  isPartOf: { '@id': 'https://dougrosenberg.com/#website' },
   about: doug,
+  mainEntity: doug,
 };
 
 const albumsSchema = { '@context': 'https://schema.org', '@graph': recordings };
