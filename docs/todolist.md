@@ -652,6 +652,106 @@ semantic headings, title/meta description.
           shows 0 and can be ignored. These are the first usable human-traffic numbers for the
           music site; I did not check country or page breakdowns. Use these as the baseline for
           future rechecks alongside Search Console.
+      - **2026-10-15 recheck (read-only, via signed-in Chrome):**
+        - Search Console, dougrosenberg.com Domain property (2026-09-28 to 2026-10-13): 3 clicks,
+          34 impressions, 8.8% CTR, avg position 6.6 (10-10 check: 3 / 28 / 10.7% / 6.1). Still one
+          query, "doug rosenberg" (1 click, 17 impressions). Impressions crept up; nothing for
+          non-name queries yet.
+        - Cloudflare Web Analytics (bots excluded), music site entry: 400 visits / 440 page views
+          over the last 30 days (10-11 baseline: 380 / 420). The last 24 hours alone had 78 visits /
+          81 page views, about 20% of the 30-day total (+7.7k% vs the prior period), on
+          `/easternblok`, `/`, `/press`, and a www `/sheetMusic/...` page. Cause not checked (no
+          referrer or country breakdown pulled); the Eastern Blok and press pages are new, so a
+          shared link is plausible but unconfirmed. Core Web Vitals: LCP 100% good (P75 785ms), CLS
+          100% good, INP 83% good / 17% poor (10 hits on `html>body`, 2,792ms, likely slow-device
+          taps); avg page load 1,024ms.
+        - **Cloudflare visits breakdown (30 days, pulled later 2026-10-15; counts are rounded to
+          the nearest 10): 210 of the 400 visits have host `localhost`, i.e. local dev traffic
+          (the beacon fires from `npm run dev`). Real visits are about 190: `dougrosenberg.com` 160,
+          `www.dougrosenberg.com` 30. So the 380 / 400 baselines above overstate human traffic by
+          roughly half; filter Host to the two real hostnames for future rechecks. Sources: direct
+          380, `l.facebook.com` 10, `scriblihelp.com` 10. Countries: US 340, China 40, Netherlands
+          10, Canada 10 (the China visits may be bots that Cloudflare didn't exclude). Devices: 250
+          desktop / 150 mobile; Chrome 240, ChromeMobile 90. Not broken down by host: the
+          last-24-hour spike, so whether it is dev traffic (likely, given the branch work) is
+          unconfirmed. Possible fix: skip the beacon when the host is `localhost` in
+          `BaseLayout.astro` (not done).**
+        - GA4 (28 days, 2026-09-17 to 10-14): about 7,400 views / 7,300 users, 1.02 views per user,
+          ~0s engagement; every page title is a dougrosenbergdev.com page, same bot-shaped profile as
+          10-10/10-11. GA4 flagged `/` views falling to 1 on 2026-10-09 (expected 151), all
+          Safari/Apple; read as a bot wave ending, not verified. Still not usable for this site.
+        - Bing, dougrosenberg.com (Site Explorer, after signing in): crawl info unchanged at 13
+          indexed / 1 error / 20 warnings / 6 excluded (10-10: 13 / 1 / 27 / 4). The home page's
+          last crawl is still 2026-06-09 (5.1KB document, the old Blazor site), so Bing has not
+          recrawled the rebuild six days after the 10-10 check and about 2.5 weeks after the sitemap
+          import. Search Performance on the Bing home page: 0 clicks / 0 impressions for 2026-09-07
+          to 10-13. Site Explorer's 6-month view shows 5 clicks / 57 impressions, all from before
+          the rebuild. Submitted `/`, `/easternblok` and `/press` through Bing URL Submission on
+          2026-10-15 at 23:21 CT (Bing confirmed "3 URLs submitted"; `/` had also been submitted
+          2026-09-29 with no recrawl since). Recheck Site Explorer in a few days for a new last-crawl
+          date on `/`.
+        - Bing, dougrosenbergdev.com: 7 indexed / 0 error / 1 warning / 1 excluded (10-11: 6 / 0 / 1
+          / 1); home page recrawled 2026-10-11 (106.2KB, 200). I did not check whether the 5 URLs
+          submitted 2026-10-11 are the new indexed one.
+
+- [ ] **2026-10-15 — Getting more traffic (plan after the recheck above).** Real traffic is about
+      190 visits / 30 days, nearly all direct or name searches. Off-site links and mentions
+      will move that more than on-site tweaks. Status:
+      - [x] **Stop counting localhost.** The Cloudflare beacon and gtag.js are now injected by the
+            inline script in `BaseLayout.astro` only when the hostname isn't `localhost`,
+            `127.0.0.1` or `[::1]`. Regenerated the CSP hashes (`npm run build && npm run
+            verify-csp -- --write`; `verify-csp` passes, 12 hashes). Added two e2e tests in
+            `e2e/smoke.spec.ts` (no analytics scripts on localhost; both injected on
+            `site.localhost`); confirmed the localhost test fails against the pre-fix build and
+            passes after. Unit tests (48) and the full e2e suite pass. Not live until merged and
+            deployed; check Cloudflare's Host breakdown afterward to confirm `localhost` stops
+            growing.
+      - [x] **Google "Request indexing" for `/easternblok` was rejected (2026-10-15)**, correctly:
+            `/press` and `/easternblok` are deliberate drafts (`noindex`, left out of the sitemap
+            via `DRAFT_PAGES` in `astro.config.mjs`) until Doug's own text is in. Not changed,
+            since it's recorded as deliberate. The 2026-10-15 Bing URL Submission of those two
+            pages was therefore wasted (Bing will see `noindex`); `/` is the useful submission.
+            Search Console's URL Inspection also says Google doesn't know `/easternblok` at all.
+            **Don't request indexing for either until it is out of `DRAFT_PAGES`.**
+            **Update 2026-10-16:** `/easternblok` is out of draft (branch
+            `easternblok-story-2026-10-16`, not yet merged): Doug's story text is in, `noindex`
+            removed, page added to the sitemap. Once that's deployed: request indexing for
+            `/easternblok` in Search Console, submit it again in Bing URL Submission, and add it
+            to IndexNow. `/press` is still a draft.
+      - [x] **Eastern Blok story written 2026-10-16.** Sources: the band's own 2007 bio (Wayback
+            capture of `easternblok.net/bio.html`, 2007-07-09, saved in
+            `../press-archive/easternblok-net-bio-2007/` outside git), the All About Jazz promo
+            bio (2008) and Budd Kopman's *Folk Tales* review, the show list, and Doug's
+            confirmations in chat on 2026-10-16: *Underwater* is 2011, don't say how the band
+            ended, there was one lineup (Goran Ivanovic guitar, Doug saxophone/flute/clarinet,
+            Matthew Ulery bass, Michael Caskey drums), include the LA Times and Time Out quotes.
+            The page says those two quotes come from the 2007 bio and that the original articles
+            haven't been found; still unsourced (same gap as the Tribune quote). The show count
+            and state count in the story are computed from `eastern-blok-shows.json`. Still open:
+            the "year to confirm" notes on the first two albums (some sources say 2005 for the
+            first, All About Jazz lists 2008 for *Folk Tales*); they stay visible on the page.
+      - [ ] **Share the new pages where people already are** (needs Doug; I can't post). Facebook
+            already sent visits. Eastern Blok's own channels, Chicago/Balkan music groups, venues
+            and bandmates linking to the show history. Blocked on `/easternblok` leaving draft,
+            since it carries `noindex` (sharing the link still works, it just won't rank).
+      - [ ] **Claim and align profiles** (needs Doug): same name, bio and site link on LinkedIn,
+            GitHub, Bandcamp, Discogs, MusicBrainz, All About Jazz musician pages (the archive has
+            AAJ pages for Eastern Blok and Goran Ivanovic whose bios may allow a website link).
+      - [ ] **Pick 3-5 non-name searches to target.** Today only "doug rosenberg" shows up.
+            Candidates: sheet music titles (the `/sheetMusic/` page already gets visits; the 7
+            missing PDFs and the ranking decision are still open), "Eastern Blok Chicago",
+            "jazz saxophone lessons Chicago", "website for my band".
+      - [ ] **Turn the press archive into links** (needs Doug to send). The archive has 39
+            entries; the ones worth asking for a link to dougrosenberg.com (or `/easternblok` once
+            it's live) are live pages that name Doug: All About Jazz (reviews and the Eastern Blok
+            musician page), Minor7th, WBEZ Morning Show, Chicago Reader, Sun-Times, Jazz Review.
+            Nothing was sent. A published link on a review matters more than any on-site change.
+            Also depends on deciding the `/press` page's draft status.
+      - [ ] **Decide the site's primary goal:** music (Eastern Blok, sheet music, lessons) or dev
+            services. The audiences and search terms differ; traffic grows faster with one.
+      - [ ] **Recheck in ~1 week:** Bing Site Explorer last-crawl date for `/` (submitted
+            2026-10-15 23:21 CT), Search Console, and Cloudflare filtered to the two real hostnames
+            (`dougrosenberg.com`, `www.dougrosenberg.com`).
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are

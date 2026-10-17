@@ -29,14 +29,17 @@ test.describe('press timeline and archive pages', () => {
     }
   });
 
-  test('/easternblok renders as a draft archive page', async ({ page }) => {
+  test('/easternblok renders as a published archive page', async ({ page }) => {
     await page.goto('/easternblok');
     await expect(page.locator('h1')).toHaveText('Eastern Blok');
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://dougrosenberg.com/easternblok');
     await expect(page.locator('.album')).toHaveCount(3);
     await expect(page.locator('.ledger__row')).toHaveCount(5);
-    await expect(page.locator('.placeholder').first()).toBeVisible();
+    await expect(page.locator('.placeholder')).toHaveCount(0);
+    await expect(page.locator('#story')).toBeVisible();
+    await expect(page.locator('.archive')).toContainText('saxophone, flute and clarinet');
+    await expect(page.locator('.members li')).toHaveCount(4);
   });
 
   test('/easternblok lists the show history by year, ending with the 2011 Schubas show', async ({ page }) => {
@@ -95,11 +98,11 @@ test.describe('press timeline and archive pages', () => {
     }
   });
 
-  test('draft pages stay out of the sitemap', async ({ request }) => {
+  test('draft pages stay out of the sitemap and published ones are in it', async ({ request }) => {
     const sitemap = await (await request.get('/sitemap-0.xml')).text();
     expect(sitemap).toContain('<loc>https://dougrosenberg.com/</loc>');
+    expect(sitemap).toContain('<loc>https://dougrosenberg.com/easternblok</loc>');
     expect(sitemap).not.toContain('/press');
-    expect(sitemap).not.toContain('/easternblok');
   });
 
   test('archive pages have no horizontal overflow', async ({ page }) => {

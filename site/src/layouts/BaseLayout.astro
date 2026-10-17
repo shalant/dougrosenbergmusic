@@ -94,7 +94,10 @@ const websiteSchema = {
 		     secret; it's a public per-site beacon ID meant to ship in every page's
 		     HTML. Site registered under Web Analytics as
 		     dougrosenbergmusic.doug-rosenberg.workers.dev. -->
-		<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: '775b11737d154a3a8878533ba375f9f9' })}></script>
+		{/* The beacon and gtag.js are injected by the inline script below, only
+		    off localhost: 210 of the 400 Cloudflare visits in the 30 days to
+		    2026-10-15 had host `localhost` (dev server / e2e / Lighthouse runs
+		    against a local build), which roughly doubled the apparent traffic. */}
 
 		<!-- GA4 — reinstalled 2026-09-15; the property (G-BGSJ1FWPTF) existed but
 		     had no tag on the current Astro build, so it collected nothing since
@@ -131,6 +134,20 @@ const websiteSchema = {
 		     and surfacing to visitors as a false "Something went wrong"
 		     error even though the email itself sent successfully. -->
 		<script>
+			var host = window.location.hostname;
+			var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+			if (!isLocal) {
+				var cf = document.createElement('script');
+				cf.type = 'module';
+				cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+				cf.setAttribute('data-cf-beacon', JSON.stringify({ token: '775b11737d154a3a8878533ba375f9f9' }));
+				document.head.appendChild(cf);
+
+				var ga = document.createElement('script');
+				ga.async = true;
+				ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF';
+				document.head.appendChild(ga);
+			}
 			window.dataLayer = window.dataLayer || [];
 			window.gtag = function gtag() { window.dataLayer.push(arguments); };
 			window.gtag('consent', 'default', {
@@ -160,7 +177,6 @@ const websiteSchema = {
 				} catch {}
 			});
 		</script>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF"></script>
 	</head>
 	<body>
 		<Logo home={home} />
