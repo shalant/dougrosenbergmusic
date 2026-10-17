@@ -39,14 +39,9 @@ const artists = [
 
     <div class="performance__artists">
       <p class="performance__venue-label">Artists Performed With</p>
-      <p class="performance__artists-flow">
-        {artists.map((a, i) => (
-          <>
-            <span>{a}</span>
-            {i < artists.length - 1 && <span class="performance__dot" aria-hidden="true">·</span>}
-          </>
-        ))}
-      </p>
+      <ul class="performance__artists-flow">
+        {artists.map((a) => <li>{a}</li>)}
+      </ul>
     </div>
   </div>
 </section>
@@ -98,16 +93,31 @@ const artists = [
     gap: 0.6rem 1.5rem;
   }
 
+  /* Names never break mid-name, and the separator dot before each name sits
+     in the gap, clipped at line starts (same technique as CareerHighlights'
+     school list), so no line ends or begins with a stray "·". */
   .performance__artists-flow {
-    margin: 0;
+    list-style: none;
+    margin: 0 0 0 -1.4rem;
+    padding: 0;
+    clip-path: inset(0 0 0 1.4rem);
+    display: flex;
+    flex-wrap: wrap;
     font-size: 0.9rem;
     line-height: 2;
     color: var(--text-muted);
   }
 
-  .performance__dot {
+  .performance__artists-flow li {
+    white-space: nowrap;
+  }
+
+  .performance__artists-flow li::before {
+    content: '·';
+    display: inline-block;
+    width: 1.4rem;
+    text-align: center;
     color: var(--brass);
-    margin: 0 0.55rem;
   }
 
   @media (max-width: 700px) {
