@@ -712,7 +712,24 @@ semantic headings, title/meta description.
             since it's recorded as deliberate. The 2026-10-15 Bing URL Submission of those two
             pages was therefore wasted (Bing will see `noindex`); `/` is the useful submission.
             Search Console's URL Inspection also says Google doesn't know `/easternblok` at all.
-            **Don't request indexing for either until `DRAFT_PAGES` is emptied.**
+            **Don't request indexing for either until it is out of `DRAFT_PAGES`.**
+            **Update 2026-10-16:** `/easternblok` is out of draft (branch
+            `easternblok-story-2026-10-16`, not yet merged): Doug's story text is in, `noindex`
+            removed, page added to the sitemap. Once that's deployed: request indexing for
+            `/easternblok` in Search Console, submit it again in Bing URL Submission, and add it
+            to IndexNow. `/press` is still a draft.
+      - [x] **Eastern Blok story written 2026-10-16.** Sources: the band's own 2007 bio (Wayback
+            capture of `easternblok.net/bio.html`, 2007-07-09, saved in
+            `../press-archive/easternblok-net-bio-2007/` outside git), the All About Jazz promo
+            bio (2008) and Budd Kopman's *Folk Tales* review, the show list, and Doug's
+            confirmations in chat on 2026-10-16: *Underwater* is 2011, don't say how the band
+            ended, there was one lineup (Goran Ivanovic guitar, Doug saxophone/flute/clarinet,
+            Matthew Ulery bass, Michael Caskey drums), include the LA Times and Time Out quotes.
+            The page says those two quotes come from the 2007 bio and that the original articles
+            haven't been found; still unsourced (same gap as the Tribune quote). The show count
+            and state count in the story are computed from `eastern-blok-shows.json`. Still open:
+            the "year to confirm" notes on the first two albums (some sources say 2005 for the
+            first, All About Jazz lists 2008 for *Folk Tales*); they stay visible on the page.
       - [ ] **Share the new pages where people already are** (needs Doug; I can't post). Facebook
             already sent visits. Eastern Blok's own channels, Chicago/Balkan music groups, venues
             and bandmates linking to the show history. Blocked on `/easternblok` leaving draft,

@@ -1,10 +1,10 @@
 ---
 // Shared shell for the pages reached from the home page's Press timeline
 // (/press, /easternblok): page header, sections, and a link back to the
-// timeline. Both pages are drafts as of 2026-10-15 (placeholder text marked
-// with <Placeholder>), so they default to noindex; flip `draft` off once
-// Doug's own text is in, and remove the page from the sitemap filter in
-// astro.config.mjs at the same time.
+// timeline. Pages default to draft (noindex) while they carry placeholder
+// text (marked with <Placeholder>); pass `draft={false}` once Doug's own text
+// is in, and remove the page from the sitemap filter in astro.config.mjs at
+// the same time. /easternblok left draft 2026-10-16; /press is still one.
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {

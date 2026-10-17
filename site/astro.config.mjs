@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 // Draft pages (placeholder text, noindex via ArchiveLayout's `draft` prop) stay
 // out of the sitemap until Doug's own text is in. Remove a path from this list
 // when its page drops `draft`.
-const DRAFT_PAGES = ['/press', '/easternblok'];
+const DRAFT_PAGES = ['/press'];
 
 // https://astro.build/config
 export default defineConfig({

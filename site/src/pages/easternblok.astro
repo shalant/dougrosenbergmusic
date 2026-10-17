@@ -1,14 +1,13 @@
 ---
-// Eastern Blok archive. Generic layout as of 2026-10-15: the albums and the
-// approved press are real; the story, the full lineup and the show log wait
-// on Doug (see docs/todolist.md, "Press on the site", step 3). Reached only
-// from the home page's Press timeline for now.
+// Eastern Blok archive. Out of draft 2026-10-16 once Doug confirmed the story
+// below (see docs/todolist.md, "Press on the site"). The year notes on two
+// albums stay visible until he settles the release years.
 import ArchiveLayout from '../layouts/ArchiveLayout.astro';
 import QuoteLedger from '../components/QuoteLedger.astro';
-import Placeholder from '../components/Placeholder.astro';
 import ShowLog from '../components/ShowLog.astro';
 import { easternBlokQuotes } from '../data/press-timeline.js';
 import bandArchive from '../data/eastern-blok-press.json';
+import showData from '../data/eastern-blok-shows.json';
 
 const covers: Record<string, { src: string; width: number; height: number }> = {
   'goran-ivanovic-group': { src: '/images/albums/goran-ivanovic-group.jpg', width: 522, height: 474 },
@@ -21,6 +20,11 @@ const yearToConfirm: Record<string, string> = {
   'goran-ivanovic-group': 'some sources say 2005',
   'folk-tales': 'All About Jazz lists 2008',
 };
+
+// Counts come from the show list so the story can't drift from the log below it.
+const showCount = showData.shows.length;
+const stateCount = new Set(showData.shows.map((show) => show.region).filter((region) => region && /^[A-Z]{2}$/.test(region))).size;
+const toursPoland = showData.shows.some((show) => show.region === 'Poland');
 
 const albums = bandArchive.albums.map((album) => ({ ...album, cover: covers[album.id], yearNote: yearToConfirm[album.id] }));
 
@@ -47,24 +51,31 @@ const bandSchema = {
   description="An archive of Eastern Blok, the Chicago band that began as the Goran Ivanovic Group: albums, press and history, through 2012."
   eyebrow="Archive · Chicago · until 2012"
   heading="Eastern Blok"
+  draft={false}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(bandSchema)} />
   <p slot="lead" class="archive__lead">
-    The Chicago band that started as the Goran Ivanovic Group and played until 2012. Doug Rosenberg played saxophone.
+    The Chicago band that started as the Goran Ivanovic Group and played until 2012. Doug Rosenberg played saxophone, flute and clarinet.
   </p>
 
   <section class="archive__section" aria-labelledby="story">
     <h2 id="story">The story</h2>
-    <Placeholder>How the band started, the change from the Goran Ivanovic Group to Eastern Blok, the touring years, and how it ended in 2012. Doug is writing this.</Placeholder>
+    <p>
+      Eastern Blok began as the Goran Ivanovic Group, a Chicago band led by the Croatian-born guitarist Goran Ivanovic, with Doug Rosenberg on saxophone, flute and clarinet, Matthew Ulery on bass and Michael Caskey on drums. Their first album, <cite>Goran Ivanovic Group</cite> (Balkan Song Records, 2006), mixed Balkan folk music, klezmer and jazz improvisation, and <cite>Downbeat</cite> reviewed it in June 2006. The band took the name Eastern Blok for its second album, <cite>Folk Tales</cite> (2007), and released a third, <cite>Underwater</cite>, in 2011. The show list below records {showCount} concerts from 2005 to 2012, across {stateCount} states{toursPoland && ' and Poland'}.
+    </p>
+    <p>
+      The band's 2007 press bio quoted the <cite>Los Angeles Times</cite> calling their music “relentlessly innovative work” and <cite>Time Out</cite> calling the group “an agile Bela Fleck in Croatia.” Both quotes come from that bio; the original articles haven't been found.
+    </p>
   </section>
 
   <section class="archive__section" aria-labelledby="members">
     <h2 id="members">Members</h2>
     <ul class="members">
       <li><span class="members__name">Goran Ivanovic</span><span class="members__role">guitar</span></li>
-      <li><span class="members__name">Doug Rosenberg</span><span class="members__role">saxophone</span></li>
+      <li><span class="members__name">Doug Rosenberg</span><span class="members__role">saxophone, flute, clarinet</span></li>
+      <li><span class="members__name">Matthew Ulery</span><span class="members__role">bass</span></li>
+      <li><span class="members__name">Michael Caskey</span><span class="members__role">drums</span></li>
     </ul>
-    <Placeholder>The rest of the lineup, for each era of the band.</Placeholder>
   </section>
 
   <section class="archive__section" aria-labelledby="albums">
@@ -88,7 +99,6 @@ const bandSchema = {
   <section class="archive__section" aria-labelledby="press">
     <h2 id="press">Press</h2>
     <QuoteLedger quotes={easternBlokQuotes} />
-    <Placeholder>More reviews, previews and interviews from the press archive, once Doug approves them.</Placeholder>
   </section>
 
   <section class="archive__section" aria-labelledby="shows">
