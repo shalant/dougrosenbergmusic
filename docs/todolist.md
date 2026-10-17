@@ -775,6 +775,24 @@ semantic headings, title/meta description.
       desktop and mobile with a PDF and an image piece. Branch
       `sheet-music-full-height-2026-10-16`, not yet merged.
 
+- [x] **2026-10-16 — URL hash follows the section in view.** Reported: clicking a CTA like "Let's
+      Talk About Your Site" wrote `#contact` into the URL, and neither scrolling elsewhere nor the
+      logo ever cleared or changed it (the screenshot showed `/#contact` while on the Sheet Music
+      Library). Cause: the nav buttons and logo deliberately avoid the URL (`preventDefault` +
+      `scrollIntoView`), but plain `href="#contact"` / `#listen` links (DevServices, Lessons, the
+      hero terminal) do a native jump, and nothing updated the hash afterward. Fix in
+      `StaffNav.astro`: a second IntersectionObserver over the 13 page sections
+      (`hero`, `intro`, `dev`, ..., `contact`) calls `history.replaceState` (debounced 150ms, no
+      new history entries) so the hash tracks the visible section and is removed at the hero. A
+      deep link like `/#contact` is left alone until the page reaches that section or the visitor
+      scrolls/presses a key (the browser's smooth jump passes through other sections first, which
+      overwrote it in the first attempt). CSP hashes regenerated (12). New
+      `e2e/url-hash.spec.ts` (4 tests x 2 projects; 3 fail against the old code, the deep-link one
+      guards the regression the first attempt had); full e2e 86 passed, 6 skipped, plus lint,
+      `astro check`, `verify-csp` and the 48 unit tests. Branch `anchor-hash-sync-2026-10-16`,
+      not yet merged. Note: `/#intro` now appears in the URL just below the hero; that is
+      intentional (every section id), say if you'd rather clear it too.
+
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
 near zero — GSC only shows name queries, Bing AI citations are 0, GA4/Cloudflare Web Analytics show

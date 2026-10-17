@@ -524,10 +524,10 @@ const sections = [
     btn.addEventListener('click', (e) => {
       // Logo.astro's home link is a real `<a href="#hero">` (works without JS,
       // matches id="hero"); prevented here so its target section is reached
-      // by the same smooth-scroll every other nav item uses, rather than a
-      // native hash jump that would leave a stale #hero in the URL forever
-      // once the user scrolls elsewhere (nothing else in this nav touches
-      // the URL either).
+      // by the same smooth-scroll every other nav item uses. The URL hash is
+      // kept in step by the scroll observer below, so it follows wherever the
+      // page ends up (and is cleared at the top) instead of staying on
+      // whichever anchor was clicked last.
       e.preventDefault();
       const target = document.getElementById(btn.dataset.target ?? '');
       target?.scrollIntoView({ behavior: 'smooth' });
@@ -551,5 +551,51 @@ const sections = [
   sectionIds.forEach((id) => {
     const el = document.getElementById(id);
     if (el) observer.observe(el);
+  });
+
+  // Keep the URL hash on the section being viewed. Plain anchor links (the
+  // "Let's Talk" and "Ask about lessons" CTAs, the hero terminal) do a native
+  // jump that writes #contact / #listen into the URL; nothing used to update
+  // or clear it afterward, so scrolling elsewhere or clicking the logo left a
+  // stale #contact (reported 2026-10-16). replaceState, so scrolling never
+  // adds history entries; the hero is the top of the page, so it clears the
+  // hash. Debounced so a long smooth scroll doesn't flicker through every
+  // section. A deep link like /#contact is left alone until the page has
+  // scrolled to that section (or the visitor scrolls or presses a key
+  // themselves): the page loads at the top and the browser's smooth jump to
+  // the anchor passes through other sections first, any of which would
+  // otherwise overwrite the hash.
+  const urlSectionIds = ['hero', 'intro', 'dev', 'listen', 'about', 'performance', 'career-highlights', 'press', 'gallery', 'lessons', 'sheet-music', 'faq', 'contact'];
+  let urlSyncTimer: number | undefined;
+  let pendingDeepLink = urlSectionIds.includes(window.location.hash.slice(1)) ? window.location.hash.slice(1) : '';
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((type) => {
+    window.addEventListener(type, () => { pendingDeepLink = ''; }, { once: true, passive: true });
+  });
+
+  function syncUrlHash(id: string) {
+    window.clearTimeout(urlSyncTimer);
+    urlSyncTimer = window.setTimeout(() => {
+      const hash = id === 'hero' ? '' : `#${id}`;
+      if (window.location.hash === hash) return;
+      window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + hash);
+    }, 150);
+  }
+
+  const urlObserver = new IntersectionObserver(
+    (entries) => {
+      const current = entries.filter((entry) => entry.isIntersecting).pop();
+      if (!current) return;
+      if (pendingDeepLink) {
+        if (current.target.id !== pendingDeepLink) return;
+        pendingDeepLink = '';
+      }
+      syncUrlHash(current.target.id);
+    },
+    { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+  );
+
+  urlSectionIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) urlObserver.observe(el);
   });
 </script>
