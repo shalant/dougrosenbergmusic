@@ -713,11 +713,20 @@ semantic headings, title/meta description.
             pages was therefore wasted (Bing will see `noindex`); `/` is the useful submission.
             Search Console's URL Inspection also says Google doesn't know `/easternblok` at all.
             **Don't request indexing for either until it is out of `DRAFT_PAGES`.**
-            **Update 2026-10-16:** `/easternblok` is out of draft (branch
-            `easternblok-story-2026-10-16`, not yet merged): Doug's story text is in, `noindex`
-            removed, page added to the sitemap. Once that's deployed: request indexing for
-            `/easternblok` in Search Console, submit it again in Bing URL Submission, and add it
-            to IndexNow. `/press` is still a draft.
+            **Update 2026-10-16:** `/easternblok` is out of draft (PR #82, merged and deployed
+            the same evening; checked live: no `noindex`, in `sitemap-0.xml`, new story text
+            served): Doug's story text is in, `noindex` removed, page added to the sitemap.
+            `/press` is still a draft. Submitted after the deploy, ~21:35 CT:
+            - Google Search Console: "Request indexing" for `/easternblok` accepted ("added to a
+              priority crawl queue"; the 10-15 request had been rejected for `noindex`).
+            - Bing URL Submission: `/easternblok` accepted (quota 99 of 100 left).
+            - IndexNow for `/` and `/easternblok`: `npm run indexnow` failed with `ECONNRESET`
+              to `api.indexnow.org` (also from curl), so I POSTed the same payload to
+              `https://www.bing.com/indexnow` instead, which returned 202 (accepted). The
+              script's endpoint may be blocked from this machine; try it again from another
+              network, or point `ENDPOINT` at the Bing one.
+            - Recheck in ~1 week: Search Console URL Inspection for `/easternblok` (indexed?)
+              and Bing Site Explorer last-crawl dates for `/` and `/easternblok`.
       - [x] **Eastern Blok story written 2026-10-16.** Sources: the band's own 2007 bio (Wayback
             capture of `easternblok.net/bio.html`, 2007-07-09, saved in
             `../press-archive/easternblok-net-bio-2007/` outside git), the All About Jazz promo
