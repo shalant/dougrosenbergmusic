@@ -753,6 +753,19 @@ semantic headings, title/meta description.
             2026-10-15 23:21 CT), Search Console, and Cloudflare filtered to the two real hostnames
             (`dougrosenberg.com`, `www.dougrosenberg.com`).
 
+- [x] **2026-10-16 — Sheet Music Library fills its card on desktop.** The card was about 480px tall
+      in a 868px window: the piece list was capped at 420px and the viewer floored at 420px, so
+      both stopped well short of a PDF page. `.sheet-music__panel` is now
+      `clamp(560px, 85vh, 860px)` tall with one stretched grid row; the list and the viewer (and
+      the open PDF/image frame) fill its full inner height, and the list scrolls inside it. Below
+      800px the layout is unchanged (stacked, list capped at 260px, frame min 380px). Also fixed a
+      latent bug found on the way: the hidden `<img>` still took half the viewer (a global
+      `img { display: block }` beats `[hidden]`), now `.sheet-music__frame[hidden]
+      { display: none }`. Added an e2e test (1440x900: list bottom, viewer height and frame
+      bottom all match the card's inner box; it failed before the fix). Checked by screenshot on
+      desktop and mobile with a PDF and an image piece. Branch
+      `sheet-music-full-height-2026-10-16`, not yet merged.
+
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
 near zero — GSC only shows name queries, Bing AI citations are 0, GA4/Cloudflare Web Analytics show
