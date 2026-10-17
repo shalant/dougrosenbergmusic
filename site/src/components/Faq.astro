@@ -101,4 +101,53 @@ const faqSchema = {
     color: var(--text-muted);
     line-height: 1.65;
   }
+
+  /* Open/closed indicator (2026-10-17): `display: flex` on the summary
+     drops the browser's own marker, so nothing showed a question could
+     open. A "+" that turns to "×", same as the /easternblok show years. */
+  .faq__item summary {
+    gap: 1rem;
+    list-style: none;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__item summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--brass);
+    transition: rotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .faq__item[open] summary::after {
+    rotate: 45deg;
+  }
+
+  /* The answer slides open instead of popping in, where the browser can
+     animate to `height: auto`; elsewhere it just opens as before. */
+  @supports selector(::details-content) {
+    .faq__item {
+      interpolate-size: allow-keywords;
+    }
+    .faq__item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition: block-size 0.3s ease, content-visibility 0.3s allow-discrete;
+    }
+    .faq__item[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__item summary::after,
+    .faq__item::details-content {
+      transition: none;
+    }
+  }
 </style>

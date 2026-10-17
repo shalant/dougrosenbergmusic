@@ -105,4 +105,28 @@ const albums = [
     margin: 0;
     line-height: 1.5;
   }
+
+  /* On a phone the four full-width cards ran to about four screens before
+     About (2026-10-16 audit). Each becomes a row: a small cover beside its
+     title and blurb, about a quarter of the height. */
+  @media (max-width: 520px) {
+    .listen__grid {
+      gap: 0.9rem;
+    }
+    .album {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      align-items: center;
+    }
+    .album__cover {
+      height: 100%;
+      min-height: 112px;
+    }
+    .album__body {
+      padding: 0.8rem 0.95rem;
+    }
+    .album__blurb {
+      font-size: 0.8rem;
+    }
+  }
 </style>
