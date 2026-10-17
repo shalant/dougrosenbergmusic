@@ -108,6 +108,13 @@ const pieces = [
   .sheet-music__panel {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+    /* One row sized to the card, so the list and the viewer both stretch to
+       its full height (was: the list capped at 420px and the viewer at a
+       420px floor, leaving the card about 60% filled on a tall screen). The
+       card follows the window height with a floor that fits the search box
+       plus a few rows, and a ceiling so it doesn't stretch past a PDF page. */
+    grid-template-rows: minmax(0, 1fr);
+    height: clamp(560px, 85vh, 860px);
     gap: clamp(1.5rem, 4vw, 2.5rem);
     background: var(--surface);
     border: 1px solid rgba(233, 237, 245, 0.08);
@@ -122,6 +129,7 @@ const pieces = [
   }
 
   .sheet-music__search {
+    flex: none;
     font-family: var(--font-body);
     font-size: 0.9rem;
     color: var(--text);
@@ -144,7 +152,8 @@ const pieces = [
     list-style: none;
     margin: 0;
     padding: 0;
-    max-height: 420px;
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -179,7 +188,7 @@ const pieces = [
   }
 
   .sheet-music__viewer {
-    min-height: 420px;
+    min-height: 0;
     display: flex;
     flex-direction: column;
   }
@@ -215,7 +224,8 @@ const pieces = [
   .sheet-music__viewer-active {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
   }
 
   .sheet-music__viewer-active[hidden] {
@@ -259,10 +269,16 @@ const pieces = [
   .sheet-music__frame {
     flex: 1;
     width: 100%;
-    min-height: 380px;
+    min-height: 0;
     border: 1px solid rgba(233, 237, 245, 0.1);
     border-radius: 6px;
     background: #fff;
+  }
+
+  /* A global `img { display: block }` outranks the browser's [hidden] rule, so
+     the unused <img> kept its flex share and halved the PDF frame. */
+  .sheet-music__frame[hidden] {
+    display: none;
   }
 
   .sheet-music__frame--image {
@@ -271,20 +287,26 @@ const pieces = [
   }
 
   @media (max-width: 800px) {
+    /* Stacked on mobile the card grows with its content instead of filling a
+       viewport-sized height: a fixed-height card would leave the list and the
+       viewer fighting over it. The list keeps its own scroll cap, the empty
+       viewer a small floor (a taller one reserved a mostly-empty box just for
+       "select a piece to view", confirmed via a real mobile screenshot), and
+       the open PDF frame a floor tall enough to read. */
     .sheet-music__panel {
       grid-template-columns: 1fr;
+      grid-template-rows: none;
+      height: auto;
     }
     .sheet-music__list {
+      flex: none;
       max-height: 260px;
     }
-    /* 420px only exists to match the list column's height in the desktop
-       side-by-side grid - stacked on mobile, that same floor reserves a
-       mostly-empty dashed box just for "select a piece to view" (confirmed
-       via a real mobile screenshot). Doesn't shrink the *active* viewer once
-       a piece is picked - its frame's own 380px min-height still pushes this
-       taller as needed. */
     .sheet-music__viewer {
       min-height: 180px;
+    }
+    .sheet-music__frame {
+      min-height: 380px;
     }
   }
 </style>
