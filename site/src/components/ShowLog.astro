@@ -192,6 +192,12 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
     font-size: 0.72rem;
     color: var(--glow);
     text-underline-offset: 3px;
+    /* Standalone link, one per row (29 of them): measured 57x18px on a
+       phone (2026-10-16 audit). Padding grows the tap target to ~44px tall
+       and ~73px wide; the negative margin keeps the row's layout unchanged. */
+    display: inline-block;
+    padding: 0.82rem 0.5rem;
+    margin: -0.82rem -0.5rem;
   }
 
   .gig__listen::after {

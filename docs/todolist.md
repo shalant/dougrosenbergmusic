@@ -819,9 +819,18 @@ semantic headings, title/meta description.
       code. Full e2e 103 passed, 11 skipped; nav + url-hash specs 5× repeated with no flakes;
       lint, `astro check`, `verify-csp`, 48 unit tests. Chromium only, not Safari/Firefox or a
       real phone. Branch `ui-polish-mobile-2026-10-16`, not yet merged.
-      **Still open from the audit:** small tap targets (dev reel indicator lights 26px,
-      `/easternblok` "Listen ↗" 57×18, press source links and footer link ~15px tall); dev reel
-      remote overlapping its screenshot; `/easternblok` show-count alignment, uneven members grid,
+      **Part 2 (2026-10-17), tap targets:** `/easternblok` "Listen ↗" links grew from 57×18 to
+      73×44px and the press outlet links (`QuoteLedger`) from ~15 to 32px tall, both with
+      padding cancelled by negative margin (layout unchanged, checked by screenshot at 360px).
+      Dev reel channel lights were already a deliberate 24×24 (WCAG 2.5.8; the audit's 26px was
+      the remote's rotation); they now take taps across 24×44 via an invisible `::before`, so the
+      focus ring and active glow stay circles. Left alone on purpose: the footer "See how it was
+      rebuilt" link (in a sentence; `Footer.astro` documents it under the inline-link exception)
+      and the remote overlapping the screenshot (recorded in `DevServices.astro` as Doug's call).
+      New `e2e/tap-targets.spec.ts` (3 tests, all fail against the old code); full e2e 106
+      passed, 14 skipped; lint, `astro check`, unit tests, `verify-csp` (13, no script change).
+      **Still open from the audit:** "On air" label sitting over the client site's own logo in
+      the reel screenshot; `/easternblok` show-count alignment, uneven members grid,
       full-width album covers; long Recordings stack on mobile; FAQ divider reuses About's icon;
       mixed centered/left section headings; About photo not filling its column.
 
