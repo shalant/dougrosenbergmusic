@@ -448,6 +448,19 @@ const sections = [
   @media (max-width: 860px) {
     .staff-toggle {
       display: flex;
+      transition: translate 0.3s ease, opacity 0.3s ease;
+    }
+    /* Slides away with the logo while scrolling down (html.chrome-hidden is
+       set by Logo.astro's script, which never sets it while the menu is open). */
+    :global(html.chrome-hidden) .staff-toggle:not(:focus-visible) {
+      translate: 0 calc(-100% - 24px);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :global(html.chrome-hidden) .staff-toggle:not(:focus-visible) {
+        translate: none;
+        opacity: 0;
+        pointer-events: none;
+      }
     }
     /* Rendered at all times at this breakpoint (never [hidden]/display:none)
        so open/close can actually transition instead of popping instantly -

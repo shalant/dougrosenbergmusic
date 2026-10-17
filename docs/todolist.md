@@ -793,6 +793,47 @@ semantic headings, title/meta description.
       not yet merged. Note: `/#intro` now appears in the URL just below the hero; that is
       intentional (every section id), say if you'd rather clear it too.
 
+- [x] **2026-10-16 — UI round, part 1: mobile audit + first five fixes.** Audited the production
+      build of `/` and `/easternblok` at 360/390/768px (screenshots, tap-target and overflow
+      measurement; no page-level horizontal scroll at any width). Fixed:
+      1. Intro read "debut album*Better Than TV*": the build dropped the line break before `<em>`
+         (`Intro.astro`, now an explicit `{' '}`).
+      2. Highlights' school list ended almost every wrapped line on phones with an orphan "·".
+         The separator is now a `::before` in the gap ahead of each item, and the list is shifted
+         left one gap and `clip-path`-clipped, so line-start dots fall outside the clip.
+      3. "Artists performed with" split names across lines ("Bobby / Broom"). Now a `<ul>`, one
+         `nowrap` item per name, same clipped-separator technique.
+      4. Sheet Music rows rendered in the browser's button font (`font-family: inherit`).
+      5. Fixed logo + hamburger sat over body text the whole way down on phones. At ≤860px they now
+         slide up out of view while the visitor scrolls down and return on any scroll up (fade
+         instead of slide under `prefers-reduced-motion`); always shown near the top, while the
+         menu is open, and when keyboard-focused. Script in `Logo.astro` (so `/easternblok` gets it
+         too) sets `html.chrome-hidden`. Only the visitor's own scrolling (touchmove, wheel,
+         scroll keys) hides them: the first version also hid them during a CTA's smooth jump to
+         `#contact`, leaving no menu button on arrival (caught by `url-hash.spec.ts`). Desktop
+         unchanged. CSP hashes regenerated (13).
+      Tests: new `e2e/text-flow.spec.ts` (intro space, button font, dot lists at 360/390: rows
+      start flush, no trailing dot, no wrapped name) and a header block in `nav.spec.ts`
+      (hide/show on `/` and `/easternblok`, toggle stays while menu open, CTA jump keeps header,
+      desktop ignores the class). All new tests except the CTA-jump guard fail against the old
+      code. Full e2e 103 passed, 11 skipped; nav + url-hash specs 5× repeated with no flakes;
+      lint, `astro check`, `verify-csp`, 48 unit tests. Chromium only, not Safari/Firefox or a
+      real phone. Branch `ui-polish-mobile-2026-10-16`, not yet merged.
+      **Part 2 (2026-10-17), tap targets:** `/easternblok` "Listen ↗" links grew from 57×18 to
+      73×44px and the press outlet links (`QuoteLedger`) from ~15 to 32px tall, both with
+      padding cancelled by negative margin (layout unchanged, checked by screenshot at 360px).
+      Dev reel channel lights were already a deliberate 24×24 (WCAG 2.5.8; the audit's 26px was
+      the remote's rotation); they now take taps across 24×44 via an invisible `::before`, so the
+      focus ring and active glow stay circles. Left alone on purpose: the footer "See how it was
+      rebuilt" link (in a sentence; `Footer.astro` documents it under the inline-link exception)
+      and the remote overlapping the screenshot (recorded in `DevServices.astro` as Doug's call).
+      New `e2e/tap-targets.spec.ts` (3 tests, all fail against the old code); full e2e 106
+      passed, 14 skipped; lint, `astro check`, unit tests, `verify-csp` (13, no script change).
+      **Still open from the audit:** "On air" label sitting over the client site's own logo in
+      the reel screenshot; `/easternblok` show-count alignment, uneven members grid,
+      full-width album covers; long Recordings stack on mobile; FAQ divider reuses About's icon;
+      mixed centered/left section headings; About photo not filling its column.
+
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
 near zero — GSC only shows name queries, Bing AI citations are 0, GA4/Cloudflare Web Analytics show
