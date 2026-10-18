@@ -86,6 +86,35 @@ const albums = [
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
+    transition: scale 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* The cover pushes in slightly inside its frame on hover (the card's
+     overflow: hidden crops it), and the card settles back down when
+     pressed (2026-10-17). */
+  .album:hover .album__cover,
+  .album:focus-visible .album__cover {
+    scale: 1.04;
+  }
+
+  .album:active {
+    transform: translateY(0) scale(0.99);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .album,
+    .album__cover {
+      transition: none;
+    }
+    .album:hover,
+    .album:focus-visible,
+    .album:active {
+      transform: none;
+    }
+    .album:hover .album__cover,
+    .album:focus-visible .album__cover {
+      scale: none;
+    }
   }
 
   .album__body {

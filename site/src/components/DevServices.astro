@@ -43,10 +43,10 @@ const channels = [
         ))}
       </ul>
       <div class="dev__ctas">
-        <a href="#contact" class="cta cta-primary" data-cta="dev-primary">Let&rsquo;s Talk About Your Site →</a>
-        <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-secondary" data-cta="dev-secondary">Visit dougrosenbergdev.com →</a>
+        <a href="#contact" class="cta cta-primary" data-cta="dev-primary">Let&rsquo;s Talk About Your Site <span class="cta__arrow" aria-hidden="true">→</span></a>
+        <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-secondary" data-cta="dev-secondary">Visit dougrosenbergdev.com <span class="cta__arrow" aria-hidden="true">→</span></a>
       </div>
-      <!-- A second "See More of My Work" CTA used to sit here, cut as
+      {/* A second "See More of My Work" CTA used to sit here, cut as
            redundant with Channel Surf just to the right - re-added
            2026-09-27 (Doug's call) as a link to the dougrosenbergdev.com
            root domain specifically, which nothing else on this page
@@ -58,11 +58,11 @@ const channels = [
 
            The "see how this site was built" case-study link still lives
            at Contact.astro's footer, not duplicated here - that reasoning
-           is unchanged. -->
+           is unchanged. */}
     </div>
 
     <div class="dev__demo">
-      <!-- The screen shows the actual site, not a name card - a TV plays a
+      {/* The screen shows the actual site, not a name card - a TV plays a
            picture, not a caption. "channel" image/href/target are set by
            the script below on load and on every click - kept out of the
            initial markup (besides the first channel, pre-rendered same as
@@ -71,7 +71,7 @@ const channels = [
            Remote overlaps the screen's own bottom edge (skewed, resting
            against it) instead of sitting in its own row below - Doug's
            call, both for the physical-object feel and because a separate
-           row was dead space this section didn't need. -->
+           row was dead space this section didn't need. */}
       <div class="dev__screen-wrap">
         <a class="dev__screen" id="dev-screen" href={channels[0].href} target="_blank" rel="noopener noreferrer" aria-label={`View ${channels[0].name}`}>
           <img class="dev__screen-img" id="dev-screen-img" src={channels[0].img} alt="" />
@@ -237,6 +237,18 @@ const channels = [
     background: var(--note-dev);
     filter: brightness(1.15);
     transform: translateY(-1px);
+  }
+
+  /* Out-specifies the hover lift above so the shared press (global.css)
+     still shows on this section's button. */
+  .dev__ctas .cta-primary:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dev__ctas .cta-primary:active {
+      transform: none;
+    }
   }
 
   /* ---- broadcast screen + clicker ---- */

@@ -65,69 +65,22 @@ test.describe('mobile hamburger nav', () => {
   });
 });
 
-// The fixed logo + hamburger used to sit over body text all the way down the
-// page on phones (2026-10-16 audit). They now slide away while scrolling down
-// and come back on any scroll up. Only the visitor's own scrolling hides
-// them, so each scroll here is preceded by the touchmove a finger drag sends.
-async function scrollToY(page: import('@playwright/test').Page, y: number) {
-  await page.evaluate((top) => {
-    window.dispatchEvent(new Event('touchmove'));
-    window.scrollTo(0, top);
-  }, y);
-}
-
-test.describe('mobile header hides while scrolling down', () => {
-  test.skip(({ isMobile }) => !isMobile, 'mobile-only behavior');
+// The logo and hamburger stay fixed and visible the whole way down the page.
+// A hide-on-scroll-down version shipped in PR #86 and was removed on
+// 2026-10-17 at Doug's request ("I like the logo and hamburger always
+// available"), so this guards against reintroducing it.
+test.describe('mobile header stays visible', () => {
+  test.skip(({ isMobile }) => !isMobile, 'mobile-only controls');
 
   for (const path of ['/', '/easternblok']) {
-    test(`logo slides out on scroll down and back on scroll up (${path})`, async ({ page }) => {
+    test(`logo${path === '/' ? ' and menu toggle stay' : ' stays'} in view while scrolling down (${path})`, async ({ page }) => {
       await page.goto(path);
-      const logo = page.locator('.logo');
-      await expect(logo).toBeInViewport();
-
-      await scrollToY(page, 300);
-      await scrollToY(page, 1200);
-      await expect(logo).not.toBeInViewport();
-
-      await page.evaluate(() => window.scrollBy(0, -200));
-      await expect(logo).toBeInViewport();
+      for (const y of [300, 1200, 2400]) {
+        await page.mouse.wheel(0, y - (await page.evaluate(() => window.scrollY)));
+        await page.waitForTimeout(400);
+        await expect(page.locator('.logo')).toBeInViewport();
+        if (path === '/') await expect(page.locator('[data-menu-toggle]')).toBeInViewport();
+      }
     });
   }
-
-  test('a CTA jump down the page leaves the header visible', async ({ page }) => {
-    await page.goto('/');
-    await page.locator('a[data-cta="dev-primary"]').click();
-    await expect(page.locator('#contact')).toBeInViewport();
-    await page.waitForTimeout(500);
-    await expect(page.locator('[data-menu-toggle]')).toBeInViewport();
-    await expect(page.locator('html')).not.toHaveClass(/chrome-hidden/);
-  });
-
-  test('the menu toggle hides with the logo and stays put while the menu is open', async ({ page }) => {
-    await page.goto('/');
-    const toggle = page.locator('[data-menu-toggle]');
-
-    await scrollToY(page, 300);
-    await scrollToY(page, 1200);
-    await expect(toggle).not.toBeInViewport();
-
-    await page.evaluate(() => window.scrollBy(0, -200));
-    await expect(toggle).toBeInViewport();
-    await toggle.click();
-    await scrollToY(page, 2000);
-    await expect(toggle).toBeInViewport();
-    await expect(page.locator('[data-menu-panel]')).toBeVisible();
-  });
-});
-
-test.describe('desktop header stays fixed', () => {
-  test.skip(({ isMobile }) => isMobile, 'desktop-only');
-
-  test('the logo ignores the scroll-hide state at desktop widths', async ({ page }) => {
-    await page.goto('/');
-    await page.evaluate(() => window.scrollTo(0, 1200));
-    await page.evaluate(() => document.documentElement.classList.add('chrome-hidden'));
-    await page.waitForTimeout(400);
-    await expect(page.locator('.logo')).toBeInViewport();
-  });
 });

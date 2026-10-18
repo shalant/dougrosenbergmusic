@@ -94,3 +94,32 @@ test.describe('reduced motion', () => {
     expect(opacities.every((o) => o === '1')).toBe(true);
   });
 });
+
+// UI round 3 (2026-10-17): hover/press feedback and the sending state.
+test.describe('hover and progress feedback', () => {
+  test.skip(({ isMobile }) => isMobile, 'hover states');
+
+  test('CTA arrows nudge forward on hover and stay out of the link name', async ({ page }) => {
+    await page.goto('/');
+    const cta = page.locator('a[data-cta="hero-primary"]');
+    await expect(cta).toHaveAccessibleName("Like This Site? Let's Build Yours");
+    await cta.hover();
+    await expect.poll(() => cta.locator('.cta__arrow').evaluate((el) => getComputedStyle(el).translate)).toBe('4px');
+  });
+
+  test('album covers push in on hover', async ({ page }) => {
+    await page.goto('/');
+    const card = page.locator('#listen .album').first();
+    await card.scrollIntoViewIfNeeded();
+    await card.hover();
+    await expect.poll(() => card.locator('.album__cover').evaluate((el) => getComputedStyle(el).scale)).toBe('1.04');
+  });
+
+  test('the send button animates while a message is sending', async ({ page }) => {
+    await page.goto('/');
+    const button = page.locator('.contact__submit');
+    expect(await button.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+    await button.evaluate((el: HTMLButtonElement) => (el.disabled = true));
+    expect(await button.evaluate((el) => getComputedStyle(el).animationName)).toBe('contact-sending');
+  });
+});
