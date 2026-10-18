@@ -95,4 +95,14 @@ test.describe('smoke', () => {
     await expect(screenLink).toHaveAttribute('href', /^https:\/\/dougrosenbergdev\.com\//);
     await expect(screenLink).toHaveAttribute('target', '_blank');
   });
+
+  // Internal dev notes used to ship as HTML comments (7 on the home page,
+  // ~4.5% of its bytes; found 2026-10-11). They're Astro {/* */} comments
+  // now, which the build strips.
+  for (const path of ['/', '/easternblok', '/press', '/no-such-page']) {
+    test(`no HTML comments in the served page (${path})`, async ({ request }) => {
+      const html = await (await request.get(path)).text();
+      expect(html).not.toContain('<!--');
+    });
+  }
 });

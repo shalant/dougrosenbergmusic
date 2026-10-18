@@ -26,9 +26,9 @@
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" required maxlength="5000" rows="4"></textarea>
         </div>
-        <!-- Honeypot: hidden from real visitors via off-screen positioning
+        {/* Honeypot: hidden from real visitors via off-screen positioning
              (not `hidden`/display:none — some bots skip fields detected via
-             those too crudely), invisible and unreachable by tab/keyboard. -->
+             those too crudely), invisible and unreachable by tab/keyboard. */}
         <div class="contact__field contact__honeypot" aria-hidden="true">
           <label for="contact-website">Website</label>
           <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
@@ -40,10 +40,10 @@
   </div>
 </section>
 
-<!-- Success toast: fixed to the viewport so it's visible after the page
+{/* Success toast: fixed to the viewport so it's visible after the page
      scrolls back to the top on a successful send (the form itself is far
      below the fold by then). Always in the DOM so screen readers reliably
-     announce the text change in this live region. -->
+     announce the text change in this live region. */}
 <div id="contact-toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -258,6 +258,38 @@
   .contact__submit:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  /* The button is only disabled while a message is sending, so the
+     disabled state doubles as a progress indicator (2026-10-17): diagonal
+     stripes drift across it under the "Sending..." label, instead of a
+     static dimmed button that looks broken. CSS only, no script change. */
+  .contact__submit:disabled {
+    opacity: 0.85;
+    cursor: progress;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.16) 0 10px,
+      transparent 10px 20px
+    );
+    background-size: 28.28px 28.28px;
+    animation: contact-sending 0.8s linear infinite;
+  }
+
+  @keyframes contact-sending {
+    to {
+      background-position: 28.28px 0;
+    }
+  }
+
+  .contact__submit:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact__submit:disabled {
+      animation: none;
+    }
   }
 
   .contact__form-status {

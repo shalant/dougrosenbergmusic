@@ -812,6 +812,8 @@ semantic headings, title/meta description.
          scroll keys) hides them: the first version also hid them during a CTA's smooth jump to
          `#contact`, leaving no menu button on arrival (caught by `url-hash.spec.ts`). Desktop
          unchanged. CSP hashes regenerated (13).
+         **Removed 2026-10-17 (part 4)** at Doug's request: "I want the nav bar to remain fixed. I
+         like the logo and hamburger always available."
       Tests: new `e2e/text-flow.spec.ts` (intro space, button font, dot lists at 360/390: rows
       start flush, no trailing dot, no wrapped name) and a header block in `nav.spec.ts`
       (hide/show on `/` and `/easternblok`, toggle stays while menu open, CTA jump keeps header,
@@ -854,6 +856,26 @@ semantic headings, title/meta description.
       the press-visibility ones guard the new reveal, including under reduced motion). Full
       e2e 123 passed, 19 skipped; lint, `astro check`, unit tests, `verify-csp`. Screenshots
       at 390px; Chromium only, not Safari/Firefox or a real phone.
+      **Part 4 (2026-10-17), fixed header back + hover feedback** (branch
+      `nav-fixed-comments-hover-2026-10-17`):
+      - Removed the hide-on-scroll header from part 1 (Doug wants the logo and hamburger always
+        available). `Logo.astro` and `StaffNav.astro` are byte-for-byte back to their pre-#86
+        versions; CSP back to 12 hashes. `nav.spec.ts` now asserts the logo and toggle stay in
+        view through a real wheel scroll on `/` and `/easternblok` (fails against the hiding
+        version).
+      - Removed the internal dev comments from the live HTML (see the item below).
+      - Micro-interactions, CSS only, all off under `prefers-reduced-motion`: the three arrow
+        CTAs (hero primary, both Dev buttons) wrap "→" in an `aria-hidden` span that nudges 4px
+        forward on hover/focus, so the link's accessible name is now just its words; every
+        `.cta` presses in (scale 0.97) on tap; `.cta`'s `transition: all` is now a named list.
+        Recordings covers push in (scale 1.04) inside the card on hover, and cards settle when
+        pressed. The contact button's disabled state, used only while sending, now shows
+        drifting diagonal stripes under "Sending..." instead of a static dimmed button (no
+        script change). Desktop nav active state left as is: the current note already pulses
+        at full opacity while the rest dim.
+      New tests: 3 hover/progress tests in `polish.spec.ts` and the no-comments smoke tests,
+      all failing on the old code. Full e2e 131 passed, 19 skipped; lint, `astro check`, unit
+      tests, `verify-csp` (12). Hover states checked by screenshot at 1280px; Chromium only.
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
@@ -865,7 +887,10 @@ status. Needs Doug: entity-consistency profile claiming, sheet-music ranking dec
 missing PDFs, monitoring/alerting decision. **Correction:** `/api/contact` already has a rate
 limit (5/60s per IP, `CONTACT_RATE_LIMITER`, fixed 2026-09-27); a handoff note from the
 dougrosenbergdev repo claiming this site had the same gap was wrong.
-- [ ] **Internal dev comments ship in the live HTML (found 2026-10-11, low priority)** — 7 HTML
+- [x] **Done 2026-10-17:** the 7 comments in `BaseLayout`, `HeroGraded`, `DevServices` and
+      `Contact` are now Astro `{/* */}` comments; no built page contains `<!--` (new smoke test
+      covers `/`, `/easternblok`, `/press` and the 404). CSP hashes unchanged, as predicted.
+      **Internal dev comments ship in the live HTML (found 2026-10-11, low priority)** — 7 HTML
       comments (BaseLayout's Cloudflare/GA4 notes, the hero/dev-screen/contact comments) are
       served to visitors and crawlers: 5,244 of 116,782 bytes (~4.5%, small after gzip). Harmless
       to SEO but it is internal reasoning on a public page. Fix: turn them into Astro `{/* */}`

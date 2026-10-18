@@ -89,17 +89,17 @@ const websiteSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 		<slot name="head" />
 
-		<!-- Cloudflare Web Analytics — chosen over GA4/Plausible for zero-config,
+		{/* Cloudflare Web Analytics — chosen over GA4/Plausible for zero-config,
 		     no-cookie-consent-overhead reasons, same as haxbyte.com. Token isn't a
 		     secret; it's a public per-site beacon ID meant to ship in every page's
 		     HTML. Site registered under Web Analytics as
-		     dougrosenbergmusic.doug-rosenberg.workers.dev. -->
+		     dougrosenbergmusic.doug-rosenberg.workers.dev. */}
 		{/* The beacon and gtag.js are injected by the inline script below, only
 		    off localhost: 210 of the 400 Cloudflare visits in the 30 days to
 		    2026-10-15 had host `localhost` (dev server / e2e / Lighthouse runs
 		    against a local build), which roughly doubled the apparent traffic. */}
 
-		<!-- GA4 — reinstalled 2026-09-15; the property (G-BGSJ1FWPTF) existed but
+		{/* GA4 — reinstalled 2026-09-15; the property (G-BGSJ1FWPTF) existed but
 		     had no tag on the current Astro build, so it collected nothing since
 		     the rebuild.
 		     Consent Mode v2 default is 'denied' for every storage type below,
@@ -132,7 +132,7 @@ const websiteSchema = {
 		     Contact.astro throwing "gtag is not defined" on every real
 		     submission, silently swallowed by that script's own try/catch
 		     and surfacing to visitors as a false "Something went wrong"
-		     error even though the email itself sent successfully. -->
+		     error even though the email itself sent successfully. */}
 		<script>
 			var host = window.location.hostname;
 			var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
