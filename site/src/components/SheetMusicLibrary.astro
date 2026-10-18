@@ -184,6 +184,29 @@ const pieces = [
     color: var(--text);
   }
 
+  /* Feedback on press and a clearer "this one is open" marker
+     (2026-10-17): a brass bar grows in on the active row's left edge. */
+  .sheet-music__item {
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.2s ease, scale 0.1s ease;
+  }
+
+  .sheet-music__item:active {
+    scale: 0.985;
+  }
+
+  .sheet-music__item.is-active {
+    box-shadow: inset 3px 0 0 var(--brass);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sheet-music__item {
+      transition: none;
+    }
+    .sheet-music__item:active {
+      scale: none;
+    }
+  }
+
   .sheet-music__item[hidden] {
     display: none;
   }

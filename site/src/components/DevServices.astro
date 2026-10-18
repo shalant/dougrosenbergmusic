@@ -359,6 +359,16 @@ const channels = [
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   }
 
+  /* A dark on-screen-display chip behind each label (2026-10-17): the
+     top gradient alone left "On air" sitting directly on whatever each
+     client site has in its top-left corner, usually its own logo. */
+  .dev__screen-live,
+  .dev__screen-count {
+    background: rgba(10, 14, 23, 0.72);
+    border-radius: 3px;
+    padding: 0.2rem 0.45rem;
+  }
+
   /* Compact on purpose - name, stack, and tagline share two lines instead
      of three stacked blocks with their own margins, since this whole
      column was taking up more vertical real estate than the amount of
@@ -509,18 +519,12 @@ const channels = [
   }
 
   @media (max-width: 760px) {
+    /* Stacked but left-aligned, not centered (changed 2026-10-17): every
+       other section on a phone starts from the same left edge, and a
+       centered stack was the one AI-site tell DESIGN_NOTES lists that this
+       section still matched. */
     .dev__grid {
       grid-template-columns: 1fr;
-    }
-    .dev__services,
-    .dev__ctas {
-      justify-content: center;
-    }
-    .dev__body {
-      text-align: center;
-    }
-    .dev__text {
-      margin-inline: auto;
     }
   }
 </style>

@@ -110,6 +110,36 @@ const { quotes } = Astro.props;
     text-decoration-color: var(--text-muted);
   }
 
+  /* Each entry rises in as it scrolls into view (2026-10-17), driven by
+     scroll position (no script, no CSP change), the same technique as the
+     staff dividers. Browsers without scroll timelines, and reduced motion,
+     show the entries as before. */
+  @keyframes ledger-rise {
+    from {
+      opacity: 0;
+      translate: 0 1.25rem;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .ledger__row {
+        animation: ledger-rise linear both;
+      }
+      /* Separate, more specific rule on purpose: see StaffDivider.astro -
+         the minifier folds a same-rule animation-timeline into the
+         shorthand, which some browsers then reject outright. */
+      .ledger .ledger__row {
+        animation-timeline: view();
+        animation-range: entry 10% entry 90%;
+      }
+    }
+  }
+
   @media (max-width: 860px) {
     .ledger__row {
       grid-template-columns: 3.25rem minmax(0, 1fr);

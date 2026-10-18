@@ -110,15 +110,41 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
     display: none;
   }
 
+  /* "+" turns to "×" rather than swapping to "−", so it can rotate instead
+     of jumping (2026-10-17); the FAQ uses the same indicator. */
   .year summary::after {
     content: '+';
     margin-left: auto;
     font-family: var(--font-mono);
     color: var(--brass);
+    transition: rotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .year[open] summary::after {
-    content: '−';
+    rotate: 45deg;
+  }
+
+  /* A year's show list slides open where the browser can animate to
+     `height: auto`; elsewhere it opens as before. */
+  @supports selector(::details-content) {
+    .year {
+      interpolate-size: allow-keywords;
+    }
+    .year::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition: block-size 0.35s ease, content-visibility 0.35s allow-discrete;
+    }
+    .year[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .year summary::after,
+    .year::details-content {
+      transition: none;
+    }
   }
 
   .year summary:focus-visible {
@@ -132,6 +158,10 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
     font-size: 1.6rem;
     line-height: 1;
     font-variant-numeric: lining-nums;
+    /* Fixed width so each year's show count starts in the same column; the
+       display face's digits are proportional, so "2011" is narrower than
+       "2008" (2026-10-17). */
+    min-width: 2.6em;
   }
 
   .year__count {

@@ -829,10 +829,31 @@ semantic headings, title/meta description.
       and the remote overlapping the screenshot (recorded in `DevServices.astro` as Doug's call).
       New `e2e/tap-targets.spec.ts` (3 tests, all fail against the old code); full e2e 106
       passed, 14 skipped; lint, `astro check`, unit tests, `verify-csp` (13, no script change).
-      **Still open from the audit:** "On air" label sitting over the client site's own logo in
-      the reel screenshot; `/easternblok` show-count alignment, uneven members grid,
-      full-width album covers; long Recordings stack on mobile; FAQ divider reuses About's icon;
-      mixed centered/left section headings; About photo not filling its column.
+      **Part 3 (2026-10-17), layout touch-ups + micro-interactions** (branch
+      `ui-polish-round2-2026-10-17`):
+      - Reel "On air" and channel-count labels each sit on a dark on-screen-display chip, so
+        they no longer print over each client site's own logo.
+      - Recordings (home) and `/easternblok` albums are compact rows on phones (≤520px): a 112px
+        cover beside the text instead of four full-width covers.
+      - `/easternblok`: members are a grid (2×2 on phones down to 360px, one row on desktop; names
+        scale slightly so none wrap); year labels have a fixed width so show counts line up.
+      - FAQ divider has its own question-mark icon (`help`) instead of reusing About's person.
+      - Dev and Contact are left-aligned on phones (≤760px) like every other section; desktop
+        Contact stays centered as the closing section. DESIGN_NOTES lists centered stacks as an
+        AI-site tell.
+      - Micro-interactions, all CSS (no script, CSP unchanged at 13), all off under
+        `prefers-reduced-motion`: FAQ questions and show years slide open (`::details-content` +
+        `interpolate-size`; other browsers open instantly as before) with a "+" that rotates to
+        "×" (the FAQ had no open/closed indicator at all: `display: flex` drops the marker);
+        press timeline entries rise in on scroll (`animation-timeline: view()`, separate
+        timeline rule per the StaffDivider minifier gotcha); Sheet Music rows get a press
+        scale and a brass bar on the open piece.
+      - Not changed: the About photo's narrower, offset frame is the asymmetric layout
+        DESIGN_NOTES asks for, not a bug.
+      New `e2e/polish.spec.ts` (12 tests; the layout and indicator ones fail on the old code,
+      the press-visibility ones guard the new reveal, including under reduced motion). Full
+      e2e 123 passed, 19 skipped; lint, `astro check`, unit tests, `verify-csp`. Screenshots
+      at 390px; Chromium only, not Safari/Firefox or a real phone.
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are

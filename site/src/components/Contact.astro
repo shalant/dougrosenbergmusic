@@ -163,6 +163,16 @@
     margin: 0 0 1.5rem;
   }
 
+  /* Desktop keeps the centered finale; on a phone the form is full width
+     and left-aligned, so the heading above it starts from the same edge as
+     every other section (2026-10-17). */
+  @media (max-width: 760px) {
+    .contact,
+    .contact__form-label {
+      text-align: left;
+    }
+  }
+
   .contact__field {
     display: flex;
     flex-direction: column;
