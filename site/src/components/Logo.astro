@@ -59,11 +59,28 @@ const { home = true } = Astro.props;
        gets a solid backing" language rather than a one-off patch. */
     background: var(--bg-elevated);
     box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6);
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) ease;
   }
 
-  .logo:hover {
-    transform: scale(1.06);
+  @media (hover: hover) {
+    .logo:hover {
+      transform: scale(1.06);
+    }
+  }
+
+  .logo:active {
+    transform: scale(0.96);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo {
+      transition: none;
+    }
+
+    .logo:hover,
+    .logo:active {
+      transform: none;
+    }
   }
 
   .logo:focus-visible {

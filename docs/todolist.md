@@ -876,6 +876,47 @@ semantic headings, title/meta description.
       New tests: 3 hover/progress tests in `polish.spec.ts` and the no-comments smoke tests,
       all failing on the old code. Full e2e 131 passed, 19 skipped; lint, `astro check`, unit
       tests, `verify-csp` (12). Hover states checked by screenshot at 1280px; Chromium only.
+      **Part 5 (2026-10-17), motion pass** (branch `motion-pass-2026-10-17`). Doug asked what a
+      good amount of micro-interaction is. The rule adopted: feedback motion (hover, tap, focus)
+      on nearly everything interactive at 0.15-0.3s; scroll reveals once per section at most;
+      looping ambient motion limited to 1-2 things per screen. Measured against that:
+      - **Motion tokens** in `global.css` `:root`: `--ease-spring` (the overshoot curve used for
+        icons/arrows/indicators), `--ease-out`, and `--dur-fast/base/med/slow` (0.15/0.2/0.3/
+        0.45s). Every `transition:` in `src/` now uses them; 0.25s became 0.3s and 0.35-0.4s
+        became 0.45s. Exception: Gallery's 0.5s reel slide (a carousel move, not feedback).
+      - **Nav calmed down:** the six inactive desktop staff-nav notes no longer breathe forever
+        (the nav is fixed, so they looped on every screen and drowned out the active note's
+        pulse). They sit still and swell/tip on hover or focus instead (`scale`/`rotate`
+        properties, so they stack on the active pulse's `transform`). The active note keeps
+        its pulse. Hero haze, title shimmer, cursor and chips left as they are: the chips
+        already show about two at a time, and tablet/phone already freeze the rest.
+      - **Sticky hover on phones fixed:** every hover-driven *movement* (CTA lifts and arrow
+        nudges, album lift + cover push-in, logo scale, Dev screen zoom and remote tilt, hero
+        terminal, contact button lift, divider icon spin and the no-scroll-timeline divider
+        fallback) is now inside `@media (hover: hover)`, with `:focus-visible` kept separate.
+        On touch, `:hover` used to stick to the last tapped element. Colour-only hovers left
+        as is. The logo also gained a press (`:active`) state and a reduced-motion rule (it
+        had none).
+      - **Lessons subjects:** they aren't links, so hovering no longer slides the row over like a
+        menu item; only the little note-head dot tips and swells.
+      - **Motion for the still sections:** a shared `.scroll-rise` reveal in `global.css`
+        (`QuoteLedger` now uses it instead of its own copy; `--rise-range` tunes it, with a
+        small stagger on second columns) on the Highlights blocks and school list and the
+        Performance venue groups and artist list. About's brass frame slides out from behind the
+        photo as it scrolls in. Each press-era bracket draws itself in top to bottom (left to
+        right on phones, where it's a rule). Its link gets the CTA arrow nudge, with the arrow
+        `aria-hidden`, so the accessible name is now "The archive" / "All press". Footer social
+        underlines grow out from the middle. All scroll-driven (no script, CSP unchanged at 12),
+        all off under reduced motion; browsers without scroll timelines show everything static.
+      - **Divider comment corrected:** the pill reveal follows scroll both ways (it closes
+        again if the divider sinks back toward the bottom edge). Kept on purpose; the comment
+        used to say it "stays open".
+      New `e2e/motion.spec.ts` (10 tests). The 7 that test new behaviour fail on the old code;
+      the other 3 are guards (mouse hover still moves, the bracket ends fully drawn, reduced motion
+      disables the reveals). Full e2e 145 passed, 25 skipped. One run had 3 "tearing down context"
+      timeouts under load in contact/gallery specs; they passed on rerun and on a 2-worker full run.
+      Lint, `astro check`, 48 unit tests, `verify-csp` (12). Screenshots at 1280px and Pixel 7,
+      mid-reveal and hovered. Chromium only, not Safari/Firefox or a real phone.
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are

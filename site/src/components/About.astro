@@ -73,6 +73,35 @@ const tags = ['Saxophones, Flutes, Clarinets', 'Composition / Arranging', 'Educa
     z-index: -1;
   }
 
+  /* The brass frame starts tucked behind the photo and slides out to its
+     offset as the photo scrolls into view (2026-10-17). Scroll-driven, no
+     script; without support, or under reduced motion, it just sits at the
+     offset as before. */
+  @keyframes about-frame-slide {
+    from {
+      transform: translate(0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .about__photo-wrap {
+        view-timeline-name: --about-photo;
+      }
+
+      .about__photo-wrap::after {
+        animation: about-frame-slide linear both;
+      }
+
+      /* Separate rule on purpose (see StaffDivider.astro): the minifier
+         folds a same-rule timeline into the shorthand. */
+      .about .about__photo-wrap::after {
+        animation-timeline: --about-photo;
+        animation-range: entry 20% cover 45%;
+      }
+    }
+  }
+
   .about__quote {
     font-family: var(--font-display);
     font-style: italic;

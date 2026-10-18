@@ -98,6 +98,31 @@ read on why these being uncoordinated is lower-risk here than on a typical site 
 read, not a live-viewport check; treat new breakpoint additions as needing an actual resize test,
 not just a plausible-sounding number.
 
+## Motion
+
+Added 2026-10-17 (see `docs/todolist.md`, UI round part 5). Tokens live in `global.css` `:root`:
+
+| Token | Value | Use |
+|---|---|---|
+| `--ease-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Small things that should bounce: icons, arrows, +/× indicators, nav notes |
+| `--ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` | Bigger things that should settle: covers, panels, pills, underlines |
+| `--dur-fast` / `--dur-base` / `--dur-med` | `0.15s` / `0.2s` / `0.3s` | Hover, tap, focus and open/close feedback |
+| `--dur-slow` | `0.45s` | Reveals and larger transitions |
+
+How much, by kind:
+- **Feedback** (hover, tap, focus): on nearly everything interactive. Small movement (scale up to
+  about 1.05 on big things, about 1.15 on small icons). Hover-driven *movement* goes inside
+  `@media (hover: hover)` with `:focus-visible` as its own rule, because `:hover` sticks on
+  touch screens; touch gets an `:active` press instead.
+- **Reveals** (scroll-driven, `animation-timeline: view()`): one per section at most. Reuse
+  `.scroll-rise` (set `--rise-range` to retime it) rather than writing new keyframes. Keep
+  `animation-timeline` in a separate, more specific rule (the minifier gotcha in
+  `StaffDivider.astro`).
+- **Ambient loops**: 1-2 per screen, slow (6s+), low contrast. The fixed nav's only loop is the
+  active note's pulse.
+- Everything off under `prefers-reduced-motion: reduce`; nothing hidden when scroll timelines
+  aren't supported.
+
 ## Component Patterns
 
 - **Buttons/pills/badges**: `border-radius: 999px` — the standard for any pill-shaped CTA, tag, or

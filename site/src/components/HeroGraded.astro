@@ -308,13 +308,22 @@ const tracks = [
     color: var(--text);
     text-decoration: none;
     white-space: nowrap;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: border-color var(--dur-base) ease, transform var(--dur-base) ease;
   }
 
   .hero__terminal:hover,
   .hero__terminal:focus-visible {
     border-color: var(--glow);
+  }
+
+  .hero__terminal:focus-visible {
     transform: rotate(-6deg) scale(1.03);
+  }
+
+  @media (hover: hover) {
+    .hero__terminal:hover {
+      transform: rotate(-6deg) scale(1.03);
+    }
   }
 
   .hero__terminal:focus-visible {
@@ -368,7 +377,7 @@ const tracks = [
     transform: translateY(14px) scale(0.9);
     animation: chip-float 9s ease-in-out infinite;
     white-space: nowrap;
-    transition: border-color 0.2s ease;
+    transition: border-color var(--dur-base) ease;
   }
 
   .hero__chip:hover,

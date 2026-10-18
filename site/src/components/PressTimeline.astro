@@ -44,7 +44,7 @@ const eras = [
               </p>
             )}
             <p class="era__meta">{era.meta}</p>
-            <a class="era__link" href={era.link.href} data-cta={`press-${era.key}`}>{era.link.label} &rarr;</a>
+            <a class="era__link" href={era.link.href} data-cta={`press-${era.key}`}>{era.link.label}<span class="era__arrow" aria-hidden="true">&rarr;</span></a>
           </div>
         </div>
       ))}
@@ -162,6 +162,67 @@ const eras = [
     color: var(--text);
   }
 
+  /* Same arrow nudge as the site's CTAs (global.css). The arrow is
+     aria-hidden, so the link's name is just its label. */
+  .era__arrow {
+    display: inline-block;
+    margin-left: 0.45em;
+    transition: translate var(--dur-med) var(--ease-spring);
+  }
+
+  .era__link:focus-visible .era__arrow {
+    translate: 4px 0;
+  }
+
+  @media (hover: hover) {
+    .era__link:hover .era__arrow {
+      translate: 4px 0;
+    }
+  }
+
+  /* The bracket draws itself in, top to bottom, as its era scrolls into
+     view (2026-10-17); on phones, where it's a rule above the rows, it
+     draws left to right. Scroll-driven, no script; no support or reduced
+     motion shows it whole. */
+  @keyframes era-bracket-draw {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    /* Ends a little outside the box so the link's focus ring isn't cut. */
+    to {
+      clip-path: inset(-0.5rem);
+    }
+  }
+
+  @keyframes era-bracket-draw-across {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(-0.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .era__bracket {
+        animation: era-bracket-draw linear both;
+      }
+
+      /* Separate rule on purpose (see StaffDivider.astro). */
+      .era .era__bracket {
+        animation-timeline: view();
+        animation-range: entry 10% cover 35%;
+      }
+
+      @media (max-width: 860px) {
+        .era .era__bracket {
+          animation-name: era-bracket-draw-across;
+        }
+      }
+    }
+  }
+
   @media (max-width: 860px) {
     .era {
       grid-template-columns: minmax(0, 1fr);
@@ -179,5 +240,6 @@ const eras = [
     .era__bracket::after {
       display: none;
     }
+
   }
 </style>

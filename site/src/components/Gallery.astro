@@ -475,7 +475,7 @@ const photos = [
     height: 120%;
     object-fit: cover;
     transform: translate(0, 0) scale(1.06);
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s var(--ease-out);
     pointer-events: none;
     user-select: none;
   }
@@ -487,7 +487,7 @@ const photos = [
     background: linear-gradient(180deg, transparent, rgba(10, 14, 23, 0.92) 88%);
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity var(--dur-med) ease, transform var(--dur-med) ease;
     pointer-events: none;
     text-align: left;
   }
@@ -526,7 +526,7 @@ const photos = [
     border: 1px solid var(--staff-line-strong);
     border-radius: 999px;
     padding: 0.4rem 0.7rem;
-    transition: opacity 0.4s ease;
+    transition: opacity var(--dur-slow) ease;
     pointer-events: none;
     z-index: 3;
   }
@@ -563,7 +563,7 @@ const photos = [
     cursor: pointer;
     opacity: 0.5;
     transform: translateY(0);
-    transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    transition: opacity var(--dur-med) ease, transform var(--dur-med) ease, border-color var(--dur-med) ease;
   }
 
   .reel-thumb img {
@@ -669,7 +669,7 @@ const photos = [
     cursor: pointer;
     padding: 0.75rem;
     opacity: 0.7;
-    transition: opacity 0.2s ease;
+    transition: opacity var(--dur-base) ease;
   }
 
   .gallery__lightbox-nav:hover,

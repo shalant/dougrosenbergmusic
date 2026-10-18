@@ -105,6 +105,20 @@
   --font-body: 'Work Sans', -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
 
+  /* Motion tokens (2026-10-17). Hover, tap and open/close transitions use
+     these, so a new micro-interaction matches the rest without copying
+     numbers. --ease-spring overshoots a little: the site's signature bounce
+     on icons, arrows and indicators. --ease-out settles without overshoot,
+     for bigger things (covers, panels, pills). Feedback stays at 0.15-0.3s;
+     --dur-slow is for reveals. Looping ambient motion (hero haze, the active
+     nav note) doesn't use these: keep it rare, slow and low-contrast. */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.15s;
+  --dur-base: 0.2s;
+  --dur-med: 0.3s;
+  --dur-slow: 0.45s;
+
   color-scheme: dark;
 }
 
@@ -231,7 +245,7 @@ a {
   text-decoration: none;
   /* Named properties instead of `all`, so only what's meant to animate
      does (2026-10-17). */
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color var(--dur-base) ease, color var(--dur-base) ease, border-color var(--dur-base) ease, transform var(--dur-base) ease, filter var(--dur-base) ease, box-shadow var(--dur-base) ease;
 }
 
 /* The trailing arrow nudges forward on hover/focus, and the button presses
@@ -241,12 +255,21 @@ a {
 .cta__arrow {
   display: inline-block;
   margin-left: -0.3rem;
-  transition: translate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: translate var(--dur-med) var(--ease-spring);
 }
 
-.cta:hover .cta__arrow,
+/* Hover-driven movement sits behind (hover: hover) across the site
+   (2026-10-17): on a phone, :hover sticks to whatever was last tapped until
+   the next tap elsewhere, so a lift or nudge would stay stuck on. Touch gets
+   the :active press instead; keyboard focus keeps its own rule. */
 .cta:focus-visible .cta__arrow {
   translate: 4px 0;
+}
+
+@media (hover: hover) {
+  .cta:hover .cta__arrow {
+    translate: 4px 0;
+  }
 }
 
 .cta:active {
@@ -275,7 +298,16 @@ a {
 .cta-primary:hover,
 .cta-primary:focus-visible {
   background: #9fe8cd;
+}
+
+.cta-primary:focus-visible {
   transform: translateY(-1px);
+}
+
+@media (hover: hover) {
+  .cta-primary:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .cta-secondary {
@@ -294,6 +326,40 @@ a {
 .cta:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+/* Shared scroll reveal (2026-10-17): add .scroll-rise to anything that
+   should rise in as it scrolls into view (press rows, Highlights,
+   Performance). Driven by scroll position like the staff dividers, so
+   there's no script and no CSP hash. Browsers without scroll timelines,
+   and reduced motion, just show the element. The default range finishes
+   once the element is a quarter of the way up the screen, which suits
+   tall blocks; set --rise-range on short rows to finish sooner. A second
+   item in a row can start a little later for a stagger. */
+@keyframes scroll-rise {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .scroll-rise {
+      animation: scroll-rise linear both;
+    }
+    /* Separate, more specific rule on purpose (see StaffDivider.astro):
+       the minifier folds a same-rule animation-timeline into the shorthand,
+       which some browsers then reject outright. */
+    html .scroll-rise {
+      animation-timeline: view();
+      animation-range: var(--rise-range, entry 10% cover 25%);
+    }
+  }
 }
 
 .visually-hidden {

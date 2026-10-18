@@ -121,7 +121,7 @@ const faqSchema = {
     font-weight: 400;
     font-size: 1.1rem;
     color: var(--brass);
-    transition: rotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: rotate var(--dur-med) var(--ease-spring);
   }
 
   .faq__item[open] summary::after {
@@ -137,7 +137,7 @@ const faqSchema = {
     .faq__item::details-content {
       block-size: 0;
       overflow: hidden;
-      transition: block-size 0.3s ease, content-visibility 0.3s allow-discrete;
+      transition: block-size var(--dur-med) ease, content-visibility var(--dur-med) allow-discrete;
     }
     .faq__item[open]::details-content {
       block-size: auto;

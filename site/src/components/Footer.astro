@@ -64,7 +64,7 @@ const socials = [
     text-decoration: underline;
     text-decoration-color: rgba(233, 237, 245, 0.35);
     text-underline-offset: 3px;
-    transition: text-decoration-color 0.2s ease, color 0.2s ease;
+    transition: text-decoration-color var(--dur-base) ease, color var(--dur-base) ease;
     /* Same 44px tap-target technique as .site-footer__socials a below -
        measured 23px tall before. */
     display: inline-block;
@@ -86,12 +86,12 @@ const socials = [
   }
 
   .site-footer__socials a {
+    position: relative;
     text-decoration: none;
     color: var(--text-muted);
     font-size: 0.85rem;
     letter-spacing: 0.03em;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color var(--dur-base) ease;
     /* These are standalone nav items, not sentence-embedded text, so the
        WCAG inline-link exception doesn't apply the way it does for
        .site-footer__proof's link below - measured 24px tall before.
@@ -105,7 +105,32 @@ const socials = [
   .site-footer__socials a:hover,
   .site-footer__socials a:focus-visible {
     color: var(--text);
-    border-color: var(--brass);
+  }
+
+  /* The brass underline grows out from the middle on hover/focus
+     (2026-10-17) instead of just appearing. Same spot the old
+     border-bottom drew it: the bottom of the padded tap target. */
+  .site-footer__socials a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--brass);
+    scale: 0 1;
+    transition: scale var(--dur-med) var(--ease-out);
+  }
+
+  .site-footer__socials a:hover::after,
+  .site-footer__socials a:focus-visible::after {
+    scale: 1 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer__socials a::after {
+      transition: none;
+    }
   }
 
   .site-footer__proof {
@@ -123,7 +148,7 @@ const socials = [
     color: var(--glow);
     text-decoration: underline;
     text-underline-offset: 2px;
-    transition: color 0.2s ease;
+    transition: color var(--dur-base) ease;
   }
 
   .site-footer__proof a:hover,

@@ -236,7 +236,16 @@ const channels = [
   .dev__ctas .cta-primary:focus-visible {
     background: var(--note-dev);
     filter: brightness(1.15);
+  }
+
+  .dev__ctas .cta-primary:focus-visible {
     transform: translateY(-1px);
+  }
+
+  @media (hover: hover) {
+    .dev__ctas .cta-primary:hover {
+      transform: translateY(-1px);
+    }
   }
 
   /* Out-specifies the hover lift above so the shared press (global.css)
@@ -292,12 +301,17 @@ const channels = [
     height: 100%;
     object-fit: contain;
     object-position: center;
-    transition: transform 0.4s ease;
+    transition: transform var(--dur-slow) ease;
   }
 
-  .dev__screen:hover .dev__screen-img,
   .dev__screen:focus-visible .dev__screen-img {
     transform: scale(1.03);
+  }
+
+  @media (hover: hover) {
+    .dev__screen:hover .dev__screen-img {
+      transform: scale(1.03);
+    }
   }
 
   /* scanlines + a bottom vignette so the corner chrome stays legible over
@@ -442,12 +456,17 @@ const channels = [
     border: 1px solid rgba(233, 237, 245, 0.08);
     box-shadow: 0 16px 32px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     transform: rotate(-5deg);
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) ease;
   }
 
-  .dev__remote:hover,
   .dev__remote:focus-within {
     transform: rotate(-5deg) scale(1.04);
+  }
+
+  @media (hover: hover) {
+    .dev__remote:hover {
+      transform: rotate(-5deg) scale(1.04);
+    }
   }
 
   /* 44px - a real touch target, not the previous 38px (below the standard
@@ -500,7 +519,7 @@ const channels = [
     background-clip: content-box;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color var(--dur-base) ease, box-shadow var(--dur-base) ease;
   }
 
   /* Taller tap area since 2026-10-17: an invisible extension makes each
