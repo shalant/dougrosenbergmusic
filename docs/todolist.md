@@ -917,6 +917,15 @@ semantic headings, title/meta description.
       timeouts under load in contact/gallery specs; they passed on rerun and on a 2-worker full run.
       Lint, `astro check`, 48 unit tests, `verify-csp` (12). Screenshots at 1280px and Pixel 7,
       mid-reveal and hovered. Chromium only, not Safari/Firefox or a real phone.
+      **Part 6 (2026-10-18), footer socials as icons** (same branch). Doug prefers icons to the
+      text links, and wants more cross-links: the row is now five 44px round icon links
+      (Lucide-style strokes, like the nav), each named by a visually hidden label with "(opens in
+      a new tab)". The fifth is new: dougrosenbergdev.com, with the nav DEV note's `</>` mark and
+      red. They lift on hover (mouse only) and press on tap. This replaces the grow-in underline
+      from part 5. Five more layouts for the whole footer are on the "Footer Redesigns" canvas
+      (https://claude.ai/artifact/RQPGm7f74mJm67m3rRmDtu), still undecided. `motion.spec.ts`
+      checks names, order, the dev href and 44px targets; it fails on the old footer. Full e2e 147
+      passed, 25 skipped; lint, `astro check`, `verify-csp` (12).
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are

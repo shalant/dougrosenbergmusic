@@ -43,14 +43,28 @@ test.describe('desktop', () => {
     expect(await item.evaluate((el) => getComputedStyle(el).paddingLeft)).toBe(before);
   });
 
-  test('footer social underlines grow in on hover', async ({ page }) => {
+  test('footer social icons lift on hover', async ({ page }) => {
     await page.goto('/');
-    const link = page.locator('.site-footer__socials a').first();
-    const underline = () => link.evaluate((el) => getComputedStyle(el, '::after').scale);
-    expect(await underline()).toBe('0 1');
+    const link = page.locator('.site-footer__social').first();
     await link.hover();
-    await expect.poll(underline).toBe('1');
+    await expect.poll(() => link.evaluate((el) => getComputedStyle(el).translate)).toBe('0px -2px');
   });
+});
+
+// Icons since 2026-10-18, with the developer site in the same row.
+test('footer socials are named icon links, including the developer site', async ({ page }) => {
+  await page.goto('/');
+  const links = page.locator('.site-footer__socials a');
+  await expect(links).toHaveCount(5);
+  for (const [i, name] of ['Instagram', 'YouTube', 'LinkedIn', 'GitHub', 'Developer site'].entries()) {
+    await expect(links.nth(i)).toHaveAccessibleName(new RegExp(`^${name}`));
+    await expect(links.nth(i).locator('svg')).toBeVisible();
+  }
+  await expect(links.nth(4)).toHaveAttribute('href', 'https://dougrosenbergdev.com');
+  for (const box of await links.evaluateAll((els) => els.map((el) => el.getBoundingClientRect()))) {
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
 });
 
 test.describe('touch', () => {
