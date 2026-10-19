@@ -15,7 +15,7 @@ const { quotes } = Astro.props;
 
 <ol class="ledger">
   {quotes.map((quote) => (
-    <li class="ledger__row">
+    <li class="ledger__row scroll-rise">
       <span class="ledger__year">{quote.year}</span>
       <blockquote class="ledger__quote">
         <p>
@@ -43,7 +43,10 @@ const { quotes } = Astro.props;
     border-top: 1px solid var(--staff-line-strong);
   }
 
+  /* Rows rise in as they scroll into view: the shared .scroll-rise in
+     global.css, finishing sooner than its default since rows are short. */
   .ledger__row {
+    --rise-range: entry 10% entry 90%;
     display: grid;
     grid-template-columns: 4rem minmax(0, 1fr);
     gap: 0.35rem 1.5rem;
@@ -108,36 +111,6 @@ const { quotes } = Astro.props;
   .ledger__cite a:focus-visible {
     color: var(--text);
     text-decoration-color: var(--text-muted);
-  }
-
-  /* Each entry rises in as it scrolls into view (2026-10-17), driven by
-     scroll position (no script, no CSP change), the same technique as the
-     staff dividers. Browsers without scroll timelines, and reduced motion,
-     show the entries as before. */
-  @keyframes ledger-rise {
-    from {
-      opacity: 0;
-      translate: 0 1.25rem;
-    }
-    to {
-      opacity: 1;
-      translate: 0 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: view()) {
-      .ledger__row {
-        animation: ledger-rise linear both;
-      }
-      /* Separate, more specific rule on purpose: see StaffDivider.astro -
-         the minifier folds a same-rule animation-timeline into the
-         shorthand, which some browsers then reject outright. */
-      .ledger .ledger__row {
-        animation-timeline: view();
-        animation-range: entry 10% entry 90%;
-      }
-    }
   }
 
   @media (max-width: 860px) {

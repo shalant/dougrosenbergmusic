@@ -115,19 +115,26 @@ const subjects = [
     border-bottom: 1px solid var(--staff-line-strong);
     font-family: var(--font-display);
     font-size: 1.2rem;
-    transition: padding-left 0.25s ease;
   }
 
-  .lessons__subjects li:hover {
-    padding-left: 0.9rem;
-  }
-
+  /* The subjects aren't links, so hovering one no longer slides the whole
+     row over like a menu item would (changed 2026-10-17). Only its little
+     note-head dot tips and swells, a decorative nod rather than a "click
+     me", and only where hover is real (see global.css). */
   .lessons__dot {
     flex: none;
     width: 0.8rem;
     height: 0.65rem;
     border-radius: 55% 45% 40% 60% / 45% 58% 42% 55%;
     background: var(--note-lessons);
+    transition: scale var(--dur-med) var(--ease-spring), rotate var(--dur-med) var(--ease-spring);
+  }
+
+  @media (hover: hover) {
+    .lessons__subjects li:hover .lessons__dot {
+      scale: 1.35;
+      rotate: -20deg;
+    }
   }
 
   @media (max-width: 760px) {
@@ -143,8 +150,13 @@ const subjects = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .lessons__subjects li {
+    .lessons__dot {
       transition: none;
+    }
+
+    .lessons__subjects li:hover .lessons__dot {
+      scale: none;
+      rotate: none;
     }
   }
 </style>

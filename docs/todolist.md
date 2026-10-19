@@ -876,6 +876,73 @@ semantic headings, title/meta description.
       New tests: 3 hover/progress tests in `polish.spec.ts` and the no-comments smoke tests,
       all failing on the old code. Full e2e 131 passed, 19 skipped; lint, `astro check`, unit
       tests, `verify-csp` (12). Hover states checked by screenshot at 1280px; Chromium only.
+      **Part 5 (2026-10-17), motion pass** (branch `motion-pass-2026-10-17`). Doug asked what a
+      good amount of micro-interaction is. The rule adopted: feedback motion (hover, tap, focus)
+      on nearly everything interactive at 0.15-0.3s; scroll reveals once per section at most;
+      looping ambient motion limited to 1-2 things per screen. Measured against that:
+      - **Motion tokens** in `global.css` `:root`: `--ease-spring` (the overshoot curve used for
+        icons/arrows/indicators), `--ease-out`, and `--dur-fast/base/med/slow` (0.15/0.2/0.3/
+        0.45s). Every `transition:` in `src/` now uses them; 0.25s became 0.3s and 0.35-0.4s
+        became 0.45s. Exception: Gallery's 0.5s reel slide (a carousel move, not feedback).
+      - **Nav calmed down:** the six inactive desktop staff-nav notes no longer breathe forever
+        (the nav is fixed, so they looped on every screen and drowned out the active note's
+        pulse). They sit still and swell/tip on hover or focus instead (`scale`/`rotate`
+        properties, so they stack on the active pulse's `transform`). The active note keeps
+        its pulse. Hero haze, title shimmer, cursor and chips left as they are: the chips
+        already show about two at a time, and tablet/phone already freeze the rest.
+      - **Sticky hover on phones fixed:** every hover-driven *movement* (CTA lifts and arrow
+        nudges, album lift + cover push-in, logo scale, Dev screen zoom and remote tilt, hero
+        terminal, contact button lift, divider icon spin and the no-scroll-timeline divider
+        fallback) is now inside `@media (hover: hover)`, with `:focus-visible` kept separate.
+        On touch, `:hover` used to stick to the last tapped element. Colour-only hovers left
+        as is. The logo also gained a press (`:active`) state and a reduced-motion rule (it
+        had none).
+      - **Lessons subjects:** they aren't links, so hovering no longer slides the row over like a
+        menu item; only the little note-head dot tips and swells.
+      - **Motion for the still sections:** a shared `.scroll-rise` reveal in `global.css`
+        (`QuoteLedger` now uses it instead of its own copy; `--rise-range` tunes it, with a
+        small stagger on second columns) on the Highlights blocks and school list and the
+        Performance venue groups and artist list. About's brass frame slides out from behind the
+        photo as it scrolls in. Each press-era bracket draws itself in top to bottom (left to
+        right on phones, where it's a rule). Its link gets the CTA arrow nudge, with the arrow
+        `aria-hidden`, so the accessible name is now "The archive" / "All press". Footer social
+        underlines grow out from the middle. All scroll-driven (no script, CSP unchanged at 12),
+        all off under reduced motion; browsers without scroll timelines show everything static.
+      - **Divider comment corrected:** the pill reveal follows scroll both ways (it closes
+        again if the divider sinks back toward the bottom edge). Kept on purpose; the comment
+        used to say it "stays open".
+      New `e2e/motion.spec.ts` (10 tests). The 7 that test new behaviour fail on the old code;
+      the other 3 are guards (mouse hover still moves, the bracket ends fully drawn, reduced motion
+      disables the reveals). Full e2e 145 passed, 25 skipped. One run had 3 "tearing down context"
+      timeouts under load in contact/gallery specs; they passed on rerun and on a 2-worker full run.
+      Lint, `astro check`, 48 unit tests, `verify-csp` (12). Screenshots at 1280px and Pixel 7,
+      mid-reveal and hovered. Chromium only, not Safari/Firefox or a real phone.
+      **Part 6 (2026-10-18), footer socials as icons** (same branch). Doug prefers icons to the
+      text links, and wants more cross-links: the row is now five 44px round icon links
+      (Lucide-style strokes, like the nav), each named by a visually hidden label with "(opens in
+      a new tab)". The fifth is new: dougrosenbergdev.com, with the nav DEV note's `</>` mark and
+      red. They lift on hover (mouse only) and press on tap. This replaces the grow-in underline
+      from part 5. Five more layouts for the whole footer are on the "Footer Redesigns" canvas
+      (https://claude.ai/artifact/RQPGm7f74mJm67m3rRmDtu), still undecided. `motion.spec.ts`
+      checks names, order, the dev href and 44px targets; it fails on the old footer. Full e2e 147
+      passed, 25 skipped; lint, `astro check`, `verify-csp` (12).
+
+      **Part 7 (2026-10-18), "Liner notes" footer** (same branch). Doug picked concept 2 from the
+      canvas. The canvas is also saved in ui-lab as
+      `artifacts/dougrosenbergmusic/footer-redesigns/`. The footer is now an album back cover in a
+      brass hairline frame: "Side A" numbers this page's six sections (01–06), "Side B" holds the
+      cross-links (Eastern Blok archive, All press, dougrosenbergdev.com, the rebuild post), and
+      "Personnel" has the part 6 icon row plus a credits line built from the About tags. The dev
+      link from concept 3, "Two doors", was folded in as track 09, "Want a site like this one?",
+      and the dev icon is now the one filled circle in the row. The old centered byline, which
+      linked to the dev site, and the separate proof line moved into Side B and the credits. On
+      hover a track title shifts with `translate` instead of padding, so the row doesn't reflow.
+      Phones get 44px rows. The columns go 3 → 2 (Personnel spans the bottom) at 900px → 1 at
+      560px. New `e2e/footer.spec.ts` checks that every Side A href resolves to a real section,
+      the Side B hrefs, that Back to top points at `#hero`, that the phone layout is one column
+      with 44px taps and no sideways scroll, and that hover doesn't reflow. Run against the old
+      footer, all 8 tests that run there fail (2 are skipped per device). Full e2e 155 passed, 27 skipped; 48 unit tests; lint,
+      `astro check`, `verify-csp` (12).
 
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are

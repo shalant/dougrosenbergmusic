@@ -23,13 +23,13 @@ const artists = [
     <h2 class="performance__heading">On the Road</h2>
 
     <div class="performance__venues">
-      <div class="performance__venue-group">
+      <div class="performance__venue-group scroll-rise">
         <p class="performance__venue-label">Chicago</p>
         <ul class="performance__venue-list">
           {chicagoVenues.map((v) => <li>{v}</li>)}
         </ul>
       </div>
-      <div class="performance__venue-group">
+      <div class="performance__venue-group scroll-rise">
         <p class="performance__venue-label">National &amp; International</p>
         <ul class="performance__venue-list performance__venue-list--two-col">
           {nationalVenues.map((v) => <li>{v}</li>)}
@@ -37,7 +37,7 @@ const artists = [
       </div>
     </div>
 
-    <div class="performance__artists">
+    <div class="performance__artists scroll-rise">
       <p class="performance__venue-label">Artists Performed With</p>
       <ul class="performance__artists-flow">
         {artists.map((a) => <li>{a}</li>)}
@@ -65,6 +65,12 @@ const artists = [
     grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
     gap: clamp(2rem, 5vw, 3.5rem);
     margin-bottom: 3rem;
+  }
+
+  /* The venue groups and the artist list rise in on scroll (.scroll-rise,
+     global.css); the second venue column trails the first a little. */
+  .performance__venue-group + .performance__venue-group {
+    --rise-range: entry 25% cover 32%;
   }
 
   .performance__venue-label {
@@ -123,6 +129,10 @@ const artists = [
   @media (max-width: 700px) {
     .performance__venues {
       grid-template-columns: 1fr;
+    }
+
+    .performance__venue-group + .performance__venue-group {
+      --rise-range: entry 10% cover 25%;
     }
   }
 </style>

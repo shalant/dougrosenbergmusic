@@ -12,14 +12,14 @@ const schools = [
   <div class="wrap">
     <p class="eyebrow">Guest Artist / Visiting Instructor</p>
     <h2 class="career-highlights__title">Highlights</h2>
-    <ul class="career-highlights__list">
+    <ul class="career-highlights__list scroll-rise">
       {schools.map((school) => (
         <li>{school}</li>
       ))}
     </ul>
 
     <div class="career-highlights__grid">
-      <div class="career-highlights__block">
+      <div class="career-highlights__block scroll-rise">
         <h3 class="career-highlights__heading">New Trier High School</h3>
         <ul class="career-highlights__bullets">
           <li>Freshman Jazz Ensemble Assistant (2005–2008)</li>
@@ -29,7 +29,7 @@ const schools = [
         <p class="career-highlights__lead"><strong>Lake Forest Country Day School</strong> — Band Director (Fall 2012)</p>
       </div>
 
-      <div class="career-highlights__block">
+      <div class="career-highlights__block scroll-rise">
         <h3 class="career-highlights__heading">Professional Affiliations</h3>
         <ul class="career-highlights__bullets">
           <li>Member, International Association of Jazz Educators (since 2005)</li>
@@ -95,6 +95,12 @@ const schools = [
     border-top: 1px solid rgba(233, 237, 245, 0.1);
   }
 
+  /* Both blocks rise in on scroll (.scroll-rise, global.css); the second
+     trails the first a little when they sit side by side. */
+  .career-highlights__block + .career-highlights__block {
+    --rise-range: entry 25% cover 32%;
+  }
+
   .career-highlights__heading {
     font-family: var(--font-display);
     font-weight: 600;
@@ -139,6 +145,10 @@ const schools = [
   @media (max-width: 900px) {
     .career-highlights__grid {
       grid-template-columns: 1fr;
+    }
+
+    .career-highlights__block + .career-highlights__block {
+      --rise-range: entry 10% cover 25%;
     }
   }
 </style>

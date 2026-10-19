@@ -242,12 +242,16 @@
     padding: 0.85rem 1.5rem;
     border-radius: 999px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform var(--dur-base) ease, box-shadow var(--dur-base) ease;
   }
 
-  .contact__submit:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px var(--brass-soft);
+  /* Lift only where hover is real (see the (hover: hover) note in
+     global.css); a tap gets the :active press below. */
+  @media (hover: hover) {
+    .contact__submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px var(--brass-soft);
+    }
   }
 
   .contact__submit:focus-visible {
@@ -326,7 +330,7 @@
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, -1rem);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity var(--dur-med) ease, transform var(--dur-med) ease;
   }
 
   .toast--visible {

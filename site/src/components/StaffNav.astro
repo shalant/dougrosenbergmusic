@@ -145,8 +145,12 @@ const sections = [
     color: var(--bg);
     box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
     opacity: 0.5;
-    transition: opacity 0.3s ease, filter 0.2s ease;
-    animation: staff-breathe 4.6s ease-in-out infinite;
+    /* No idle loop since 2026-10-17: all seven notes used to breathe
+       forever, on every screen (the nav is fixed), which drowned out the
+       one pulse that means something - the active note below. Now the
+       others sit still and answer the pointer instead. scale/rotate are
+       separate properties so they stack on the active pulse's transform. */
+    transition: opacity var(--dur-med) ease, filter var(--dur-base) ease, scale var(--dur-med) var(--ease-spring), rotate var(--dur-med) var(--ease-spring);
   }
 
   .staff-nav__icon {
@@ -159,17 +163,24 @@ const sections = [
     filter: brightness(1.18);
   }
 
+  .staff-nav__note:focus-visible .staff-nav__blob {
+    scale: 1.1;
+    rotate: -4deg;
+  }
+
+  @media (hover: hover) {
+    .staff-nav__note:hover .staff-nav__blob {
+      scale: 1.1;
+      rotate: -4deg;
+    }
+  }
+
   .staff-nav__note:focus-visible {
     outline: none;
   }
 
   .staff-nav__note:focus-visible .staff-nav__blob {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
-  }
-
-  @keyframes staff-breathe {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.1) rotate(3deg); }
   }
 
   .staff-nav__note.note--hero .staff-nav__blob,
@@ -187,13 +198,13 @@ const sections = [
   .staff-nav__note.note--dev .staff-nav__blob,
   .staff-menu__item.note--dev .staff-menu__dot { background: var(--note-dev); }
 
-  .staff-nav__note.note--hero .staff-nav__blob { border-radius: 58% 42% 63% 37% / 41% 55% 45% 59%; animation-delay: 0s; }
-  .staff-nav__note.note--listen .staff-nav__blob { border-radius: 42% 58% 37% 63% / 60% 38% 62% 40%; animation-delay: 0.9s; }
-  .staff-nav__note.note--about .staff-nav__blob { border-radius: 65% 35% 45% 55% / 48% 62% 38% 52%; animation-delay: 1.8s; }
-  .staff-nav__note.note--highlights .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; animation-delay: 2.7s; }
-  .staff-nav__note.note--lessons .staff-nav__blob { border-radius: 55% 45% 38% 62% / 42% 58% 42% 58%; animation-delay: 3.15s; }
-  .staff-nav__note.note--contact .staff-nav__blob { border-radius: 60% 40% 40% 60% / 35% 60% 40% 65%; animation-delay: 3.6s; }
-  .staff-nav__note.note--dev .staff-nav__blob { border-radius: 50% 50% 55% 45% / 45% 55% 50% 50%; animation-delay: 4.5s; }
+  .staff-nav__note.note--hero .staff-nav__blob { border-radius: 58% 42% 63% 37% / 41% 55% 45% 59%; }
+  .staff-nav__note.note--listen .staff-nav__blob { border-radius: 42% 58% 37% 63% / 60% 38% 62% 40%; }
+  .staff-nav__note.note--about .staff-nav__blob { border-radius: 65% 35% 45% 55% / 48% 62% 38% 52%; }
+  .staff-nav__note.note--highlights .staff-nav__blob { border-radius: 38% 62% 55% 45% / 55% 45% 62% 38%; }
+  .staff-nav__note.note--lessons .staff-nav__blob { border-radius: 55% 45% 38% 62% / 42% 58% 42% 58%; }
+  .staff-nav__note.note--contact .staff-nav__blob { border-radius: 60% 40% 40% 60% / 35% 60% 40% 65%; }
+  .staff-nav__note.note--dev .staff-nav__blob { border-radius: 50% 50% 55% 45% / 45% 55% 50% 50%; }
 
   .staff-nav__tag {
     position: absolute;
@@ -212,7 +223,7 @@ const sections = [
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.15s ease, transform 0.15s ease;
+    transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
   }
 
   .staff-nav__note:hover .staff-nav__tag,
@@ -266,6 +277,9 @@ const sections = [
   @media (prefers-reduced-motion: reduce) {
     .staff-nav__blob {
       animation: none !important;
+      transition: opacity var(--dur-med) ease, filter var(--dur-base) ease;
+      scale: none !important;
+      rotate: none !important;
     }
   }
 
@@ -300,7 +314,7 @@ const sections = [
     height: 2px;
     background: var(--brass);
     border-radius: 1px;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
+    transition: transform var(--dur-med) var(--ease-spring), opacity var(--dur-fast) ease;
   }
 
   .staff-toggle.is-open {
@@ -413,7 +427,7 @@ const sections = [
     color: var(--bg);
     opacity: 0.7;
     box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity var(--dur-base) ease, transform var(--dur-base) ease;
   }
 
   .staff-menu__icon {
@@ -438,7 +452,7 @@ const sections = [
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-muted);
-    transition: color 0.2s ease;
+    transition: color var(--dur-base) ease;
   }
 
   .staff-menu__item.is-active .staff-menu__label {
@@ -461,21 +475,21 @@ const sections = [
       transform: translate3d(0, -10px, 0) scale(0.98);
       transform-origin: top center;
       will-change: transform, opacity;
-      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0.2s;
+      transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-spring), visibility 0s linear var(--dur-base);
     }
     .staff-menu.is-open {
       opacity: 1;
       visibility: visible;
       transform: translate3d(0, 0, 0) scale(1);
-      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0s linear 0s;
+      transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-spring), visibility 0s linear 0s;
     }
     @media (prefers-reduced-motion: reduce) {
       .staff-menu {
-        transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+        transition: opacity var(--dur-fast) ease, visibility 0s linear var(--dur-fast);
         transform: none;
       }
       .staff-menu.is-open {
-        transition: opacity 0.15s ease, visibility 0s linear 0s;
+        transition: opacity var(--dur-fast) ease, visibility 0s linear 0s;
         transform: none;
       }
     }
