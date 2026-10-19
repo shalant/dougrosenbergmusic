@@ -68,6 +68,25 @@ const bandSchema = {
     </p>
   </section>
 
+  {/* Both photos come from the band's old site (easternblok.net) via the
+      Wayback Machine; Doug approved publishing them 2026-10-18 and asked for
+      Saverio Truglia to be credited. The 2007 one carries his credit on the
+      image itself. The 2011 one has no credit anywhere, so its photographer
+      is still unconfirmed. */}
+  <section class="archive__section" aria-labelledby="photos">
+    <h2 id="photos">Photos</h2>
+    <div class="photos">
+      <figure class="photo photo--wide">
+        <img src="/images/easternblok/eastern-blok-2011.webp" width="864" height="576" alt="Eastern Blok in a studio portrait: Doug Rosenberg holding a tenor saxophone, Goran Ivanovic with a guitar, Matthew Ulery with an upright bass and Michael Caskey in a flat cap" loading="lazy" />
+        <figcaption>Eastern Blok, left to right: Doug Rosenberg, Goran Ivanovic, Matthew Ulery, Michael Caskey. Band photo from easternblok.net, 2011.</figcaption>
+      </figure>
+      <figure class="photo">
+        <img src="/images/easternblok/eastern-blok-2007.jpg" width="429" height="321" alt="The Goran Ivanovic Group in a velvet-walled room: Goran Ivanovic in the foreground with a guitar, Matthew Ulery behind an upright bass, Doug Rosenberg and Michael Caskey" loading="lazy" />
+        <figcaption>The Goran Ivanovic Group. Band photo from easternblok.net, 2007. Photo: Saverio Truglia.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="archive__section" aria-labelledby="members">
     <h2 id="members">Members</h2>
     <ul class="members">
@@ -108,6 +127,40 @@ const bandSchema = {
 </ArchiveLayout>
 
 <style>
+  /* Lopsided on purpose: the 2011 portrait is the full-size file, the 2007
+     one is only 429px wide, so it stays small instead of being blown up. */
+  .photos {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: end;
+  }
+
+  .photo {
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .photo img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--staff-line-strong);
+  }
+
+  .photo figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    max-width: 52ch;
+  }
+
+  @media (max-width: 700px) {
+    .photos {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .members {
     list-style: none;
     margin: 0;

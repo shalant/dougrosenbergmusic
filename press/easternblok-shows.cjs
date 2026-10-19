@@ -235,6 +235,8 @@ function applyOverrides(shows, overrides) {
 		for (const field of ["city", "region", "status", "confirmed"]) {
 			if (edit[field] != null) show[field] = field === "region" ? tidyRegion(edit[field]) : edit[field];
 		}
+		// `venue` is the match key, so a rename goes in `newVenue`.
+		if (o.newVenue != null) show.venue = o.newVenue;
 	}
 	return unmatched;
 }
