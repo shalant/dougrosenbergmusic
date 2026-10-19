@@ -927,6 +927,23 @@ semantic headings, title/meta description.
       checks names, order, the dev href and 44px targets; it fails on the old footer. Full e2e 147
       passed, 25 skipped; lint, `astro check`, `verify-csp` (12).
 
+      **Part 7 (2026-10-18), "Liner notes" footer** (same branch). Doug picked concept 2 from the
+      canvas. The canvas is also saved in ui-lab as
+      `artifacts/dougrosenbergmusic/footer-redesigns/`. The footer is now an album back cover in a
+      brass hairline frame: "Side A" numbers this page's six sections (01–06), "Side B" holds the
+      cross-links (Eastern Blok archive, All press, dougrosenbergdev.com, the rebuild post), and
+      "Personnel" has the part 6 icon row plus a credits line built from the About tags. The dev
+      link from concept 3, "Two doors", was folded in as track 09, "Want a site like this one?",
+      and the dev icon is now the one filled circle in the row. The old centered byline, which
+      linked to the dev site, and the separate proof line moved into Side B and the credits. On
+      hover a track title shifts with `translate` instead of padding, so the row doesn't reflow.
+      Phones get 44px rows. The columns go 3 → 2 (Personnel spans the bottom) at 900px → 1 at
+      560px. New `e2e/footer.spec.ts` checks that every Side A href resolves to a real section,
+      the Side B hrefs, that Back to top points at `#hero`, that the phone layout is one column
+      with 44px taps and no sideways scroll, and that hover doesn't reflow. Run against the old
+      footer, all 8 tests that run there fail (2 are skipped per device). Full e2e 155 passed, 27 skipped; 48 unit tests; lint,
+      `astro check`, `verify-csp` (12).
+
 **Where this stands, 2026-10-04 (assessment, no new data pulled):** foundation is solid (schema,
 `llms.txt`, FAQ, clean `robots.txt`/sitemap, Lighthouse SEO 100) but visibility and measurement are
 near zero — GSC only shows name queries, Bing AI citations are 0, GA4/Cloudflare Web Analytics show
