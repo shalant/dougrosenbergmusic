@@ -1,5 +1,5 @@
 {
-	"_about": "Hand edits applied on top of the generated show list by press/easternblok-shows.cjs. Match is by date + venue exactly as it appears in site/src/data/eastern-blok-shows.json. Fill in city (and region, as a postal code like IL) for the shows below; null means not filled yet and is ignored. status: past marks an announced show as played; confirmed says who confirmed it and when. After editing, rerun: node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json",
+	"_about": "Hand edits applied on top of the generated show list by press/easternblok-shows.cjs. Match is by date + venue exactly as it appears in site/src/data/eastern-blok-shows.json. Fill in city (and region, as a postal code like IL) for the shows below; null means not filled yet and is ignored. newVenue renames a venue (venue stays the match key); status: past marks an announced show as played; confirmed says who confirmed it and when. After editing, rerun: node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json",
 	"shows": [
 		{
 			"date": "2012-02-04",
@@ -430,8 +430,10 @@
 		{
 			"date": "2009-11-05",
 			"venue": "Poland",
-			"city": null,
-			"region": null
+			"newVenue": "Alchemia",
+			"city": "Krakow",
+			"region": "Poland",
+			"confirmed": "Doug Rosenberg, 2026-10-18; Jazz Forum, \"Grażyna Auguścik & Eastern Blok on tour\" lists 5.11 Kraków - Alchemia"
 		}
 	]
 }

@@ -1851,6 +1851,32 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             `MusicGroup` with members, `dissolutionDate`, albums, and reviews linked to the album
             they cover. This is the strongest SEO/GEO piece here: the band's coverage online is
             thin and decaying, so a sourced page could become the main reference for it
+      - [x] **2026-10-18, branch `motion-pass-2026-10-17`: added a Photos section to
+            `/easternblok`** (Doug asked for it in chat). Two band photos pulled from the Wayback
+            captures of the band's old site: the 2011 four-person studio portrait
+            (`hugeebnew.jpg`, captured 2011-10-13, converted to WebP) and the 2007 Goran Ivanovic
+            Group shot (`ebbysaverio.jpg`, captured 2010-12-22; the image carries a "Saverio
+            Truglia" credit, which the caption repeats). Files are in
+            `site/public/images/easternblok/`. Doug confirmed 2026-10-18 that all the photos are
+            fine to publish and asked for Saverio Truglia to be credited (done on the 2007
+            caption). Open: the 2011 photo has no credit anywhere, so its photographer is
+            unconfirmed; and Goran, Matt and Michael still haven't been told about the page.
+      - [x] **2026-10-18: Nov 5, 2009 show is now Alchemia, Krakow, Poland** (was just
+            "Poland"). Jazz Forum's "Grażyna Auguścik & Eastern Blok on tour" item lists the Nov
+            2009 Poland tour: 4.11 Bytom (charity concert), 5.11 Kraków (Alchemia), 6.11 Jazz
+            Cafe in Łomianki, 8.11 Toruń, 9.11 Lublin, 11.11 Słupsk, 12.11 Gdańsk. Source:
+            https://jazzforum.com.pl/main/news_old/64 (item has no printed date). Added a
+            `newVenue` field to the overrides in `press/easternblok-shows.cjs` (the venue is the
+            match key, so a rename needed its own field) with a test, and regenerated
+            `eastern-blok-shows.json` (only that row changed). City is spelled "Krakow" to match
+            "Torun" and "Gdansk" in the list. Not added: the Nov 4 Bytom charity concert (Doug
+            only asked for Nov 5). Verified: press tests (29 pass, the new `newVenue` test failed
+            before the fix), build, verify-csp (12), check, lint, `npm test` (48 pass), and
+            `test:e2e` 155 pass / 27 skipped. **E2E gotcha:** the config reuses whatever is
+            already listening on port 4322, and a stray `http-server` from the
+            `dougrosenbergdev` repo was there, so the first e2e runs failed on the home page
+            (the same specs failed on the untouched branch). Check `netstat -ano | findstr :4322`
+            first; I ran the suite on another port with a temporary config instead.
       - [x] **2026-10-15, branch `press-timeline-section-2026-10-15`: home timeline plus generic
             `/press` and `/easternblok` pages.** `PressTimeline.astro` (section `#press`, after
             `CareerHighlights`) shows the six approved quotes in two eras with bracket links;

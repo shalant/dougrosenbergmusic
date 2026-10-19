@@ -2597,9 +2597,9 @@
 		},
 		{
 			"date": "2009-11-05",
-			"venue": "Poland",
-			"city": null,
-			"region": null,
+			"venue": "Alchemia",
+			"city": "Krakow",
+			"region": "Poland",
 			"country": null,
 			"venueUrl": null,
 			"note": null,
@@ -2609,7 +2609,8 @@
 			"sources": [
 				"20120127200419_calendar-past",
 				"20091016014105_calendar"
-			]
+			],
+			"confirmed": "Doug Rosenberg, 2026-10-18; Jazz Forum, \"Grażyna Auguścik & Eastern Blok on tour\" lists 5.11 Kraków - Alchemia"
 		},
 		{
 			"date": "2009-11-06",
