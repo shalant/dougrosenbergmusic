@@ -49,7 +49,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Gig calendar entries, NOT reviews. Page URLs are https://chicagoreader.com/news/trg-music-listings-N/ for N in 2, 3, 25, 41-50, 52-59, 63-68, 70, 72-74, 85, 88, 89 (page 51 had no match). Spot-checked: 2003-05-01 lists 'Doug Rosenberg Trio' Fri/Sat at Montage (Naperville), 'Keyon Harrold/Doug Rosenberg Quintet' at Chase Cafe 5/8 and Velvet Lounge 5/7; 2004-06-10 lists 'Goran Ivanovic & Doug Rosenberg' at Chase Cafe 6/11. Useful as dated evidence of regular Chicago gigging 2003-2004; only the other 29 pages are unread beyond the name match. | Bare gig listings, seen only as Google snippets, for the Goran Ivanovic Group at HotHouse (2004-03-12, with Shooglenifty), Hideout/Jazz Showcase (Jazz Institute of Chicago Jazz Club Tour), Around the Coyote Fall Arts Festival, and others across 2004. Useful as a dated record of when the group formed and where it played. Individual URLs are on chicagoreader.com/news/trg-music-listings-NN; not opened. Opened 2026-10-23 via the Reader's current site: trg-music-listings-11/12 (HotHouse 2004-03-12 with Shooglenifty), -20 (Borders Books & Music, 2004-05-09), -23/24 (HotHouse 2004-06-04 with Andreas Kapsalis Trio), -25 (Chase Cafe 2004-06-11, see chireader-trg-chase-cafe-2004-06), -30/31 (Morseland 2004-07-23), -35/36 (Martyrs' 2004-08-28 with New Monsoon), -37 (HotHouse 2004-09-09 with Andreas Kapsalis). All under the name Goran Ivanovic Group, none naming Doug; all before the 2005 start of the show log.",
       "provenance": "Found via the Reader's own site search (36 results) and fetched 2026-10-05.",
       "aliases": [
@@ -173,7 +173,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "\"Fri 6/11, 9 PM, Goran Ivanovic & Doug Rosenberg\" at Chase Cafe, 7301 N. Sheridan (2004-06-11, a duo, before the show log starts in 2005). Reader listing text only.",
       "sources": [
         "eastern-blok-press.json"
@@ -200,7 +200,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Nov/Dec 2005 issue of this acoustic-guitar review site. This is the source of the Minor 7th quote ('extraordinary pan-cultural ensemble...') in the band's bio and press copy, so that one is now sourced. Read through WebFetch summary; confirm the full text and the exact wording of the bio quote against the page before reuse.",
       "sources": [
         "eastern-blok-press.json"
@@ -226,7 +226,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Short 'Soundcheck' item on Goran Ivanovic Group (Balkan Song) in the February 2006 issue, scanned on the Internet Archive. Read via a WebFetch summary of the scan's OCR text; confirm the quote against the scan. No rating. Not saved: the URL is the OCR text of a whole magazine issue.",
       "aliases": [
         "guitar-one-2006-02"
@@ -281,7 +281,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Press release with an 18-date spring 2006 tour list. Names Doug on saxophone. Dates in the list but NOT in eastern-blok-shows.json (announced, not confirmed played): 2006-03-23 Club Khameleon Kent OH; 03-24 Wilbert's Cleveland; 03-25 Gideon's North Adams MA; 03-26 Club Metronome Burlington VT; 03-27 Makor NYC; 03-30 Lost Dog Cafe Binghamton; 03-31 Lost Dog Cafe Ithaca; 04-05 Buzz Bar Detroit; 04-06 Firefly Ann Arbor; 04-07 Toledo Folk Festival; 04-27 The Mill Iowa City (the show log has CSPS on 04-27); 04-28 Dukum Inn Kirksville; 04-29 Pop's Blue Moon St. Louis; 04-30 Iron Post Urbana. Release is band copy, so this is a date source, not independent coverage. No full copy in press-archive: the site blocks scripted fetches and the Wayback Machine has no capture (checked 2026-10-23); text was read in Chrome.",
       "sources": [
         "eastern-blok-press.json"
@@ -311,7 +311,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Calendar entry for the show at Makor, New York, Monday 2006-03-27, 7:30 PM, $12. Repeats the Minor 7th quote and cites the Chicago Tribune calling Goran a 'lightning-fingered guitarist': a second-hand Tribune reference; the original Tribune piece is not located and could be the source of the Tribune quote noted in other press copy. Not saved: the URL is a rolling calendar category page, not the 2006 entry.",
       "sources": [
         "eastern-blok-press.json"
@@ -396,7 +396,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Concert preview/profile of Goran; quotes are Goran's, not the writer's, so none are kept.",
       "aliases": [
         "vindicator-2006"
@@ -423,7 +423,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Wednesday 2006-08-30 club tour: \"Paul Wertico, Goran Ivanovic Group\" at HotHouse. This date is NOT in eastern-blok-shows.json.",
       "sources": [
         "eastern-blok-press.json"
@@ -448,7 +448,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Festival ran 9/8-9/10/2006. Under SUNDAY: Goran Ivanovic Group at the Around the Coyote Gallery, 11 AM-6 PM, one of several acts. This date is NOT in eastern-blok-shows.json. The same page lists a \"Doug Rosenberg Quartet\" on Friday 2006-09-08, 6-9 PM, at the Around the Coyote Gallery (his own group; see chireader-around-the-coyote-doug-quartet-2006-09 in candidates.json).",
       "provenance": "Found 2006-09-07 page read 2026-10-23: under FRIDAY 9/8, \"Around the Coyote Gallery: Arthi Meera, Emily Hurd, Easy Tiger, and Doug Rosenberg Quartet, 6-9 PM\". His own group, not Eastern Blok. The Goran Ivanovic Group is on the same page for Sunday 9/10.",
       "aliases": [
@@ -482,7 +482,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Feature that discusses the album.",
       "provenance": "Fetched 2026-10-05.",
       "aliases": [
@@ -535,7 +535,7 @@
       ],
       "verified": false,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Known only from the band's news page, which quoted it for the MAJIC concert in Grand Rapids. The page was not retrieved.",
       "sources": [
         "eastern-blok-press.json"
@@ -564,7 +564,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Album review (Paperwork Media label listed). Mentions the saxophone and flutes but names only Goran Ivanovic. Month not shown on the page; the copyright line reads 1996-2007.",
       "sources": [
         "eastern-blok-press.json"
@@ -609,7 +609,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Studio performance of the Nirvana song, from the band's news page (which said \"tomorrow morning\" in a post dated 2007-03-07) and press page (audio at audio.wbez.org/848/2007/03/848_20070308d.mp3). Neither page was reachable on 2026-10-23, so not verified. namesDoug unknown.",
       "sources": [
         "eastern-blok-press.json"
@@ -633,7 +633,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Webcast with \"Blacksmith's Dance\" as the first track, plus a short band bio that names Doug Rosenberg on saxophone. Date from the band's news page.",
       "sources": [
         "eastern-blok-press.json"
@@ -659,7 +659,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Blog review of the 2005 Goran Ivanovic Group disc (\"Macedonian Girl\", \"Episodes from a Village Dance\"). Post date is the one the band's news page gave; the archived copy shows no date. Does not name Doug.",
       "sources": [
         "eastern-blok-press.json"
@@ -683,7 +683,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Announces Folk Tales and the track placement in the film Wanted. Doesn't name Doug. Separate from the 2010 ALARM preview already in this file.",
       "sources": [
         "eastern-blok-press.json"
@@ -707,7 +707,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Release announcing Folk Tales (2007-10-24) and the Wanted film placement, with 16 tour dates. Does not name Doug; names the band only. Band copy, so a date source rather than independent coverage. Also the source of the \"touring with Grazyna Auguscik\" claim. No full copy in press-archive: the site blocks scripted fetches and the Wayback Machine has no capture (checked 2026-10-23); text was read in Chrome.",
       "sources": [
         "eastern-blok-press.json"
@@ -749,7 +749,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Linked from the band's news page as \"another review of our new album\" (2007-08-20). The page returns 404 and has no Wayback capture, so unread.",
       "sources": [
         "eastern-blok-press.json"
@@ -805,7 +805,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Quote lightly trimmed from the original sentence.",
       "aliases": [
         "wyce-folk-tales-2007"
@@ -834,7 +834,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Student-paper review of the FUCS show in Lunt Basement, Haverford College. Does not name members (calls them the bassist and the drummer). The band's own news page dated this item 2007-08-11, which is wrong; the article is in the 2007-09-25 issue.",
       "sources": [
         "eastern-blok-press.json"
@@ -890,7 +890,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Copy of the review on the band's own press page (easternblok.net, Wayback 2008-06-09); the original page is gone. Names \"saxophonist Doug Rosenberg, 28\" and quotes him (\"There are songs on the record that we played 100 times before recording...\"). Photography by Joseph Mohan. Original issue not located online.",
       "sources": [
         "eastern-blok-press.json"
@@ -919,7 +919,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Lukewarm: the reviewer wanted vocals. Decide deliberately whether to display it; do not cherry-pick the rating.",
       "aliases": [
         "spb-folk-tales-2007"
@@ -948,7 +948,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Copy of the review on the band's own press page (easternblok.net, Wayback 2008-06-09); the original page is gone. The original URL now redirects to the site home page and has no Wayback capture. Does not name Doug in the part reproduced.",
       "sources": [
         "eastern-blok-press.json"
@@ -974,7 +974,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Quoted on the band's news page (2007-12-14). A faculty testimonial, not a press piece. The Truman State show is 2007-11-02 (SUB Down Under, per guestbook).",
       "sources": [
         "eastern-blok-press.json"
@@ -1035,7 +1035,7 @@
       ],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Second-hand: the band's own bio quoting four outlets. The original LA Times, Downbeat, Acoustic Guitar, and Minor 7th pieces are NOT located; do not publish these quotes on the site as verified until they are. The same bio mentions NPR, Chicago Public Radio's Chicago Undercover, the 2005 John Lennon Songwriting Competition finalist, and the film Wanted.",
       "aliases": [
         "aaj-band-bio-promo-2008"
@@ -1062,7 +1062,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Release for the March 2008 East Coast and Midwest run. Names Doug (saxophone and flute). Band copy. Read in Chrome because the site blocks the fetch tool. No full copy in press-archive: the site blocks scripted fetches and the Wayback Machine has no capture (checked 2026-10-23); text was read in Chrome.",
       "sources": [
         "eastern-blok-press.json"
@@ -1095,7 +1095,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "University calendar: Monday March 24, 9 p.m., \"Davis International Center concert. Eastern Blok: Folk Tales. Cafe Vivian, Frist.\" Matches the 2008-03-24 date in the March 2008 tour release. A university publication, not a student paper. No names given.",
       "sources": [
         "eastern-blok-press.json"
@@ -1124,7 +1124,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Tartan Vol. 102 No. 21 (2008-03-24), page 30: a photo of the band on stage (a saxophonist is visible) with a caption saying Eastern Blok \"performed at The Underground as part of AB Concerts\" last Saturday, was formerly the Goran Ivanovic Group and has headlined the World Music Festival. Covers the 2008-03-22 show. Does not name Doug. Found with the archive's full-text search; the page is a scanned image viewer, so the archive folder holds only the caption text. The issue also has a \"calendar\" line for the show.",
       "sources": [
         "eastern-blok-press.json"
@@ -1153,7 +1153,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Post-show review of the Night Eagle Cafe, Binghamton, the night before. Names \"Doug rosenberg on sax, flute and clarinet\" (sic) and says about 20 people attended. Public radio host's blog.",
       "sources": [
         "eastern-blok-press.json"
@@ -1180,7 +1180,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Two DCist posts (2008-05-28 \"This Week in Jazz\", 2008-05-29 \"About Tonight\", https://dcist.com/story/08/05/29/about-tonight-181/) say Goran Ivanovic leads Eastern Blok at Twins Jazz. Neither names Doug.",
       "sources": [
         "eastern-blok-press.json"
@@ -1209,7 +1209,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "'Serb-o-riffic films and music': Eastern Blok at Katerina's after Emir Kusturica screenings, on a Wednesday ('tonight') and Wednesday July 23. Year inferred as 2008 (July 23 was a Wednesday; page is tagged Vol. 37 No. 43). Posting date 2008-07-16 is therefore inferred. No byline shown on the page.",
       "aliases": [
         "reader-katerinas-blog-2008"
@@ -1236,7 +1236,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Release for the fall 2008 tour. Names Doug. Also lists 2008-10-13 University of Nebraska Omaha (lecture and concert), which is not in eastern-blok-shows.json. The show log has 10-16 Boulder and 10-19 Kansas City that this release omits. Band copy. No full copy in press-archive: the site blocks scripted fetches and the Wayback Machine has no capture (checked 2026-10-23); text was read in Chrome.",
       "sources": [
         "eastern-blok-press.json"
@@ -1273,7 +1273,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "The band's calendar of 2008-10-06 (and the 2008-08-28 copy) notes \"with Snarky Puppy\" on 2008-10-28 (Frequency, Madison) and 2008-10-29 (The Jazz Estate, Milwaukee). The show log's generator dropped these notes. Snarky Puppy was touring the Northeast behind Bring Us the Bright that month (a WMBR listing has them at MIT on 2008-10-23). Band copy.",
       "sources": [
         "eastern-blok-press.json"
@@ -1303,7 +1303,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Names Doug as saxophonist and flute player. Says the band last played St. Louis in November 2007 at Pop's Blue Moon (matches the 2007-11-03 show). Art After 5 series, 7 PM, Grigg Gallery. The original news.allaboutjazz.com URL redirects here.",
       "sources": [
         "eastern-blok-press.json"
@@ -1356,7 +1356,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "University news post. Names Doug as the woodwinds player. The date is the post's own; the page gives no byline. Mostly band-supplied copy.",
       "sources": [
         "eastern-blok-press.json"
@@ -1383,7 +1383,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Eastern Blok opens a show at the Old Town School of Folk Music (7 PM, $22). The entry's blurb is about the headliner, whose name was not captured. Mention only.",
       "aliases": [
         "reader-the-list-2009-10-29"
@@ -1410,7 +1410,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Lists Eastern Blok with Chicago Gypsy Experiment, 9:30 PM, Saint Paul's Cultural Center, 2215 W. North, $40 ($35 advance), a HotHouse event. Matches the 2009-12-31 show.",
       "sources": [
         "eastern-blok-press.json"
@@ -1437,7 +1437,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Tour announcement for a 14-date August 2010 tour featuring Matt Ulery's 'The Underwater Suite', the material that became the album. Page shows publication 2013-04-23 and update 2010-07-30; the 2010 date is used.",
       "aliases": [
         "alarm-2010"
@@ -1464,7 +1464,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Event listing blurb, likely partly promo-derived. Calls Goran Serbian though other sources say Croatian-born. | Names him as 'woodwind player Doug Rosenberg' joining Goran Ivanovic's group in 2004. A band preview, not a review.",
       "provenance": "Fetched 2026-10-05.",
       "aliases": [
@@ -1493,7 +1493,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Preview for the Blind Pig, Ann Arbor, built on a Michael Caskey interview. Quotes are Caskey's; one says the new material is 'more thematic, and more developed', which is likely about Underwater.",
       "aliases": [
         "annarbor-2010"
@@ -1520,7 +1520,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Interview with Goran, mostly about the Kapsalis duo; low value.",
       "aliases": [
         "workandworry-2010"
@@ -1547,7 +1547,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Snarky Puppy's own tour announcement. Lists Eastern Blok as the support act (\"w/ Eastern Blok\") on 3/29 Mayne Stage Chicago (also with the Zach Brock Trio), 3/30 Rudyard Kipling Louisville (also Zach Brock Trio), 4/1 Hailey's Denton, 4/2 Prophet Bar Dallas, 4/6 Blue Nile New Orleans, and 4/7 and 4/8 Thirsty Hippo Hattiesburg. Not credited with Eastern Blok on the list: 3/31 Townview High School Dallas, 4/3 Austin private event, and 4/4 Lafayette (listed there as a University of Louisiana date, while the band's own log has Artmosphere, Lafayette, that night). Doug said 2026-10-23 that all dates near the Texas dates were with Snarky Puppy. Does not name Doug. Band copy, so a date source, not coverage.",
       "sources": [
         "eastern-blok-press.json"
@@ -1580,7 +1580,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "'Tasty Eastern Blok coffee', a Matt Ulery interview preview. Seen only as a Google snippet; the real URL has an ID suffix and was not opened. Search result dated 2011-12-01. Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "aliases": [
         "bennington-ulery-2011"
@@ -1607,7 +1607,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "'E-week' listing. Google snippet says the band would play 'all original compositions, mostly from Underwater'. Confirms the album existed by Dec 2011. Page not opened (connection reset). Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "aliases": [
         "bennington-eweek-2011"
@@ -1634,7 +1634,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Calls the show at Pop's Blue Moon (St. Louis) a celebration of the release of the new CD Underwater. Suggests the release party was May 2012, so the 2011 year may be wrong or just the first-copies date. Confirm.",
       "aliases": [
         "aaj-jazz-this-week-stl-2012"
@@ -1661,7 +1661,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Festival ran Friday through Sunday that week; Eastern Blok is on the Sunday main stage (2012-07-22 inferred, since the post is dated Wed 2012-07-18). This date is NOT in eastern-blok-shows.json.",
       "sources": [
         "eastern-blok-press.json"
@@ -1690,7 +1690,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Not a review: an interview with bassist Matt Ulery in the Polish web magazine's October 2012 issue (113-page PDF). Pages 78 and 80 discuss Eastern Blok: Ulery says the band listened to a lot of Balkan, Russian and Polish folk music when it started, and that Underwater was recorded in a Chicago studio with engineer Anthony Gravino (who made all his records) and is 'my second self'. The interviewer admits he has not yet heard Underwater. Translations are by Claude, not the publisher; check the Polish before quoting. Doug Rosenberg is not named on the pages found.",
       "sources": [
         "eastern-blok-press.json"
@@ -1714,7 +1714,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "DownBeat January 2013 issue (a Scribd copy). Snippet reads 'In the quartet Eastern Blok with guitarist Goran Ivanovic, all of the compositions are tied to Balkan traditions.' Probably in a feature on Matt Ulery. Seen only as a Google result titled 'Downbeat-January2013' on Scribd; the link was not captured. This is the first confirmed DownBeat mention; the page and author need finding, and it is a mention, not a review.",
       "aliases": [
         "downbeat-2013-01-ulery-mention"
@@ -1829,7 +1829,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Mentions Eastern Blok in passing as a former group (2016, Goran Ivanovic Trio piece). Text seen only as an excerpt on Goran's press page; URL is from a search result and the article was not opened. Date taken from the URL path (2016/3/9). EuroCircle's 2017 profile reprints the piece as 'CHICAGO SUN-TIMES, October 21, 2016, Jeff Elbel', so the dates disagree; confirm on the live page. The text says Goran shared the stage with Michael Caskey 'in the pair's former group Eastern Blok'.",
       "aliases": [
         "suntimes-elbel-retrospective"
@@ -1856,7 +1856,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Profile of Goran written years after the band ended. Names Eastern Blok as 'a key member of the quartet' with Matt Ulery, Doug Rosenberg and Michael Caskey, a combo that 'deftly surveys the folk music of Macedonia, Bulgaria, and Serbia'. The same text appears on the All About Jazz musician page, so it is probably Goran's own bio. Reprints a Jeff Elbel Sun-Times piece as 'October 21, 2016' (see suntimes-goran-trio-2016-03). The first URL in the leads list (.../meet-croatian-born-guitarist-goran-ivanovic-from-chicago/) was a 404.",
       "sources": [
         "eastern-blok-press.json"
@@ -1910,7 +1910,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Three 5-star reviews: 2007-07-05 (Ellen M. Falbowski, who heard the band \"in Connecticut in September 2006\", a date not in the show log, which has Bradford CT on 2006-03-28), 2013-05-09 (Emily Covington) and 2020-03-10 (a longer one that names \"Douglas Rosenberg's saxophone\" and argues the horn is what makes the album work). Same page quotes a CD Baby review by Tamara Turner and the All About Jazz line. Read in Chrome 2026-10-23; the page was not saved to press-archive because it was logged in and showed the reader's delivery address. | CD Baby staff review, reproduced in the Amazon listing's editorial reviews; not seen on CD Baby itself, no date.",
       "aliases": [
         "cdbaby-turner-goran-ivanovic-group"
@@ -1937,7 +1937,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Band-supplied biography, last updated 2020-10-28 per the page. Identical to the EuroCircle profile text. Names Doug Rosenberg. Not independent coverage; low value beyond showing how the band was described later. Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "sources": [
         "eastern-blok-press.json"
@@ -1964,7 +1964,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Staff review read in Chrome. Mixed-to-positive: praises Ivanovic's inventive guitar and the writing, but warns that listeners wanting gypsy music will not get it. No publication date on the page. The star rating is graphical and was not captured; check the page. Page lists the album as 2005, recorded July 2005 at B-Side Audio. The AllMusic page for Folk Tales shows no review. Does not name Doug in the text read.",
       "sources": [
         "eastern-blok-press.json"
@@ -2026,7 +2026,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Calendar entry for Mayne Stage on 2010-12-08, doors 7 PM, tickets on sale 2010-10-15. Names Doug Rosenberg in the band history. Blurb is band copy. Publication date not shown.",
       "sources": [
         "eastern-blok-press.json"
@@ -2053,7 +2053,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "notes": "Event page: Fri 2012-07-06, 8 PM, The Thompson House, Newport KY, $10. Lists Doug Rosenberg among the musicians. This date is NOT in eastern-blok-shows.json. Page has no publication date. Blurb is band copy (LA Times, DownBeat and Acoustic Guitar quotes). No full copy in press-archive: the site blocks scripted fetches and the Wayback Machine has no capture (checked 2026-10-23); text was read in Chrome.",
       "sources": [
         "eastern-blok-press.json"

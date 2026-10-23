@@ -824,6 +824,20 @@ semantic headings, title/meta description.
             (2013-04-04) and "BRVS 08.13.13" (2013-08-13), which are after the band's last logged
             show and may be a reunion or a mis-titled upload. The Mick's Omaha 2008-10-18 set
             exists as a full 1h08m video (YXcIRQrg7Iw).
+      - [x] **Press archive page `/easternblok/press` (2026-10-23, Doug asked to publish everything
+            found).** Approved 55 entries in `eastern-blok-press.json` (60 now show) and regenerated
+            `press/press.json`. Not approved, on purpose: fan and forum comments (Amazon, Head-Fi,
+            the old guestbook; private people's words) and the Live Music Archive recording (it is
+            already in the show log). The page (`PressStrip`, `PressWall`, `PressYears`, data logic in
+            `src/data/press-archive.js`, tests in `press-archive.test.js`) shows a 2004-2013 tick
+            timeline, the 18 reviews and features as short quotes (split into those that name Doug
+            and those that don't), and every other piece by year with its type, a link, an archived
+            copy where one exists, and flags for band-issued, print-only and unconfirmed items.
+            `/easternblok` links to it. It renders only `approved: true` entries, so un-approving
+            one removes it. Quotes are capped at 30 words; band-issued bios never get a quote.
+            Not checked on a phone (the browser window would not resize); desktop checked.
+            Next: more searching (Tribune/Sun-Times archives, the print Reader, Snarky Puppy dates),
+            and ask Doug to confirm the Montage and Chase Cafe entries are him.
       - [ ] **Snarky Puppy tours (2026-10-23).** Eastern Blok supported Snarky Puppy on at least two
             runs. 2008-10-28 Frequency, Madison and 2008-10-29 The Jazz Estate, Milwaukee are marked
             "with Snarky Puppy" on the band's old calendar (the show-log generator dropped those

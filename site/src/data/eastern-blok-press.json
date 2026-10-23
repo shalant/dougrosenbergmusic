@@ -71,7 +71,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Feature that discusses the album.",
       "aliases": [
         "obscuresound-2006"
@@ -95,7 +95,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Concert preview/profile of Goran; quotes are Goran's, not the writer's, so none are kept.",
       "aliases": [
         "vindicator-2006"
@@ -145,7 +145,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Quote lightly trimmed from the original sentence.",
       "aliases": [
         "wyce-folk-tales-2007"
@@ -174,7 +174,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Lukewarm: the reviewer wanted vocals. Decide deliberately whether to display it; do not cherry-pick the rating.",
       "aliases": [
         "spb-folk-tales-2007"
@@ -227,7 +227,7 @@
       ],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Second-hand: the band's own bio quoting four outlets. The original LA Times, Downbeat, Acoustic Guitar, and Minor 7th pieces are NOT located; do not publish these quotes on the site as verified until they are. The same bio mentions NPR, Chicago Public Radio's Chicago Undercover, the 2005 John Lennon Songwriting Competition finalist, and the film Wanted.",
       "aliases": [
         "aaj-band-bio-promo-2008"
@@ -253,7 +253,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Event listing blurb, likely partly promo-derived. Calls Goran Serbian though other sources say Croatian-born.",
       "aliases": [
         "citybeat-2010"
@@ -277,7 +277,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Preview for the Blind Pig, Ann Arbor, built on a Michael Caskey interview. Quotes are Caskey's; one says the new material is 'more thematic, and more developed', which is likely about Underwater.",
       "aliases": [
         "annarbor-2010"
@@ -301,7 +301,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Interview with Goran, mostly about the Kapsalis duo; low value.",
       "aliases": [
         "workandworry-2010"
@@ -325,7 +325,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Mentions Eastern Blok in passing as a former group (2016, Goran Ivanovic Trio piece). Text seen only as an excerpt on Goran's press page; URL is from a search result and the article was not opened. Date taken from the URL path (2016/3/9). EuroCircle's 2017 profile reprints the piece as 'CHICAGO SUN-TIMES, October 21, 2016, Jeff Elbel', so the dates disagree; confirm on the live page. The text says Goran shared the stage with Michael Caskey 'in the pair's former group Eastern Blok'.",
       "aliases": [
         "suntimes-elbel-retrospective"
@@ -349,7 +349,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Tour announcement for a 14-date August 2010 tour featuring Matt Ulery's 'The Underwater Suite', the material that became the album. Page shows publication 2013-04-23 and update 2010-07-30; the 2010 date is used.",
       "aliases": [
         "alarm-2010"
@@ -373,7 +373,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "'Tasty Eastern Blok coffee', a Matt Ulery interview preview. Seen only as a Google snippet; the real URL has an ID suffix and was not opened. Search result dated 2011-12-01. Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "aliases": [
         "bennington-ulery-2011"
@@ -397,7 +397,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "'E-week' listing. Google snippet says the band would play 'all original compositions, mostly from Underwater'. Confirms the album existed by Dec 2011. Page not opened (connection reset). Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive.",
       "aliases": [
         "bennington-eweek-2011"
@@ -421,7 +421,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-04",
-      "approved": false,
+      "approved": true,
       "notes": "Calls the show at Pop's Blue Moon (St. Louis) a celebration of the release of the new CD Underwater. Suggests the release party was May 2012, so the 2011 year may be wrong or just the first-copies date. Confirm.",
       "aliases": [
         "aaj-jazz-this-week-stl-2012"
@@ -496,7 +496,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Eastern Blok opens a show at the Old Town School of Folk Music (7 PM, $22). The entry's blurb is about the headliner, whose name was not captured. Mention only.",
       "aliases": [
         "reader-the-list-2009-10-29"
@@ -522,7 +522,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "'Serb-o-riffic films and music': Eastern Blok at Katerina's after Emir Kusturica screenings, on a Wednesday ('tonight') and Wednesday July 23. Year inferred as 2008 (July 23 was a Wednesday; page is tagged Vol. 37 No. 43). Posting date 2008-07-16 is therefore inferred. No byline shown on the page.",
       "aliases": [
         "reader-katerinas-blog-2008"
@@ -546,7 +546,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Bare gig listings, seen only as Google snippets, for the Goran Ivanovic Group at HotHouse (2004-03-12, with Shooglenifty), Hideout/Jazz Showcase (Jazz Institute of Chicago Jazz Club Tour), Around the Coyote Fall Arts Festival, and others across 2004. Useful as a dated record of when the group formed and where it played. Individual URLs are on chicagoreader.com/news/trg-music-listings-NN; not opened. Opened 2026-10-23 via the Reader's current site: trg-music-listings-11/12 (HotHouse 2004-03-12 with Shooglenifty), -20 (Borders Books & Music, 2004-05-09), -23/24 (HotHouse 2004-06-04 with Andreas Kapsalis Trio), -25 (Chase Cafe 2004-06-11, see chireader-trg-chase-cafe-2004-06), -30/31 (Morseland 2004-07-23), -35/36 (Martyrs' 2004-08-28 with New Monsoon), -37 (HotHouse 2004-09-09 with Andreas Kapsalis). All under the name Goran Ivanovic Group, none naming Doug; all before the 2005 start of the show log.",
       "aliases": [
         "reader-trg-listings-2004"
@@ -572,7 +572,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Nov/Dec 2005 issue of this acoustic-guitar review site. This is the source of the Minor 7th quote ('extraordinary pan-cultural ensemble...') in the band's bio and press copy, so that one is now sourced. Read through WebFetch summary; confirm the full text and the exact wording of the bio quote against the page before reuse."
     },
     {
@@ -595,7 +595,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Short 'Soundcheck' item on Goran Ivanovic Group (Balkan Song) in the February 2006 issue, scanned on the Internet Archive. Read via a WebFetch summary of the scan's OCR text; confirm the quote against the scan. No rating. Not saved: the URL is the OCR text of a whole magazine issue.",
       "aliases": [
         "guitar-one-2006-02"
@@ -643,7 +643,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Calendar entry for the show at Makor, New York, Monday 2006-03-27, 7:30 PM, $12. Repeats the Minor 7th quote and cites the Chicago Tribune calling Goran a 'lightning-fingered guitarist': a second-hand Tribune reference; the original Tribune piece is not located and could be the source of the Tribune quote noted in other press copy. Not saved: the URL is a rolling calendar category page, not the 2006 entry."
     },
     {
@@ -666,7 +666,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Not a review: an interview with bassist Matt Ulery in the Polish web magazine's October 2012 issue (113-page PDF). Pages 78 and 80 discuss Eastern Blok: Ulery says the band listened to a lot of Balkan, Russian and Polish folk music when it started, and that Underwater was recorded in a Chicago studio with engineer Anthony Gravino (who made all his records) and is 'my second self'. The interviewer admits he has not yet heard Underwater. Translations are by Claude, not the publisher; check the Polish before quoting. Doug Rosenberg is not named on the pages found."
     },
     {
@@ -716,7 +716,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "DownBeat January 2013 issue (a Scribd copy). Snippet reads 'In the quartet Eastern Blok with guitarist Goran Ivanovic, all of the compositions are tied to Balkan traditions.' Probably in a feature on Matt Ulery. Seen only as a Google result titled 'Downbeat-January2013' on Scribd; the link was not captured. This is the first confirmed DownBeat mention; the page and author need finding, and it is a mention, not a review.",
       "aliases": [
         "downbeat-2013-01-ulery-mention"
@@ -743,7 +743,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Staff review read in Chrome. Mixed-to-positive: praises Ivanovic's inventive guitar and the writing, but warns that listeners wanting gypsy music will not get it. No publication date on the page. The star rating is graphical and was not captured; check the page. Page lists the album as 2005, recorded July 2005 at B-Side Audio. The AllMusic page for Folk Tales shows no review. Does not name Doug in the text read."
     },
     {
@@ -764,7 +764,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Profile of Goran written years after the band ended. Names Eastern Blok as 'a key member of the quartet' with Matt Ulery, Doug Rosenberg and Michael Caskey, a combo that 'deftly surveys the folk music of Macedonia, Bulgaria, and Serbia'. The same text appears on the All About Jazz musician page, so it is probably Goran's own bio. Reprints a Jeff Elbel Sun-Times piece as 'October 21, 2016' (see suntimes-goran-trio-2016-03). The first URL in the leads list (.../meet-croatian-born-guitarist-goran-ivanovic-from-chicago/) was a 404."
     },
     {
@@ -785,7 +785,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Band-supplied biography, last updated 2020-10-28 per the page. Identical to the EuroCircle profile text. Names Doug Rosenberg. Not independent coverage; low value beyond showing how the band was described later. Full-page save failed 2026-10-05 (404 live and on Wayback), so there is no copy in press-archive."
     },
     {
@@ -800,7 +800,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Balkan Fusion: Goran Ivanovic Group Goes on North American Tour",
       "outlet": "World Music Central (band-issued tour announcement)",
       "author": "World Music Central News Room",
@@ -827,7 +827,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok Appears in Angelina Jolie's Upcoming Film, Wanted, and Will Release Folk Tales in October",
       "outlet": "World Music Central (band-issued tour announcement)",
       "author": "World Music Central News Room",
@@ -866,7 +866,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok March 08 Tour",
       "outlet": "World Music Central (band-issued tour announcement)",
       "author": "admin",
@@ -896,7 +896,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok Heads West for its Fall Tour 2008",
       "outlet": "World Music Central (band-issued tour announcement)",
       "author": "World Music Central News Room",
@@ -932,7 +932,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok To Play Free Concert On Friday, August 28 At Saint Louis Art Museum",
       "outlet": "All About Jazz (St. Louis Jazz Notes)",
       "author": "Dean Minderman",
@@ -958,7 +958,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok @ MSUM & Studio 222 Sept. 18",
       "outlet": "Minnesota State University Moorhead News",
       "author": null,
@@ -982,7 +982,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok at The Thompson House",
       "outlet": "JazzNearYou",
       "author": null,
@@ -1006,7 +1006,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok (FLOOD Magazine Chicago Event Calendar)",
       "outlet": "FLOOD Magazine",
       "author": null,
@@ -1030,7 +1030,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "This Week in Jazz / About Tonight",
       "outlet": "DCist",
       "author": null,
@@ -1054,7 +1054,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "New Year's Eve 2009: Music",
       "outlet": "Chicago Reader",
       "author": null,
@@ -1078,7 +1078,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Jazz Institute of Chicago Jazz Club Tour",
       "outlet": "Chicago Reader",
       "author": null,
@@ -1102,7 +1102,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Around the Coyote Fall Arts Festival",
       "outlet": "Chicago Reader",
       "author": null,
@@ -1126,7 +1126,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Milwaukee Avenue Arts Festival",
       "outlet": "Chicago Reader",
       "author": null,
@@ -1150,7 +1150,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "TRG Music Listings (Chase Cafe, Goran Ivanovic & Doug Rosenberg)",
       "outlet": "Chicago Reader",
       "author": null,
@@ -1174,7 +1174,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Photo and caption, Pillbox section, page 30",
       "outlet": "The Tartan (Carnegie Mellon student newspaper)",
       "author": "Jesse Kummer (photo staff)",
@@ -1198,7 +1198,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Calendar of events - 3/24/2008",
       "outlet": "Princeton Weekly Bulletin (Princeton University)",
       "author": null,
@@ -1224,7 +1224,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok",
       "outlet": "WSKG, \"Behind the Mic with Scott Hollis\" (Jazz in Silhouette)",
       "author": "Scott Hollis",
@@ -1250,7 +1250,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok, Mark Guiliana's \"Thing\" Come to Lunt",
       "outlet": "The Bi-College News (Haverford and Bryn Mawr)",
       "author": "Justin Dainer-Best and Jacob Carroll",
@@ -1276,7 +1276,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "The Radar Music: Blok Party",
       "outlet": "CS Magazine (Chicago)",
       "author": "Matt Lee",
@@ -1299,7 +1299,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok | Folk Tales (s/r)",
       "outlet": "PLAYBACK:stl",
       "author": "Kevin Renick",
@@ -1322,7 +1322,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Folk Tales",
       "outlet": "The Phantom Tollbooth",
       "author": "Derek Walker",
@@ -1345,7 +1345,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok's Breath of Fresh Air",
       "outlet": "Resident Media Pundit (blog)",
       "author": "Greg",
@@ -1366,7 +1366,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Radio Muse webcast 16",
       "outlet": "Muse's Muse (Radio Muse)",
       "author": null,
@@ -1387,7 +1387,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok Wanted for Folk Tales, Angelina Jolie Flick",
       "outlet": "ALARM",
       "author": null,
@@ -1408,7 +1408,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "848: Eastern Blok perform \"Heart Shaped Box\"",
       "outlet": "Chicago Public Radio (WBEZ), Eight Forty-Eight",
       "author": null,
@@ -1431,7 +1431,7 @@
       ],
       "verified": false,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "MAJIC Concert Series feature",
       "outlet": "Revue Magazine (Grand Rapids)",
       "author": null,
@@ -1455,7 +1455,7 @@
       "pullQuotes": [],
       "verified": false,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Eastern Blok review",
       "outlet": "Propculture.com",
       "author": null,
@@ -1478,7 +1478,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "title": "Testimonial on Eastern Blok's campus lectures and concert",
       "outlet": "Truman State University (Royce Kallerud, associate professor of English)",
       "author": "Royce Kallerud",
@@ -1580,7 +1580,7 @@
       ],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "id": "cdbaby-turner-goran-ivanovic-group",
       "kind": "review",
       "album": "goran-ivanovic-group",
@@ -1602,7 +1602,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "namesDoug": false,
       "id": "snarkypuppy-blog-spring-tour-2011-03",
       "kind": "listing",
@@ -1632,7 +1632,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-23",
-      "approved": false,
+      "approved": true,
       "namesDoug": false,
       "id": "easternblok-net-calendar-snarky-2008-10",
       "kind": "listing",
