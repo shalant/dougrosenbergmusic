@@ -36,9 +36,9 @@ export function dateParts(date) {
 	return { year: Number(m[1]), month: m[2] ? Number(m[2]) : null, day: m[3] ? Number(m[3]) : null };
 }
 
-/** The date an entry sits at: its own, else the first show it lists. */
+/** The date an entry sits at: its own (the start of a range), else the first show it lists. */
 export function sortDate(entry) {
-	return entry.date || entry.showDates?.[0] || null;
+	return entry.date?.split('/')[0] || entry.showDates?.[0] || null;
 }
 
 /** True where the band itself wrote or issued the piece, so it is not independent press. */

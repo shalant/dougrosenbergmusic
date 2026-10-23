@@ -7,19 +7,25 @@ import { dateLabel, highlightName, isTranslated } from '../data/press-archive.js
 
 interface Props {
   items: { entry: any; quote: string }[];
-  albumTitles: Record<string, string>;
+  albumTitles?: Record<string, string>;
+  // Band pages split the wall into pieces that name Doug and pieces that
+  // don't; his own press page names him throughout, so it passes false.
+  split?: boolean;
 }
 
-const { items, albumTitles } = Astro.props;
-const groups = [
-  { id: 'names-doug', heading: 'Reviews that name Doug', items: items.filter((i) => i.entry.namesDoug) },
-  { id: 'about-band', heading: 'Reviews of the band', items: items.filter((i) => !i.entry.namesDoug) },
-].filter((group) => group.items.length > 0);
+const { items, albumTitles = {}, split = true } = Astro.props;
+const groups = (split
+  ? [
+      { id: 'names-doug', heading: 'Reviews that name Doug', items: items.filter((i) => i.entry.namesDoug) },
+      { id: 'about-band', heading: 'Reviews of the band', items: items.filter((i) => !i.entry.namesDoug) },
+    ]
+  : [{ id: 'all', heading: '', items }]
+).filter((group) => group.items.length > 0);
 ---
 
 {groups.map((group) => (
   <div class="wall">
-    <h3 class="wall__heading">{group.heading}</h3>
+    {group.heading && <h3 class="wall__heading">{group.heading}</h3>}
     <ul class="wall__list">
       {group.items.map(({ entry, quote }) => (
         <li class="cut">
@@ -39,7 +45,7 @@ const groups = [
           </p>
           {(!entry.url || entry.archiveUrl || isTranslated(entry) || (entry.verified === false && entry.url)) && (
             <p class="cut__note">
-              {!entry.url && <span>print only, no web page</span>}
+              {!entry.url && <span>no live page</span>}
               {entry.archiveUrl && <a href={entry.archiveUrl} target="_blank" rel="noopener noreferrer">archived copy<span class="visually-hidden"> (opens in a new tab)</span></a>}
               {isTranslated(entry) && <span>translated from Polish</span>}
               {entry.verified === false && entry.url && <span>not independently confirmed</span>}

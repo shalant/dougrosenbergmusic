@@ -3,7 +3,7 @@
 // interviews, listings, mentions, band-issued announcements. Rows are in the
 // HTML at load (closed <details>), like the show list. Data and labels from
 // src/data/press-archive.js.
-import { KIND_LABEL, dateLabel, highlightName, isFromBand, isTranslated, shortQuote } from '../data/press-archive.js';
+import { KIND_LABEL, dateLabel, highlightName, isFromBand, isTranslated, shortQuote, sortDate } from '../data/press-archive.js';
 
 interface Props {
   years: [string, any[]][];
@@ -22,7 +22,7 @@ const { years } = Astro.props;
       <ol class="year__list">
         {entries.map((entry) => {
           const quote = shortQuote(entry);
-          const when = dateLabel(entry.date || entry.showDates?.[0]);
+          const when = dateLabel(sortDate(entry));
           return (
             <li class="clip">
               <span class="clip__date">{when}</span>
@@ -35,6 +35,9 @@ const { years } = Astro.props;
                   )}
                 </p>
                 <p class="clip__outlet">{entry.outlet}{entry.author && `, ${entry.author}`}</p>
+                {entry.showDates?.length > 0 && (
+                  <p class="clip__shows">Lists shows on {entry.showDates.slice(0, 8).map((d: string) => dateLabel(d, true)).join(', ')}</p>
+                )}
                 {quote && (
                   <p class="clip__quote">
                     &ldquo;{highlightName(quote).map((part) => (part.name ? <span class="clip__name">{part.text}</span> : part.text))}&rdquo;
@@ -43,7 +46,7 @@ const { years } = Astro.props;
               </div>
               <p class="clip__tags">
                 <span>{isFromBand(entry) && entry.kind !== 'promo-bio' ? `${KIND_LABEL[entry.kind]}, from the band` : KIND_LABEL[entry.kind]}</span>
-                {!entry.url && <span>print only</span>}
+                {!entry.url && <span>no live page</span>}
                 {entry.archiveUrl && <a href={entry.archiveUrl} target="_blank" rel="noopener noreferrer">archived copy<span class="visually-hidden"> (opens in a new tab)</span></a>}
                 {isTranslated(entry) && <span>translated</span>}
                 {entry.verified === false && entry.url && <span>not confirmed</span>}
@@ -166,6 +169,12 @@ const { years } = Astro.props;
   .clip__outlet {
     font-size: 0.85rem;
     color: var(--text-muted);
+  }
+
+  .clip__shows {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
   }
 
   .clip__quote {

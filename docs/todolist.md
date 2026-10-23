@@ -1926,6 +1926,25 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             before this. Regenerate `press/press.json` after
       - [x] 2026-10-15: Doug approved six entries (All About Jazz 2006 and 2008, DownBeat 2006,
             jazzreview.com 2004, Chicago Reader 2007, Minor 7th 2007)
+      - [x] 2026-10-23: **`/press` is out of draft and shows Doug's own press** (15 entries in
+            the new `site/src/data/doug-press.json`, same schema and same components as
+            `/easternblok/press`; `DRAFT_PAGES` in `astro.config.mjs` is now empty). Moved nine
+            personal entries out of `press/candidates.json` into it and added six: four
+            *chi.now&then* calendar pages from Chicago Rash Audio Potential (`savagesound.com/archives`
+            2003b, 2003c, 2003d, 2004b, copies in `press-archive/savagesound-chinowthen-2003-2004`)
+            and two Reader TRG listings (Velvet Lounge, Nov 8 2002 and Jan 31 2003). They cover the
+            May 7 and 8, 2003 shows with Keyon Harrold and Robert Glasper (Jazz Record Mart 5 PM,
+            Velvet Lounge 9 PM, Chase Cafe 7 PM), Velvet Lounge Jul 17 and Aug 27 2003 ("Douglas
+            Rosenberg Quintet"), Hungry Brain Nov 16 2003, and Bob Moses Apr 2-3 2004. Added the
+            "big, firm sound, a la Wayne Shorter and David Liebman" line from the jazzreview.com
+            piece. Still open, ask Doug: (1) who wrote the Chicago Tribune quote in his bio
+            ("fearlessness of spirit and a robustness of tone...", in use by 2013-11-03) and
+            roughly when, since it reads like a review of an early gig and is the likeliest "other
+            review" he remembered; (2) which St. Louis dates he meant (nothing Doug-led or with
+            Harrold found; the band's are 2007-11-03, 2008-10-11, 2009-08-28); (3) whether the
+            "Douglas Rosenberg" Velvet Lounge and Montage listings and the May 17 2003 Green Mill
+            "Live the Spirit Band" listing are him. No independent *Better Than TV* review found
+            after another search (Reader, WBEZ, All Souls, Boo Boo, Proteus, retail pages)
       - [ ] **2. Home-page timeline section.** Decided 2026-10-15: a short career timeline with a
             few approved quotes and links, using the "Era bracket" Ledger variation (rows grouped
             by project, a bracket per group with a one-line history and one link to its page).

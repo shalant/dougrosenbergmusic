@@ -34,7 +34,7 @@ const reviewCount = archive.wall.length;
 
   <section class="archive__section" aria-labelledby="when">
     <h2 id="when">When it ran</h2>
-    <PressStrip entries={archive.shown} albums={bandArchive.albums} />
+    <PressStrip entries={archive.shown} albums={bandArchive.albums} start={2004} end={2013} />
     <p>
       Reviews are the tall brass marks. Most of them ran in 2006 and 2007, around the first two albums. {inBandYears} of the {archive.total} pieces appeared while the band was playing, 2004 to 2013{later > 0 && `, and ${later} came later`}.
     </p>

@@ -1,19 +1,19 @@
 ---
-// A staff-line timeline of the coverage, 2004-2013: one tick per dated piece,
+// A staff-line timeline of the coverage (the page picks the years): one tick per dated piece,
 // tall and brass for reviews and features, short for everything else, with
-// the three album releases marked underneath. Decorative (aria-hidden); the
+// any album releases marked underneath. Decorative (aria-hidden); the
 // page's summary sentence carries the same facts in text. Ticks are placed
 // by tickPosition() in src/data/press-archive.js.
 import { sortDate, tickPosition, wallQuote } from '../data/press-archive.js';
 
 interface Props {
   entries: any[];
-  albums: { id: string; title: string; year: number }[];
+  albums: { title: string; year: number }[];
+  start: number;
+  end: number;
 }
 
-const { entries, albums } = Astro.props;
-const START = 2004;
-const END = 2013;
+const { entries, albums, start: START, end: END } = Astro.props;
 
 const ticks = entries
   .map((entry) => ({ at: tickPosition(sortDate(entry), START, END), review: wallQuote(entry) !== null }))

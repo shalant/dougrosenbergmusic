@@ -2,12 +2,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import press from "./data/eastern-blok-press.json" with { type: "json" };
-import { buildArchive, cleanQuote, dateLabel, dateParts, publicEntries, shortQuote, tickPosition } from "./data/press-archive.js";
+import dougPress from "./data/doug-press.json" with { type: "json" };
+import { buildArchive, cleanQuote, dateLabel, dateParts, publicEntries, shortQuote, sortDate, tickPosition } from "./data/press-archive.js";
 
-// /easternblok/press shows only approved entries, and only short excerpts of
+// /easternblok/press and /press show only approved entries, and only short excerpts of
 // what the sources said. These checks guard both.
 
-const shown = publicEntries(press.entries);
+const shown = [...publicEntries(press.entries), ...publicEntries(dougPress.entries)];
 const pressIndex = JSON.parse(readFileSync(new URL("../../press/press.json", import.meta.url), "utf8"));
 // merge-press.cjs folds duplicates into one entry and keeps the other ids as aliases.
 const indexById = new Map();
@@ -21,7 +22,7 @@ test("only approved entries are shown, and never fan comments or the concert rec
 		assert.equal(e.approved, true, e.id);
 		assert.ok(!["listener-comment", "concert-recording"].includes(e.kind), e.id);
 	}
-	assert.ok(!press.entries.some((e) => e.kind === "listener-comment" && e.approved), "a fan comment is approved");
+	assert.ok(![...press.entries, ...dougPress.entries].some((e) => e.kind === "listener-comment" && e.approved), "a fan comment is approved");
 });
 
 test("every shown entry is approved in press/press.json too", () => {
@@ -51,10 +52,23 @@ test("band-issued material never gets a quote on the page", () => {
 	for (const e of shown.filter((x) => x.kind === "promo-bio")) assert.equal(shortQuote(e), null, e.id);
 });
 
-test("every shown entry lands in the wall or in exactly one year list", () => {
-	const a = buildArchive(press.entries);
-	const placed = a.wall.length + a.years.reduce((n, [, list]) => n + list.length, 0);
-	assert.equal(placed, a.total);
+for (const [name, file] of [["Eastern Blok", press], ["Doug", dougPress]]) {
+	test(`${name}: every shown entry lands in the wall or in exactly one year list, and none is undated`, () => {
+		const a = buildArchive(file.entries);
+		const placed = a.wall.length + a.years.reduce((n, [, list]) => n + list.length, 0);
+		assert.equal(placed, a.total);
+		assert.ok(!a.years.some(([year]) => year === "Undated" && name === "Doug"), "a personal entry has no usable date");
+	});
+}
+
+test("a date range sorts at its start", () => {
+	assert.equal(sortDate({ date: "2003-02-27/2004-01-29" }), "2003-02-27");
+	assert.equal(sortDate({ date: "", showDates: ["2011-03-29"] }), "2011-03-29");
+});
+
+test("ids are unique across the band and personal press files", () => {
+	const ids = [...press.entries, ...dougPress.entries].map((e) => e.id);
+	assert.equal(new Set(ids).size, ids.length);
 });
 
 test("date helpers handle day, month and year precision", () => {
