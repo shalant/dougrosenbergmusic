@@ -42,3 +42,12 @@ test("every source snapshot is a Wayback URL for easternblok.net", () => {
 		for (const id of show.sources) assert.ok(id === "internet-archive" || ids.has(id), id);
 	}
 });
+
+test("shows marked 'with' a headliner say who, and each has a source in `confirmed`", () => {
+	const withs = shows.shows.filter((s) => s.with);
+	assert.ok(withs.length >= 10, "the Snarky Puppy dates are missing");
+	for (const s of withs) {
+		assert.equal(s.with, "Snarky Puppy");
+		assert.ok(s.confirmed, `${s.date} ${s.venue} has no source`);
+	}
+});

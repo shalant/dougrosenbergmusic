@@ -207,3 +207,9 @@ test("applyOverrides splits a city typed as 'City, ST' into city and region", ()
 	assert.equal(shows[0].city, "New Haven");
 	assert.equal(shows[0].region, "CT");
 });
+
+test("applyOverrides records who the band played with", () => {
+	const shows = [{ date: "2008-10-28", venue: "Frequency", city: "Madison", region: "WI" }];
+	applyOverrides(shows, [{ date: "2008-10-28", venue: "Frequency", with: "Snarky Puppy" }]);
+	assert.equal(shows[0].with, "Snarky Puppy");
+});

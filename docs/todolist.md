@@ -756,6 +756,90 @@ semantic headings, title/meta description.
             musician page), Minor7th, WBEZ Morning Show, Chicago Reader, Sun-Times, Jazz Review.
             Nothing was sent. A published link on a review matters more than any on-site change.
             Also depends on deciding the `/press` page's draft status.
+      - [ ] **Press for each Eastern Blok gig (started 2026-10-23).** Added 16 entries to
+            `site/src/data/eastern-blok-press.json` (all `approved: false`), each with a
+            `showDates` list: four World Music Central tour releases (2006-03, 2007-07, 2008-03,
+            2008-09, band copy, 53 dates between them), All About Jazz on the 2009-08-28 St. Louis
+            Art Museum show, the MSUM post for 2009-09-18, FLOOD for Mayne Stage 2010-12-08, DCist
+            for Twins Jazz 2008-05-29, JazzNearYou for 2012-07-06, five Chicago Reader pages, The Tartan (CMU student paper) photo caption for 2008-03-22, and the Princeton Weekly Bulletin calendar for 2008-03-24. Campus and school papers: nothing else found; the Daily Illini (Illinois Digital Newspaper Collections) and Michigan Daily archives sit behind a Cloudflare "verify you are human" check and need Doug to run by hand.
+            Six dates turned up that are not in `eastern-blok-shows.json` (plus 14 announced-only 2006 tour dates noted in the WMC entry): 2006-08-30 (HotHouse
+            club tour), 2006-09-10 (Around the Coyote), 2008-10-13 (Omaha university), 2012-07-06
+            (Thompson House, Newport KY), 2012-07-22 (Milwaukee Avenue Arts Festival), and the 2004
+            Chase Cafe duo. They are flagged, not added to the log. **Still open:** the Reader's
+            site holds only about a dozen pages naming the band, so most Chicago dates (Katerina's,
+            Martyrs', Double Door, Metro, Hideout, Jazz Showcase) have no press found; the old
+            Reader event pages are only in the Wayback Machine (offline during this session).
+            Next: retry Wayback for `chicagoreader.com/chicago/*` event pages, ask Doug for any
+            clippings, and check each campus paper's own archive. Fredonia 2011-04-12 is still
+            Access Denied.
+      - [ ] **Old easternblok.net second pass (2026-10-23).** The band's own 2008 Press and News
+            pages (Wayback 2008-06-09 and 2008-08-28, saved in `press-archive/easternblok-net-site/`)
+            list reviews the earlier sessions never saw. Added 14 more entries to
+            `eastern-blok-press.json` (all `approved: false`, 60 in total): WSKG/Scott Hollis review
+            of Binghamton 2008-03-27 (names Doug), Bi-Co News (Haverford student paper) review of
+            2007-09-22, CS Magazine "Blok Party" feature (quotes Doug), PLAYBACK:stl and Phantom
+            Tollbooth reviews of *Folk Tales*, Resident Media Pundit review of the first album,
+            Radio Muse, ALARM 2007, the WBEZ 848 studio performance (unverified), a guestbook
+            entry tying 12 fan comments to show dates, and others. Leads that could not be
+            retrieved are in `unfetchedLeads`. **Doug's own non-Eastern-Blok dates** went into
+            `press/candidates.json` (4 entries, `press.json` regenerated): the Reader's Critic's
+            Choice by Neil Tesser on Bob Moses with Doug at the Velvet Lounge 2004-04-02/03, the
+            Doug Rosenberg Trio's Friday/Saturday run at Montage in Naperville (about 48 weekly
+            Reader listings, 2003-02 to 2004-01), the Keyon Harrold/Doug Rosenberg Quintet at
+            Chase Cafe 2003-05-08, and the Doug Rosenberg Quartet at Around the Coyote 2006-09-08.
+            **Missing from `/easternblok` vs the old site (not built):** audio (the old site's MP3s
+            have no Wayback capture, so use the Internet Archive fan recordings or Doug's masters),
+            track lists and personnel per album (*Folk Tales* lists Doug on tenor sax, clarinet,
+            bass clarinet and flute, plus guest cellist Michael Freilich), the news timeline, the
+            photo gallery (Gareth Glynn Ash's MCA 2007-09-19 and Copernicus 2007-11-24 shots need
+            his permission), the campus "History of Balkan Music" program, the 2012 pledge drive
+            (Fredonia residency, Vermont high school visit), and the guestbook.
+            **Same day, third pass:** read the Amazon pages in Chrome (first album 3 customer
+            reviews, one naming Doug; *Folk Tales* 1; *Underwater* none) and added 3 entries (63
+            in `eastern-blok-press.json`). The Illinois Digital Newspaper Collections and Michigan
+            Daily archives opened with no CAPTCHA and had no hits. Still not reachable:
+            fredonia.edu (Access Denied), chamber-music.org (certificate error, not bypassed),
+            the Wayback copy of the old Reader event pages (`chicagoreader.com/chicago/.../Event?oid=`;
+            CDX found only Goran's trio and Fareed Haque pages). Ideas left: Doug's own press kit
+            files, a library card for Tribune/Sun-Times/Daily Herald/Chicago Free Press archives,
+            and asking Goran for clippings.
+      - [x] **Live photos and video on `/easternblok` (2026-10-23, Doug asked for any that turned
+            up).** Added three live portraits (Doug on sax, Goran on guitar, Matthew Ulery on bass)
+            from the old site's 2007 pages, shown no wider than their own 233-313px, and a Video
+            section (left out on purpose: a Katerina's clip (`82syl1nnedU`) titled "4-4-13", which
+            would date it a year after the band's last logged show; add it back if Doug confirms
+            the date) (`VideoLog.astro`, data in `src/data/eastern-blok-video.json`, 15 clips, test in
+            `eastern-blok-video.test.js`). The lead clip is the fan video of the Rockford Waterfront
+            Festival set closer with fireworks (YouTube `GSe24EvmetI`, confirmed by playing the last
+            minute). Video is **linked, not embedded**: the CSP allows no third-party frames, and
+            I did not loosen it; embedding means adding `frame-src https://www.youtube-nocookie.com`
+            to `public/_headers`, Doug's call. The old site's other ~35 live photos (Gareth Glynn
+            Ash's MCA, Copernicus, Rockford and HotHouse shots, plus Tijana's) are lost: Wayback
+            saved only the six band-portrait files and Ash's gallery is offline everywhere I
+            checked, so those need the originals from Doug, Goran or the photographers. Photo
+            credits: Goran's carries Saverio Truglia on the image; Doug's and Matthew's photographers
+            are unconfirmed. Clips that point at dates not in the show log, to add by hand in
+            `press/easternblok-shows-overrides.json` if wanted: 2006-07-22 Wicker Park Fest,
+            2009-03-13 Chicago Cultural Center World Music Series, and two titled 4-4-13 Katerina's
+            (2013-04-04) and "BRVS 08.13.13" (2013-08-13), which are after the band's last logged
+            show and may be a reunion or a mis-titled upload. The Mick's Omaha 2008-10-18 set
+            exists as a full 1h08m video (YXcIRQrg7Iw).
+      - [ ] **Snarky Puppy tours (2026-10-23).** Eastern Blok supported Snarky Puppy on at least two
+            runs. 2008-10-28 Frequency, Madison and 2008-10-29 The Jazz Estate, Milwaukee are marked
+            "with Snarky Puppy" on the band's old calendar (the show-log generator dropped those
+            notes). The spring 2011 tour (Snarky Puppy's blog, "Spring Tour Dates!", 2011-03-13,
+            Wayback) lists "w/ Eastern Blok" on 3/29 Mayne Stage Chicago, 3/30 Rudyard Kipling
+            Louisville, 4/1 Hailey's Denton, 4/2 Prophet Bar Dallas, 4/6 Blue Nile New Orleans,
+            4/7 and 4/8 Thirsty Hippo Hattiesburg, and Doug says every date around the Texas ones
+            was with them. Both are recorded under `tours` in `eastern-blok-press.json`. **No press
+            on any of these dates found yet** (searched local papers and student papers by the
+            tool; Courier-Journal, Hattiesburg American, Journal Sentinel and Tribune are blocked to
+            it). Next: Doug, Goran, Michael League or Zach Brock for clippings and photos; LEO
+            Weekly and Daily Cardinal archives by hand; setlist.fm. **Done same day:** the show list now
+            says "with Snarky Puppy" on 10 rows (the 9 above plus 2011-04-04 Artmosphere, Lafayette, which Doug confirmed 2026-10-23) and the summary counts them (new `with` field in
+            `press/easternblok-shows-overrides.json`, copied through by `easternblok-shows.cjs`, shown by
+            `ShowLog.astro`; show list regenerated, only those rows changed). Snarky Puppy's own list has a separate University of Louisiana date that
+            night without Eastern Blok; Doug said that one is not marked.
       - [ ] **Decide the site's primary goal:** music (Eastern Blok, sheet music, lessons) or dev
             services. The audiences and search terms differ; traffic grows faster with one.
       - [ ] **Recheck in ~1 week:** Bing Site Explorer last-crawl date for `/` (submitted

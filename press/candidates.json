@@ -270,6 +270,90 @@
       "accessed": "2026-10-05",
       "approved": false,
       "archive": null
+    },
+    {
+      "about": "person",
+      "author": "Neil Tesser",
+      "archiveUrl": null,
+      "archive": "chireader-bob-moses-2004-04",
+      "namesDoug": true,
+      "pullQuotes": [
+        "a former student, Chicago reedist Doug Rosenberg"
+      ],
+      "verified": true,
+      "accessed": "2026-10-23",
+      "approved": false,
+      "id": "chireader-bob-moses-2004-04",
+      "kind": "preview",
+      "title": "Bob Moses",
+      "outlet": "Chicago Reader (Critic's Choice)",
+      "date": "2004-04-01",
+      "url": "https://chicagoreader.com/music/bob-moses/",
+      "showDates": [
+        "2004-04-02",
+        "2004-04-03"
+      ],
+      "provenance": "Found 2026-10-23 through the Reader's WordPress API (search \"Bob Moses\"). Critic's Choice blurb: the drummer Bob Moses, teaching at the New England Conservatory, plays Fri-Sat April 2-3, 2004, 9:30 PM, at the Velvet Lounge with Doug Rosenberg, with a drum clinic at Rhythm on April 4. The same week's listing (trg-music-listings-15) reads \"Bob Moses (see Critic's Choice) & Doug Rosenberg\"."
+    },
+    {
+      "about": "person",
+      "author": null,
+      "archiveUrl": null,
+      "archive": "chireader-trg-montage-2003",
+      "namesDoug": true,
+      "pullQuotes": [],
+      "verified": true,
+      "accessed": "2026-10-23",
+      "approved": false,
+      "id": "chireader-trg-montage-2003",
+      "kind": "listing",
+      "title": "TRG Music Listings: Doug Rosenberg Trio at Montage, Naperville",
+      "outlet": "Chicago Reader (weekly club listings)",
+      "date": "2003-02-27/2004-01-29",
+      "url": "https://chicagoreader.com/news/trg-music-listings-46/",
+      "provenance": "Found 2026-10-23 through the Reader's WordPress API (search \"Doug Rosenberg\"). Weekly listing \"MONTAGE 3124 S. Rte. 59, Naperville: Fridays and Saturdays, 8 PM, Doug Rosenberg Trio\" from trg-music-listings-46 (2003-02-27, with Kyle Asche and Clark Sommers on Fri 2/28 and Mike Allemana and Lorin Cohen on Sat 3/1) through trg-music-listings-6 (2004-01-29), Saturdays only after about 2003-07. About 48 weekly listings, i.e. a residency of roughly a year. Name only; confirm this is the same Doug Rosenberg."
+    },
+    {
+      "about": "person",
+      "author": null,
+      "archiveUrl": null,
+      "archive": "chireader-trg-chase-cafe-2003-05",
+      "namesDoug": true,
+      "pullQuotes": [],
+      "verified": true,
+      "accessed": "2026-10-23",
+      "approved": false,
+      "id": "chireader-trg-chase-cafe-2003-05",
+      "kind": "listing",
+      "title": "TRG Music Listings: Keyon Harrold/Doug Rosenberg Quintet, Chase Cafe",
+      "outlet": "Chicago Reader",
+      "date": "2003-05-01",
+      "url": "https://chicagoreader.com/news/trg-music-listings-55/",
+      "showDates": [
+        "2003-05-08"
+      ],
+      "provenance": "Found 2026-10-23: \"CHASE CAFE 7301 N. Sheridan: Thu 5/8, 7 PM, Keyon Harrold/Doug Rosenberg Quintet, Organic Mind Unit.\" Listing text only; confirm the same Doug."
+    },
+    {
+      "about": "person",
+      "author": null,
+      "archiveUrl": null,
+      "archive": "chireader-around-the-coyote-doug-quartet-2006-09",
+      "namesDoug": true,
+      "pullQuotes": [],
+      "verified": true,
+      "accessed": "2026-10-23",
+      "approved": false,
+      "id": "chireader-around-the-coyote-doug-quartet-2006-09",
+      "kind": "listing",
+      "title": "Around the Coyote Fall Arts Festival (Doug Rosenberg Quartet)",
+      "outlet": "Chicago Reader",
+      "date": "2006-09-07",
+      "url": "https://chicagoreader.com/arts-culture/around-the-coyote-fall-arts-festival/",
+      "showDates": [
+        "2006-09-08"
+      ],
+      "provenance": "Found 2006-09-07 page read 2026-10-23: under FRIDAY 9/8, \"Around the Coyote Gallery: Arthi Meera, Emily Hurd, Easy Tiger, and Doug Rosenberg Quartet, 6-9 PM\". His own group, not Eastern Blok. The Goran Ivanovic Group is on the same page for Sunday 9/10."
     }
   ],
   "rejected": [

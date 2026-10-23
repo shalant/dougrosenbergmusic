@@ -1,5 +1,5 @@
 {
-	"_about": "Hand edits applied on top of the generated show list by press/easternblok-shows.cjs. Match is by date + venue exactly as it appears in site/src/data/eastern-blok-shows.json. Fill in city (and region, as a postal code like IL) for the shows below; null means not filled yet and is ignored. newVenue renames a venue (venue stays the match key); status: past marks an announced show as played; confirmed says who confirmed it and when. After editing, rerun: node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json",
+	"_about": "Hand edits applied on top of the generated show list by press/easternblok-shows.cjs. Match is by date + venue exactly as it appears in site/src/data/eastern-blok-shows.json. Fill in city (and region, as a postal code like IL) for the shows below; null means not filled yet and is ignored. newVenue renames a venue (venue stays the match key); status: past marks an announced show as played; confirmed says who confirmed it and when. After editing, rerun: node press/easternblok-shows.cjs --out site/src/data/eastern-blok-shows.json `with` names a headliner or co-bill the band played alongside (shown on /easternblok as \"with X\").",
 	"shows": [
 		{
 			"date": "2012-02-04",
@@ -434,6 +434,66 @@
 			"city": "Krakow",
 			"region": "Poland",
 			"confirmed": "Doug Rosenberg, 2026-10-18; Jazz Forum, \"Grażyna Auguścik & Eastern Blok on tour\" lists 5.11 Kraków - Alchemia"
+		},
+		{
+			"date": "2008-10-28",
+			"venue": "Frequency",
+			"with": "Snarky Puppy",
+			"confirmed": "band's own calendar (easternblok.net, Wayback 2008-10-06) says \"with Snarky Puppy\""
+		},
+		{
+			"date": "2008-10-29",
+			"venue": "The Jazz Estate",
+			"with": "Snarky Puppy",
+			"confirmed": "band's own calendar (easternblok.net, Wayback 2008-10-06) says \"with Snarky Puppy\""
+		},
+		{
+			"date": "2011-03-29",
+			"venue": "Mayne Stage",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-03-30",
+			"venue": "The Rudyard Kipling",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-04-01",
+			"venue": "Hailey's",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-04-02",
+			"venue": "The Prophet Bar",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-04-06",
+			"venue": "The Blue Nile",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-04-07",
+			"venue": "Thirsty Hippo",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-04-08",
+			"venue": "Thirsty Hippo",
+			"with": "Snarky Puppy",
+			"confirmed": "Snarky Puppy's blog \"Spring Tour Dates!\" (2011-03-13, Wayback) lists \"w/ Eastern Blok\""
+		},
+		{
+			"date": "2011-04-04",
+			"venue": "Artmosphere",
+			"with": "Snarky Puppy",
+			"confirmed": "Doug Rosenberg, 2026-10-23: the Artmosphere show was with Snarky Puppy (their own tour list shows only a separate university date that night)"
 		}
 	]
 }

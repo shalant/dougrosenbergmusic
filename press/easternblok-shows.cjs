@@ -232,7 +232,7 @@ function applyOverrides(shows, overrides) {
 		// "New Haven, CT" typed into city is split into city + region.
 		const split = typeof o.city === "string" ? o.city.match(/^(.+?),\s*([A-Za-z]{2})$/) : null;
 		const edit = split ? { ...o, city: split[1], region: o.region ?? split[2] } : o;
-		for (const field of ["city", "region", "status", "confirmed"]) {
+		for (const field of ["city", "region", "status", "confirmed", "with"]) {
 			if (edit[field] != null) show[field] = field === "region" ? tidyRegion(edit[field]) : edit[field];
 		}
 		// `venue` is the match key, so a rename goes in `newVenue`.
