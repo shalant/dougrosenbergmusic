@@ -1,0 +1,160 @@
+---
+// Live video of the band for /easternblok. Data: src/data/eastern-blok-video.json.
+// Links to YouTube instead of embedding it: the site's Content-Security-Policy
+// (public/_headers) allows no third-party frames on purpose, and a plain link
+// loads nothing from Google until someone clicks.
+import data from '../data/eastern-blok-video.json';
+
+type Video = (typeof data.videos)[number];
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const fullDate = (iso: string) => `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}, ${iso.slice(0, 4)}`;
+const url = (v: Video) => `https://www.youtube.com/watch?v=${v.id}`;
+
+const lead = data.videos.find((v) => v.lead);
+const rest = data.videos.filter((v) => !v.lead);
+---
+
+<div class="videolog">
+  {lead && (
+    <p class="lead">
+      <a class="lead__link" href={url(lead)} target="_blank" rel="noopener noreferrer">
+        {lead.venue}, {lead.dateLabel ?? (lead.date && fullDate(lead.date))}<span class="visually-hidden"> (video on YouTube, opens in a new tab)</span>
+      </a>
+      <span class="lead__note">
+        The closer, Kalajdzisko Oro, with fireworks going off over the stage. Low resolution, filmed by a fan.
+      </span>
+    </p>
+  )}
+
+  <details class="more">
+    <summary>
+      <span class="more__label">More video</span>
+      <span class="more__count">{rest.length} clips</span>
+    </summary>
+    <ul class="more__list">
+      {rest.map((v) => (
+        <li>
+          <a href={url(v)} target="_blank" rel="noopener noreferrer">
+            {v.venue ?? v.title}
+            <span class="visually-hidden"> (video on YouTube, opens in a new tab)</span>
+          </a>
+          <span class="more__meta">
+            {v.date ? fullDate(v.date) : 'date not stated'} · {v.length} · {v.uploader}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </details>
+
+  <p class="videolog__source">
+    Uploaded by fans, venues and friends of the band, not by Doug, and linked rather than embedded. Dates come from the
+    video's title or from matching the band's show list, and a few are not stated.
+  </p>
+</div>
+
+<style>
+  .videolog {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .lead {
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+    max-width: 62ch;
+  }
+
+  .lead__link {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 4.6vw, 1.4rem);
+    color: var(--text);
+    text-decoration-color: var(--brass);
+    text-underline-offset: 0.25em;
+  }
+
+  .lead__note {
+    color: var(--text-muted);
+  }
+
+  .more {
+    border-top: 1px solid var(--staff-line-strong);
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  .more summary {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    min-height: 44px;
+    padding-block: 0.9rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .more summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: var(--font-mono);
+    color: var(--brass);
+    transition: rotate var(--dur-med) var(--ease-spring);
+  }
+
+  .more[open] summary::after {
+    rotate: 45deg;
+  }
+
+  .more__label {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+
+  .more__count,
+  .more__meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+  }
+
+  .more__list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 1rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .more__list li {
+    display: grid;
+    gap: 0.1rem;
+    padding-block: 0.4rem;
+    /* 44px tap target on a phone. */
+    min-height: 44px;
+    align-content: center;
+  }
+
+  .more__list a {
+    width: fit-content;
+  }
+
+  @media (min-width: 700px) {
+    .more__list li {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+  }
+
+  .videolog__source {
+    margin: 0;
+    max-width: 62ch;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+  }
+</style>

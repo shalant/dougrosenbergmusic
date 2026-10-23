@@ -23,6 +23,7 @@ const years = Object.entries(
 const count = (status: string) => data.shows.filter((s) => s.status === status).length;
 const usStates = new Set(data.shows.map((s) => s.region).filter((r): r is string => !!r && /^[A-Z]{2}$/.test(r)));
 const recorded = data.shows.filter((s) => s.recording).length;
+const withHeadliner = data.shows.filter((s) => s.with);
 const first = data.shows[0].date.slice(0, 4);
 const last = data.shows[data.shows.length - 1].date.slice(0, 4);
 ---
@@ -31,6 +32,7 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
   <p class="showlog__summary">
     <strong>{data.shows.length} shows</strong>, {first}–{last}, in {usStates.size} states and Poland.{' '}
     {recorded} have a fan recording on the Internet Archive.
+    {withHeadliner.length > 0 && ` ${withHeadliner.length} were on bills with ${[...new Set(withHeadliner.map((s) => s.with))].join(' and ')}.`}
   </p>
 
   <div class="showlog__years">
@@ -47,6 +49,7 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
               <span class="gig__venue">{show.venue}</span>
               <span class="gig__place">{place(show)}</span>
               <span class="gig__extra">
+                {show.with && <span class="gig__with">with {show.with}</span>}
                 {show.status === 'announced' && <span class="gig__tag" title="Listed as upcoming on the band's site, but never on its past-dates list">announced</span>}
                 {show.recording && (
                   <a class="gig__listen" href={`https://archive.org/details/${show.recording}`} target="_blank" rel="noopener noreferrer">
@@ -215,6 +218,13 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
     color: var(--text-faint);
     border: 1px dashed var(--staff-line-strong);
     padding: 0.05rem 0.35rem;
+  }
+
+  .gig__with {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--brass);
+    white-space: nowrap;
   }
 
   .gig__listen {

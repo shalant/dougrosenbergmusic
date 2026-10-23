@@ -5,6 +5,7 @@
 import ArchiveLayout from '../layouts/ArchiveLayout.astro';
 import QuoteLedger from '../components/QuoteLedger.astro';
 import ShowLog from '../components/ShowLog.astro';
+import VideoLog from '../components/VideoLog.astro';
 import { easternBlokQuotes } from '../data/press-timeline.js';
 import bandArchive from '../data/eastern-blok-press.json';
 import showData from '../data/eastern-blok-shows.json';
@@ -85,6 +86,33 @@ const bandSchema = {
         <figcaption>The Goran Ivanovic Group. Band photo from easternblok.net, 2007. Photo: Saverio Truglia.</figcaption>
       </figure>
     </div>
+    {/* Added 2026-10-23 when Doug asked for any live pictures that turned up.
+        The old site's photo page had about 40 live shots, but its image files
+        were never saved by the Wayback Machine, and the photographer's gallery
+        (Gareth Glynn Ash, The Celtic Camera) is gone. These three are the only
+        ones that survive, from easternblok.net's 2007 pages. Goran's carries a
+        Saverio Truglia credit on the image; the other two have no credit
+        anywhere, so their photographers are unconfirmed. They are small, so
+        they are never scaled past their own width. */}
+    <div class="photos photos--live">
+      <figure class="photo photo--portrait" style="--w: 313px">
+        <img src="/images/easternblok/doug-rosenberg-sax.jpg" width="313" height="419" alt="Doug Rosenberg on stage, eyes closed, playing a saxophone beside a microphone" loading="lazy" />
+        <figcaption>Doug Rosenberg. From easternblok.net, 2007. Photographer unconfirmed.</figcaption>
+      </figure>
+      <figure class="photo photo--portrait" style="--w: 292px">
+        <img src="/images/easternblok/goran-ivanovic-guitar.jpg" width="292" height="432" alt="Close black-and-white view of Goran Ivanovic playing a classical guitar" loading="lazy" />
+        <figcaption>Goran Ivanovic. From easternblok.net, 2007. Photo: Saverio Truglia.</figcaption>
+      </figure>
+      <figure class="photo photo--portrait" style="--w: 233px">
+        <img src="/images/easternblok/matt-ulery-bass.jpg" width="233" height="350" alt="Matthew Ulery on stage bowing an upright bass" loading="lazy" />
+        <figcaption>Matthew Ulery. From easternblok.net, 2007. Photographer unconfirmed.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="archive__section" aria-labelledby="video">
+    <h2 id="video">Video</h2>
+    <VideoLog />
   </section>
 
   <section class="archive__section" aria-labelledby="members">
@@ -146,6 +174,18 @@ const bandSchema = {
     width: 100%;
     height: auto;
     border: 1px solid var(--staff-line-strong);
+  }
+
+  /* Three small portraits in a row; each is capped at its own pixel width so
+     the low-resolution files are never blown up (2026-10-23). */
+  .photos--live {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  .photo--portrait img {
+    max-width: var(--w);
   }
 
   .photo figcaption {

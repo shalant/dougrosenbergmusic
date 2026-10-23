@@ -1,0 +1,145 @@
+{
+  "_about": "Videos of Eastern Blok / the Goran Ivanovic Group on YouTube, found 2026-10-23 by searching YouTube for the band name. All were uploaded by fans, venues or the band; none are Doug's own uploads, and the site links to them rather than embedding them (the site's Content-Security-Policy blocks third-party frames on purpose). `date` is only set where the title or description says it, or where a log entry on the same date matches (see `how`); otherwise it is null. `lead` marks the clip the page shows first. Lengths are as YouTube listed them. `dateLabel` overrides the printed date where the exact day is only inferred.",
+  "videos": [
+    {
+      "id": "GSe24EvmetI",
+      "title": "Eastern Blok at Waterfront Festival, Rockford",
+      "uploader": "gogy23",
+      "length": "4:44",
+      "venue": "On the Waterfront festival, Rockford, IL",
+      "date": "2007-09-01",
+      "how": "Year inferred: uploaded about 18 years ago, and the old site's photo page shows fireworks photos from this festival on 2007-09-01. The title and description give no date.",
+      "note": "Kalajdzisko Oro, the set closer. Fireworks go off over the stage near the end (checked 2026-10-23). Low-resolution.",
+      "lead": true,
+      "dateLabel": "2007"
+    },
+    {
+      "id": "YXcIRQrg7Iw",
+      "title": "Eastern Blok Live at Mick's in Omaha Oct 2008",
+      "uploader": "Dave Aulph",
+      "length": "1:07:56",
+      "venue": "Mick's, Omaha, NE",
+      "date": "2008-10-18",
+      "how": "Title says Oct 2008; the same uploader's clips say 10-18-2008, which matches the show log."
+    },
+    {
+      "id": "Nv1Ce1QEgcY",
+      "title": "Eastern Blok at Krypto February 19 2010 Rockford IL",
+      "uploader": "maidenearth",
+      "length": "8:26",
+      "venue": "Kryptonite Bar, Rockford, IL",
+      "date": "2010-02-19",
+      "how": "Title. A second clip (g9XiWCx8110, 5:12) is titled February 20 but its description says it was recorded February 19."
+    },
+    {
+      "id": "-7T5EeffiPE",
+      "title": "Eastern Bloc at Reggies 10.6.11",
+      "uploader": "chicagojamscene",
+      "length": "2:01",
+      "venue": "Reggie's Rock Club, Chicago",
+      "date": "2011-10-06",
+      "how": "Title; matches the show log."
+    },
+    {
+      "id": "ZtztSrqcCz0",
+      "title": "Eastern Blok Jazz Showcase Mov 7-5-2011 (7).MOV",
+      "uploader": "Gin Tonic",
+      "length": "2:05",
+      "venue": "Jazz Showcase, Chicago",
+      "date": "2011-07-05",
+      "how": "Title; matches the show log. The same uploader has more clips from the night."
+    },
+    {
+      "id": "WHjLva_nyWc",
+      "title": "Eastern Blok performing at Haileys 4-1-11",
+      "uploader": "SpyrockEnt",
+      "length": "7:40",
+      "venue": "Hailey's, Denton, TX",
+      "date": "2011-04-01",
+      "how": "Title; matches the show log."
+    },
+    {
+      "id": "bmGKUPt4htI",
+      "title": "Eastern Blok at the Museum of Contemporary Art",
+      "uploader": "gogy23",
+      "length": "0:59",
+      "venue": "Museum of Contemporary Art, Chicago",
+      "date": "2007-09-19",
+      "how": "The Folk Tales release concert at the MCA was 2007-09-19; the title gives no date."
+    },
+    {
+      "id": "-pjY3y3KSA8",
+      "title": "EASTERN BLOK",
+      "uploader": "TIJANAJOVANOVIC",
+      "length": "3:10",
+      "venue": "Chicago Cultural Center, World Music Series",
+      "date": "2009-03-13",
+      "how": "Description: \"Songs from the Black Sea\", Chicago Cultural Center World Music Series, March 13, 2009. This date is not in the show log.",
+      "note": "Songs from the Black Sea."
+    },
+    {
+      "id": "B9eLPjR6wT4",
+      "title": "Goran Ivanovic Group @ Wicker Park Fest 072206",
+      "uploader": "rpmime",
+      "length": "9:57",
+      "venue": "Wicker Park Fest, Chicago",
+      "date": "2006-07-22",
+      "how": "Title (072206). This date is not in the show log."
+    },
+    {
+      "id": "47whr-JJnaM",
+      "title": "Eastern Blok - Live at Around the Coyote Festival",
+      "uploader": "paperworkmediamusic",
+      "length": "1:01",
+      "venue": "Around the Coyote Festival, Chicago",
+      "date": null,
+      "how": "No date given. The Chicago Reader lists the Goran Ivanovic Group at the Around the Coyote Gallery on 2006-09-10, which may be this."
+    },
+    {
+      "id": "QvRDlnIl_fA",
+      "title": "Eastern Blok @ Double Door!",
+      "uploader": "paperworkmediamusic",
+      "length": "4:36",
+      "venue": "Double Door, Chicago",
+      "date": null,
+      "how": "No date given."
+    },
+    {
+      "id": "1F1F7xKgZ-M",
+      "title": "Eastern Blok at Katerina's",
+      "uploader": "katerinasupperclub",
+      "length": "3:04",
+      "venue": "Katerina's, Chicago",
+      "date": null,
+      "how": "No date given."
+    },
+    {
+      "id": "5cTey0NpCGM",
+      "title": "Eastern Blok playing at Uncommon Ground in Chicago",
+      "uploader": "gogy23",
+      "length": "4:53",
+      "venue": "Uncommon Ground, Chicago",
+      "date": null,
+      "how": "No date given; the show log has Uncommon Ground on 2008-04-03 and 2008-05-07."
+    },
+    {
+      "id": "kcbtgm6K_1w",
+      "title": "Eastern Blok",
+      "uploader": "gogy23",
+      "length": "6:28",
+      "venue": null,
+      "date": null,
+      "how": "No venue or date given.",
+      "note": "Gates to the Unknown, with all four members named in the description."
+    },
+    {
+      "id": "YGOXeM9wroc",
+      "title": "Grazyna Auguscik & Eastern Blok \"Alamo's basemant\"",
+      "uploader": "Kadagra",
+      "length": "3:43",
+      "venue": null,
+      "date": null,
+      "how": "No date given. With the vocalist Grazyna Auguscik."
+    }
+  ]
+}
