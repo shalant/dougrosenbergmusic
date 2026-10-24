@@ -350,6 +350,31 @@
       "showDates": []
     },
     {
+      "id": "wilmette-life-katerinas-2005-11",
+      "kind": "listing",
+      "about": "person",
+      "band": null,
+      "album": null,
+      "title": "SRO: Jazz Jam (Katerina’s concert with Sam Barsh and Doug Rosenberg)",
+      "outlet": "Wilmette Life",
+      "author": null,
+      "date": "2005-11-24",
+      "url": "https://history.wilmettelibrary.info/1700630/data",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": true,
+      "rating": null,
+      "pullQuotes": [],
+      "verified": false,
+      "accessed": "2026-10-23",
+      "approved": true,
+      "notes": "Not verified: open the page by hand and confirm it names Doug before setting namesDoug/verified. Friday concert at Katerina’s with Gabe Noel (bass) and Gene Coy (drums), per the roundup.",
+      "provenance": "From press/better-than-tv-reviews-2026-10-23.md (p. B4, via Wilmette Library archive). The archive returned 403 to automated fetches on 2026-10-23, so the text was not read.",
+      "sources": [
+        "doug-press.json"
+      ]
+    },
+    {
       "id": "minor7th-goran-ivanovic-group-2005-12",
       "kind": "review",
       "about": "other-album",
@@ -677,7 +702,7 @@
       "pullQuotes": [],
       "verified": true,
       "accessed": "2026-10-05",
-      "approved": false,
+      "approved": true,
       "notes": "Fan-taped audience recording, NOT a review. Lineup: Goran Ivanovic (guitar), Doug Rosenberg (tenor sax, alto sax, flute), Matt Ulery (bass), Michael Caskey (drums). Set list includes Doug's 'Episodes From A Village Dance'. Documents a HotHouse (31 E. Balbo) appearance, which backs the 'Hothouse' entry in site/src/components/Performance.astro. Check the taping/streaming terms before linking or embedding from the site.",
       "provenance": "Fetched 2026-10-05.",
       "sources": [
@@ -1915,6 +1940,33 @@
       ]
     },
     {
+      "id": "chicagoist-better-than-tv-2013-12",
+      "kind": "review",
+      "about": "this-cd",
+      "band": null,
+      "album": null,
+      "title": "Stop Channel Surfing, Chicago Saxophonist Doug Rosenberg's Debut 'Better Than TV' Delivers",
+      "outlet": "Chicagoist",
+      "author": "Chris Bentley",
+      "date": "2013-12-09",
+      "url": "https://chicagoist.com/2013/12/09/stop_channel_surfing_-_chicago_saxo.php",
+      "archiveUrl": "http://web.archive.org/web/20260313014006/https://www.chicagoist.com/2013/12/09/stop_channel_surfing_-_chicago_saxo.php",
+      "archive": "chicagoist-better-than-tv-2013-12",
+      "namesDoug": true,
+      "rating": null,
+      "pullQuotes": [
+        "full-bodied tone"
+      ],
+      "verified": true,
+      "accessed": "2026-10-23",
+      "approved": true,
+      "notes": "The first independent review of Better Than TV found. Dated Dec 9, 2013, 8:20PM; reviews the album ahead of the Dec 10 release show. Pull quote kept to two words; the page says “his full-bodied tone”. Approve only with Doug.",
+      "provenance": "From press/better-than-tv-reviews-2026-10-23.md. Text read 2026-10-23 from the Wayback copy; the original URL now returns 404.",
+      "sources": [
+        "doug-press.json"
+      ]
+    },
+    {
       "id": "wbez-morning-shift-2013-12-10",
       "kind": "listing",
       "about": "this-cd",
@@ -1956,6 +2008,34 @@
       "provenance": "Wayback copy read 2026-10-05; live URL returned 404.",
       "sources": [
         "doug-press.json"
+      ]
+    },
+    {
+      "id": "dnainfo-better-than-tv-websters-2014-05",
+      "kind": "listing",
+      "about": "person",
+      "band": null,
+      "album": null,
+      "title": "Things to Do in Lincoln Park / Old Town: Doug Rosenberg at Webster’s Wine Bar",
+      "outlet": "DNAinfo Chicago",
+      "author": null,
+      "date": "2014-05-12",
+      "url": "https://www.dnainfo.com/chicago/20140512/old-town/things-do-lincoln-park-old-town-monday/",
+      "archiveUrl": null,
+      "archive": "dnainfo-better-than-tv-websters-2014-05",
+      "namesDoug": true,
+      "rating": null,
+      "pullQuotes": [],
+      "verified": true,
+      "accessed": "2026-10-23",
+      "approved": true,
+      "notes": "Show listing, not a review. Lineup differs from the album. Page is the show Monday May 12, 2014; confirm the date in the show log.",
+      "provenance": "From press/better-than-tv-reviews-2026-10-23.md. Page read 2026-10-23: Monday 9 p.m., 1480 W. Webster Ave., no cover; \"Better than TV\" with Doug (sax), Kris Meyes (drums), Justin Thomas (vibes), Bryan Doherty (bass).",
+      "sources": [
+        "doug-press.json"
+      ],
+      "showDates": [
+        "2014-05-12"
       ]
     },
     {
@@ -2029,6 +2109,34 @@
       "notes": "Profile of Goran written years after the band ended. Names Eastern Blok as 'a key member of the quartet' with Matt Ulery, Doug Rosenberg and Michael Caskey, a combo that 'deftly surveys the folk music of Macedonia, Bulgaria, and Serbia'. The same text appears on the All About Jazz musician page, so it is probably Goran's own bio. Reprints a Jeff Elbel Sun-Times piece as 'October 21, 2016' (see suntimes-goran-trio-2016-03). The first URL in the leads list (.../meet-croatian-born-guitarist-goran-ivanovic-from-chicago/) was a 404.",
       "sources": [
         "eastern-blok-press.json"
+      ]
+    },
+    {
+      "id": "youtube-fulton-street-barsh-2017",
+      "kind": "mention",
+      "about": "person",
+      "band": null,
+      "album": null,
+      "title": "Doug Rosenberg, Sam Barsh, Frank Portolese, Jon Deitemyer, Live Jazz Music, Chicago 8 of 17",
+      "outlet": "YouTube (Michael Heimlich)",
+      "author": "Michael Heimlich",
+      "date": "2017-10-27",
+      "url": "https://www.youtube.com/watch?v=poJv_XhoK7M",
+      "archiveUrl": null,
+      "archive": null,
+      "namesDoug": true,
+      "rating": null,
+      "pullQuotes": [],
+      "verified": false,
+      "accessed": "2026-10-23",
+      "approved": true,
+      "notes": "Concert video, not press: clip 8 of a 17-video playlist. Shown as a mention. Date is the roundup’s upload date.",
+      "provenance": "From press/better-than-tv-reviews-2026-10-23.md. The title naming Doug was confirmed on the page 2026-10-23; the uploader, upload date and the Apr 30, 2017 Fulton Street Collective concert come from the roundup only.",
+      "sources": [
+        "doug-press.json"
+      ],
+      "showDates": [
+        "2017-04-30"
       ]
     },
     {
@@ -2237,7 +2345,7 @@
       "about": "person",
       "title": "Chicago Tribune quote used in bio and label copy",
       "outlet": "Chicago Tribune",
-      "author": null,
+      "author": "Howard Reich",
       "date": null,
       "url": null,
       "archiveUrl": null,
@@ -2248,8 +2356,8 @@
       ],
       "verified": false,
       "accessed": "2026-10-05",
-      "approved": false,
-      "notes": "Original article NOT found. Appears in Doug's bio (2014 Wayback snapshot) and Boo Boo label copy (2014-05-11). Wording ('in coming years') suggests an earlier article about Doug as a player, not a review of Better Than TV. Do not present it as a CD review until the source is located.",
+      "approved": true,
+      "notes": "Author per Doug, 2026-10-23 (Howard Reich, the Tribune's jazz critic); date still unknown. Original article NOT found. Appears in Doug's bio (2014 Wayback snapshot) and Boo Boo label copy (2014-05-11). Wording ('in coming years') suggests an earlier article about Doug as a player, not a review of Better Than TV. Do not present it as a CD review until the source is located.",
       "sources": [
         "candidates.json"
       ]
@@ -2287,6 +2395,10 @@
     {
       "url": "https://www.pointofdeparture.org/PoD69/PoD69Ulery.html",
       "reason": "Point of Departure interview with Matt Ulery: no mention of Eastern Blok, Goran Ivanovic, Doug Rosenberg or Underwater."
+    },
+    {
+      "url": "https://history.wilmettelibrary.info/1697213/data",
+      "reason": "Wilmette Life, May 5, 2005, p. B18: about Sam Barsh’s benefit luncheon; per the roundup it does not mention Doug."
     }
   ],
   "unfetchedLeads": [

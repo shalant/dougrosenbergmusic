@@ -1944,7 +1944,14 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             Harrold found; the band's are 2007-11-03, 2008-10-11, 2009-08-28); (3) whether the
             "Douglas Rosenberg" Velvet Lounge and Montage listings and the May 17 2003 Green Mill
             "Live the Spirit Band" listing are him. No independent *Better Than TV* review found
-            after another search (Reader, WBEZ, All Souls, Boo Boo, Proteus, retail pages)
+            after another search (Reader, WBEZ, All Souls, Boo Boo, Proteus, retail pages).
+            **Update 2026-10-23 (evening):** a research roundup (`press/better-than-tv-reviews-2026-10-23.md`)
+            turned up the one review: Chicagoist, Chris Bentley, 2013-12-09 (live URL now 404; read from
+            the Wayback copy). Doug approved it plus the DNAinfo 2014-05-12 listing, a Wilmette Life
+            2005-11-24 notice and a 2017 Fulton Street clip, all now in `doug-press.json` and on `/press`.
+            Wilmette (403 to automated fetches) and the YouTube clip are `verified: false` and show
+            "not confirmed"; open them by hand to confirm. Still unapproved in `candidates.json`: the
+            Tribune quote (no source) and five band-side items
       - [ ] **2. Home-page timeline section.** Decided 2026-10-15: a short career timeline with a
             few approved quotes and links, using the "Era bracket" Ledger variation (rows grouped
             by project, a bracket per group with a one-line history and one link to its page).
