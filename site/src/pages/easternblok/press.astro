@@ -1,0 +1,65 @@
+---
+// Every piece of press on Eastern Blok / the Goran Ivanovic Group that the
+// press index (press/, summarized in src/data/eastern-blok-press.json) has
+// found and Doug approved. Entries show only while approved: true (see
+// src/data/press-archive.js). Quotes are short excerpts; each piece links to
+// its original, and full copies are kept offline, not on this site.
+import ArchiveLayout from '../../layouts/ArchiveLayout.astro';
+import PressStrip from '../../components/PressStrip.astro';
+import PressWall from '../../components/PressWall.astro';
+import PressYears from '../../components/PressYears.astro';
+import bandArchive from '../../data/eastern-blok-press.json';
+import { buildArchive, dateParts, sortDate } from '../../data/press-archive.js';
+
+const archive = buildArchive(bandArchive.entries);
+const albumTitles = Object.fromEntries(bandArchive.albums.map((album) => [album.id, album.title]));
+
+const inBandYears = archive.shown.filter((e) => (dateParts(sortDate(e))?.year ?? 0) <= 2013).length;
+const later = archive.total - inBandYears;
+const reviewCount = archive.wall.length;
+---
+
+<ArchiveLayout
+  title="Eastern Blok press — Doug Rosenberg"
+  description={`${archive.total} reviews, previews, features and listings about Eastern Blok and the Goran Ivanovic Group, ${archive.firstYear} to ${archive.lastYear}, each linked to its original.`}
+  eyebrow="Archive · Eastern Blok · press"
+  heading="What they wrote"
+  draft={false}
+  back={{ href: '/easternblok', label: 'Back to Eastern Blok' }}
+>
+  <p slot="lead" class="archive__lead">
+    {archive.total} pieces from {archive.outletCount} outlets, {archive.firstYear} to {archive.lastYear}: {reviewCount} reviews and features, and the rest previews, interviews and listings.
+    Each links to the original, with an archived copy where the page has gone.
+  </p>
+
+  <section class="archive__section" aria-labelledby="when">
+    <h2 id="when">When it ran</h2>
+    <PressStrip entries={archive.shown} albums={bandArchive.albums} start={2004} end={2013} />
+    <p>
+      Reviews are the tall brass marks. Most of them ran in 2006 and 2007, around the first two albums. {inBandYears} of the {archive.total} pieces appeared while the band was playing, 2004 to 2013{later > 0 && `, and ${later} came later`}.
+    </p>
+  </section>
+
+  <section class="archive__section" aria-labelledby="reviews">
+    <h2 id="reviews">Reviews and features</h2>
+    <PressWall items={archive.wall} albumTitles={albumTitles} />
+  </section>
+
+  <section class="archive__section" aria-labelledby="everything-else">
+    <h2 id="everything-else">Everything else, by year</h2>
+    <p>
+      Previews, interviews, newspaper calendars and tour announcements. Pieces the band wrote or sent out are marked
+      “from the band”: they show where and when the band played, but they are not independent coverage.
+    </p>
+    <PressYears years={archive.years} />
+  </section>
+
+  <section class="archive__section" aria-labelledby="missing">
+    <h2 id="missing">Still missing</h2>
+    <p>
+      Newspaper archives are the biggest gap: the Chicago Tribune and Sun-Times, and the print Chicago Reader, were not searchable here
+      (the Reader's website keeps only about a dozen pages that name the band). The tours with Snarky Puppy, 2008 and 2011, have dates
+      but no coverage yet. If you wrote about the band, or kept a clipping, <a href="/#contact">send it along</a>.
+    </p>
+  </section>
+</ArchiveLayout>

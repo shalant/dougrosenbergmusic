@@ -4,7 +4,7 @@
 // timeline. Pages default to draft (noindex) while they carry placeholder
 // text (marked with <Placeholder>); pass `draft={false}` once Doug's own text
 // is in, and remove the page from the sitemap filter in astro.config.mjs at
-// the same time. /easternblok left draft 2026-10-16; /press is still one.
+// the same time. /easternblok left draft 2026-10-16 and /press 2026-10-23.
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
@@ -13,9 +13,10 @@ interface Props {
   eyebrow: string;
   heading: string;
   draft?: boolean;
+  back?: { href: string; label: string };
 }
 
-const { title, description, eyebrow, heading, draft = true } = Astro.props;
+const { title, description, eyebrow, heading, draft = true, back = { href: '/#press', label: 'Back to dougrosenberg.com' } } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} home={false} noindex={draft}>
@@ -23,7 +24,7 @@ const { title, description, eyebrow, heading, draft = true } = Astro.props;
   <article class="archive">
     <div class="wrap">
       <header class="archive__header">
-        <a class="archive__back" href="/#press">&larr; Back to dougrosenberg.com</a>
+        <a class="archive__back" href={back.href}>&larr; {back.label}</a>
         <p class="eyebrow">{eyebrow}</p>
         <h1 class="archive__title">{heading}</h1>
         <slot name="lead" />

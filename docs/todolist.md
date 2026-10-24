@@ -824,6 +824,20 @@ semantic headings, title/meta description.
             (2013-04-04) and "BRVS 08.13.13" (2013-08-13), which are after the band's last logged
             show and may be a reunion or a mis-titled upload. The Mick's Omaha 2008-10-18 set
             exists as a full 1h08m video (YXcIRQrg7Iw).
+      - [x] **Press archive page `/easternblok/press` (2026-10-23, Doug asked to publish everything
+            found).** Approved 55 entries in `eastern-blok-press.json` (60 now show) and regenerated
+            `press/press.json`. Not approved, on purpose: fan and forum comments (Amazon, Head-Fi,
+            the old guestbook; private people's words) and the Live Music Archive recording (it is
+            already in the show log). The page (`PressStrip`, `PressWall`, `PressYears`, data logic in
+            `src/data/press-archive.js`, tests in `press-archive.test.js`) shows a 2004-2013 tick
+            timeline, the 18 reviews and features as short quotes (split into those that name Doug
+            and those that don't), and every other piece by year with its type, a link, an archived
+            copy where one exists, and flags for band-issued, print-only and unconfirmed items.
+            `/easternblok` links to it. It renders only `approved: true` entries, so un-approving
+            one removes it. Quotes are capped at 30 words; band-issued bios never get a quote.
+            Not checked on a phone (the browser window would not resize); desktop checked.
+            Next: more searching (Tribune/Sun-Times archives, the print Reader, Snarky Puppy dates),
+            and ask Doug to confirm the Montage and Chase Cafe entries are him.
       - [ ] **Snarky Puppy tours (2026-10-23).** Eastern Blok supported Snarky Puppy on at least two
             runs. 2008-10-28 Frequency, Madison and 2008-10-29 The Jazz Estate, Milwaukee are marked
             "with Snarky Puppy" on the band's old calendar (the show-log generator dropped those
@@ -1912,6 +1926,32 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             before this. Regenerate `press/press.json` after
       - [x] 2026-10-15: Doug approved six entries (All About Jazz 2006 and 2008, DownBeat 2006,
             jazzreview.com 2004, Chicago Reader 2007, Minor 7th 2007)
+      - [x] 2026-10-23: **`/press` is out of draft and shows Doug's own press** (15 entries in
+            the new `site/src/data/doug-press.json`, same schema and same components as
+            `/easternblok/press`; `DRAFT_PAGES` in `astro.config.mjs` is now empty). Moved nine
+            personal entries out of `press/candidates.json` into it and added six: four
+            *chi.now&then* calendar pages from Chicago Rash Audio Potential (`savagesound.com/archives`
+            2003b, 2003c, 2003d, 2004b, copies in `press-archive/savagesound-chinowthen-2003-2004`)
+            and two Reader TRG listings (Velvet Lounge, Nov 8 2002 and Jan 31 2003). They cover the
+            May 7 and 8, 2003 shows with Keyon Harrold and Robert Glasper (Jazz Record Mart 5 PM,
+            Velvet Lounge 9 PM, Chase Cafe 7 PM), Velvet Lounge Jul 17 and Aug 27 2003 ("Douglas
+            Rosenberg Quintet"), Hungry Brain Nov 16 2003, and Bob Moses Apr 2-3 2004. Added the
+            "big, firm sound, a la Wayne Shorter and David Liebman" line from the jazzreview.com
+            piece. Still open, ask Doug: (1) who wrote the Chicago Tribune quote in his bio
+            ("fearlessness of spirit and a robustness of tone...", in use by 2013-11-03) and
+            roughly when, since it reads like a review of an early gig and is the likeliest "other
+            review" he remembered; (2) which St. Louis dates he meant (nothing Doug-led or with
+            Harrold found; the band's are 2007-11-03, 2008-10-11, 2009-08-28); (3) whether the
+            "Douglas Rosenberg" Velvet Lounge and Montage listings and the May 17 2003 Green Mill
+            "Live the Spirit Band" listing are him. No independent *Better Than TV* review found
+            after another search (Reader, WBEZ, All Souls, Boo Boo, Proteus, retail pages).
+            **Update 2026-10-23 (evening):** a research roundup (`press/better-than-tv-reviews-2026-10-23.md`)
+            turned up the one review: Chicagoist, Chris Bentley, 2013-12-09 (live URL now 404; read from
+            the Wayback copy). Doug approved it plus the DNAinfo 2014-05-12 listing, a Wilmette Life
+            2005-11-24 notice and a 2017 Fulton Street clip, all now in `doug-press.json` and on `/press`.
+            Wilmette (403 to automated fetches) and the YouTube clip are `verified: false` and show
+            "not confirmed"; open them by hand to confirm. Still unapproved in `candidates.json`: the
+            Tribune quote (no source) and five band-side items
       - [ ] **2. Home-page timeline section.** Decided 2026-10-15: a short career timeline with a
             few approved quotes and links, using the "Era bracket" Ledger variation (rows grouped
             by project, a bracket per group with a one-line history and one link to its page).

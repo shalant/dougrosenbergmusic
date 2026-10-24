@@ -1,0 +1,162 @@
+---
+// The reviews and features, each as a typeset quote with its source. Two
+// groups: the pieces that name Doug (the quote shown may not, the full piece
+// does) and the rest. Data from src/data/press-archive.js; quotes are short
+// excerpts, never whole reviews, and every card links to the original.
+import { dateLabel, highlightName, isTranslated } from '../data/press-archive.js';
+
+interface Props {
+  items: { entry: any; quote: string }[];
+  albumTitles?: Record<string, string>;
+  // Band pages split the wall into pieces that name Doug and pieces that
+  // don't; his own press page names him throughout, so it passes false.
+  split?: boolean;
+}
+
+const { items, albumTitles = {}, split = true } = Astro.props;
+const groups = (split
+  ? [
+      { id: 'names-doug', heading: 'Reviews that name Doug', items: items.filter((i) => i.entry.namesDoug) },
+      { id: 'about-band', heading: 'Reviews of the band', items: items.filter((i) => !i.entry.namesDoug) },
+    ]
+  : [{ id: 'all', heading: '', items }]
+).filter((group) => group.items.length > 0);
+---
+
+{groups.map((group) => (
+  <div class="wall">
+    {group.heading && <h3 class="wall__heading">{group.heading}</h3>}
+    <ul class="wall__list">
+      {group.items.map(({ entry, quote }) => (
+        <li class="cut">
+          <blockquote class="cut__quote">
+            <p>
+              &ldquo;{highlightName(quote).map((part) => (part.name ? <span class="cut__name">{part.text}</span> : part.text))}&rdquo;
+            </p>
+          </blockquote>
+          <p class="cut__cite">
+            {entry.url ? (
+              <a href={entry.url} target="_blank" rel="noopener noreferrer">{entry.outlet}<span class="visually-hidden"> (opens in a new tab)</span></a>
+            ) : (
+              <span class="cut__outlet">{entry.outlet}</span>
+            )}
+            {entry.author && <span>, {entry.author}</span>}
+            <span class="cut__when"> · {dateLabel(entry.date, true) || 'undated'}{entry.album && albumTitles[entry.album] ? ` · on ${albumTitles[entry.album]}` : ''}</span>
+          </p>
+          {(!entry.url || entry.archiveUrl || isTranslated(entry) || (entry.verified === false && entry.url)) && (
+            <p class="cut__note">
+              {!entry.url && <span>no live page</span>}
+              {entry.archiveUrl && <a href={entry.archiveUrl} target="_blank" rel="noopener noreferrer">archived copy<span class="visually-hidden"> (opens in a new tab)</span></a>}
+              {isTranslated(entry) && <span>translated from Polish</span>}
+              {entry.verified === false && entry.url && <span>not independently confirmed</span>}
+            </p>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
+
+<style>
+  .wall {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .wall + .wall {
+    margin-top: 1.5rem;
+  }
+
+  .wall__heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.15rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  /* Columns, not a grid: quotes run from one line to four, and columns pack
+     them without gaps. Each cut keeps its source with it. */
+  .wall__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2 22rem;
+    column-gap: 3rem;
+  }
+
+  .cut {
+    break-inside: avoid;
+    margin: 0 0 2rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--staff-line-strong);
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .cut__quote {
+    margin: 0;
+  }
+
+  .cut__quote p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 3.8vw, 1.4rem);
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+
+  .cut__name {
+    color: var(--brass);
+  }
+
+  .cut__cite,
+  .cut__note {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .cut__cite a {
+    color: var(--text);
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(233, 237, 245, 0.3);
+    /* Tap target: padding grows it without moving the line. */
+    display: inline-block;
+    padding-block: 0.5rem;
+    margin-block: -0.5rem;
+  }
+
+  .cut__cite a::after {
+    content: ' ↗';
+    color: var(--text-faint);
+  }
+
+  .cut__cite a:hover,
+  .cut__cite a:focus-visible {
+    text-decoration-color: var(--brass);
+  }
+
+  .cut__when {
+    color: var(--text-faint);
+  }
+
+  .cut__note {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+  }
+
+  .cut__note a {
+    color: var(--text-muted);
+    text-underline-offset: 3px;
+    display: inline-block;
+    padding-block: 0.6rem;
+    margin-block: -0.6rem;
+  }
+</style>

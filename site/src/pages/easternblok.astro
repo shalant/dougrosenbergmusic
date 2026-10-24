@@ -9,6 +9,7 @@ import VideoLog from '../components/VideoLog.astro';
 import { easternBlokQuotes } from '../data/press-timeline.js';
 import bandArchive from '../data/eastern-blok-press.json';
 import showData from '../data/eastern-blok-shows.json';
+import { publicEntries } from '../data/press-archive.js';
 
 const covers: Record<string, { src: string; width: number; height: number }> = {
   'goran-ivanovic-group': { src: '/images/albums/goran-ivanovic-group.jpg', width: 522, height: 474 },
@@ -26,6 +27,8 @@ const yearToConfirm: Record<string, string> = {
 const showCount = showData.shows.length;
 const stateCount = new Set(showData.shows.map((show) => show.region).filter((region) => region && /^[A-Z]{2}$/.test(region))).size;
 const toursPoland = showData.shows.some((show) => show.region === 'Poland');
+
+const pressCount = publicEntries(bandArchive.entries).length;
 
 const albums = bandArchive.albums.map((album) => ({ ...album, cover: covers[album.id], yearNote: yearToConfirm[album.id] }));
 
@@ -146,6 +149,9 @@ const bandSchema = {
   <section class="archive__section" aria-labelledby="press">
     <h2 id="press">Press</h2>
     <QuoteLedger quotes={easternBlokQuotes} />
+    <p class="press-more">
+      <a href="/easternblok/press">All {pressCount} pieces of coverage, 2004 to 2020</a>: every review, preview, interview and listing found, each linked to its original.
+    </p>
   </section>
 
   <section class="archive__section" aria-labelledby="shows">
@@ -155,6 +161,12 @@ const bandSchema = {
 </ArchiveLayout>
 
 <style>
+  .press-more a {
+    color: var(--text);
+    text-underline-offset: 3px;
+    text-decoration-color: var(--brass);
+  }
+
   /* Lopsided on purpose: the 2011 portrait is the full-size file, the 2007
      one is only 429px wide, so it stays small instead of being blown up. */
   .photos {
