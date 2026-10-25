@@ -434,6 +434,15 @@ semantic headings, title/meta description.
             confirmed 301 → `/` on 2026-10-11 (also `/index.html` 307 → `/`, `/photogallery.html`
             301 → `/#gallery`). **Still to do:** "Validate fix" on the 404 group again (button
             in Search Console).
+      - [ ] **2026-10-24 "Excluded by 'noindex' tag" email (1 page, first detected 2026-10-16):**
+            the page is `https://www.dougrosenberg.com/press`, last crawled 2026-10-16 while it was
+            still a `noindex` draft (out of draft 2026-10-23, PR #92 merged). Checked live: `/press`
+            on both `www` and the apex returns 200 with no robots meta tag and no `X-Robots-Tag`
+            header, and `/press` and `/easternblok/press` are in `sitemap-0.xml`. Canonicals and
+            `og:url` on both hosts point at the apex; `www` is a second Worker custom domain and
+            doesn't redirect (deliberate, not a gap). Doug clicked "Validate fix" 2026-10-24.
+            **Still to do:** check the validation result email in 1-2 weeks; run URL Inspection on
+            `/easternblok/press` and request indexing if it still shows the draft state.
       - [ ] Review Performance report once data populates (query/page baseline, name searches)
       - [x] Confirm Manual actions and Security issues both clean — both "No issues detected"
             on the domain property (2026-10-11)
@@ -452,7 +461,9 @@ semantic headings, title/meta description.
             key URL (`https://dougrosenberg.com/d9dfce984872d86601855f63a4980a65.txt` must return
             the key with a 200), then run `npm run build && npm run indexnow` and expect 200/202.
             Not wired into deploy on purpose: a manual run after meaningful content changes keeps
-            it from pinging on every build.
+            it from pinging on every build. *2026-10-24: the key URL returns the key with a 200
+            on the live site; whether `npm run indexnow` has been run since `/press` and
+            `/easternblok/press` went public isn't recorded, so run it.*
 - [x] **Direct-answer intro** — 30-60 word plain statement of who Doug is and what he does,
       near the top (h1 is currently the slogan "I make websites"). Copy needs Doug's approval.
       *Shipped; confirmed in the served page by the 2026-09-30 live check below. Checkbox
@@ -539,8 +550,8 @@ semantic headings, title/meta description.
       The forward would have been rejected (400, logged only) on a bad value, but both leads
       arrived, which is consistent with it being accepted. Not confirmed that PR #67 itself is
       deployed to the live Worker (Cloudflare Version History not checked).
-- [ ] **Private Lessons section + nav note (2026-09-30, in PR stacked on the divider PR, not yet
-      seen live).** New `Lessons.astro` (`#lessons`, eyebrow "Teaching", h2 "Private lessons"),
+- [x] **Private Lessons section + nav note (2026-09-30; confirmed live 2026-10-24: `#lessons`,
+      "Private lessons" and "Ask about lessons" are in the served page, and `llms.txt` lists it).** New `Lessons.astro` (`#lessons`, eyebrow "Teaching", h2 "Private lessons"),
       placed after Gallery and before Sheet Music, with its own divider and a sixth nav note
       (book icon, new `--note-lessons` blue). Subjects (saxophone, clarinet, flute, jazz
       improvisation, music theory) sit on a five-line staff; CTA "Ask about lessons" jumps to
@@ -554,7 +565,8 @@ semantic headings, title/meta description.
       availability. Also fixed `llms.txt`'s Highlights link (`#credibility` → `#career-highlights`)
       and added Lessons. Added e2e for the Lessons note + CTA and `lessons` in the smoke section
       list. Checked with Chromium screenshots at 1280/900/390px; not Safari/Firefox.
-- [ ] **Staff-divider micro-interaction + nav opacity (2026-09-30, in PR, not yet seen live).**
+- [x] **Staff-divider micro-interaction + nav opacity (2026-09-30; shipped, the live CSS bundle
+      contains `view-timeline` as of 2026-10-24. The education-section question below is still open).**
       Each `StaffDivider` note now stretches from a 64px circle into a pill and slides out its
       section name (Dev / Listen / About / Highlights / FAQ / Contact; new required `label`
       prop) as the divider scrolls toward the middle of the viewport, with a small
@@ -579,6 +591,9 @@ semantic headings, title/meta description.
       `curl -I` (PDF: `SAMEORIGIN`, no CSP; `/`: `DENY` + CSP intact). Added `src/headers.test.js`
       (3 tests, fail against the old `_headers`). **Still to do:** after deploy, `curl -I` a PDF
       and open the viewer in a real browser (headless Chromium can't render PDFs, so no e2e).
+      **2026-10-24:** live `curl -I` of `/sheetmusic/adagio-and-allegro-handel.pdf` returns 200
+      with `x-frame-options: SAMEORIGIN`, and `/` still returns `DENY` + CSP, so the header fix
+      is deployed. Only the real-browser check of the viewer is outstanding (Doug).
 - [ ] **Freshness** — keep facts current, update `dateModified`, revisit periodically.
 - [ ] **Same audit on dougrosenbergdev.com** — repair already shipped separately (PR #28 in that
       repo: 500s on unmatched URLs, robots.txt sitemap pointer); "Validate fix" started on Redirect
@@ -2047,10 +2062,18 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             and pre-2007 Goran Ivanovic Group shows are known only from recordings (the 2003-04
             Chicago Reader listings in `press/candidates.json` aren't merged in yet). Doug's
             flyers, emails or a gig spreadsheet could fill these
-      - [ ] **Before the two pages go public:** both are `draft` (noindex, left out of the
+      - [x] **Before the two pages go public:** both are `draft` (noindex, left out of the
             sitemap via `DRAFT_PAGES` in `astro.config.mjs`). When Doug's text replaces the
             placeholders: drop `draft`, remove the path from `DRAFT_PAGES`, add the pages to
-            `llms.txt`, update the e2e noindex/sitemap assertions, then run IndexNow after deploy
+            `llms.txt`, update the e2e noindex/sitemap assertions, then run IndexNow after deploy.
+            *Done: `/easternblok` out of draft 2026-10-16, `/press` 2026-10-23, `DRAFT_PAGES` is
+            empty. 2026-10-24 tidy-up found the e2e suite had been failing since
+            `/easternblok/press` landed (16 failures across chromium and mobile-chrome): (1)
+            `http-server` 302s `/easternblok` to the `easternblok/` directory (no index), so every
+            `/easternblok` test hit the 404 page; switched the Playwright web server to `serve`
+            (`http-server` removed); (2) `/press` still asserted `noindex` and one result row; (3)
+            the sitemap test still said `/press` must be absent. All three updated; e2e is 155
+            passed, 27 skipped, and `npm test` 64 pass.*
       - [ ] **Merge note:** PR #78 (IndexNow, JSON-LD `@id` links) also changes the CSP hash
             list and `index.astro`'s schema; whichever merges second needs
             `npm run build && npm run verify-csp -- --write`

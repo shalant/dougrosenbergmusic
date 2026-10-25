@@ -30,8 +30,11 @@ export default defineConfig({
     // dev`) instead of staying in the foreground, so Playwright sees the
     // command exit immediately and treats it as a startup failure. A plain
     // static server avoids that - matches what serves dist/ in production
-    // anyway (Cloudflare Workers static-assets, not astro preview).
-    command: 'npx http-server dist -p 4322 -s',
+    // anyway (Cloudflare Workers static-assets, not astro preview). `serve`
+    // rather than `http-server`: with both /easternblok.html and an
+    // /easternblok/ directory (for /easternblok/press), http-server 302s
+    // /easternblok to the directory, which has no index, and it 404s.
+    command: 'npx serve dist -l 4322 --no-request-logging',
     url: 'http://localhost:4322',
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,
