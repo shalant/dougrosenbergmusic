@@ -84,9 +84,9 @@ test.describe('press timeline and archive pages', () => {
   test('/press renders and links to the band archive', async ({ page }) => {
     await page.goto('/press');
     await expect(page.locator('h1')).toHaveText('On record');
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
-    await expect(page.locator('.ledger__row')).toHaveCount(1);
-    await expect(page.locator('a.band-link')).toHaveAttribute('href', '/easternblok');
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+    await expect(page.locator('.wall__list').first()).toBeVisible();
+    await expect(page.locator('a.band-link')).toHaveAttribute('href', '/easternblok/press');
   });
 
   test('archive pages link home instead of using the in-page nav', async ({ page }) => {
@@ -98,11 +98,11 @@ test.describe('press timeline and archive pages', () => {
     }
   });
 
-  test('draft pages stay out of the sitemap and published ones are in it', async ({ request }) => {
+  test('published archive pages are in the sitemap', async ({ request }) => {
     const sitemap = await (await request.get('/sitemap-0.xml')).text();
-    expect(sitemap).toContain('<loc>https://dougrosenberg.com/</loc>');
-    expect(sitemap).toContain('<loc>https://dougrosenberg.com/easternblok</loc>');
-    expect(sitemap).not.toContain('/press');
+    for (const path of ['', '/easternblok', '/easternblok/press', '/press']) {
+      expect(sitemap).toContain(`<loc>https://dougrosenberg.com${path}${path ? '' : '/'}</loc>`);
+    }
   });
 
   test('archive pages have no horizontal overflow', async ({ page }) => {

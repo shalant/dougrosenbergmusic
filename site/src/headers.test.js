@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 // The sheet-music viewer iframes /sheetmusic/* PDFs same-origin. The global
 // `X-Frame-Options: DENY` / CSP `frame-ancestors 'none'` in public/_headers
 // blocked that (found live 2026-09-30), so the /sheetmusic/* rule must detach
-// both and allow same-origin framing. Static test only: the local http-server
+// both and allow same-origin framing. Static test only: the local static server
 // and Node don't apply _headers, so real header behavior is checked with
 // `wrangler dev` + curl (see docs/todolist.md).
 const headers = readFileSync(new URL("../public/_headers", import.meta.url), "utf8");
