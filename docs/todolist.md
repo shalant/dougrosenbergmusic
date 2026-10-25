@@ -1104,6 +1104,11 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       spacing comes along for free, no changes needed to the per-note pixel offsets or the photo.
       Verified clear at 861px (previously the worst case) and no jump/overlap at the 1010px
       transition boundary.
+- [ ] **UI/UX "clearly exceptional" pass (assessed 2026-10-24, deferred by Doug).** Scored 70/100
+      on desktop; mobile unverified. Ranked findings and a suggested order are in
+      `docs/ui-assessment-2026-10-24.md`. Biggest levers: hero hierarchy, proof (a project
+      preview) near the hero, nav/carousel overlap, repeated eyebrows, archive pages that don't
+      match the home page. Check first whether the current hero is the "Riff 14" port.
 - [ ] **Light-mode refactor.** Site is currently dark-only by deliberate choice (see
       `docs/DESIGN_NOTES.md`) — no toggle, no `prefers-color-scheme` handling. Per
       `SITE_QUALITY_CHECKLIST.md`'s Design System category, dual-theme support (if added) needs to
