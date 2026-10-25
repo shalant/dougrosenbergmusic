@@ -14,7 +14,10 @@ import { pathToFileURL } from 'node:url';
 export const HOST = 'dougrosenberg.com';
 export const KEY = 'd9dfce984872d86601855f63a4980a65';
 export const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
-export const ENDPOINT = 'https://api.indexnow.org/indexnow';
+// Bing's own endpoint, not api.indexnow.org: from Doug's machine api.indexnow.org
+// resets the TLS connection (ECONNRESET) for Node's fetch, and for curl on 2026-10-16.
+// IndexNow engines share submissions, so this reaches the same participants.
+export const ENDPOINT = 'https://www.bing.com/indexnow';
 
 // Only URLs on HOST are accepted by IndexNow; anything else is dropped here
 // rather than letting the whole submission 422.
