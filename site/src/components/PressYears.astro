@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { years } = Astro.props;
+const kindLabel = (kind: string) => KIND_LABEL[kind as keyof typeof KIND_LABEL];
 ---
 
 <div class="years">
@@ -45,7 +46,7 @@ const { years } = Astro.props;
                 )}
               </div>
               <p class="clip__tags">
-                <span>{isFromBand(entry) && entry.kind !== 'promo-bio' ? `${KIND_LABEL[entry.kind]}, from the band` : KIND_LABEL[entry.kind]}</span>
+                <span>{isFromBand(entry) && entry.kind !== 'promo-bio' ? `${kindLabel(entry.kind)}, from the band` : kindLabel(entry.kind)}</span>
                 {!entry.url && <span>no live page</span>}
                 {entry.archiveUrl && <a href={entry.archiveUrl} target="_blank" rel="noopener noreferrer">archived copy<span class="visually-hidden"> (opens in a new tab)</span></a>}
                 {isTranslated(entry) && <span>translated</span>}
