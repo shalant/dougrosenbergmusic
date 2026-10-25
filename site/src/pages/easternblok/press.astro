@@ -14,7 +14,7 @@ import { buildArchive, dateParts, sortDate } from '../../data/press-archive.js';
 const archive = buildArchive(bandArchive.entries);
 const albumTitles = Object.fromEntries(bandArchive.albums.map((album) => [album.id, album.title]));
 
-const inBandYears = archive.shown.filter((e) => (dateParts(sortDate(e))?.year ?? 0) <= 2013).length;
+const inBandYears = archive.shown.filter((e: unknown) => (dateParts(sortDate(e))?.year ?? 0) <= 2013).length;
 const later = archive.total - inBandYears;
 const reviewCount = archive.wall.length;
 ---
