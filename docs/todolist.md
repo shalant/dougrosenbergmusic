@@ -740,6 +740,10 @@ semantic headings, title/meta description.
               `https://www.bing.com/indexnow` instead, which returned 202 (accepted). The
               script's endpoint may be blocked from this machine; try it again from another
               network, or point `ENDPOINT` at the Bing one.
+              **2026-10-24:** it failed the same way again (Node v26.7 `fetch` to
+              `api.indexnow.org` gets `ECONNRESET`; Node GETs to `www.bing.com` and the site itself
+              work, and curl to `api.indexnow.org` answers). `ENDPOINT` in
+              `site/scripts/indexnow.mjs` now points at `https://www.bing.com/indexnow`.
             - Recheck in ~1 week: Search Console URL Inspection for `/easternblok` (indexed?)
               and Bing Site Explorer last-crawl dates for `/` and `/easternblok`.
       - [x] **Eastern Blok story written 2026-10-16.** Sources: the band's own 2007 bio (Wayback
