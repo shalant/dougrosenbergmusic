@@ -744,6 +744,8 @@ semantic headings, title/meta description.
               `api.indexnow.org` gets `ECONNRESET`; Node GETs to `www.bing.com` and the site itself
               work, and curl to `api.indexnow.org` answers). `ENDPOINT` in
               `site/scripts/indexnow.mjs` now points at `https://www.bing.com/indexnow`.
+              Doug ran `npm run indexnow` after that change (2026-10-24, evening) for `/`, `/easternblok`,
+              `/easternblok/press` and `/press`: `IndexNow responded 200`.
             - Recheck in ~1 week: Search Console URL Inspection for `/easternblok` (indexed?)
               and Bing Site Explorer last-crawl dates for `/` and `/easternblok`.
       - [x] **Eastern Blok story written 2026-10-16.** Sources: the band's own 2007 bio (Wayback
