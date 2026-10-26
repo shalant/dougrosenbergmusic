@@ -15,11 +15,21 @@ test.describe('smoke', () => {
   test('hero record row is visible and named under reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    const records = page.getByRole('list', { name: 'Recordings' }).getByRole('link');
+    const records = page.getByRole('list', { name: 'The records' }).getByRole('link');
     await expect(records).toHaveCount(4);
     for (const title of ['Better Than TV', 'Goran Ivanovic Group', 'Underwater', 'Folk Tales']) {
       await expect(page.getByRole('link', { name: `${title} (opens in a new tab)` }).first()).toBeVisible();
     }
+  });
+
+  // The hero's 1024px query re-declared the title's fade-up after the
+  // reduced-motion block, so the fade still ran at tablet and phone widths
+  // (found 2026-10-25).
+  test('hero headline does not animate under reduced motion at tablet width', async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await expect(page.locator('.hero__title')).toHaveCSS('animation-name', 'none');
   });
 
   // 210 of 400 Cloudflare Web Analytics visits in the 30 days to 2026-10-15

@@ -54,6 +54,16 @@ this project's own custom items and where it stands against them.
       `astro check`, lint, CSP check, e2e (156 passed; one nav test failed once in the full run
       and passed on three reruns, so flaky, not caused by this change), screenshots at all four
       widths.
+      **Follow-up fixes the same day:** at 641-1024px the content block is bottom-anchored like
+      the phone layout (it was centered, leaving the lower third of the 768x1024 frame as empty
+      dark photo); at phone width the hero CTAs have tighter padding so both fit one row at
+      390px (still over 44px tall; they still stack at 360px); a visible "The records" caption
+      in Fraunces italic now names the cover row (and is its accessible name). Fixed a real bug
+      found while screenshotting: the 1024px query re-declared the title's fade-up after the
+      reduced-motion block, so reduced-motion visitors on tablets and phones still got the fade;
+      the reduced-motion block now sits last. New e2e test for it fails on the previous hero and
+      passes now. Verified: 64 unit tests, `astro check`, lint, CSP check, 159 e2e passing,
+      screenshots at 1440x900, 1024x768, 1024x1366, 820x1180, 768x1024, 390x844 and 360x740.
 
 ## Order of operations
 

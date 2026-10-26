@@ -42,7 +42,9 @@ const records = [
       <a href="#lessons" class="cta cta-secondary" data-cta="hero-secondary">Book lessons</a>
     </div>
 
-    <ul class="hero__records" aria-label="Recordings">
+    <div class="hero__records-row">
+    <p class="hero__records-label" id="hero-records-label">The records</p>
+    <ul class="hero__records" aria-labelledby="hero-records-label">
       {records.map((record) => (
         <li>
           <a class="hero__record" href={record.href} target="_blank" rel="noopener noreferrer">
@@ -53,6 +55,7 @@ const records = [
         </li>
       ))}
     </ul>
+    </div>
   </div>
 </header>
 
@@ -261,10 +264,28 @@ const records = [
      first screen. Covers rather than text chips; each title shows on
      hover/focus under its own cover, and is always in the accessible
      name via the visually-hidden span. */
+  /* A visible caption so the covers read as Doug's records before anyone
+     hovers one (added 2026-10-25): Fraunces italic in muted text, the same
+     voice as the name line, not another tracked all-caps label. */
+  .hero__records-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .hero__records-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
   .hero__records {
     display: flex;
     gap: 0.6rem;
-    margin: 2rem 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -321,18 +342,6 @@ const records = [
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero__name,
-    .hero__title,
-    .hero__haze::before,
-    .hero__haze::after {
-      animation: none;
-    }
-    .hero__record {
-      transition: none;
-    }
-  }
-
   /* tablet: drop the overlap, pull the block into a plain right-hand
      column instead of jumping straight to a full mobile stack.
 
@@ -380,11 +389,15 @@ const records = [
          restores the actual right-hug. */
       margin: 0;
       max-width: min(540px, 62vw);
-      padding-bottom: 0;
+      /* Bottom-anchored like the phone layout rather than centered: at
+         768x1024 the centered block left the lower third of the frame as
+         empty dark photo (screenshot, 2026-10-25). */
+      align-self: flex-end;
+      padding-bottom: clamp(3rem, 12vh, 7rem);
       text-align: right;
     }
     .hero__ctas,
-    .hero__records {
+    .hero__records-row {
       justify-content: flex-end;
     }
     .hero__record-label {
@@ -430,14 +443,38 @@ const records = [
       padding-bottom: 2.25rem;
       text-align: right;
     }
-    .hero__records {
+    .hero__records-row {
       margin-top: 1.5rem;
+    }
+    /* Tighter buttons so both CTAs fit one row at 390px instead of "Book
+       lessons" dropping onto its own line; still over 44px tall. */
+    .hero__ctas {
+      gap: 0.5rem;
+    }
+    .hero__ctas .cta {
+      padding: 0.8rem 1.1rem;
     }
     .hero__record {
       width: 3rem;
     }
     .hero__scrim {
       background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.4) 42%, rgba(10, 14, 23, 0.88) 62%, rgba(10, 14, 23, 0.95) 100%);
+    }
+  }
+
+  /* Last in the file on purpose: the 1024px query above re-declares the
+     title's fade-up animation, and when this block sat before it, that
+     later rule won, so reduced-motion visitors on tablets and phones
+     still got the fade (found 2026-10-25). */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__name,
+    .hero__title,
+    .hero__haze::before,
+    .hero__haze::after {
+      animation: none;
+    }
+    .hero__record {
+      transition: none;
     }
   }
 </style>
