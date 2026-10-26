@@ -20,6 +20,21 @@ and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the ma
 docs, updated centrally when a new practice surfaces). This file doesn't duplicate them; it tracks
 this project's own custom items and where it stands against them.
 
+## Music-first direction (2026-10-25)
+
+- [x] **Copy and metadata switched to musician first, web design as the quieter secondary line**
+      (branch `music-first-copy-2026-10-25`). Supersedes the 2026-09-14 dev-services hero pivot
+      recorded below. Changed: hero eyebrow/headline/CTAs ("Jazz saxophone, composed and played in
+      Chicago."; "Listen to the music" and "Book lessons"; the four-item services list removed),
+      Intro, FAQ (music questions first, web question fourth), `public/llms.txt`, page title and
+      meta description, WebPage and WebSite schema, Person `jobTitle`. The Dev section moved from
+      just under the hero to after Sheet Music, before the FAQ; StaffNav, the footer links and the
+      scroll-spy lists follow that order. Updated the e2e assertions that quoted the old copy and
+      regenerated the CSP hashes (`npm run verify-csp -- --write`) since StaffNav's inline script
+      changed. Verified: 64 unit tests, `astro check`, build, CSP check, 155 e2e passing.
+      Plan and remaining steps: `docs/music-first-plan-2026-10-25.md`. Not yet checked by eye:
+      the hero headline's line breaks at the widths the old copy was tuned for (step 2).
+
 ## Order of operations
 
 1. **Finish basic content/build items** — this project isn't feature-complete yet.

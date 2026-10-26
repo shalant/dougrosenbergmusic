@@ -4,7 +4,9 @@
 // grade (scanlines, screen vignette, warmth) and real animated haze as the
 // prior bottom-left version, but the content block now sits right-of-
 // center, left-aligned, slightly overlapping Doug's body, carrying the
-// pivoted copy plus a services list and two CTAs instead of just a name.
+// headline and two CTAs instead of just a name. Copy was music-first again
+// from 2026-10-25 (see docs/music-first-plan-2026-10-25.md); the original
+// dev-services copy and services list lived here until then.
 // The photo's own baked-in haze (upper-right of hero.webp) drifts with a
 // stronger, faster amplitude than a purely decorative hero needs, since
 // it's now sharing the frame with the content block instead of being the
@@ -18,7 +20,7 @@
 // and crowded/overlapped). Reverted to display:none on phones (see the
 // max-width: 640px query) for the chips, terminal, AND the eyebrow, which
 // wasn't part of the earlier reactive-hide list but is cut for the same
-// reason - the phone hero keeps the headline, services, and two CTAs only.
+// reason - the phone hero keeps the headline and two CTAs only.
 const tracks = [
   { href: 'https://www.amazon.com/dp/B00G9Y8TPE', label: 'Better Than TV' },
   { href: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C', label: 'Goran Ivanovic Group' },
@@ -44,18 +46,12 @@ const tracks = [
   ))}
 
   <div class="hero__content wrap">
-    <p class="eyebrow hero__eyebrow">Formerly on stage. Now behind the screen.</p>
-    <h1 class="hero__title">I make websites<br />that <span class="accent">sound like you.</span></h1>
-    <div class="hero__services">
-      <div class="hero__service"><span class="hero__service-bar"></span>Web Design</div>
-      <div class="hero__service"><span class="hero__service-bar"></span>Development</div>
-      <div class="hero__service"><span class="hero__service-bar"></span>Branding</div>
-      <div class="hero__service"><span class="hero__service-bar"></span>Ongoing Support</div>
-    </div>
+    <p class="eyebrow hero__eyebrow">Jazz saxophonist · composer · educator · Chicago</p>
+    <h1 class="hero__title">Jazz saxophone,<br />composed and <span class="accent">played in Chicago.</span></h1>
 
     <div class="hero__ctas">
-      <a href="https://dougrosenbergdev.com" target="_blank" rel="noopener noreferrer" class="cta cta-primary" data-cta="hero-primary">Like This Site? Let's Build Yours <span class="cta__arrow" aria-hidden="true">→</span></a>
-      <a href="https://dougrosenbergdev.com/webdesign" target="_blank" rel="noopener noreferrer" class="cta cta-secondary" data-cta="hero-secondary">See My Work</a>
+      <a href="#listen" class="cta cta-primary" data-cta="hero-primary">Listen to the music <span class="cta__arrow" aria-hidden="true">→</span></a>
+      <a href="#lessons" class="cta cta-secondary" data-cta="hero-secondary">Book lessons</a>
     </div>
   </div>
 
@@ -245,36 +241,6 @@ const tracks = [
   @keyframes smoke-text {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
-  }
-
-  .hero__services {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin: 1.6rem 0;
-    align-items: flex-start;
-  }
-
-  .hero__service {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.03em;
-    /* Bespoke, not --text-muted (0.62) - this sits over a hazy photo
-       rather than a flat --bg, where that opacity reads as low-contrast
-       and hard to read. Bumped locally rather than raising the shared
-       token, which other --text-muted usages elsewhere rely on staying
-       quiet. */
-    color: rgba(233, 237, 245, 0.85);
-  }
-
-  .hero__service-bar {
-    width: 26px;
-    height: 2px;
-    background: var(--glow);
-    opacity: 0.75;
   }
 
   .hero__ctas {
@@ -513,9 +479,6 @@ const tracks = [
       max-width: 13rem;
       margin-left: auto;
     }
-    .hero__services {
-      align-items: flex-end;
-    }
     .hero__ctas {
       justify-content: flex-end;
     }
@@ -528,7 +491,7 @@ const tracks = [
 
   /* Phone: the content block was vertically centered over the full-bleed
      photo like every wider breakpoint, which on a narrow/short viewport
-     put the title and services list directly over Doug's face instead of
+     put the title and CTAs directly over Doug's face instead of
      beside it - unreadable and cluttered (confirmed via screenshot, not
      assumed). Anchoring it to the bottom instead reuses the scrim's
      already-strong bottom darkening, keeps his face fully visible above
@@ -556,16 +519,13 @@ const tracks = [
       text-align: right;
     }
     /* Cut outright rather than shrunk to fit - a phone-width hero has room
-       for the headline, services, and the two CTAs; the eyebrow sentence
+       for the headline and the two CTAs; the eyebrow sentence
        was one more line competing with the headline for the same tight
        vertical space directly above it (confirmed via a real screenshot:
        folding it plus the chips/terminal into flow read as crowded, not
        just tight). */
     .hero__eyebrow {
       display: none;
-    }
-    .hero__services {
-      align-items: flex-end;
     }
     .hero__ctas {
       justify-content: flex-end;

@@ -33,7 +33,7 @@ const pageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   '@id': 'https://dougrosenberg.com/#webpage',
-  name: 'Doug Rosenberg — Web Design & Development, Saxophonist & Composer',
+  name: 'Doug Rosenberg — Jazz Saxophonist, Composer & Educator',
   url: Astro.site?.toString(),
   dateModified: contentLastUpdated,
   isPartOf: { '@id': 'https://dougrosenberg.com/#website' },
@@ -45,15 +45,13 @@ const albumsSchema = { '@context': 'https://schema.org', '@graph': recordings };
 ---
 
 <BaseLayout
-  title="Doug Rosenberg — Web Design & Development, Saxophonist & Composer"
-  description="Doug Rosenberg builds websites — design, development, branding, and ongoing support — and is also a Chicago-based saxophonist, composer, and educator with jazz recordings, performances, and private instruction."
+  title="Doug Rosenberg — Jazz Saxophonist, Composer & Educator"
+  description="Doug Rosenberg is a Chicago-based jazz saxophonist, composer, and educator with recordings, performances, and private instruction. He also designs and builds websites."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(albumsSchema)} />
   <HeroGraded />
   <Intro />
-  <StaffDivider icon="code" tone="dev" label="Dev" />
-  <DevServices />
   <StaffDivider icon="music" tone="listen" label="Listen" />
   <Listen />
   <StaffDivider icon="user" tone="about" label="About" />
@@ -66,6 +64,8 @@ const albumsSchema = { '@context': 'https://schema.org', '@graph': recordings };
   <StaffDivider icon="book" tone="lessons" label="Lessons" />
   <Lessons />
   <SheetMusicLibrary />
+  <StaffDivider icon="code" tone="dev" label="Dev" />
+  <DevServices />
   <StaffDivider icon="help" tone="about" label="FAQ" />
   <Faq />
   <StaffDivider icon="mail" tone="contact" label="Contact" />

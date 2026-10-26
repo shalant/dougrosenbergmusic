@@ -21,11 +21,11 @@ const ICONS: Record<string, string> = {
 // in this list now, positioned first to match where #dev actually sits in
 // the page (right after the hero).
 const sections = [
-  { id: 'dev', label: 'Dev', icon: 'code', tone: 'dev', left: 40, top: 50 },
-  { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 116, top: 50 },
-  { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 192, top: 50 },
-  { id: 'career-highlights', label: 'Highlights', icon: 'award', tone: 'highlights', left: 268, top: 50 },
-  { id: 'lessons', label: 'Lessons', icon: 'book', tone: 'lessons', left: 344, top: 50 },
+  { id: 'listen', label: 'Listen', icon: 'music', tone: 'listen', left: 40, top: 50 },
+  { id: 'about', label: 'About', icon: 'user', tone: 'about', left: 116, top: 50 },
+  { id: 'career-highlights', label: 'Highlights', icon: 'award', tone: 'highlights', left: 192, top: 50 },
+  { id: 'lessons', label: 'Lessons', icon: 'book', tone: 'lessons', left: 268, top: 50 },
+  { id: 'dev', label: 'Dev', icon: 'code', tone: 'dev', left: 344, top: 50 },
   { id: 'contact', label: 'Contact', icon: 'mail', tone: 'contact', left: 420, top: 50 },
 ];
 ---
@@ -497,7 +497,7 @@ const sections = [
 </style>
 
 <script>
-  const sectionIds = ['dev', 'listen', 'about', 'career-highlights', 'lessons', 'contact'];
+  const sectionIds = ['listen', 'about', 'career-highlights', 'lessons', 'dev', 'contact'];
   const jumpButtons = Array.from(document.querySelectorAll<HTMLElement>('.staff-jump'));
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
@@ -579,7 +579,7 @@ const sections = [
   // themselves): the page loads at the top and the browser's smooth jump to
   // the anchor passes through other sections first, any of which would
   // otherwise overwrite the hash.
-  const urlSectionIds = ['hero', 'intro', 'dev', 'listen', 'about', 'performance', 'career-highlights', 'press', 'gallery', 'lessons', 'sheet-music', 'faq', 'contact'];
+  const urlSectionIds = ['hero', 'intro', 'listen', 'about', 'performance', 'career-highlights', 'press', 'gallery', 'lessons', 'sheet-music', 'dev', 'faq', 'contact'];
   let urlSyncTimer: number | undefined;
   let pendingDeepLink = urlSectionIds.includes(window.location.hash.slice(1)) ? window.location.hash.slice(1) : '';
   ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((type) => {

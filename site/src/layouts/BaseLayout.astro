@@ -35,7 +35,7 @@ const personSchema = {
   '@id': personId,
   name: 'Doug Rosenberg',
   alternateName: 'Douglas Rosenberg',
-  jobTitle: ['Web Developer', 'Saxophonist', 'Composer', 'Educator'],
+  jobTitle: ['Saxophonist', 'Composer', 'Educator', 'Web Developer'],
   url: Astro.site?.toString(),
   image: new URL(`${import.meta.env.BASE_URL}images/hero.webp`, Astro.site).toString(),
   email: 'mailto:doug.rosenberg@gmail.com',
@@ -57,7 +57,7 @@ const websiteSchema = {
   name: 'Doug Rosenberg',
   url: Astro.site?.toString(),
   publisher: { '@id': personId },
-  description: 'Doug Rosenberg — web design and development, plus a saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students.',
+  description: 'Doug Rosenberg — Chicago jazz saxophonist, composer, and educator. Recordings, performance history, teaching credentials, and a sheet music library for private students. Also web design and development.',
 };
 ---
 

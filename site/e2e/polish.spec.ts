@@ -102,7 +102,7 @@ test.describe('hover and progress feedback', () => {
   test('CTA arrows nudge forward on hover and stay out of the link name', async ({ page }) => {
     await page.goto('/');
     const cta = page.locator('a[data-cta="hero-primary"]');
-    await expect(cta).toHaveAccessibleName("Like This Site? Let's Build Yours");
+    await expect(cta).toHaveAccessibleName('Listen to the music');
     await cta.hover();
     await expect.poll(() => cta.locator('.cta__arrow').evaluate((el) => getComputedStyle(el).translate)).toBe('4px');
   });
