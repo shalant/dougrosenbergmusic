@@ -4,8 +4,8 @@ test.describe('smoke', () => {
   test('homepage loads with correct title and hero content', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Doug Rosenberg/);
-    await expect(page.locator('h1')).toContainText('websites');
-    await expect(page.locator('h1')).toContainText('sound like you');
+    await expect(page.locator('h1')).toContainText('Jazz saxophone');
+    await expect(page.locator('h1')).toContainText('played in Chicago');
   });
 
   // 210 of 400 Cloudflare Web Analytics visits in the 30 days to 2026-10-15
@@ -37,7 +37,7 @@ test.describe('smoke', () => {
   test('direct-answer intro sits right under the hero', async ({ page }) => {
     await page.goto('/');
     const intro = page.locator('#intro');
-    await expect(intro).toContainText('Chicago-based web designer and developer');
+    await expect(intro).toContainText('Chicago-based jazz saxophonist, composer, and educator');
     const words = (await intro.innerText()).trim().split(/\s+/).length;
     expect(words).toBeGreaterThanOrEqual(30);
     expect(words).toBeLessThanOrEqual(60);
