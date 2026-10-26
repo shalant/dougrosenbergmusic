@@ -98,6 +98,11 @@ Plan: `docs/ui-85-plan-2026-10-25.md`; re-score (about 78) in `docs/ui-assessmen
       overlapping the preview, recorded in `DevServices.astro` as Doug's call. CSP hashes
       regenerated for the gallery's inline script. Verified: 64 unit tests, `astro check`, lint,
       CSP check, 164 e2e passing, section screenshots at 1440px and 390px.
+      **Same branch, Doug's request:** dougrosenbergdev.com added as a seventh Dev channel
+      (screenshot of the live site); the screen fills its column and both columns are
+      bottom-aligned so the caption ends level with the CTAs (e2e test at 1440/1024/820px). Fixed
+      the knock-on: seven lights pushed the remote's left arrow 32px off a 320px screen (test
+      fails without the fix). Re-verified: 173 e2e passing.
 
 ## Order of operations
 

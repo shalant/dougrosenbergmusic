@@ -23,6 +23,7 @@ const channels = [
   { name: 'Hardware Etc LLC', tagline: 'Bulk materials supplier', stack: 'Squarespace', href: 'https://dougrosenbergdev.com/webdesign/hardware-etc/', img: `${base}images/portfolio/hardware-etc.jpg` },
   { name: 'GigSync', tagline: 'Booking automation for gigging musicians', stack: 'Cloudflare Workers', href: 'https://dougrosenbergdev.com/webdesign/gigsync/', img: `${base}images/portfolio/gigsync.jpg` },
   { name: 'ArborKin', tagline: 'Multi-user family tree app, ~8k lines of C#, real users', stack: 'Blazor Server', href: 'https://dougrosenbergdev.com/webdesign/arborkin/', img: `${base}images/portfolio/arborkin.webp` },
+  { name: 'dougrosenbergdev.com', tagline: 'My developer portfolio: .NET, ERP and small-business sites', stack: 'Astro', href: 'https://dougrosenbergdev.com/', img: `${base}images/portfolio/dougrosenbergdev.jpg` },
   { name: 'This site', tagline: 'The one you’re looking at right now', stack: 'Astro', href: '#hero', img: `${base}images/portfolio/this-site.jpg` },
 ];
 ---
@@ -169,11 +170,20 @@ const channels = [
     border-bottom: 1px solid rgba(233, 237, 245, 0.08);
   }
 
+  /* Both columns stretch to the row, the CTAs sit at the bottom of the
+     left one and the screen + caption at the bottom of the right one, so
+     the two bottoms line up at any width whichever column is taller
+     (Doug's request, 2026-10-25). */
   .dev__grid {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     gap: clamp(2rem, 6vw, 4rem);
-    align-items: center;
+    align-items: stretch;
+  }
+
+  .dev__body {
+    display: flex;
+    flex-direction: column;
   }
 
   .dev__heading {
@@ -199,7 +209,8 @@ const channels = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.7rem;
-    margin-top: 2.25rem;
+    margin-top: auto;
+    padding-top: 2.25rem;
   }
 
   /* .cta-primary is shared with the hero, which sits one screen above this
@@ -246,12 +257,13 @@ const channels = [
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
   }
 
+  /* No width cap (was 420px, 2026-10-25): the screen fills its column. */
   .dev__screen-wrap {
     position: relative;
     width: 100%;
-    max-width: 420px;
     /* room for the remote, which overlaps the screen's own bottom edge
        rather than sitting in a separate row below it */
     margin-bottom: 1.6rem;
@@ -381,7 +393,6 @@ const channels = [
      actual information in it justified (Doug's own call). */
   .dev__caption {
     width: 100%;
-    max-width: 420px;
   }
 
   .dev__caption-row {
@@ -506,8 +517,9 @@ const channels = [
      target 24x44, filling the remote's 58px body vertically, so a thumb
      doesn't have to land on the dot's own row. Done with a pseudo-element
      rather than a taller button so the focus ring and active glow (both
-     box-shadows on the button) stay circles. Width stays 24px so six
-     lights plus both arrows still fit a 360px screen. */
+     box-shadows on the button) stay circles. Width stays 24px so the
+     lights plus both arrows still fit a 360px screen (seven since
+     2026-10-25; see the 359px query for narrower). */
   .dev__remote-led::before {
     content: '';
     position: absolute;
@@ -527,6 +539,16 @@ const channels = [
   .dev__remote-led.is-active {
     background-color: var(--note-highlights);
     box-shadow: 0 0 5px var(--note-highlights);
+  }
+
+  /* Seven channels since 2026-10-25 make the remote about 300px wide. A
+     320px screen leaves the preview only 280px, so below 360px the remote
+     hangs 10px past the screen's right edge instead of 28px inside it,
+     which keeps its left arrow on screen (it sat 32px off at 320px). */
+  @media (max-width: 359px) {
+    .dev__remote {
+      right: -10px;
+    }
   }
 
   @media (max-width: 760px) {

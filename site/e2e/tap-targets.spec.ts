@@ -18,8 +18,19 @@ test.describe('phone tap targets', () => {
         return [-20, 0, 20].every((dy) => document.elementFromPoint(x, y + dy) === led);
       })
     );
-    expect(hits.length).toBe(6);
+    expect(hits.length).toBe(7);
     expect(hits.every(Boolean)).toBe(true);
+  });
+
+  // A seventh channel (2026-10-25) made the remote wider than the preview
+  // on a 320px screen; its left arrow sat off screen.
+  test('the dev remote stays on screen at 320px', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 700 });
+    await page.goto('/');
+    await page.locator('.dev__remote').scrollIntoViewIfNeeded();
+    const box = await page.locator('.dev__remote').boundingBox();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(320);
   });
 
   test('/easternblok Listen links are at least 44px tall', async ({ page }) => {
