@@ -32,6 +32,18 @@ test.describe('smoke', () => {
     await expect(page.locator('.hero__title')).toHaveCSS('animation-name', 'none');
   });
 
+  // On a phone held sideways the hero text started under the fixed header
+  // and the headline ran into the hamburger (667x375, found 2026-10-25).
+  test('hero text clears the fixed header on a landscape phone', async ({ page }) => {
+    await page.setViewportSize({ width: 667, height: 375 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const toggle = await page.locator('.staff-toggle').boundingBox();
+    const name = await page.locator('.hero__name').boundingBox();
+    expect(toggle && name).toBeTruthy();
+    expect(name!.y).toBeGreaterThanOrEqual(toggle!.y + toggle!.height);
+  });
+
   // 210 of 400 Cloudflare Web Analytics visits in the 30 days to 2026-10-15
   // had host `localhost`: the analytics scripts ran during dev and test runs.
   test('analytics scripts are not loaded on localhost', async ({ page }) => {

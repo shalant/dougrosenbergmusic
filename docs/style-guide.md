@@ -66,7 +66,7 @@ viewport — these are the three clamp arguments):
 
 | Role | Clamp | Where |
 |---|---|---|
-| Hero headline (largest) | `2.6rem, 5.4vw, 5rem` | `HeroGraded` (since 2026-10-25) |
+| Hero headline (largest) | `2.8rem, min(6.6vw, 12vh), 6rem` | `HeroGraded` (since 2026-10-25; short-landscape override `2rem, 12vh, 3.25rem`) |
 | Section H2 (standard) | `2rem, 4vw, 2.75rem` | `Listen`, `Performance`, `Gallery`, `SheetMusicLibrary` — the default; reach for this first for any new section heading |
 | Closing CTA heading | `2.2rem, 6vw, 3.75rem` | `Contact` |
 | Stat number | `2.2rem, 5vw, 3.2rem` | `Performance`'s big numbers |

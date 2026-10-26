@@ -48,7 +48,7 @@ const records = [
       {records.map((record) => (
         <li>
           <a class="hero__record" href={record.href} target="_blank" rel="noopener noreferrer">
-            <img src={`${import.meta.env.BASE_URL}${record.cover}`} alt="" width="64" height="64" />
+            <img src={`${import.meta.env.BASE_URL}${record.cover}`} alt="" width="64" height="64" decoding="async" fetchpriority="low" />
             <span class="visually-hidden">{record.label} (opens in a new tab)</span>
             <span class="hero__record-label" aria-hidden="true">{record.label}</span>
           </a>
@@ -206,7 +206,9 @@ const records = [
   .hero__title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2.8rem, 6.6vw, 6rem);
+    /* Capped by height as well as width (12vh) so a short laptop window
+       doesn't push the block up into the nav pill (1280x600, 2026-10-25). */
+    font-size: clamp(2.8rem, min(6.6vw, 12vh), 6rem);
     line-height: 1;
     letter-spacing: -0.015em;
     margin: 0;
@@ -435,7 +437,9 @@ const records = [
      pill (removed 2026-10-25 after a real screenshot showed them crowding
      the headline), it's one compact line, and it's the only proof of the
      music in the first screen. Titles are hover/focus-only, so they never
-     show on touch; the visually-hidden span still names each link. */
+     show on touch; the visually-hidden span still names each link. The
+     covers load at low fetch priority so hero.webp, the page's largest
+     paint, isn't competing with them. */
   @media (max-width: 640px) {
     .hero__content {
       max-width: 100%;
@@ -459,6 +463,44 @@ const records = [
     }
     .hero__scrim {
       background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.4) 42%, rgba(10, 14, 23, 0.88) 62%, rgba(10, 14, 23, 0.95) 100%);
+    }
+  }
+
+  /* Phones held sideways (and any short landscape window): the tablet
+     rules above apply by width, but at 844x390 the name sat under the
+     hamburger and at 667x375 the block started under the fixed header
+     (screenshots, 2026-10-25). Clears the header with top padding, sizes
+     the type by height, and keeps the CTAs on one row. Covers stay at
+     44px, the touch-target minimum. */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .hero__content {
+      max-width: min(560px, 68vw);
+      padding-top: 5rem;
+      padding-bottom: 1.25rem;
+    }
+    .hero__name {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .hero__title {
+      font-size: clamp(2rem, 12vh, 3.25rem);
+    }
+    .hero__title .hero__sub {
+      margin-top: 0.4rem;
+      font-size: clamp(1rem, 5vh, 1.3rem);
+    }
+    .hero__ctas {
+      margin-top: 1rem;
+      gap: 0.5rem;
+    }
+    .hero__ctas .cta {
+      padding: 0.75rem 1.1rem;
+    }
+    .hero__records-row {
+      margin-top: 1rem;
+    }
+    .hero__record {
+      width: 2.75rem;
     }
   }
 

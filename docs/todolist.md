@@ -64,6 +64,15 @@ this project's own custom items and where it stands against them.
       the reduced-motion block now sits last. New e2e test for it fails on the previous hero and
       passes now. Verified: 64 unit tests, `astro check`, lint, CSP check, 159 e2e passing,
       screenshots at 1440x900, 1024x768, 1024x1366, 820x1180, 768x1024, 390x844 and 360x740.
+      **Short and landscape screens, same day:** first check of sizes never screenshotted
+      before. Fixed: on phones held sideways the hero text started under the fixed header and the
+      headline ran into the hamburger (667x375; at 844x390 the name sat under it). A
+      `(max-height: 500px) and (orientation: landscape)` block now clears the header and sizes
+      the type by height, with an e2e test (fails on the previous hero, passes now). The desktop
+      headline is also capped at 12vh so a 1280x600 window keeps clear of the nav pill. The hero
+      covers load at low fetch priority so `hero.webp` isn't competing with them. Checked and fine
+      as they were: 1920x1080, 2560x1440, 1366x768, 1280x720, cover hover and keyboard focus.
+      Verified: 64 unit tests, `astro check`, lint, CSP check, full e2e suite.
 
 ## Order of operations
 
