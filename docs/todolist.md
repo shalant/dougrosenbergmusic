@@ -34,6 +34,45 @@ this project's own custom items and where it stands against them.
       changed. Verified: 64 unit tests, `astro check`, build, CSP check, 155 e2e passing.
       Plan and remaining steps: `docs/music-first-plan-2026-10-25.md`. Not yet checked by eye:
       the hero headline's line breaks at the widths the old copy was tuned for (step 2).
+- [ ] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
+      Confirmed first that the current hero is the Riff 14 port (PR #27, commit `538bc63`), not a
+      stopgap, so this is a rework of the hierarchy rather than a swap. Changed in
+      `HeroGraded.astro`: the headline is about 1.6x larger (`clamp(2.6rem, 5.4vw, 5rem)`) with
+      explicit breaks so it sits on three lines at every width; the tiny all-caps eyebrow became
+      "Doug Rosenberg" in brass Fraunces italic (the hero never named him); the four drifting track
+      chips and the "listen now" terminal pill were replaced by one row of the four record covers,
+      linking to the same Amazon pages. Fixed along the way: under reduced motion the chips sat at
+      opacity 0, so those visitors never saw them. Added an e2e test for the record row under
+      reduced motion (fails on the old hero, passes now). Verified: 64 unit tests, `astro check`,
+      lint, CSP check, full e2e suite, screenshots at 1440/1024/768/390. Open for Doug: the
+      first-pass look, and whether to iterate further before the PR.
+      **Headline replaced the same day:** Doug found "Jazz saxophone, composed and played in
+      Chicago." flat, and from ten variations chose "Better Than TV" (the debut album's title,
+      which also names the TV logo and brand idea) over the subtitle "original music composed
+      and improvised", both inside the `<h1>`. "Jazz", "saxophone" and "Chicago" left the
+      headline but stay in the page title, meta description and schema. Re-verified: unit tests,
+      `astro check`, lint, CSP check, e2e (156 passed; one nav test failed once in the full run
+      and passed on three reruns, so flaky, not caused by this change), screenshots at all four
+      widths.
+      **Follow-up fixes the same day:** at 641-1024px the content block is bottom-anchored like
+      the phone layout (it was centered, leaving the lower third of the 768x1024 frame as empty
+      dark photo); at phone width the hero CTAs have tighter padding so both fit one row at
+      390px (still over 44px tall; they still stack at 360px); a visible "The records" caption
+      in Fraunces italic now names the cover row (and is its accessible name). Fixed a real bug
+      found while screenshotting: the 1024px query re-declared the title's fade-up after the
+      reduced-motion block, so reduced-motion visitors on tablets and phones still got the fade;
+      the reduced-motion block now sits last. New e2e test for it fails on the previous hero and
+      passes now. Verified: 64 unit tests, `astro check`, lint, CSP check, 159 e2e passing,
+      screenshots at 1440x900, 1024x768, 1024x1366, 820x1180, 768x1024, 390x844 and 360x740.
+      **Short and landscape screens, same day:** first check of sizes never screenshotted
+      before. Fixed: on phones held sideways the hero text started under the fixed header and the
+      headline ran into the hamburger (667x375; at 844x390 the name sat under it). A
+      `(max-height: 500px) and (orientation: landscape)` block now clears the header and sizes
+      the type by height, with an e2e test (fails on the previous hero, passes now). The desktop
+      headline is also capped at 12vh so a 1280x600 window keeps clear of the nav pill. The hero
+      covers load at low fetch priority so `hero.webp` isn't competing with them. Checked and fine
+      as they were: 1920x1080, 2560x1440, 1366x768, 1280x720, cover hover and keyboard focus.
+      Verified: 64 unit tests, `astro check`, lint, CSP check, full e2e suite.
 
 ## Order of operations
 

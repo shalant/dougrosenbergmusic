@@ -4,8 +4,44 @@ test.describe('smoke', () => {
   test('homepage loads with correct title and hero content', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Doug Rosenberg/);
-    await expect(page.locator('h1')).toContainText('Jazz saxophone');
-    await expect(page.locator('h1')).toContainText('played in Chicago');
+    await expect(page.locator('h1')).toContainText('Better Than TV');
+    await expect(page.locator('h1')).toContainText('original music composed and improvised');
+    await expect(page.locator('.hero__name')).toHaveText('Doug Rosenberg');
+  });
+
+  // The hero's record row replaced the drifting track chips on 2026-10-25.
+  // The chips sat at opacity 0 whenever their animation was off, so under
+  // reduced motion nobody saw them; this checks the row stays visible there.
+  test('hero record row is visible and named under reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const records = page.getByRole('list', { name: 'The records' }).getByRole('link');
+    await expect(records).toHaveCount(4);
+    for (const title of ['Better Than TV', 'Goran Ivanovic Group', 'Underwater', 'Folk Tales']) {
+      await expect(page.getByRole('link', { name: `${title} (opens in a new tab)` }).first()).toBeVisible();
+    }
+  });
+
+  // The hero's 1024px query re-declared the title's fade-up after the
+  // reduced-motion block, so the fade still ran at tablet and phone widths
+  // (found 2026-10-25).
+  test('hero headline does not animate under reduced motion at tablet width', async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await expect(page.locator('.hero__title')).toHaveCSS('animation-name', 'none');
+  });
+
+  // On a phone held sideways the hero text started under the fixed header
+  // and the headline ran into the hamburger (667x375, found 2026-10-25).
+  test('hero text clears the fixed header on a landscape phone', async ({ page }) => {
+    await page.setViewportSize({ width: 667, height: 375 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const toggle = await page.locator('.staff-toggle').boundingBox();
+    const name = await page.locator('.hero__name').boundingBox();
+    expect(toggle && name).toBeTruthy();
+    expect(name!.y).toBeGreaterThanOrEqual(toggle!.y + toggle!.height);
   });
 
   // 210 of 400 Cloudflare Web Analytics visits in the 30 days to 2026-10-15

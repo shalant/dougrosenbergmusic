@@ -46,11 +46,28 @@ before the FAQ (Doug did not pick; reversible). The headline is the default one.
 **Done when:** the PR is merged, no old-pitch copy remains, tests/build pass, and the todolist
 records it.
 
-## Step 2: Hero hierarchy (Opus, new session, branch `music-first-hero-2026-10-2x`)
+**Status:** PR #96 merged 2026-10-25.
+
+## Step 2: Hero hierarchy (Opus, new session, branch `music-first-hero-2026-10-25`)
 
 Start by reading `docs/ui-assessment-2026-10-24.md` and this file. First check whether the
-current hero is the "Riff 14" port or a stopgap (`docs/HeroDesigns`); that decides swap vs
-redesign. Check `ui-lab` and sibling repos for locked visual directions first.
+current hero is the "Riff 14" port or a stopgap; that decides swap vs redesign. Check `ui-lab`
+and sibling repos for locked visual directions first.
+
+**Answered 2026-10-25: it is the Riff 14 port, so this step is a redesign of the hierarchy.**
+Riff 14 went into `HeroGraded.astro` in PR #27 (commit `538bc63`, 2026-09-14) and every later
+hero commit iterated on it; step 1 changed only its copy. The riffs live in
+`ui-lab/artifacts/dougrosenbergmusic/` (`hero-from-scratch-riffs.html`, plus the business-pivot
+and 30-39 riff files), not in `docs/HeroDesigns`, which holds the AI-generated comps from
+2026-09-13. Riff 14 was picked to sell web work, so its layout is not locked for music-first;
+what the docs do lock is the logo, staff nav, divider pills, note colors, type system and the
+always-visible header.
+
+**First pass, 2026-10-25:** headline about 1.6x larger on three set lines; the eyebrow became
+Doug's name; chips and terminal pill replaced by a row of the four record covers (the
+music-first proof; nothing playable is possible without audio files, and the CSP blocks
+embeds). Kept: photo, haze, broadcast grade, the italic accent phrase, both CTAs. See
+`docs/todolist.md` for verification.
 
 - Much larger headline; fewer hero parts (decide the fate of the chips, the terminal widget
   and the eyebrow).
@@ -72,5 +89,6 @@ redesign. Check `ui-lab` and sibling repos for locked visual directions first.
 
 ## Open questions for Doug
 
-- Final hero headline (default: "Jazz saxophone, composed and played in Chicago.").
+- ~~Final hero headline~~ **Decided 2026-10-25:** "Better Than TV" (the debut album's title) with
+  the subtitle "original music composed and improvised", picked by Doug from ten variations.
 - Dev section placement (below Listen/About vs just before the FAQ).
