@@ -66,7 +66,7 @@ viewport — these are the three clamp arguments):
 
 | Role | Clamp | Where |
 |---|---|---|
-| Hero name (largest) | `3rem, 9vw, 6.5rem` | `HeroGraded` |
+| Hero headline (largest) | `2.6rem, 5.4vw, 5rem` | `HeroGraded` (since 2026-10-25) |
 | Section H2 (standard) | `2rem, 4vw, 2.75rem` | `Listen`, `Performance`, `Gallery`, `SheetMusicLibrary` — the default; reach for this first for any new section heading |
 | Closing CTA heading | `2.2rem, 6vw, 3.75rem` | `Contact` |
 | Stat number | `2.2rem, 5vw, 3.2rem` | `Performance`'s big numbers |
@@ -89,8 +89,8 @@ Container width: `.wrap` (`global.css`) caps content at `max-width: 1180px`, hor
 ## Breakpoints
 
 No shared breakpoint tokens — each component declares its own `@media (max-width: …)` inline.
-Current values in use: **640px** (`HeroGraded` — hides antenna/scroll-cue, stacks the now-playing
-pill), **700px** (`Performance`, `LeadSheetBarShape`), **800px** (`SheetMusicLibrary`, `About` —
+Current values in use: **1024px** and **640px** (`HeroGraded` — right-hand column, then the
+content block anchors to the bottom), **700px** (`Performance`, `LeadSheetBarShape`), **800px** (`SheetMusicLibrary`, `About` —
 grids go single-column), **860px** (`StaffNav` — desktop nav hides, hamburger takes over), **900px**
 (`CareerHighlights` — 3-column grid stacks). See `docs/todolist.md`'s round 2 part 6 for a structural
 read on why these being uncoordinated is lower-risk here than on a typical site (`StaffNav` is

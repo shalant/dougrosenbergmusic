@@ -6,6 +6,20 @@ test.describe('smoke', () => {
     await expect(page).toHaveTitle(/Doug Rosenberg/);
     await expect(page.locator('h1')).toContainText('Jazz saxophone');
     await expect(page.locator('h1')).toContainText('played in Chicago');
+    await expect(page.locator('.hero__name')).toHaveText('Doug Rosenberg');
+  });
+
+  // The hero's record row replaced the drifting track chips on 2026-10-25.
+  // The chips sat at opacity 0 whenever their animation was off, so under
+  // reduced motion nobody saw them; this checks the row stays visible there.
+  test('hero record row is visible and named under reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const records = page.getByRole('list', { name: 'Recordings' }).getByRole('link');
+    await expect(records).toHaveCount(4);
+    for (const title of ['Better Than TV', 'Goran Ivanovic Group', 'Underwater', 'Folk Tales']) {
+      await expect(page.getByRole('link', { name: `${title} (opens in a new tab)` }).first()).toBeVisible();
+    }
   });
 
   // 210 of 400 Cloudflare Web Analytics visits in the 30 days to 2026-10-15

@@ -1,31 +1,26 @@
 ---
-// "Full-Bleed, Screen-Graded" hero — Riff 14 of the dev-services pivot
-// exploration (see docs/HeroDesigns). Same full-bleed photo, broadcast
-// grade (scanlines, screen vignette, warmth) and real animated haze as the
-// prior bottom-left version, but the content block now sits right-of-
-// center, left-aligned, slightly overlapping Doug's body, carrying the
-// headline and two CTAs instead of just a name. Copy was music-first again
-// from 2026-10-25 (see docs/music-first-plan-2026-10-25.md); the original
-// dev-services copy and services list lived here until then.
-// The photo's own baked-in haze (upper-right of hero.webp) drifts with a
-// stronger, faster amplitude than a purely decorative hero needs, since
-// it's now sharing the frame with the content block instead of being the
-// only thing happening in it. Four "now playing" chips drift up out of
-// the bell on curved paths, each naming a real track from Listen.astro. A
-// mobile-first pass tried folding the chips and the terminal pill into
-// .hero__content's flow instead of hiding them outright on phones - real
-// content, not filler - but on an actual phone it was simply too much
-// competing for the same short viewport (confirmed via a real screenshot,
-// not assumed: the headline, eyebrow, chips, and terminal all stacked up
-// and crowded/overlapped). Reverted to display:none on phones (see the
-// max-width: 640px query) for the chips, terminal, AND the eyebrow, which
-// wasn't part of the earlier reactive-hide list but is cut for the same
-// reason - the phone hero keeps the headline and two CTAs only.
-const tracks = [
-  { href: 'https://www.amazon.com/dp/B00G9Y8TPE', label: 'Better Than TV' },
-  { href: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C', label: 'Goran Ivanovic Group' },
-  { href: 'https://www.amazon.com/dp/B006HTEKHM', label: 'Underwater' },
-  { href: 'https://www.amazon.com/dp/B00169L616', label: 'Folk Tales' },
+// "Full-Bleed, Screen-Graded" hero — Riff 14 of the 2026-09 dev-services
+// pivot exploration (ui-lab/artifacts/dougrosenbergmusic/hero-from-scratch-
+// riffs.html), ported in PR #27. Full-bleed photo, broadcast grade
+// (scanlines, screen vignette, warmth) and real animated haze, with the
+// content block right-of-center, left-aligned, slightly overlapping Doug's
+// body.
+// Music-first hierarchy pass, 2026-10-25 (docs/music-first-plan-2026-10-25.md,
+// step 2; findings in docs/ui-assessment-2026-10-24.md): the headline is
+// roughly 1.6x larger so it stops reading as a caption; the tiny all-caps
+// eyebrow became Doug's name (the hero never said it); the four drifting
+// "now playing" chips and the "listen now" terminal pill were replaced by
+// one row of the real record covers - the same four albums and Amazon links
+// the chips carried, but visible at rest, on phones, and under reduced
+// motion (the chips sat at opacity 0 whenever their animation was off, so
+// reduced-motion visitors never saw them). The terminal pill only repeated
+// the primary CTA's #listen link. Archived versions: hero-terminal-widget.html
+// in ui-lab, and this file's git history before 2026-10-25.
+const records = [
+  { href: 'https://www.amazon.com/dp/B00G9Y8TPE', label: 'Better Than TV', cover: 'images/albums/better-than-tv.jpg' },
+  { href: 'https://www.amazon.com/Goran-Ivanovic-Group/dp/B000HWY64C', label: 'Goran Ivanovic Group', cover: 'images/albums/goran-ivanovic-group.jpg' },
+  { href: 'https://www.amazon.com/dp/B006HTEKHM', label: 'Underwater', cover: 'images/albums/underwater.jpg' },
+  { href: 'https://www.amazon.com/dp/B00169L616', label: 'Folk Tales', cover: 'images/albums/folk-tales.jpg' },
 ];
 ---
 
@@ -36,39 +31,27 @@ const tracks = [
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
 
-  {tracks.map((track, i) => (
-    <a
-      class={`hero__chip hero__chip--nc${i + 1}${i % 2 === 1 ? ' hero__chip--mirror' : ''}`}
-      href={track.href}
-      target="_blank"
-      rel="noopener noreferrer"
-    ><span>♪</span> {track.label}</a>
-  ))}
-
   <div class="hero__content wrap">
-    <p class="eyebrow hero__eyebrow">Jazz saxophonist · composer · educator · Chicago</p>
-    <h1 class="hero__title">Jazz saxophone,<br />composed and <span class="accent">played in Chicago.</span></h1>
+    <p class="hero__name">Doug Rosenberg</p>
+    <h1 class="hero__title">Jazz saxophone,<br /> composed and<br /> <span class="accent">played in&nbsp;Chicago.</span></h1>
 
     <div class="hero__ctas">
       <a href="#listen" class="cta cta-primary" data-cta="hero-primary">Listen to the music <span class="cta__arrow" aria-hidden="true">→</span></a>
       <a href="#lessons" class="cta cta-secondary" data-cta="hero-secondary">Book lessons</a>
     </div>
-  </div>
 
-  {/* Sits in the empty lower-left of the frame. Used to rotate through
-       four destinations (listen/lessons/private events/portfolio) as a
-       typewriter cycle; simplified to a static line once the new #dev
-       section gave "portfolio" a real home with its own CTAs - the other
-       two rotating items were already hard to discover (a visitor had to
-       catch the right moment in a 10s cycle), so dropping the rotation
-       loses little and removes a third competing visual idiom (terminal/
-       typewriter) from a hero that already carries broadcast and musical-
-       notation motifs. Full rotating version archived at
-       ui-lab/artifacts/dougrosenbergmusic/hero-terminal-widget.html. */}
-  <a class="hero__terminal" href="#listen">
-    <span class="hero__terminal-prompt" aria-hidden="true">&gt;</span>
-    <span class="hero__terminal-text">listen now  →</span><span class="hero__terminal-cursor" aria-hidden="true"></span>
-  </a>
+    <ul class="hero__records" aria-label="Recordings">
+      {records.map((record) => (
+        <li>
+          <a class="hero__record" href={record.href} target="_blank" rel="noopener noreferrer">
+            <img src={`${import.meta.env.BASE_URL}${record.cover}`} alt="" width="64" height="64" />
+            <span class="visually-hidden">{record.label} (opens in a new tab)</span>
+            <span class="hero__record-label" aria-hidden="true">{record.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </header>
 
 <style>
@@ -187,11 +170,13 @@ const tracks = [
   }
 
   /* content block sits right-of-center, left-aligned, slightly
-     overlapping Doug's body rather than hugging the frame's edge */
+     overlapping Doug's body rather than hugging the frame's edge. Starts
+     a little further left than the old 50% so the larger headline has
+     room for three lines without crowding the frame's right edge. */
   .hero__content {
     position: absolute;
     z-index: 1;
-    left: 50%;
+    left: 46%;
     right: clamp(1.25rem, 4vw, 3rem);
     top: 50%;
     transform: translateY(-50%);
@@ -200,17 +185,25 @@ const tracks = [
     text-align: left;
   }
 
-  .hero__eyebrow {
-    margin: 0 0 0.9rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.13em;
+  /* The name, in the display face's italic and the brass accent, instead
+     of a tracked all-caps mono kicker: the staff dividers already carry
+     that label idiom further down the page. */
+  .hero__name {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+    color: var(--brass);
+    animation: fade-up 0.7s ease-out both;
   }
 
   .hero__title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2rem, 3.6vw, 3rem);
-    line-height: 1.08;
+    font-size: clamp(2.6rem, 5.4vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.015em;
     margin: 0;
     /* smoke-tinted headline, shimmering within the site's own glow
        family rather than a second competing hue */
@@ -247,209 +240,115 @@ const tracks = [
     display: flex;
     gap: 0.7rem;
     justify-content: flex-start;
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
     flex-wrap: wrap;
   }
 
-  /* skewed "command line" — static now (see the markup comment above for
-     why the rotating version was simplified out). Sized to its content,
-     not a fixed box, so it still reads as a pill rather than a full-width
-     bar. */
-  .hero__terminal {
+  /* The record row: the proof that this is a working musician, in the
+     first screen. Covers rather than text chips; each title shows on
+     hover/focus under its own cover, and is always in the accessible
+     name via the visually-hidden span. */
+  .hero__records {
+    display: flex;
+    gap: 0.6rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero__record {
+    position: relative;
+    display: block;
+    width: clamp(3.25rem, 4.4vw, 4rem);
+    aspect-ratio: 1;
+    border-radius: 4px;
+    outline: 1px solid rgba(233, 237, 245, 0.14);
+    outline-offset: -1px;
+    transition: transform var(--dur-base) var(--ease-out), outline-color var(--dur-base) ease;
+  }
+
+  .hero__record img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+
+  .hero__record-label {
     position: absolute;
-    z-index: 1;
-    left: 5%;
-    bottom: 10%;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.4rem;
-    background: rgba(10, 14, 23, 0.72);
-    border: 1px solid rgba(233, 237, 245, 0.18);
-    border-radius: 14px;
-    backdrop-filter: blur(6px);
-    transform: rotate(-6deg);
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    color: var(--text);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: border-color var(--dur-base) ease, transform var(--dur-base) ease;
-  }
-
-  .hero__terminal:hover,
-  .hero__terminal:focus-visible {
-    border-color: var(--glow);
-  }
-
-  .hero__terminal:focus-visible {
-    transform: rotate(-6deg) scale(1.03);
-  }
-
-  @media (hover: hover) {
-    .hero__terminal:hover {
-      transform: rotate(-6deg) scale(1.03);
-    }
-  }
-
-  .hero__terminal:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
-  }
-
-  .hero__terminal-prompt {
-    color: var(--glow);
-    flex-shrink: 0;
-  }
-
-  .hero__terminal-cursor {
-    display: inline-block;
-    width: 0.5em;
-    height: 1em;
-    background: var(--glow);
-    flex-shrink: 0;
-    animation: terminal-blink 1s step-end infinite;
-  }
-
-  @keyframes terminal-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  /* "now playing" chips — real track titles (see Listen.astro), drifting
-     up from the bell one at a time on a gentle curved path rather than a
-     straight vertical line; alternating chips curve opposite ways so they
-     don't all bow the same direction. Each links out to its album, so
-     (unlike a purely decorative chip) it needs to be reachable and
-     visible on keyboard focus even mid-animation, and needs to actually
-     render for reduced-motion users instead of freezing at the
-     animation's invisible starting frame. */
-  .hero__chip {
-    position: absolute;
-    z-index: 1;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.7rem;
-    border-radius: 999px;
-    background: rgba(19, 26, 38, 0.75);
-    border: 1px solid var(--glow-soft);
-    backdrop-filter: blur(6px);
+    left: 0;
+    top: calc(100% + 0.45rem);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     color: var(--text);
-    text-decoration: none;
-    opacity: 0;
-    transform: translateY(14px) scale(0.9);
-    animation: chip-float 9s ease-in-out infinite;
     white-space: nowrap;
-    transition: border-color var(--dur-base) ease;
+    opacity: 0;
+    transition: opacity var(--dur-base) ease;
+    pointer-events: none;
   }
 
-  .hero__chip:hover,
-  .hero__chip:focus-visible {
-    border-color: var(--brass);
+  .hero__record:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+    transform: translateY(-3px);
   }
 
-  .hero__chip:focus-visible {
+  .hero__record:focus-visible .hero__record-label {
     opacity: 1;
-    transform: none;
-    animation-play-state: paused;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
   }
 
-  .hero__chip span {
-    color: var(--glow);
-  }
+  @media (hover: hover) {
+    .hero__record:hover {
+      outline-color: var(--brass);
+      transform: translateY(-3px);
+    }
 
-  .hero__chip--nc1 { left: 27%; top: 34%; animation-delay: 0s; }
-  .hero__chip--nc2 { left: 14%; top: 21%; animation-delay: 4.5s; }
-  .hero__chip--nc3 { left: 22%; top: 45%; animation-delay: 2.25s; }
-  .hero__chip--nc4 { left: 10%; top: 30%; animation-delay: 6.75s; }
-
-  @keyframes chip-float {
-    0%, 100% { opacity: 0; transform: translate(0, 14px) scale(0.9); }
-    8% { opacity: 1; transform: translate(3px, 2px) scale(1); }
-    22% { opacity: 1; transform: translate(11px, -12px) scale(1); }
-    38% { opacity: 1; transform: translate(5px, -28px) scale(1); }
-    48% { opacity: 0; transform: translate(-6px, -44px) scale(0.95); }
-  }
-
-  @keyframes chip-float-mirror {
-    0%, 100% { opacity: 0; transform: translate(0, 14px) scale(0.9); }
-    8% { opacity: 1; transform: translate(-3px, 2px) scale(1); }
-    22% { opacity: 1; transform: translate(-11px, -12px) scale(1); }
-    38% { opacity: 1; transform: translate(-5px, -28px) scale(1); }
-    48% { opacity: 0; transform: translate(6px, -44px) scale(0.95); }
-  }
-
-  .hero__chip--mirror {
-    animation-name: chip-float-mirror;
+    .hero__record:hover .hero__record-label {
+      opacity: 1;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__chip,
+    .hero__name,
     .hero__title,
-    .hero__eyebrow,
-    .hero__terminal-cursor,
     .hero__haze::before,
     .hero__haze::after {
       animation: none;
     }
+    .hero__record {
+      transition: none;
+    }
   }
 
   /* tablet: drop the overlap, pull the block into a plain right-hand
-     column instead of jumping straight to a full mobile stack. The "now
-     playing" chips are hidden from here down too - their left/top percentages
-     are tuned for the desktop absolute-overlay composition and land
-     straight on top of the content block's text once .hero__content drops
-     into normal flow.
+     column instead of jumping straight to a full mobile stack.
 
      A fixed max-width: 460px looked fine at 768px (where it was originally
      checked) but was never re-checked across the rest of this range - at
      the narrow end (641px) that same 460px box is nearly the full viewport
      width, and left-aligned text inside it starts right where Doug is
-     (confirmed via a real 641px screenshot, not assumed). min(460px, 58vw)
-     keeps the original 460px wherever there's room for it (~793px+, where
-     the headline still wants that width to hold "that sound like you." on
-     one line - dropping the cap to 400px fixed 641px but broke this,
-     orphaning "you." onto its own third line at 1024px) and only shrinks
-     below 460px on the narrower widths where 58vw is the smaller number.
-
-     text-align: right alone (the fix already proven at the phone
-     breakpoint below) turned out not to be enough here on its own: the
-     eyebrow sentence is naturally almost exactly as wide as the box, so a
-     right-aligned single line of it still starts at the box's own left
-     edge either way (confirmed via a second real screenshot after the
-     first fix attempt still showed it landing on him) - same root issue as
-     the phone breakpoint's eyebrow overlap, same fix: cap the eyebrow's
-     own width so it wraps to two shorter lines that actually pull clear,
-     instead of relying on the container alone. */
+     (confirmed via a real 641px screenshot, not assumed). min(540px, 62vw)
+     (460px/58vw until the 2026-10-25 headline enlargement, which needed
+     the room for "played in Chicago." on one line) keeps the cap wherever
+     there's room for it and only shrinks on the narrower widths where
+     the vw value is the smaller number. Text is right-
+     aligned in this range so short lines pull clear of him rather than
+     starting at the box's left edge. */
   @media (max-width: 1024px) {
-    .hero__chip {
-      display: none;
-    }
     /* Lighthouse mobile audit: 50/100, traced to ~5.9s of paint/composite
        work under throttled CPU (desktop: 95/100, no such cost - so this is
-       purely a lower-end-hardware concern, not a real bug). The chips above
-       and the staff-nav's breathing dots are already display:none at this
-       width, so they're already free; these three are what's actually left
-       running - the haze blobs' drift, the title's shimmer, and the
-       terminal's cursor blink. Freezing them to their resting frame (not
-       hiding the elements - the haze glow, the gradient title, and the
-       cursor block all still render, just without the continuous
-       repaint/recomposite) keeps the atmosphere while cutting the
-       measured cost. Desktop keeps the full animated version untouched. */
+       purely a lower-end-hardware concern, not a real bug). The haze
+       blobs' drift and the title's shimmer are what run continuously here;
+       freezing them to their resting frame (not hiding them - the haze
+       glow and gradient title still render, just without the continuous
+       repaint/recomposite) keeps the atmosphere while cutting the measured
+       cost. Desktop keeps the full animated version untouched. */
     .hero__haze::before,
     .hero__haze::after {
       animation: none;
     }
     .hero__title {
       animation: fade-up 0.7s ease-out 0.15s both;
-    }
-    .hero__terminal-cursor {
-      animation: none;
     }
     .hero__content {
       position: relative;
@@ -464,23 +363,20 @@ const tracks = [
          margins first claim on free space), so the block was actually
          being centered - equal gaps on both sides - not hugging the right
          edge the way every other breakpoint does. Confirmed via computed
-         styles at 665x674 (Doug's "weird size" report): a 132px margin on
-         each side, not the flush-right position the max-width/text-align
-         tuning above assumed it already had. Zeroing it here restores the
-         actual right-hug and moves everything further right at once,
-         which is what "slide the text right" needed - not another narrower
-         max-width. */
+         styles at 665x674 (Doug's "weird size" report). Zeroing it here
+         restores the actual right-hug. */
       margin: 0;
-      max-width: min(460px, 58vw);
+      max-width: min(540px, 62vw);
       padding-bottom: 0;
       text-align: right;
     }
-    .hero__eyebrow {
-      max-width: 13rem;
-      margin-left: auto;
-    }
-    .hero__ctas {
+    .hero__ctas,
+    .hero__records {
       justify-content: flex-end;
+    }
+    .hero__record-label {
+      left: auto;
+      right: 0;
     }
     .hero__scrim {
       background:
@@ -507,28 +403,25 @@ const tracks = [
      left edge - directly over his face again (confirmed via a real
      448x487 screenshot, not assumed). Right-aligning the text itself,
      rather than fighting for width, is the fix that survives regardless
-     of exact viewport width or how many lines anything wraps to. */
+     of exact viewport width or how many lines anything wraps to.
+
+     The record row stays on phones: unlike the old chips and terminal
+     pill (removed 2026-10-25 after a real screenshot showed them crowding
+     the headline), it's one compact line, and it's the only proof of the
+     music in the first screen. Titles are hover/focus-only, so they never
+     show on touch; the visually-hidden span still names each link. */
   @media (max-width: 640px) {
-    .hero__terminal {
-      display: none;
-    }
     .hero__content {
       max-width: 100%;
       align-self: flex-end;
-      padding-bottom: 2.75rem;
+      padding-bottom: 2.25rem;
       text-align: right;
     }
-    /* Cut outright rather than shrunk to fit - a phone-width hero has room
-       for the headline and the two CTAs; the eyebrow sentence
-       was one more line competing with the headline for the same tight
-       vertical space directly above it (confirmed via a real screenshot:
-       folding it plus the chips/terminal into flow read as crowded, not
-       just tight). */
-    .hero__eyebrow {
-      display: none;
+    .hero__records {
+      margin-top: 1.5rem;
     }
-    .hero__ctas {
-      justify-content: flex-end;
+    .hero__record {
+      width: 3rem;
     }
     .hero__scrim {
       background: linear-gradient(180deg, rgba(10, 14, 23, 0.05) 0%, rgba(10, 14, 23, 0.4) 42%, rgba(10, 14, 23, 0.88) 62%, rgba(10, 14, 23, 0.95) 100%);

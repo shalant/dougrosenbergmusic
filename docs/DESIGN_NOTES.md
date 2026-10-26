@@ -40,7 +40,9 @@ A wider set of ideas — a channel-dial badge, a TV-guide-style listing for List
 
 > **Superseded 2026-10-25:** the site went back to musician first, with web design as a quieter
 > secondary line (see `docs/music-first-plan-2026-10-25.md`). The layout below still describes the
-> hero structure; its dev-pitch copy and services list were removed.
+> hero structure; its dev-pitch copy and services list were removed. The same day, a hierarchy
+> pass enlarged the headline, turned the eyebrow into Doug's name, and replaced the "now playing"
+> chips and the terminal pill with a row of the four record covers.
 
 ## Dev-services hero pivot — exploratory, branch `hero-riff-14`, not yet merged (2026-09-15)
 

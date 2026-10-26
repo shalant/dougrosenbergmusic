@@ -34,6 +34,18 @@ this project's own custom items and where it stands against them.
       changed. Verified: 64 unit tests, `astro check`, build, CSP check, 155 e2e passing.
       Plan and remaining steps: `docs/music-first-plan-2026-10-25.md`. Not yet checked by eye:
       the hero headline's line breaks at the widths the old copy was tuned for (step 2).
+- [ ] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
+      Confirmed first that the current hero is the Riff 14 port (PR #27, commit `538bc63`), not a
+      stopgap, so this is a rework of the hierarchy rather than a swap. Changed in
+      `HeroGraded.astro`: the headline is about 1.6x larger (`clamp(2.6rem, 5.4vw, 5rem)`) with
+      explicit breaks so it sits on three lines at every width; the tiny all-caps eyebrow became
+      "Doug Rosenberg" in brass Fraunces italic (the hero never named him); the four drifting track
+      chips and the "listen now" terminal pill were replaced by one row of the four record covers,
+      linking to the same Amazon pages. Fixed along the way: under reduced motion the chips sat at
+      opacity 0, so those visitors never saw them. Added an e2e test for the record row under
+      reduced motion (fails on the old hero, passes now). Verified: 64 unit tests, `astro check`,
+      lint, CSP check, full e2e suite, screenshots at 1440/1024/768/390. Open for Doug: the
+      first-pass look, and whether to iterate further before the PR.
 
 ## Order of operations
 
