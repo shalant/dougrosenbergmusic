@@ -74,6 +74,20 @@ this project's own custom items and where it stands against them.
       as they were: 1920x1080, 2560x1440, 1366x768, 1280x720, cover hover and keyboard focus.
       Verified: 64 unit tests, `astro check`, lint, CSP check, full e2e suite.
 
+## UI to 85 (2026-10-25)
+
+Plan: `docs/ui-85-plan-2026-10-25.md`; re-score (about 78) in `docs/ui-assessment-2026-10-24.md`.
+
+- [x] **Step 1, template chrome (branch `ui-template-chrome-2026-10-25`).** Removed the home
+      page's section-level eyebrows (the staff dividers and headings already name each section);
+      "Guest Artist / Visiting Instructor" became a lead-in to the Highlights school list, which
+      is now body type in full-strength text instead of 0.78rem grey mono. In-section labels use a
+      new global `.label` (Fraunces italic, muted). Intro left-aligned as a lede; contact is two
+      columns from 900px. Fixed a regression this caused: phone menu jumps parked headings under
+      the fixed logo (new `scroll-margin-top` below 860px, e2e test fails without it). Verified:
+      64 unit tests, `astro check`, lint, CSP check, 162 e2e passing, full-page screenshots at
+      1440px and 390px.
+
 ## Order of operations
 
 1. **Finish basic content/build items** — this project isn't feature-complete yet.

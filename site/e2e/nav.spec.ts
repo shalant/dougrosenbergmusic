@@ -63,6 +63,27 @@ test.describe('mobile hamburger nav', () => {
     await expect(page.locator('[data-menu-panel]')).toBeHidden();
     await expect(page.locator('#dev')).toBeInViewport();
   });
+
+  // Removing the section eyebrows (2026-10-25) moved each heading up into
+  // the strip under the fixed logo, so a menu jump hid the heading's top.
+  test('a menu jump leaves the section heading below the fixed logo', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    for (const id of ['listen', 'career-highlights', 'lessons', 'contact']) {
+      await page.locator('[data-menu-toggle]').click();
+      await page.locator(`.staff-menu__item[data-target="${id}"]`).click();
+      await expect(page.locator('[data-menu-panel]')).toBeHidden();
+      // Wait for the smooth scroll to settle before measuring, or a check
+      // mid-scroll can catch the heading passing through a clear position.
+      await page.waitForFunction(() => new Promise((resolve) => {
+        const y = window.scrollY;
+        setTimeout(() => resolve(window.scrollY === y), 250);
+      }));
+      const logo = await page.locator('.logo').boundingBox();
+      const heading = await page.locator(`#${id} h2`).boundingBox();
+      expect(heading!.y, id).toBeGreaterThanOrEqual(logo!.y + logo!.height);
+    }
+  });
 });
 
 // The logo and hamburger stay fixed and visible the whole way down the page.

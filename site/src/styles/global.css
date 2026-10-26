@@ -126,6 +126,18 @@
   box-sizing: border-box;
 }
 
+/* Below the desktop nav breakpoint the fixed logo and hamburger sit over
+   the left edge where every section heading starts. The nav scrolls a
+   section's top to the viewport's top, and once the section eyebrows were
+   removed (2026-10-25) the heading itself landed under the logo instead
+   of the eyebrow. This offset parks it below the header. Desktop's logo
+   sits left of the content column, so it needs none. */
+@media (max-width: 860px) {
+  section[id] {
+    scroll-margin-top: 2.75rem;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   /* Chrome/Safari's text-autosizer ("font boosting") inflates font sizes in
@@ -228,6 +240,20 @@ a {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--brass);
+}
+
+/* In-section labels on the home page (2026-10-25, docs/ui-85-plan-2026-10-25.md
+   step 1): the display face's italic in muted text, the same voice as the
+   hero's "The records" caption, instead of tracked mono caps. The home page's
+   section-level eyebrows were removed in the same pass (the staff dividers
+   and headings already name each section); .eyebrow above stays for the
+   archive pages and the 404 until their own pass. */
+.label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--text-muted);
 }
 
 /* Shared pill-button pair — originally hero-only, promoted here once

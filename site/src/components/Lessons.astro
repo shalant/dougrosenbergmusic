@@ -17,7 +17,6 @@ const subjects = [
 <section id="lessons" class="lessons">
   <div class="wrap lessons__grid">
     <div class="lessons__body">
-      <p class="eyebrow">Teaching</p>
       <h2 class="lessons__heading">Private lessons</h2>
       <p class="lessons__lead">
         Customized lesson plans for students from beginner to advanced, plus preparation
@@ -33,7 +32,7 @@ const subjects = [
     </div>
 
     <div class="lessons__staff" aria-label="Subjects taught">
-      <p class="lessons__staff-label">Subjects</p>
+      <p class="label lessons__staff-label">Subjects</p>
       <ol class="lessons__subjects">
         {subjects.map((subject) => (
           <li>
@@ -92,11 +91,6 @@ const subjects = [
   }
 
   .lessons__staff-label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-faint);
     margin: 0 0 0.35rem;
   }
 
