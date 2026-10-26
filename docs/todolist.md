@@ -88,6 +88,17 @@ Plan: `docs/ui-85-plan-2026-10-25.md`; re-score (about 78) in `docs/ui-assessmen
       64 unit tests, `astro check`, lint, CSP check, 162 e2e passing, full-page screenshots at
       1440px and 390px.
 
+- [x] **Step 2, craft fixes (branch `ui-craft-fixes-2026-10-25`).** Global heading
+      line-height and `text-wrap: balance` (headings inherited body's 1.55, which caused the Dev
+      heading's orphaned "one." and the wide gaps in wrapped headings); gallery hint moved beside
+      its heading and no longer claims "auto-playing" under reduced motion; `/press` missing-space
+      typo fixed with a regression test; tag pills became a `.dot-list` line; album cards became
+      uncarded covers; the empty sheet-music viewer is ruled like manuscript paper (auto-opening a
+      piece was ruled out: the first is a 4.6MB PDF). Left alone on purpose: the Dev remote
+      overlapping the preview, recorded in `DevServices.astro` as Doug's call. CSP hashes
+      regenerated for the gallery's inline script. Verified: 64 unit tests, `astro check`, lint,
+      CSP check, 164 e2e passing, section screenshots at 1440px and 390px.
+
 ## Order of operations
 
 1. **Finish basic content/build items** — this project isn't feature-complete yet.

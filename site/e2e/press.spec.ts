@@ -89,6 +89,13 @@ test.describe('press timeline and archive pages', () => {
     await expect(page.locator('a.band-link')).toHaveAttribute('href', '/easternblok/press');
   });
 
+  test('/press band paragraph keeps its space before the count', async ({ page }) => {
+    // Regression (2026-10-25): same Astro whitespace drop as the show log,
+    // rendering "Goran Ivanovic Group.60 pieces".
+    await page.goto('/press');
+    await expect(page.locator('section[aria-labelledby="band"] p')).toContainText(/Ivanovic Group\. \d+ pieces/);
+  });
+
   test('archive pages link home instead of using the in-page nav', async ({ page }) => {
     for (const path of ['/easternblok', '/press']) {
       await page.goto(path);

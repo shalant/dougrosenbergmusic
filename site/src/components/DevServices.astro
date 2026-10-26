@@ -15,7 +15,7 @@
 // landing here - "Channel Surf" screen + "Clicker" remote, the two Doug
 // picked. Every channel is real, live client/personal work, not filler -
 // see that URL for the fuller reasoning and the other variants.
-const services = ['Web Design', 'Development', 'Branding', 'Ongoing Support'];
+const services = ['Web design', 'Development', 'Branding', 'Ongoing support'];
 const base = import.meta.env.BASE_URL;
 const channels = [
   { name: 'Guacamayo', tagline: 'Chicago funky Latin groove band', stack: 'Astro', href: 'https://dougrosenbergdev.com/webdesign/guacamayo-band/', img: `${base}images/portfolio/guacamayo.jpg` },
@@ -36,7 +36,7 @@ const channels = [
         every animation, form, and pixel on this page. Fast, clean, no bloat, no bolted-on
         page builder.
       </p>
-      <ul class="dev__services">
+      <ul class="dot-list dev__services">
         {services.map((s) => (
           <li>{s}</li>
         ))}
@@ -191,23 +191,8 @@ const channels = [
   }
 
   .dev__services {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    list-style: none;
-    margin: 1.75rem 0 0;
-    padding: 0;
-  }
-
-  .dev__services li {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    border: 1px solid rgba(233, 237, 245, 0.14);
-    border-radius: 999px;
-    padding: 0.4rem 0.85rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
   }
 
   .dev__ctas {
