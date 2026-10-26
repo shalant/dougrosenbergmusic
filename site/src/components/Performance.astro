@@ -19,18 +19,17 @@ const artists = [
 
 <section id="performance" class="performance">
   <div class="wrap">
-    <p class="eyebrow">Performance</p>
     <h2 class="performance__heading">On the Road</h2>
 
     <div class="performance__venues">
       <div class="performance__venue-group scroll-rise">
-        <p class="performance__venue-label">Chicago</p>
+        <p class="label performance__venue-label">Chicago</p>
         <ul class="performance__venue-list">
           {chicagoVenues.map((v) => <li>{v}</li>)}
         </ul>
       </div>
       <div class="performance__venue-group scroll-rise">
-        <p class="performance__venue-label">National &amp; International</p>
+        <p class="label performance__venue-label">National and international</p>
         <ul class="performance__venue-list performance__venue-list--two-col">
           {nationalVenues.map((v) => <li>{v}</li>)}
         </ul>
@@ -38,7 +37,7 @@ const artists = [
     </div>
 
     <div class="performance__artists scroll-rise">
-      <p class="performance__venue-label">Artists Performed With</p>
+      <p class="label performance__venue-label">Artists performed with</p>
       <ul class="performance__artists-flow">
         {artists.map((a) => <li>{a}</li>)}
       </ul>
@@ -74,12 +73,7 @@ const artists = [
   }
 
   .performance__venue-label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--brass);
-    margin: 0 0 1rem;
+    margin: 0 0 0.8rem;
   }
 
   .performance__venue-list {

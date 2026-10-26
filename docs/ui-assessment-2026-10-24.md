@@ -85,6 +85,24 @@ stands.
    re-score. Run the `site-audit` agent against `SITE_QUALITY_CHECKLIST` for the objective
    items.
 
+## Re-score, 2026-10-25: about 78 / 100
+
+After PR #97 (hero hierarchy, "Better Than TV" headline, record row). Reviewed this time: the
+full home page at 1440px and 390px, the hero at 15 sizes from 360x740 to 2560x1440, `/press`
+and `/easternblok`, and the hero's hover, focus and reduced-motion states. Same reviewer who
+built the hero, so read the gain as "clearly better", not a measurement.
+
+| Area | Was | Now | Why |
+|---|---|---|---|
+| Identity and distinctiveness | 17 | 18 | The headline now ties to the TV logo; the "Side A / Side B" footer is a strong touch. |
+| First impression (hero) | 12 | 17 | Names Doug, big headline, records in the first screen, holds up at every size. Nothing playable; the shimmer leaves arbitrary letters green. |
+| Craft and polish | 13 | 14 | Hero bugs fixed; carousel overlap, gallery pill and a `/press` typo remain. |
+| Typography and hierarchy | 12 | 12 | Eyebrow-per-section template, centered intro and contact, small grey type. |
+| Content and archive pages | 7 | 7 | Unchanged. |
+| Mobile | 9 (unverified) | 10 | Now checked; the hero is solid, the rest is long and list-heavy. |
+
+Plan to reach 85: `docs/ui-85-plan-2026-10-25.md`.
+
 ## Related
 
 - Rubric: `career-development/docs/SITE_QUALITY_CHECKLIST.md`

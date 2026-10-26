@@ -10,8 +10,8 @@ const schools = [
 
 <section id="career-highlights" class="career-highlights staff-lines--strong">
   <div class="wrap">
-    <p class="eyebrow">Guest Artist / Visiting Instructor</p>
     <h2 class="career-highlights__title">Highlights</h2>
+    <p class="label career-highlights__intro">Guest artist and visiting instructor at</p>
     <ul class="career-highlights__list scroll-rise">
       {schools.map((school) => (
         <li>{school}</li>
@@ -63,17 +63,23 @@ const schools = [
      left by one gap and clipped, so the dot in front of a line's first item
      falls outside the clip. A trailing ::after dot left an orphan "·" at the
      end of every wrapped line on phones. */
+  .career-highlights__intro {
+    margin: 1.25rem 0 0;
+  }
+
+  /* Body face at body size in full-strength text (2026-10-25): it was
+     0.78rem mono in muted grey, the smallest and dimmest text on the page
+     for a list that's real credentials. */
   .career-highlights__list {
     list-style: none;
-    margin: 1rem 0 0 -1.4rem;
+    margin: 0.6rem 0 0 -1.4rem;
     padding: 0 0 0 1.4rem;
     clip-path: inset(0 0 0 1.4rem);
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--text-muted);
+    font-size: 0.98rem;
+    color: var(--text);
   }
 
   .career-highlights__list li::before {

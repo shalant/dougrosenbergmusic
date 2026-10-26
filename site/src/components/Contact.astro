@@ -1,11 +1,11 @@
 <section id="contact" class="contact">
-  <div class="wrap">
-    <p class="eyebrow">Booking &amp; Contact</p>
-    <h2 class="contact__heading">Let&rsquo;s make some music.</h2>
-    <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
+  <div class="wrap contact__grid">
+    <div class="contact__intro">
+      <h2 class="contact__heading">Let&rsquo;s make some music.</h2>
+      <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
+    </div>
 
     <div class="contact__form-wrap">
-      <p class="contact__form-label">Send a Message</p>
       <form id="contact-form" class="contact__form" novalidate>
         <div class="contact__field">
           <label for="contact-name">Name</label>
@@ -131,7 +131,18 @@
   .contact {
     padding-block: clamp(5rem, 12vw, 8.5rem) clamp(2rem, 4vw, 3rem);
     background: linear-gradient(180deg, var(--bg) 0%, #060810 100%);
-    text-align: center;
+  }
+
+  /* Two columns from 900px (2026-10-25): the heading on the left edge every
+     other section uses, the form beside it. It was the page's only centered
+     section besides the intro, a centered heading over a centered form. */
+  @media (min-width: 900px) {
+    .contact__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: start;
+    }
   }
 
   .contact__heading {
@@ -139,37 +150,24 @@
     font-style: italic;
     font-weight: 500;
     font-size: clamp(2.2rem, 6vw, 3.75rem);
-    margin: 0.5rem 0 0.6rem;
+    /* Set explicitly: in the two-column layout the heading wraps, and the
+       inherited body line-height left a wide gap between its lines. */
+    line-height: 1.08;
+    margin: 0 0 1rem;
   }
 
   .contact__sub {
     color: var(--text-muted);
-    margin: 0 0 2.5rem;
+    margin: 0;
   }
 
   .contact__form-wrap {
     max-width: 480px;
-    margin: 2.5rem auto 0;
-    text-align: left;
   }
 
-  .contact__form-label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--brass);
-    text-align: center;
-    margin: 0 0 1.5rem;
-  }
-
-  /* Desktop keeps the centered finale; on a phone the form is full width
-     and left-aligned, so the heading above it starts from the same edge as
-     every other section (2026-10-17). */
-  @media (max-width: 760px) {
-    .contact,
-    .contact__form-label {
-      text-align: left;
+  @media (max-width: 899px) {
+    .contact__form-wrap {
+      margin-top: 1.5rem;
     }
   }
 
@@ -357,10 +355,6 @@
 
     .contact__form-wrap {
       margin-top: 1rem;
-    }
-
-    .contact__form-label {
-      margin-bottom: 0.9rem;
     }
 
     .contact__field {

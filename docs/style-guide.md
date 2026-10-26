@@ -22,7 +22,7 @@ deliberate choice per `docs/DESIGN_NOTES.md`, tracked as a scoped future decisio
 | `--text` | `#e9edf5` | Primary text |
 | `--text-muted` | `rgba(233, 237, 245, 0.62)` | Secondary text (body copy, descriptions) |
 | `--text-faint` | `rgba(233, 237, 245, 0.52)` | Tertiary text (captions, footer, empty states) |
-| `--brass` | `#cf9a4f` | Primary accent — eyebrows, CTAs, active states |
+| `--brass` | `#cf9a4f` | Primary accent — CTAs, active states, the hero's name line, archive-page eyebrows |
 | `--brass-soft` | `rgba(207, 154, 79, 0.14)` | Brass at low opacity — subtle fills/glows |
 | `--glow` | `#7fb0ff` | Secondary accent (hero note, text-shadow glow) |
 | `--glow-soft` | `rgba(127, 176, 255, 0.16)` | Glow at low opacity |
@@ -53,7 +53,8 @@ how to add a new weight).
   (`font-style: italic; font-weight: 500`), normal+600 for sub-headings/stat numbers.
 - `--font-body`: **Work Sans** — body copy. Weights: 400 (default), 500 (`<strong>` inside
   `.career-highlights__bullets`), 700 (bare `<strong>` elsewhere, browser default bold).
-- `--font-mono`: **JetBrains Mono** — eyebrows, nav labels, captions, metadata. Weights: 400, 600.
+- `--font-mono`: **JetBrains Mono** — nav labels, form labels, captions, metadata, archive-page eyebrows. Weights: 400, 600.
+- **Label voice (2026-10-25):** in-section labels on the home page use the global `.label` class, Fraunces italic in `--text-muted` ("Chicago", "Artists performed with", "Subjects", "The records"), not tracked mono caps. The home page has no section-level eyebrows: the staff dividers and headings name each section.
 
 **Before adding a new weight/style combo**, check it's actually needed (a real rendered use, not
 just declared) — a false-positive from a decorative empty `<i>` tag registering as "Work Sans

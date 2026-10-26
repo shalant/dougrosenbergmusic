@@ -23,13 +23,15 @@
     background: var(--bg);
   }
 
+  /* Left-aligned on the same edge as every section heading below it, and
+     set as a lede (2026-10-25): centered, it was the one section breaking
+     the page's left axis. */
   .intro__text {
-    max-width: 46rem;
-    margin-inline: auto;
-    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-    line-height: 1.65;
+    max-width: 44rem;
+    margin: 0;
+    font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+    line-height: 1.6;
     color: var(--text-muted);
-    text-align: center;
   }
 
   .intro__text strong {
