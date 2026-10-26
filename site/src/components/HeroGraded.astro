@@ -7,7 +7,9 @@
 // body.
 // Music-first hierarchy pass, 2026-10-25 (docs/music-first-plan-2026-10-25.md,
 // step 2; findings in docs/ui-assessment-2026-10-24.md): the headline is
-// roughly 1.6x larger so it stops reading as a caption; the tiny all-caps
+// the debut album's title, "Better Than TV" (Doug's pick, which also names
+// the TV logo and test-card brand idea), set large enough that it stops
+// reading as a caption, with his subtitle under it; the tiny all-caps
 // eyebrow became Doug's name (the hero never said it); the four drifting
 // "now playing" chips and the "listen now" terminal pill were replaced by
 // one row of the real record covers - the same four albums and Amazon links
@@ -33,7 +35,7 @@ const records = [
 
   <div class="hero__content wrap">
     <p class="hero__name">Doug Rosenberg</p>
-    <h1 class="hero__title">Jazz saxophone,<br /> composed and<br /> <span class="accent">played in&nbsp;Chicago.</span></h1>
+    <h1 class="hero__title">Better Than&nbsp;TV<span class="visually-hidden">:</span> <span class="hero__sub">original music composed and improvised</span></h1>
 
     <div class="hero__ctas">
       <a href="#listen" class="cta cta-primary" data-cta="hero-primary">Listen to the music <span class="cta__arrow" aria-hidden="true">→</span></a>
@@ -201,7 +203,7 @@ const records = [
   .hero__title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2.6rem, 5.4vw, 5rem);
+    font-size: clamp(2.8rem, 6.6vw, 6rem);
     line-height: 1;
     letter-spacing: -0.015em;
     margin: 0;
@@ -216,7 +218,18 @@ const records = [
     animation: fade-up 0.7s ease-out 0.15s both, smoke-text 16s ease-in-out infinite;
   }
 
-  .hero__title .accent {
+  /* The supporting line under the album-title headline: same glow and
+     italic the old accent phrase used, at a size that reads as a
+     subtitle rather than a second headline. */
+  .hero__title .hero__sub {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: clamp(1.3rem, 2.3vw, 2.1rem);
+    line-height: 1.15;
+    letter-spacing: 0;
+    /* evens out the phone-width wrap instead of leaving "improvised"
+       alone on the second line (390px screenshot, 2026-10-25) */
+    text-wrap: balance;
     background: none;
     -webkit-background-clip: initial;
     background-clip: initial;
@@ -329,7 +342,7 @@ const records = [
      width, and left-aligned text inside it starts right where Doug is
      (confirmed via a real 641px screenshot, not assumed). min(540px, 62vw)
      (460px/58vw until the 2026-10-25 headline enlargement, which needed
-     the room for "played in Chicago." on one line) keeps the cap wherever
+     the room for its longest line on one line) keeps the cap wherever
      there's room for it and only shrinks on the narrower widths where
      the vw value is the smaller number. Text is right-
      aligned in this range so short lines pull clear of him rather than

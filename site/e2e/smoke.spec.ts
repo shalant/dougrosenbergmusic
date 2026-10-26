@@ -4,8 +4,8 @@ test.describe('smoke', () => {
   test('homepage loads with correct title and hero content', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Doug Rosenberg/);
-    await expect(page.locator('h1')).toContainText('Jazz saxophone');
-    await expect(page.locator('h1')).toContainText('played in Chicago');
+    await expect(page.locator('h1')).toContainText('Better Than TV');
+    await expect(page.locator('h1')).toContainText('original music composed and improvised');
     await expect(page.locator('.hero__name')).toHaveText('Doug Rosenberg');
   });
 

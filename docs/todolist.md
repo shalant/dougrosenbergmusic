@@ -46,6 +46,14 @@ this project's own custom items and where it stands against them.
       reduced motion (fails on the old hero, passes now). Verified: 64 unit tests, `astro check`,
       lint, CSP check, full e2e suite, screenshots at 1440/1024/768/390. Open for Doug: the
       first-pass look, and whether to iterate further before the PR.
+      **Headline replaced the same day:** Doug found "Jazz saxophone, composed and played in
+      Chicago." flat, and from ten variations chose "Better Than TV" (the debut album's title,
+      which also names the TV logo and brand idea) over the subtitle "original music composed
+      and improvised", both inside the `<h1>`. "Jazz", "saxophone" and "Chicago" left the
+      headline but stay in the page title, meta description and schema. Re-verified: unit tests,
+      `astro check`, lint, CSP check, e2e (156 passed; one nav test failed once in the full run
+      and passed on three reruns, so flaky, not caused by this change), screenshots at all four
+      widths.
 
 ## Order of operations
 

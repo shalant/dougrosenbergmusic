@@ -89,5 +89,6 @@ embeds). Kept: photo, haze, broadcast grade, the italic accent phrase, both CTAs
 
 ## Open questions for Doug
 
-- Final hero headline (default: "Jazz saxophone, composed and played in Chicago.").
+- ~~Final hero headline~~ **Decided 2026-10-25:** "Better Than TV" (the debut album's title) with
+  the subtitle "original music composed and improvised", picked by Doug from ten variations.
 - Dev section placement (below Listen/About vs just before the FAQ).
