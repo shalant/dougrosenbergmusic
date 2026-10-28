@@ -163,6 +163,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Headings had no rule of their own and inherited body's 1.55, which left
+   a wide gap whenever a display heading wrapped ("I also build sites like
+   this / one.", the two-column contact heading). Balanced wrapping also
+   stops one-word last lines. Components that set a line-height keep it
+   (2026-10-25). */
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -239,6 +251,32 @@ a {
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* A plain inline list with brass dot separators, for short facet lists that
+   used to be tiny mono-caps pills (About's instruments, Dev's services;
+   2026-10-25). Same technique as the Highlights and Performance lists: each
+   dot sits in the gap before its item and the list is shifted left one gap
+   and clipped, so a wrapped line never starts or ends on a stray dot. */
+.dot-list {
+  list-style: none;
+  margin-left: -1.4rem;
+  padding: 0 0 0 1.4rem;
+  clip-path: inset(0 0 0 1.4rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.4rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.dot-list li::before {
+  content: '·';
+  display: inline-block;
+  width: 1.4rem;
+  margin-left: -1.4rem;
+  text-align: center;
   color: var(--brass);
 }
 

@@ -67,8 +67,10 @@ const pieces = [
 
       <div class="sheet-music__viewer">
         <div class="sheet-music__viewer-empty" data-viewer-empty>
-          <span class="sheet-music__viewer-empty-icon" aria-hidden="true">&#9835;</span>
-          <p>Select a piece from the list to view.</p>
+          <p class="sheet-music__viewer-empty-text">
+            <span class="sheet-music__viewer-empty-icon" aria-hidden="true">&#9835;</span>
+            <span class="label">{pieces.length} pieces.</span> Pick one and it opens here.
+          </p>
         </div>
         <div class="sheet-music__viewer-active" data-viewer-active hidden>
           <div class="sheet-music__viewer-head">
@@ -223,21 +225,47 @@ const pieces = [
     align-items: center;
     justify-content: center;
     gap: 0.85rem;
-    color: var(--text-faint);
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
     border: 1px solid rgba(233, 237, 245, 0.1);
     border-radius: 8px;
-    /* Was a plain dashed wireframe box - reads as an unfinished/empty state
-       rather than a considered one. A soft brass glow behind a music-note
-       glyph borrows the accent color already used for eyebrows/section
-       marks elsewhere instead of introducing a new one. */
-    background: radial-gradient(circle at 50% 42%, var(--brass-soft), transparent 70%);
+    /* Blank manuscript paper (2026-10-25): five-line staves ruled down the
+       panel, so the empty viewer reads as a page waiting for a piece rather
+       than half a card of nothing. Loading a piece by default was ruled out:
+       the first one is a 4.6MB PDF. Earlier versions: a dashed wireframe box,
+       then a brass glow behind a note glyph. */
+    background-color: var(--surface);
+    background-image: repeating-linear-gradient(
+      180deg,
+      var(--staff-line-strong) 0 1px, transparent 1px 9px,
+      var(--staff-line-strong) 9px 10px, transparent 10px 18px,
+      var(--staff-line-strong) 18px 19px, transparent 19px 27px,
+      var(--staff-line-strong) 27px 28px, transparent 28px 36px,
+      var(--staff-line-strong) 36px 37px, transparent 37px 76px
+    );
+    background-size: calc(100% - 3rem) 76px;
+    background-position: center 1.5rem;
+    background-repeat: repeat-y;
+  }
+
+  /* The prompt sits on a solid patch so the staff lines don't run through
+     its text. */
+  .sheet-music__viewer-empty-text {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.6rem 1.1rem;
+    background: var(--surface);
+    border-radius: 6px;
   }
 
   .sheet-music__viewer-empty-icon {
-    font-size: 2.75rem;
+    font-size: 1.6rem;
+    line-height: 1;
     color: var(--brass);
-    opacity: 0.75;
   }
 
   .sheet-music__viewer-empty[hidden] {

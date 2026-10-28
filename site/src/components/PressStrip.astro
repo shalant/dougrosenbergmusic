@@ -42,34 +42,47 @@ const flags = albums
 <style>
   .strip {
     position: relative;
-    height: 8.5rem;
+    height: 12rem;
     margin-inline: 0.5rem;
   }
 
   .strip__ticks {
     position: absolute;
-    inset: 0 0 3.5rem;
-    border-bottom: 1px solid var(--text-faint);
+    inset: 0 0 4rem;
+    border-bottom: 2px solid var(--brass);
+    /* four more staff lines above the baseline, 14px apart */
+    background-image: repeating-linear-gradient(
+      to top,
+      transparent 0,
+      transparent 13px,
+      var(--staff-line-strong) 13px,
+      var(--staff-line-strong) 14px
+    );
+    background-size: 100% 57px;
+    background-position: bottom;
+    background-repeat: no-repeat;
   }
 
   .tick {
     position: absolute;
     bottom: 0;
-    width: 2px;
-    height: 0.9rem;
-    margin-left: -1px;
-    background: var(--text-faint);
+    width: 3px;
+    height: 1.5rem;
+    margin-left: -1.5px;
+    background: var(--brass);
+    opacity: 0.55;
   }
 
   .tick--review {
-    height: 3.6rem;
-    background: var(--brass);
+    height: 6rem;
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(207, 154, 79, 0.55);
   }
 
   /* A year is 1/10 of the width; labels sit at the start of their year. */
   .strip__axis {
     position: absolute;
-    inset: auto 0 1.9rem;
+    inset: auto 0 2.1rem;
     height: 1.2rem;
   }
 
@@ -79,16 +92,16 @@ const flags = albums
     padding-left: 0.3rem;
     border-left: 1px solid var(--staff-line-strong);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     line-height: 1;
-    color: var(--text-faint);
+    color: var(--text-muted);
     font-variant-numeric: tabular-nums;
   }
 
   .strip__albums {
     position: absolute;
     inset: auto 0 0;
-    height: 1.4rem;
+    height: 1.6rem;
   }
 
   .strip__album {
@@ -98,8 +111,8 @@ const flags = albums
     white-space: nowrap;
     font-family: var(--font-display);
     font-style: italic;
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    font-size: 1.05rem;
+    color: var(--brass);
   }
 
   @media (max-width: 700px) {
@@ -108,7 +121,7 @@ const flags = albums
     }
 
     .strip__album {
-      font-size: 0.72rem;
+      font-size: 0.85rem;
     }
   }
 </style>

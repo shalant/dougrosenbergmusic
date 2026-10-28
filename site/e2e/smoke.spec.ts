@@ -132,6 +132,24 @@ test.describe('smoke', () => {
     await expect(screenLink).toHaveAttribute('target', '_blank');
   });
 
+  // Doug asked (2026-10-25) for the screen to fill its column so its
+  // caption's bottom lines up with the CTAs' bottom in the left column.
+  for (const width of [1440, 1024, 820]) {
+    test(`dev section columns end on the same line at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      await page.locator('#dev').scrollIntoViewIfNeeded();
+      const ctas = await page.locator('.dev__ctas').boundingBox();
+      const caption = await page.locator('.dev__caption').boundingBox();
+      expect(Math.abs(ctas!.y + ctas!.height - (caption!.y + caption!.height))).toBeLessThanOrEqual(2);
+    });
+  }
+
+  test('the dev carousel includes dougrosenbergdev.com', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.dev__remote-led[aria-label="View dougrosenbergdev.com"]')).toHaveCount(1);
+  });
+
   // Internal dev notes used to ship as HTML comments (7 on the home page,
   // ~4.5% of its bytes; found 2026-10-11). They're Astro {/* */} comments
   // now, which the build strips.

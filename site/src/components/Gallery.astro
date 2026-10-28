@@ -43,10 +43,10 @@ const photos = [
 <section id="gallery" class="gallery staff-lines">
   <div class="wrap gallery__head">
     <h2 class="gallery__heading">In Frame</h2>
+    <span class="label reel-hint" data-hint>auto-playing &middot; drag or scroll</span>
   </div>
 
   <div class="reel-stage" data-stage>
-    <span class="reel-hint" data-hint>auto-playing &middot; drag or scroll</span>
     <div class="reel-track" data-reel>
       {photos.map((p, i) => (
         <button class="reel-panel" data-index={i} aria-label={`Open ${p.caption}`}>
@@ -109,6 +109,9 @@ const photos = [
     const thumbs = Array.from(thumbsEl.querySelectorAll('.reel-thumb'));
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = window.matchMedia('(hover: hover)').matches;
+
+    // The reel doesn't autoplay under reduced motion, so don't claim it does.
+    if (reduceMotion && hint) hint.textContent = 'drag or scroll';
 
     const AUTOPLAY_SPEED = 0.45;
     const AUTOPLAY_DELAY = 450;
@@ -415,7 +418,14 @@ const photos = [
     position: relative;
   }
 
+  /* The hint sits beside the heading, in the label voice, instead of
+     floating over the first photo (2026-10-25). */
   .gallery__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem 1.5rem;
     margin-bottom: 1.6rem;
   }
 
@@ -513,21 +523,8 @@ const photos = [
   }
 
   .reel-hint {
-    position: absolute;
-    top: 12px;
-    right: max(20px, calc((100vw - 1180px) / 2 + 20px));
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    background: rgba(10, 14, 23, 0.65);
-    border: 1px solid var(--staff-line-strong);
-    border-radius: 999px;
-    padding: 0.4rem 0.7rem;
+    font-size: 0.95rem;
     transition: opacity var(--dur-slow) ease;
-    pointer-events: none;
-    z-index: 3;
   }
 
   .reel-hint.hide {

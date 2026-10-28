@@ -1,5 +1,5 @@
 ---
-const tags = ['Saxophones, Flutes, Clarinets', 'Composition / Arranging', 'Education', 'Tech'];
+const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Education', 'Tech'];
 ---
 
 <section id="about" class="about">
@@ -23,7 +23,7 @@ const tags = ['Saxophones, Flutes, Clarinets', 'Composition / Arranging', 'Educa
         Kendrick Scott.
       </p>
 
-      <ul class="about__tags">
+      <ul class="dot-list about__tags">
         {tags.map((tag) => (
           <li>{tag}</li>
         ))}
@@ -130,23 +130,8 @@ const tags = ['Saxophones, Flutes, Clarinets', 'Composition / Arranging', 'Educa
   }
 
   .about__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    list-style: none;
-    margin: 1.75rem 0 0;
-    padding: 0;
-  }
-
-  .about__tags li {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    border: 1px solid rgba(233, 237, 245, 0.14);
-    border-radius: 999px;
-    padding: 0.4rem 0.85rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
   }
 
   @media (max-width: 800px) {

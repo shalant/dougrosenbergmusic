@@ -34,7 +34,7 @@ const albums = [
     <div class="listen__grid">
       {albums.map((album) => (
         <a class="album" href={album.url} target="_blank" rel="noopener noreferrer">
-          <img class="album__cover" src={`${import.meta.env.BASE_URL}${album.cover.replace(/^\//, '')}`} alt={`${album.title} album cover`} loading="lazy" />
+          <span class="album__art"><img class="album__cover" src={`${import.meta.env.BASE_URL}${album.cover.replace(/^\//, '')}`} alt={`${album.title} album cover`} loading="lazy" /></span>
           <div class="album__body">
             <p class="album__title">{album.title}</p>
             <p class="album__blurb">{album.blurb}</p>
@@ -64,20 +64,33 @@ const albums = [
     gap: 1.5rem;
   }
 
+  /* Records on a shelf, not cards (2026-10-25): the cover sits straight on
+     the page with its title and blurb under it. Four identical rounded,
+     tinted cards were one of the template tells in the UI assessment. The
+     hover/focus accent moved from the card's border to the cover's own
+     outline. */
   .album {
     display: block;
     text-decoration: none;
     color: var(--text);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--surface);
-    border: 1px solid rgba(233, 237, 245, 0.08);
-    transition: transform var(--dur-base) ease, border-color var(--dur-base) ease;
+    border-radius: 3px;
+    transition: transform var(--dur-base) ease;
   }
 
-  .album:hover,
-  .album:focus-visible {
-    border-color: var(--brass);
+  .album__art {
+    display: block;
+    overflow: hidden;
+    border-radius: 3px;
+    outline: 1px solid rgba(233, 237, 245, 0.1);
+    outline-offset: -1px;
+    box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.9);
+    transition: outline-color var(--dur-base) ease;
+  }
+
+  .album:hover .album__art,
+  .album:focus-visible .album__art {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
   }
 
   .album:focus-visible {
@@ -85,6 +98,7 @@ const albums = [
   }
 
   .album__cover {
+    display: block;
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
@@ -131,7 +145,7 @@ const albums = [
   }
 
   .album__body {
-    padding: 0.9rem 1rem 1.15rem;
+    padding: 0.9rem 0.1rem 0;
   }
 
   .album__title {
@@ -160,12 +174,8 @@ const albums = [
       grid-template-columns: 112px minmax(0, 1fr);
       align-items: center;
     }
-    .album__cover {
-      height: 100%;
-      min-height: 112px;
-    }
     .album__body {
-      padding: 0.8rem 0.95rem;
+      padding: 0 0 0 0.95rem;
     }
     .album__blurb {
       font-size: 0.8rem;
