@@ -144,9 +144,12 @@ const pieces = [
     margin-bottom: 0.9rem;
   }
 
+  /* Same focus treatment as the contact form's fields: a brass border plus a
+     soft ring, so focus isn't carried by a 1px color change alone. */
   .sheet-music__search:focus {
     outline: none;
     border-color: var(--brass);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
   }
 
   .sheet-music__list {

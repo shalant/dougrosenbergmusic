@@ -120,3 +120,20 @@ test.describe('press timeline and archive pages', () => {
     }
   });
 });
+
+// From 768px the fixed logo is 104px tall; the archive pages' "Back" link used
+// to start 20px above its bottom edge, so the two tap targets overlapped.
+test.describe('archive page header', () => {
+  for (const width of [768, 860]) {
+    test(`the back link clears the fixed logo at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/press');
+      const gap = await page.evaluate(() => {
+        const logo = document.querySelector('a.logo')!.getBoundingClientRect();
+        const back = document.querySelector('.archive__back')!.getBoundingClientRect();
+        return back.top - logo.bottom;
+      });
+      expect(gap).toBeGreaterThanOrEqual(0);
+    });
+  }
+});
