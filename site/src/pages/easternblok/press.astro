@@ -20,6 +20,7 @@ const reviewCount = archive.wall.length;
 ---
 
 <ArchiveLayout
+  tone="about"
   title="Eastern Blok press — Doug Rosenberg"
   description={`${archive.total} reviews, previews, features and listings about Eastern Blok and the Goran Ivanovic Group, ${archive.firstYear} to ${archive.lastYear}, each linked to its original.`}
   eyebrow="Archive · Eastern Blok · press"
@@ -54,12 +55,13 @@ const reviewCount = archive.wall.length;
     <PressYears years={archive.years} />
   </section>
 
-  <section class="archive__section" aria-labelledby="missing">
+  <section class="archive__section archive__wanted" aria-labelledby="missing">
     <h2 id="missing">Still missing</h2>
     <p>
       Newspaper archives are the biggest gap: the Chicago Tribune and Sun-Times, and the print Chicago Reader, were not searchable here
       (the Reader's website keeps only about a dozen pages that name the band). The tours with Snarky Puppy, 2008 and 2011, have dates
-      but no coverage yet. If you wrote about the band, or kept a clipping, <a href="/#contact">send it along</a>.
+      but no coverage yet. If you wrote about the band, or kept a clipping, I'd like to see it.
     </p>
+    <a class="wanted-cta" href="/#contact" data-cta="easternblok-send-clipping">Send a clipping</a>
   </section>
 </ArchiveLayout>

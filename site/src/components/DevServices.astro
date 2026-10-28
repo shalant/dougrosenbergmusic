@@ -273,7 +273,8 @@ const channels = [
     position: relative;
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    /* 15% taller than 16:9 (9 * 1.15 = 10.35), Doug's request 2026-10-27. */
+    aspect-ratio: 16 / 10.35;
     border-radius: 10px;
     background: var(--surface);
     border: 2px solid var(--brass);

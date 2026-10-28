@@ -14,17 +14,29 @@ interface Props {
   heading: string;
   draft?: boolean;
   back?: { href: string; label: string };
+  // Which home-page section color the page borrows (its --note-* variable):
+  // the eyebrow, the notehead on the staff and each section heading's note.
+  tone?: 'about' | 'highlights' | 'listen' | 'lessons' | 'contact' | 'dev';
 }
 
-const { title, description, eyebrow, heading, draft = true, back = { href: '/#press', label: 'Back to dougrosenberg.com' } } = Astro.props;
+const {
+  title,
+  description,
+  eyebrow,
+  heading,
+  draft = true,
+  back = { href: '/#press', label: 'Back to dougrosenberg.com' },
+  tone = 'highlights',
+} = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} home={false} noindex={draft}>
   <slot name="head" slot="head" />
-  <article class="archive">
+  <article class="archive" style={`--archive-tone: var(--note-${tone})`}>
     <div class="wrap">
       <header class="archive__header">
         <a class="archive__back" href={back.href}>&larr; {back.label}</a>
+        <div class="archive__staff staff-lines--strong" aria-hidden="true"><span class="archive__note"></span></div>
         <p class="eyebrow">{eyebrow}</p>
         <h1 class="archive__title">{heading}</h1>
         <slot name="lead" />
@@ -63,6 +75,31 @@ const { title, description, eyebrow, heading, draft = true, back = { href: '/#pr
     color: var(--brass);
   }
 
+  /* The home page's staff motif at the top of the page: five ruled lines
+     (the .staff-lines--strong gradient, cut to one staff's 49px) with a
+     notehead in the page's section color sitting on the middle line. */
+  .archive__staff {
+    position: relative;
+    height: 49px;
+    margin-bottom: 0.75rem;
+  }
+
+  .archive__note {
+    position: absolute;
+    left: 2.5rem;
+    top: 24px;
+    width: 17px;
+    height: 12px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: var(--archive-tone);
+    transform: rotate(-18deg);
+  }
+
+  .archive :global(.eyebrow) {
+    color: var(--archive-tone);
+  }
+
   .archive__title {
     font-family: var(--font-display);
     font-weight: 500;
@@ -90,9 +127,67 @@ const { title, description, eyebrow, heading, draft = true, back = { href: '/#pr
     margin: 0;
   }
 
+  /* A small notehead in the page's color leads every section heading, the
+     way the home page's staff dividers mark each section. */
+  .archive :global(.archive__section h2)::before {
+    content: '';
+    display: inline-block;
+    width: 0.5em;
+    height: 0.36em;
+    margin-right: 0.45em;
+    border-radius: 50%;
+    background: var(--archive-tone);
+    transform: rotate(-18deg);
+    vertical-align: 0.1em;
+  }
+
   .archive :global(.archive__section > p) {
     margin: 0;
     max-width: 62ch;
     color: var(--text-muted);
+  }
+</style>
+
+<style is:global>
+  /* "Still missing" reads as a want ad, not a progress note: a dashed amber
+     frame, a WANTED label, and the way to send a clipping as a real button. */
+  .archive__wanted {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 2px dashed var(--brass);
+    border-radius: 6px;
+    background: var(--brass-soft);
+    max-width: 62ch;
+  }
+
+  .archive__wanted::before {
+    content: 'Wanted: clippings';
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .archive__wanted > p {
+    color: var(--text);
+    font-size: 1.05rem;
+  }
+
+  .archive__wanted .wanted-cta {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 1.1rem;
+    border-radius: 999px;
+    background: var(--brass);
+    color: var(--bg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .archive__wanted .wanted-cta:hover,
+  .archive__wanted .wanted-cta:focus-visible {
+    filter: brightness(1.15);
   }
 </style>
