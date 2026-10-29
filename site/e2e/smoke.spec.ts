@@ -32,6 +32,26 @@ test.describe('smoke', () => {
     await expect(page.locator('.hero__title')).toHaveCSS('animation-name', 'none');
   });
 
+  // Step 5 of the UI plan (2026-10-28): the headline is solid text with only
+  // "TV" in the logo's test-card colors, not a gradient that left arbitrary
+  // letters green, and the one-time TV flicker is off under reduced motion.
+  test('hero headline is solid text with TV in test-card colors', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.hero__title')).toHaveCSS('background-image', 'none');
+    await expect(page.locator('.hero__title')).toHaveCSS('animation-name', 'fade-up');
+    for (const letter of ['.hero__tv-t', '.hero__tv-v']) {
+      expect(await page.locator(letter).evaluate((el) => getComputedStyle(el).backgroundImage)).toContain('linear-gradient');
+    }
+  });
+
+  test('the TV flicker does not run under reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    for (const letter of ['.hero__tv-t', '.hero__tv-v']) {
+      await expect(page.locator(letter)).toHaveCSS('animation-name', 'none');
+    }
+  });
+
   // On a phone held sideways the hero text started under the fixed header
   // and the headline ran into the hamburger (667x375, found 2026-10-25).
   test('hero text clears the fixed header on a landscape phone', async ({ page }) => {
