@@ -48,7 +48,9 @@ const {
 
 <style>
   .archive {
-    padding-block: clamp(6rem, 12vw, 8rem) clamp(3rem, 6vw, 5rem);
+    /* 7.75rem floor: from 768px the fixed logo is 104px tall (to y=116), and
+       the back link sat 20px under that, so their tap targets overlapped. */
+    padding-block: clamp(7.75rem, 12vw, 8rem) clamp(3rem, 6vw, 5rem);
     min-height: 100vh;
   }
 

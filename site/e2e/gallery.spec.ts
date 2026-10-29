@@ -26,6 +26,28 @@ test.describe('gallery', () => {
     await expect(page.locator('[data-lightbox-counter]')).toHaveText(/1 \/ \d+/);
   });
 
+  // Added 2026-10-28 after the site audit: the viewer was a bare div with no
+  // dialog role, no focus move, and the page scrolled behind it.
+  test('the lightbox is a modal dialog that takes focus, holds Tab, and scrolls nothing behind it', async ({ page }) => {
+    await page.locator('.reel-panel').first().click({ force: true });
+    const lightbox = page.locator('[data-lightbox]');
+    await expect(lightbox).toBeVisible();
+    await expect(lightbox).toHaveAttribute('role', 'dialog');
+    await expect(lightbox).toHaveAttribute('aria-modal', 'true');
+    await expect(page.locator('[data-lightbox-close]')).toBeFocused();
+    expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
+
+    // Shift+Tab from the first control wraps to the last, Tab wraps back.
+    await page.keyboard.press('Shift+Tab');
+    await expect(page.locator('[data-lightbox-next]')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.locator('[data-lightbox-close]')).toBeFocused();
+
+    await page.keyboard.press('Escape');
+    await expect(lightbox).toBeHidden();
+    expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+  });
+
   test('Escape closes the lightbox', async ({ page }) => {
     await page.locator('.reel-panel').first().click({ force: true });
     await expect(page.locator('[data-lightbox]')).toBeVisible();
