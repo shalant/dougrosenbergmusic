@@ -35,7 +35,7 @@ const records = [
 
   <div class="hero__content wrap">
     <p class="hero__name">Doug Rosenberg</p>
-    <h1 class="hero__title">Better Than&nbsp;TV<span class="visually-hidden">:</span> <span class="hero__sub">original music composed and improvised</span></h1>
+    <h1 class="hero__title">Better Than&nbsp;<span class="hero__tv"><span class="hero__tv-t">T</span><span class="hero__tv-v">V</span></span><span class="visually-hidden">:</span> <span class="hero__sub">original music composed and improvised</span></h1>
 
     <div class="hero__ctas">
       <a href="#listen" class="cta cta-primary" data-cta="hero-primary">Listen to the music <span class="cta__arrow" aria-hidden="true">→</span></a>
@@ -212,15 +212,46 @@ const records = [
     line-height: 1;
     letter-spacing: -0.015em;
     margin: 0;
-    /* smoke-tinted headline, shimmering within the site's own glow
-       family rather than a second competing hue */
-    background: linear-gradient(100deg, var(--text) 0%, var(--glow) 32%, var(--text) 58%, #9fe8cd 80%, var(--text) 100%);
-    background-size: 300% 100%;
+    /* Solid text, with "TV" the one colored thing in it (2026-10-28). The
+       old green shimmer slid across the whole title and left whichever
+       letters it happened to stop on green; the color now sits on the
+       two letters the logo's test card colors. */
+    color: var(--text);
+    animation: fade-up 0.7s ease-out 0.15s both;
+  }
+
+  /* T and V wear the logo's test card: each letter is split at its middle,
+     T blue over amber and V green over purple, the same pairs as the D and
+     R in Logo.astro (hard stop, so it reads as two bars, not a gradient). */
+  .hero__tv-t,
+  .hero__tv-v {
+    background: linear-gradient(to bottom, var(--bar-top) 0 50%, var(--bar-bottom) 50% 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    animation: fade-up 0.7s ease-out 0.15s both, smoke-text 16s ease-in-out infinite;
+    /* One-time "TV switching on": the letters sit dim while the headline
+       fades up, then flicker to full brightness. Never repeats. */
+    animation: tv-on 0.9s steps(1, end) 0.85s backwards;
+  }
+
+  .hero__tv-t {
+    --bar-top: #7fb0ff;
+    --bar-bottom: var(--brass);
+  }
+
+  .hero__tv-v {
+    --bar-top: var(--note-highlights);
+    --bar-bottom: var(--note-contact);
+  }
+
+  @keyframes tv-on {
+    0% { opacity: 0.15; filter: brightness(2.4); }
+    14% { opacity: 1; filter: brightness(1); }
+    26% { opacity: 0.3; filter: brightness(1.8); }
+    40% { opacity: 1; filter: brightness(1.5); }
+    55% { opacity: 0.6; filter: brightness(1); }
+    70%, 100% { opacity: 1; filter: none; }
   }
 
   /* The supporting line under the album-title headline: same glow and
@@ -247,11 +278,6 @@ const records = [
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes smoke-text {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
   }
 
   .hero__ctas {
@@ -362,11 +388,12 @@ const records = [
     /* Lighthouse mobile audit: 50/100, traced to ~5.9s of paint/composite
        work under throttled CPU (desktop: 95/100, no such cost - so this is
        purely a lower-end-hardware concern, not a real bug). The haze
-       blobs' drift and the title's shimmer are what run continuously here;
-       freezing them to their resting frame (not hiding them - the haze
-       glow and gradient title still render, just without the continuous
-       repaint/recomposite) keeps the atmosphere while cutting the measured
-       cost. Desktop keeps the full animated version untouched. */
+       blobs' drift and the title's shimmer were what ran continuously here;
+       the haze is frozen to its resting frame (not hidden - the glow still
+       renders, just without the continuous repaint/recomposite), which
+       keeps the atmosphere while cutting the measured cost. The title's
+       shimmer was removed everywhere on 2026-10-28; its remaining motion
+       is the fade-up and the one-time TV flicker. */
     .hero__haze::before,
     .hero__haze::after {
       animation: none;
@@ -511,6 +538,8 @@ const records = [
   @media (prefers-reduced-motion: reduce) {
     .hero__name,
     .hero__title,
+    .hero__tv-t,
+    .hero__tv-v,
     .hero__haze::before,
     .hero__haze::after {
       animation: none;
