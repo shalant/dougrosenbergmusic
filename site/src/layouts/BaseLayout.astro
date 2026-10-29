@@ -181,7 +181,10 @@ const websiteSchema = {
 		</script>
 	</head>
 	<body>
-		<Logo home={home} />
+		{/* A banner landmark for the fixed logo, so it isn't page content outside every landmark (axe "region", 2026-10-28). The logo is fixed-position, so this wrapper takes no space. */}
+		<header>
+			<Logo home={home} />
+		</header>
 		{home && <StaffNav />}
 		<main>
 			<slot />

@@ -228,7 +228,9 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
   }
 
   .liner__track--dev .liner__num {
-    color: rgba(224, 95, 106, 0.75);
+    /* Solid --note-dev: the old 75% alpha red measured 3.6:1 on the footer's
+       background (axe, 2026-10-28); 4.5:1 is the AA minimum for this size. */
+    color: var(--note-dev);
     padding-top: 0.15rem;
   }
 
