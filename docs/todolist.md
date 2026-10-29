@@ -104,35 +104,29 @@ Plan: `docs/ui-85-plan-2026-10-25.md`; re-score (about 78) in `docs/ui-assessmen
       the knock-on: seven lights pushed the remote's left arrow 32px off a 320px screen (test
       fails without the fix). Re-verified: 173 e2e passing.
 
-## Hazy hero: approved, port pending (2026-10-29)
+## Hazy hero: ported (2026-10-29)
 
-Doug approved the look on 2026-10-29 ("i like the new hazy hero") and will say when to start,
-planned for the evening. Nothing is in the site yet: it exists only as a private Artifact
-preview (https://claude.ai/artifact/Qpga9oKkn3NXFA2FyW9gfW). Its source is saved as
-`docs/hero-haze-preview-2026-10-29.html`: open it in a browser to compare against the port (it
-loads `site/public/images/hero.webp`). Port to `site/src/components/HeroGraded.astro` on its own
-branch.
+Doug approved the look on 2026-10-29 ("i like the new hazy hero") and asked for these settings:
+Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drifting. Ported to
+`site/src/components/HeroGraded.astro` on branch `hazy-hero-2026-10-29`. The preview source stays in
+`docs/hero-haze-preview-2026-10-29.html` for comparison (it loads `site/public/images/hero.webp`).
 
-- [ ] **Haze:** four layers, not seven: orange glow, right teal glow, one cool wisp, and the
-      left teal patch Doug likes ("alien teal glow", keep it subtle). Strength 0.80. Plain
-      gradients, no blur filter, normal blending, no masks; the scrim already darkens behind the
-      headline. Fix the left teal patch's opacity so it can't get brighter.
-- [ ] **Grey blobs:** two SVG shapes (different outlines and noise), filter drawn once, moved with
-      transform and opacity on 36s and 47s loops. No per-frame filter animation (that was the
-      choppy version).
-- [ ] **Headline shading:** three noise tiles clipped to "Better Than" (T and V keep their
-      test-card colors), sliding at different speeds on a 28s loop. Check contrast with axe.
-- [ ] **Tablet and phone (1024px and under):** haze and blobs frozen, headline shading still, plus
-      one slow 40s cross-fade between two static smoke layers. All still under reduced motion.
-- [ ] **Checks:** Playwright test for the frozen and reduced-motion states; full suite;
-      Lighthouse desktop and mobile (home mobile LCP is already near its gate: 86 on 2026-10-29
-      with or without these changes); axe.
-- [ ] **Docs:** replace "Hero motion: taken out, not decided" in `docs/DESIGN_NOTES.md` with what
-      shipped and close PR #102 (it is now obsolete).
+- [x] **Haze:** four layers (orange glow, right teal glow, cool wisp, left teal patch), plain
+      gradients, no blur filter, normal blending, no masks, strength 0.65 via `--haze-strength`.
+- [x] **Grey blobs:** two SVG shapes, filter drawn once, transform and opacity only (36s and 47s).
+- [x] **Headline shading:** three noise tiles clipped to "Better Than" (T and V keep their colors),
+      28s loop, guarded with `@supports (background-clip: text)`.
+- [x] **1024px and under:** drifting haze swapped for two static layers cross-fading over 40s, first
+      blob frozen, second dropped, headline shading still. All still under reduced motion.
+- [x] **Tests:** `site/e2e/hero-haze.spec.ts` (desktop animates; resting tier at 1024, 768, 390;
+      still under reduced motion at 1440 and 390). Fails on the old hero, passes now.
+- [x] **Docs:** "Update, 2026-10-29" under "Hero motion" in `docs/DESIGN_NOTES.md`.
+- [ ] **Check on a real laptop and phone:** the frame rates below are headless Chromium with no
+      GPU. If desktop feels choppy, lower the strength or drop a layer.
 - [ ] **Still undecided:** the floating "now playing" chips from the sax bell (Doug liked them;
       he hasn't said whether to bring them back).
 - Measured in headless Chromium with no GPU (relative numbers only): everything on 12 fps vs 43
-  for the photo alone; the old seven-layer haze was 6-9 fps. Re-measure on a real laptop.
+  for the photo alone; the old seven-layer haze was 6-9 fps.
 
 ## Order of operations
 

@@ -28,14 +28,64 @@ const records = [
 
 <header id="hero" class="hero">
   <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" />
-  <div class="hero__haze" aria-hidden="true"></div>
+  <div class="hero__haze" aria-hidden="true">
+    <div class="haze-blob haze-blob--wisp"></div>
+    <div class="haze-blob haze-blob--glow"></div>
+    <div class="haze-blob haze-blob--teal"></div>
+    <div class="haze-blob haze-blob--patch"></div>
+  </div>
+  <div class="hero__smoke" aria-hidden="true">
+    <svg class="hero__blob hero__blob--a" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet" focusable="false">
+      <defs>
+        <radialGradient id="hero-blob-fill-a" cx="50%" cy="50%" r="55%">
+          <stop offset="0" stop-color="#9aa2b0" stop-opacity="0.42" />
+          <stop offset="0.6" stop-color="#737c8c" stop-opacity="0.22" />
+          <stop offset="1" stop-color="#6b7486" stop-opacity="0" />
+        </radialGradient>
+        <filter id="hero-blob-turb-a" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.008" numOctaves="3" seed="4" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="190" xChannelSelector="R" yChannelSelector="G" result="d" />
+          <feGaussianBlur in="d" stdDeviation="3" result="b" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.011 0.02" numOctaves="4" seed="9" result="t" />
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.6 0 0 0 -0.7" result="tx" />
+          <feComposite in="b" in2="tx" operator="arithmetic" k1="1.3" k2="0.3" k3="0" k4="0" />
+        </filter>
+      </defs>
+      <g filter="url(#hero-blob-turb-a)">
+        <path d="M220 120 C340 40 520 90 600 200 C700 330 640 470 560 560 C470 660 300 700 210 600 C120 500 160 380 130 280 C110 200 150 150 220 120 Z" fill="url(#hero-blob-fill-a)" />
+        <path d="M470 250 C560 230 650 300 640 390 C630 470 540 500 470 460 C410 420 400 280 470 250 Z" fill="url(#hero-blob-fill-a)" />
+      </g>
+    </svg>
+    <svg class="hero__blob hero__blob--b" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet" focusable="false">
+      <defs>
+        <radialGradient id="hero-blob-fill-b" cx="50%" cy="50%" r="55%">
+          <stop offset="0" stop-color="#9aa2b0" stop-opacity="0.42" />
+          <stop offset="0.6" stop-color="#737c8c" stop-opacity="0.22" />
+          <stop offset="1" stop-color="#6b7486" stop-opacity="0" />
+        </radialGradient>
+        <filter id="hero-blob-turb-b" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.005 0.007" numOctaves="3" seed="17" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="210" xChannelSelector="G" yChannelSelector="R" result="d" />
+          <feGaussianBlur in="d" stdDeviation="3" result="b" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.014 0.018" numOctaves="4" seed="31" result="t" />
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.6 0 0 0 -0.7" result="tx" />
+          <feComposite in="b" in2="tx" operator="arithmetic" k1="1.3" k2="0.3" k3="0" k4="0" />
+        </filter>
+      </defs>
+      <g filter="url(#hero-blob-turb-b)">
+        <path d="M300 90 C430 60 590 150 640 290 C690 430 600 590 470 640 C340 690 200 600 160 470 C120 340 180 130 300 90 Z" fill="url(#hero-blob-fill-b)" />
+        <path d="M180 360 C250 300 360 320 380 410 C400 500 300 560 220 520 C150 490 130 410 180 360 Z" fill="url(#hero-blob-fill-b)" />
+      </g>
+    </svg>
+  </div>
+  <div class="hero__rest" aria-hidden="true"><div class="hero__rest-a"></div><div class="hero__rest-b"></div></div>
   <div class="hero__scan" aria-hidden="true"></div>
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
 
   <div class="hero__content wrap">
     <p class="hero__name">Doug Rosenberg</p>
-    <h1 class="hero__title">Better Than&nbsp;<span class="hero__tv"><span class="hero__tv-t">T</span><span class="hero__tv-v">V</span></span><span class="visually-hidden">:</span> <span class="hero__sub">original music composed and improvised</span></h1>
+    <h1 class="hero__title"><span class="hero__main">Better Than&nbsp;</span><span class="hero__tv"><span class="hero__tv-t">T</span><span class="hero__tv-v">V</span></span><span class="visually-hidden">:</span> <span class="hero__sub">original music composed and improvised</span></h1>
 
     <div class="hero__ctas">
       <a href="#listen" class="cta cta-primary" data-cta="hero-primary">Listen to the music <span class="cta__arrow" aria-hidden="true">→</span></a>
@@ -97,38 +147,43 @@ const records = [
     filter: sepia(0.18) saturate(1.08) brightness(1.22) contrast(1.06);
   }
 
-  /* the studio haze already baked into hero.webp (right side of the frame)
-     is static pixels - this drifts two soft blurred glows over that same
-     region so it reads as living smoke instead of a still photo. Tuned
-     stronger/faster than a purely decorative hero needs, since this haze
-     now shares the frame with the content block instead of being the only
-     thing happening in it. */
+  /* Smoky haze (ported 2026-10-29 from docs/hero-haze-preview-2026-10-29.html,
+     "Lean haze" at strength 0.65, smoke blob and headline shading on). The
+     studio haze baked into hero.webp is static pixels; these layers drift over
+     it so it reads as living smoke. Four soft gradients (no blur filter, no
+     blend mode, no masks: the scrim already darkens the headline area), two
+     torn grey smoke shapes, and noise clipped to the headline letters. Only
+     transform and opacity animate, which stays on the GPU; the filtered SVG
+     shapes are drawn once. Travel is in vw so it is a fixed share of the frame.
+     --haze-strength scales every layer. */
+  .hero {
+    --haze-strength: 0.65;
+  }
+
   .hero__haze {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    mix-blend-mode: screen;
-    opacity: 0.8;
+    opacity: var(--haze-strength);
   }
 
-  .hero__haze::before,
-  .hero__haze::after {
-    content: '';
+  .haze-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(40px);
+    will-change: transform;
   }
 
-  .hero__haze::before {
+  .haze-blob--glow {
     width: 42vw;
     height: 42vw;
     top: 8%;
     right: 6%;
-    background: radial-gradient(circle, rgba(224, 121, 79, 0.28), transparent 70%);
+    background: radial-gradient(circle, rgba(224, 121, 79, 0.2), transparent 70%);
     animation: haze-drift-a 13s ease-in-out infinite;
   }
 
-  .hero__haze::after {
+  /* the right teal glow */
+  .haze-blob--teal {
     width: 38vw;
     height: 38vw;
     top: 28%;
@@ -137,14 +192,115 @@ const records = [
     animation: haze-drift-b 15s ease-in-out infinite;
   }
 
+  /* the cool wisp across the top */
+  .haze-blob--wisp {
+    width: 70vw;
+    height: 15vw;
+    top: 14%;
+    left: -8%;
+    background: radial-gradient(ellipse, rgba(190, 208, 232, 0.2), transparent 68%);
+    transform: rotate(-8deg);
+    animation: haze-wisp 26s ease-in-out infinite;
+  }
+
+  /* the alien-green patch on the left, kept subtle (Doug likes it) */
+  .haze-blob--patch {
+    width: 30vw;
+    height: 30vw;
+    top: 36%;
+    left: 2%;
+    background: radial-gradient(circle, rgba(82, 209, 166, 0.15), transparent 70%);
+    animation: haze-drift-b 19s ease-in-out infinite reverse;
+  }
+
   @keyframes haze-drift-a {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-7%, 8%) scale(1.28); }
+    0%, 100% { translate: 0 0; scale: 1; }
+    50% { translate: -26vw 14vw; scale: 1.45; }
   }
 
   @keyframes haze-drift-b {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(8%, -6%) scale(0.82); }
+    0%, 100% { translate: 0 0; scale: 1; }
+    50% { translate: 24vw -13vw; scale: 0.7; }
+  }
+
+  @keyframes haze-wisp {
+    0%, 100% { translate: -24vw 0; }
+    50% { translate: 34vw 10vw; }
+  }
+
+  /* Two irregular grey shapes, each torn into its own outline and streaked by
+     noise (feTurbulence + feDisplacementMap, drawn once, never re-filtered).
+     The flow comes from the two layers swinging, turning and cross-fading. */
+  .hero__smoke {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--haze-strength);
+  }
+
+  .hero__blob {
+    position: absolute;
+    left: 36%;
+    top: -6%;
+    width: 64%;
+    height: 112%;
+    overflow: visible;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+
+  .hero__blob--a { animation: haze-blob-a 36s ease-in-out infinite; }
+  .hero__blob--b { animation: haze-blob-b 47s ease-in-out infinite; }
+
+  @keyframes haze-blob-a {
+    0%, 100% { translate: -14vw 6vw; rotate: -16deg; scale: 1; opacity: 0.9; }
+    50% { translate: 20vw -14vw; rotate: 20deg; scale: 1.2; opacity: 0.45; }
+  }
+
+  @keyframes haze-blob-b {
+    0%, 100% { translate: 16vw -4vw; rotate: 14deg; scale: 1.15; opacity: 0.4; }
+    50% { translate: -18vw 12vw; rotate: -22deg; scale: 0.9; opacity: 0.95; }
+  }
+
+  /* Resting smoke for the 1024px-and-under tier: two static gradient layers
+     cross-fading over 40s, one opacity animation on two layers and nothing
+     else. Hidden on desktop, where the drifting layers above do the work. */
+  .hero__rest {
+    display: none;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--haze-strength);
+  }
+
+  .hero__rest-a,
+  .hero__rest-b {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__rest-a {
+    opacity: 0.6;
+    animation: haze-rest 40s ease-in-out infinite alternate;
+    background:
+      radial-gradient(40vw 30vw at 78% 24%, rgba(224, 121, 79, 0.16), transparent 70%),
+      radial-gradient(34vw 26vw at 70% 70%, rgba(82, 209, 166, 0.12), transparent 70%),
+      radial-gradient(40vw 14vw at 25% 16%, rgba(190, 208, 232, 0.12), transparent 70%);
+  }
+
+  .hero__rest-b {
+    opacity: 0.5;
+    animation: haze-rest 40s ease-in-out infinite alternate-reverse;
+    background:
+      radial-gradient(38vw 28vw at 60% 42%, rgba(224, 121, 79, 0.13), transparent 70%),
+      radial-gradient(30vw 30vw at 88% 56%, rgba(82, 209, 166, 0.12), transparent 70%),
+      radial-gradient(34vw 26vw at 14% 52%, rgba(82, 209, 166, 0.12), transparent 70%),
+      radial-gradient(44vw 14vw at 55% 82%, rgba(190, 208, 232, 0.1), transparent 70%);
+  }
+
+  @keyframes haze-rest {
+    from { opacity: 0.1; }
+    to { opacity: 1; }
   }
 
   /* the broadcast grade — scanlines and a soft screen-shaped vignette,
@@ -218,6 +374,32 @@ const records = [
        two letters the logo's test card colors. */
     color: var(--text);
     animation: fade-up 0.7s ease-out 0.15s both;
+  }
+
+  /* Smoke shading on "Better Than": three seamless noise tiles clipped to
+     the letters. The base tile runs from grey to near-white, the top tiles
+     add white wisps, and they slide in different directions. T and V keep
+     their test card colors. Guarded so a browser without background-clip:
+     text keeps the plain white title instead of transparent letters. */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .hero__main {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02 0.04' numOctaves='5' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.8 0 0 0 -0.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007 0.014' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.4 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005 0.01' numOctaves='4' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0.3 1 0 0 0 0.31 1.02 0 0 0 0.34 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+      background-size: 30vw 15vw, 50vw 25vw, 38vw 19vw;
+      background-repeat: repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: haze-text 28s linear infinite;
+    }
+  }
+
+  @keyframes haze-text {
+    from { background-position: 0 0, 0 0, 0 0; }
+    to { background-position: -60vw 0, 100vw 0, -76vw 0; }
   }
 
   /* T and V wear the logo's test card: each letter is split at its middle,
@@ -387,15 +569,28 @@ const records = [
   @media (max-width: 1024px) {
     /* Lighthouse mobile audit: 50/100, traced to ~5.9s of paint/composite
        work under throttled CPU (desktop: 95/100, no such cost - so this is
-       purely a lower-end-hardware concern, not a real bug). The haze
-       blobs' drift and the title's shimmer were what ran continuously here;
-       the haze is frozen to its resting frame (not hidden - the glow still
-       renders, just without the continuous repaint/recomposite), which
-       keeps the atmosphere while cutting the measured cost. The title's
-       shimmer was removed everywhere on 2026-10-28; its remaining motion
-       is the fade-up and the one-time TV flicker. */
-    .hero__haze::before,
-    .hero__haze::after {
+       purely a lower-end-hardware concern, not a real bug). The moving
+       layers are what ran continuously here, so at this size the drifting
+       haze is swapped for the two slow cross-fading resting layers, the
+       first smoke shape is frozen mid-frame, the second is dropped, and the
+       headline shading holds still. The smoke stays; the continuous
+       repaint goes. The title's shimmer was removed everywhere on
+       2026-10-28; its remaining motion is the fade-up and the one-time TV
+       flicker. */
+    .hero__haze {
+      display: none;
+    }
+    .hero__rest {
+      display: block;
+    }
+    .hero__blob--a {
+      animation: none;
+      opacity: 0.6;
+    }
+    .hero__blob--b {
+      display: none;
+    }
+    .hero__main {
       animation: none;
     }
     .hero__title {
@@ -540,9 +735,15 @@ const records = [
     .hero__title,
     .hero__tv-t,
     .hero__tv-v,
-    .hero__haze::before,
-    .hero__haze::after {
+    .haze-blob,
+    .hero__main,
+    .hero__rest-a,
+    .hero__rest-b {
       animation: none;
+    }
+    .hero__blob {
+      animation: none;
+      opacity: 0.7;
     }
     .hero__record {
       transition: none;
