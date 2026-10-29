@@ -1,0 +1,465 @@
+<title>Hero Haze Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400&family=Work+Sans:wght@400;600&display=swap">
+<style>
+  /* Layout: the real hero in a 16:10 frame (content block right of centre, photo full bleed),
+     with a control strip underneath to compare haze variants. Tokens copied from the site's global.css. */
+  :root {
+    --bg: #0a0e17;
+    --panel: #131a26;
+    --text: #e9edf5;
+    --text-muted: rgba(233, 237, 245, 0.62);
+    --glow: #52d1a6;
+    --brass: #cf9a4f;
+    --line: rgba(233, 237, 245, 0.16);
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-body: 'Work Sans', -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 20px 40px;
+  }
+
+  .page { max-width: 1280px; margin: 0 auto; display: grid; gap: 18px; }
+
+  h1 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; margin: 0; text-wrap: balance; }
+  .lede { margin: 4px 0 0; color: var(--text-muted); max-width: 68ch; }
+
+  /* ---- hero replica ---- */
+  .hero {
+    position: relative;
+    container-type: inline-size;
+    aspect-ratio: 16 / 10;
+    max-width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    border-radius: 4px;
+    outline: 1px solid var(--line);
+    outline-offset: -1px;
+  }
+  .hero > * { position: absolute; }
+  /* the photo is a wrapper so the base picture and the smoke copies share one crop and one grade */
+  .hero__photo {
+    inset: 0;
+    transform: scale(1.08) translateX(-5%);
+    filter: sepia(0.18) saturate(1.08) brightness(1.22) contrast(1.06);
+  }
+  .hero__photo img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center 14%;
+    max-width: none;
+  }
+
+  /* Photo smoke: copies of the photo, masked to the smoke in its top right (clear of his shoulder).
+     One copy is sharp and one is pre-blurred; they cross-fade while drifting and swelling, which reads
+     as the smoke shifting and softening. Only transform and opacity animate, so it stays cheap. */
+  .smoke {
+    inset: 0;
+    opacity: 0;
+    mix-blend-mode: screen;
+    -webkit-mask-image: radial-gradient(ellipse 30% 42% at 80% 27%, #000 28%, transparent 100%);
+            mask-image: radial-gradient(ellipse 30% 42% at 80% 27%, #000 28%, transparent 100%);
+  }
+  .smoke img { transform-origin: 80% 27%; opacity: 0.7; }
+  .smoke--sharp img { filter: brightness(1.8) contrast(1.15); animation: smoke-a 15s ease-in-out infinite; }
+  .smoke--soft img  { filter: brightness(1.8) contrast(1.1) blur(7px); animation: smoke-b 21s ease-in-out infinite; }
+  .hero[data-mode="smoke"] .smoke { opacity: var(--strength, 0.8); }
+  .hero[data-mode="smoke"] .haze { display: none; }
+  @keyframes smoke-a {
+    0%,100% { translate: 0 0; scale: 1; opacity: 0.95; }
+    50% { translate: 2.6cqw -1.8cqw; scale: 1.08; opacity: 0.3; }
+  }
+  @keyframes smoke-b {
+    0%,100% { translate: -2.2cqw 1.8cqw; scale: 1.06; opacity: 0.35; }
+    50% { translate: 2cqw 2cqw; scale: 0.96; opacity: 1; }
+  }
+
+  /* ---- the haze: everything between the photo and the grade ---- */
+  .haze {
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: calc(var(--strength, 0.8));
+    /* thins the haze to about a third behind the headline block so contrast on the text holds */
+    /* and to about 40% in the top right, where the photo's own smoke is already bright */
+    -webkit-mask-image: radial-gradient(ellipse 36% 42% at 72% 50%, rgba(0,0,0,0.3), #000 100%), radial-gradient(ellipse 34% 40% at 88% 14%, rgba(0,0,0,0.4), #000 100%);
+            mask-image: radial-gradient(ellipse 36% 42% at 72% 50%, rgba(0,0,0,0.3), #000 100%), radial-gradient(ellipse 34% 40% at 88% 14%, rgba(0,0,0,0.4), #000 100%);
+    -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+  }
+  .blob { position: absolute; border-radius: 50%; will-change: transform; }
+
+  /* the two blobs the live site has now */
+  .b-a { width: 42cqw; height: 42cqw; top: 8%; right: 6%; filter: blur(40px);
+         background: radial-gradient(circle, rgba(224,121,79,0.28), transparent 70%);
+         animation: drift-a 13s ease-in-out infinite; }
+  .b-b { width: 38cqw; height: 38cqw; top: 28%; right: 14%; filter: blur(40px);
+         background: radial-gradient(circle, rgba(82,209,166,0.22), transparent 70%);
+         animation: drift-b 15s ease-in-out infinite; }
+
+  /* added for the wider haze: long cool wisps across the frame, plus a warm patch low left */
+  .b-c { width: 70cqw; height: 15cqw; top: 14%; left: -8%; filter: blur(34px);
+         background: radial-gradient(ellipse, rgba(190,208,232,0.20), transparent 68%);
+         transform: rotate(-8deg); animation: wisp-a 26s ease-in-out infinite; }
+  .b-d { width: 64cqw; height: 13cqw; top: 46%; left: 16%; filter: blur(36px);
+         background: radial-gradient(ellipse, rgba(190,208,232,0.17), transparent 68%);
+         transform: rotate(5deg); animation: wisp-b 31s ease-in-out infinite; }
+  .b-e { width: 58cqw; height: 14cqw; top: 70%; left: -12%; filter: blur(38px);
+         background: radial-gradient(ellipse, rgba(207,154,79,0.20), transparent 68%);
+         transform: rotate(-4deg); animation: wisp-c 23s ease-in-out infinite; }
+  .b-f { width: 30cqw; height: 30cqw; top: 36%; left: 2%; filter: blur(44px);
+         background: radial-gradient(circle, rgba(82,209,166,0.15), transparent 70%);
+         animation: drift-b 19s ease-in-out infinite reverse; }
+  .b-g { width: 52cqw; height: 12cqw; top: 2%; right: -10%; filter: blur(30px);
+         background: radial-gradient(ellipse, rgba(224,121,79,0.16), transparent 68%);
+         transform: rotate(7deg); animation: wisp-a 29s ease-in-out infinite reverse; }
+
+  /* travel is in cqw so it is a fixed share of the frame, large enough to read through the blur */
+  @keyframes drift-a { 0%,100% { translate: 0 0; scale: 1; } 50% { translate: -26cqw 14cqw; scale: 1.45; } }
+  @keyframes drift-b { 0%,100% { translate: 0 0; scale: 1; } 50% { translate: 24cqw -13cqw; scale: 0.7; } }
+  @keyframes wisp-a  { 0%,100% { translate: -24cqw 0; } 50% { translate: 34cqw 10cqw; } }
+  @keyframes wisp-b  { 0%,100% { translate: 26cqw 0; }  50% { translate: -34cqw -10cqw; } }
+  @keyframes wisp-c  { 0%,100% { translate: -20cqw 6cqw; } 50% { translate: 38cqw -8cqw; } }
+
+  .hero[data-mode="off"] .haze { display: none; }
+
+  /* Lean haze: the same look for less work. Four layers instead of seven, no blur filter on them
+     (the gradients are already soft), normal blending instead of screen, and no masks. The scrim
+     above the haze already darkens the area behind the headline, so the mask was doing that twice. */
+  .hero[data-mode="lean"] .haze { mix-blend-mode: normal; -webkit-mask-image: none; mask-image: none; }
+  .hero[data-mode="lean"] .blob { filter: none; }
+  .hero[data-mode="lean"] .b-d, .hero[data-mode="lean"] .b-e, .hero[data-mode="lean"] .b-g { display: none; }
+  .hero[data-mode="lean"] .b-a { background: radial-gradient(circle, rgba(224,121,79,0.2), transparent 70%); }
+  .hero[data-mode="lean"] .blob-layer { -webkit-mask-image: none; mask-image: none; }
+  .hero[data-mode="current"] .b-c, .hero[data-mode="current"] .b-d, .hero[data-mode="current"] .b-e,
+  .hero[data-mode="current"] .b-f, .hero[data-mode="current"] .b-g { display: none; }
+  .hero[data-play="frozen"] .blob, .hero[data-play="frozen"] .smoke img { animation: none; }
+
+  /* ---- smoke blobs: two irregular grey shapes, each torn into a different outline and streaked by
+     noise (SVG feTurbulence + feDisplacementMap, drawn once and never re-filtered). The flow comes
+     from the two layers swinging, turning and cross-fading on the GPU, which replaced the old
+     per-frame turbulence animation that made the motion choppy. Normal blending instead of screen,
+     and a mask that thins them in the top right where the photo's own smoke is already bright. ---- */
+  .blob-layer {
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--strength, 0.45);
+    -webkit-mask-image: radial-gradient(ellipse 34% 40% at 88% 14%, rgba(0,0,0,0.3), #000 100%);
+            mask-image: radial-gradient(ellipse 34% 40% at 88% 14%, rgba(0,0,0,0.3), #000 100%);
+  }
+  .blob-smoke { position: absolute; left: 36%; top: -6%; width: 64%; height: 112%; overflow: visible; transform-origin: center; will-change: transform, opacity; }
+  .blob-smoke--a { animation: blob-a 36s ease-in-out infinite; }
+  .blob-smoke--b { animation: blob-b 47s ease-in-out infinite; }
+  @keyframes blob-a {
+    0%,100% { translate: -14cqw 6cqw; rotate: -16deg; scale: 1; opacity: 0.9; }
+    50% { translate: 20cqw -14cqw; rotate: 20deg; scale: 1.2; opacity: 0.45; }
+  }
+  @keyframes blob-b {
+    0%,100% { translate: 16cqw -4cqw; rotate: 14deg; scale: 1.15; opacity: 0.4; }
+    50% { translate: -18cqw 12cqw; rotate: -22deg; scale: 0.9; opacity: 0.95; }
+  }
+  .hero[data-blob="off"] .blob-layer { display: none; }
+  .hero[data-play="frozen"] .blob-smoke { animation: none; opacity: 0.7; }
+
+  /* ---- headline smoke shading: two seamless noise tiles clipped to the letters. The base tile runs
+     from grey to near-white, the top tile adds white wisps. They slide in opposite directions. ---- */
+  .t-main { color: var(--text); }
+  .hero[data-textsmoke="on"] .t-main {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02 0.04' numOctaves='5' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.8 0 0 0 -0.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007 0.014' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.4 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005 0.01' numOctaves='4' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0.3 1 0 0 0 0.31 1.02 0 0 0 0.34 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 30cqw 15cqw, 50cqw 25cqw, 38cqw 19cqw;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: text-smoke 28s linear infinite;
+  }
+  .hero[data-play="frozen"][data-textsmoke="on"] .t-main { animation: none; }
+  @keyframes text-smoke {
+    from { background-position: 0 0, 0 0, 0 0; }
+    to { background-position: -60cqw 0, 100cqw 0, -76cqw 0; }
+  }
+
+  /* ---- grade and content, same as the live hero ---- */
+  .hero__scan { inset: 0; background: repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px); mix-blend-mode: overlay; pointer-events: none; }
+  .hero__vig { inset: 0; box-shadow: inset 0 0 18cqw 4cqw rgba(6,9,15,0.55); pointer-events: none; }
+  .hero__scrim { inset: 0; background:
+      linear-gradient(180deg, rgba(10,14,23,0.1) 0%, rgba(10,14,23,0.25) 55%, rgba(10,14,23,0.85) 100%),
+      radial-gradient(ellipse 62% 58% at 68% 52%, rgba(10,14,23,0.6), transparent 72%); }
+
+  .hero__content { left: 46%; right: 4cqw; top: 50%; transform: translateY(-50%); }
+  .hero__name { margin: 0 0 0.5em; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(0.9rem, 1.6cqw, 1.45rem); color: var(--brass); }
+  .hero__title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.9rem, 6.6cqw, 6rem); line-height: 1; letter-spacing: -0.015em; }
+  .tv-t, .tv-v { background: linear-gradient(to bottom, var(--top) 0 50%, var(--bot) 50% 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+  .tv-t { --top: #7fb0ff; --bot: var(--brass); }
+  .tv-v { --top: #4fb894; --bot: #b287df; }
+  .hero__sub { display: block; margin-top: 0.4em; font-size: clamp(0.95rem, 2.3cqw, 2.1rem); line-height: 1.15; font-style: italic; font-weight: 500; color: var(--glow); text-wrap: balance; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 3cqw; }
+  .cta { display: inline-flex; align-items: center; padding: 0.7em 1.5em; border-radius: 999px; font-size: clamp(0.7rem, 1.2cqw, 0.9rem); font-weight: 600; }
+  .cta-primary { background: var(--glow); color: var(--bg); }
+  .cta-secondary { border: 1px solid rgba(233,237,245,0.22); background: rgba(19,26,38,0.4); }
+
+  /* ---- device views: the same hero in a tablet-wide or phone-wide frame ---- */
+  .stage { display: flex; justify-content: center; }
+  .stage[data-device="desktop"] .hero { width: 100%; }
+  .stage[data-device="tablet"] .hero { width: 768px; max-width: 100%; aspect-ratio: 3 / 4; }
+  .stage[data-device="phone"] .hero { width: 390px; max-width: 100%; aspect-ratio: 390 / 760; }
+
+  /* Cheap tier (1024px and under, the same line the live site uses): no moving blobs, no filtered
+     layers, still headline shading. Two static smoke images cross-fade very slowly, which is one
+     opacity animation on two layers and nothing else. */
+  .cf { display: none; inset: 0; pointer-events: none; opacity: var(--strength, 0.8); }
+  .cf-a, .cf-b { position: absolute; inset: 0; }
+  .cf-a { opacity: 0.6; animation: cf-fade 40s ease-in-out infinite alternate;
+          background:
+            radial-gradient(40cqw 30cqw at 78% 24%, rgba(224,121,79,0.16), transparent 70%),
+            radial-gradient(34cqw 26cqw at 70% 70%, rgba(82,209,166,0.12), transparent 70%),
+            radial-gradient(40cqw 14cqw at 25% 16%, rgba(190,208,232,0.12), transparent 70%); }
+  .cf-b { opacity: 0.5; animation: cf-fade 40s ease-in-out infinite alternate-reverse;
+          background:
+            radial-gradient(38cqw 28cqw at 60% 42%, rgba(224,121,79,0.13), transparent 70%),
+            radial-gradient(30cqw 30cqw at 88% 56%, rgba(82,209,166,0.12), transparent 70%),
+            radial-gradient(34cqw 26cqw at 14% 52%, rgba(82,209,166,0.12), transparent 70%),
+            radial-gradient(44cqw 14cqw at 55% 82%, rgba(190,208,232,0.10), transparent 70%); }
+  @keyframes cf-fade { from { opacity: 0.1; } to { opacity: 1; } }
+  .hero[data-play="frozen"] .cf-a, .hero[data-play="frozen"] .cf-b { animation: none; }
+
+  @container (max-width: 1024px) {
+    .cf { display: block; }
+    .blob { animation: none; }
+    .blob-smoke--a { animation: none; opacity: 0.6; }
+    .blob-smoke--b { display: none; }
+    .hero[data-textsmoke="on"] .t-main { animation: none; }
+    .hero__scrim { background:
+      linear-gradient(180deg, rgba(10,14,23,0.1) 0%, rgba(10,14,23,0.2) 60%, rgba(10,14,23,0.85) 100%),
+      linear-gradient(to left, rgba(10,14,23,0.82) 0%, rgba(10,14,23,0.5) 32%, transparent 62%); }
+    .hero__content { left: auto; right: 5cqw; top: auto; bottom: 8%; transform: none; width: min(540px, 62cqw); text-align: right; }
+    .hero__ctas { justify-content: flex-end; }
+    .hero__name { font-size: 1.1rem; }
+    .hero__title { font-size: clamp(2.8rem, 6.6cqw, 6rem); }
+    .hero__sub { font-size: clamp(1.3rem, 2.3cqw, 2.1rem); }
+    .cta { font-size: 0.85rem; }
+  }
+  @container (max-width: 640px) {
+    .hero__content { width: auto; }
+    .hero__scrim { background: linear-gradient(180deg, rgba(10,14,23,0.05) 0%, rgba(10,14,23,0.4) 42%, rgba(10,14,23,0.88) 62%, rgba(10,14,23,0.95) 100%); }
+  }
+  @container (max-width: 640px) {
+    .hero__content { left: 8%; right: 5%; top: auto; bottom: 7%; transform: none; text-align: right; }
+    .hero__ctas { justify-content: flex-end; }
+  }
+  @media (max-width: 640px) { .hero { aspect-ratio: 4 / 5; } }
+
+  /* ---- controls ---- */
+  .controls { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; padding: 14px 16px; background: var(--panel); border-radius: 4px; }
+  .group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+  .group > span { font-family: var(--font-display); font-style: italic; color: var(--text-muted); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .seg button { background: transparent; color: var(--text); border: 0; padding: 8px 16px; font: inherit; font-size: 0.85rem; cursor: pointer; min-height: 40px; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: var(--glow); color: var(--bg); font-weight: 600; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  input[type="range"] { accent-color: var(--glow); width: 160px; max-width: 100%; }
+  .readout { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); min-width: 3ch; }
+
+  .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 28px; color: var(--text-muted); font-size: 0.9rem; }
+  .notes p { margin: 0; max-width: 60ch; }
+  .notes strong { color: var(--text); font-weight: 600; }
+
+  .check { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; font-size: 0.9rem; cursor: pointer; }
+  .check input { width: 18px; height: 18px; accent-color: var(--glow); }
+  .notice { margin: 0; padding: 10px 14px; border-left: 3px solid var(--brass); background: var(--panel); color: var(--text); font-size: 0.9rem; }
+</style>
+
+<div class="page">
+  <div>
+    <h1>Hero smoke preview</h1>
+    <p class="lede">Photo smoke animates the smoke already in the picture's top right: it shifts, swells, and softens. Live site is the two glows it has now. Wider haze is the earlier all-frame test. Raise Strength to see more of the effect.</p>
+  </div>
+
+  <div class="stage" id="stage" data-device="desktop">
+  <div class="hero" id="hero" data-mode="lean" data-play="running" data-blob="on" data-textsmoke="on" style="--strength: 0.8">
+    <div class="hero__photo">
+      <img src="../site/public/images/hero.webp" alt="Doug Rosenberg holding a saxophone">
+      <div class="smoke smoke--sharp" aria-hidden="true"><img src="../site/public/images/hero.webp" alt=""></div>
+      <div class="smoke smoke--soft" aria-hidden="true"><img src="../site/public/images/hero.webp" alt=""></div>
+    </div>
+    <div class="haze" aria-hidden="true">
+      <div class="blob b-g"></div>
+      <div class="blob b-c"></div>
+      <div class="blob b-a"></div>
+      <div class="blob b-b"></div>
+      <div class="blob b-d"></div>
+      <div class="blob b-f"></div>
+      <div class="blob b-e"></div>
+    </div>
+    <div class="blob-layer" aria-hidden="true">
+    <svg class="blob-smoke blob-smoke--a" id="blobSvg" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="blobFill" cx="50%" cy="50%" r="55%">
+          <stop offset="0" stop-color="#9aa2b0" stop-opacity="0.42"/>
+          <stop offset="0.6" stop-color="#737c8c" stop-opacity="0.22"/>
+          <stop offset="1" stop-color="#6b7486" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="turb" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.008" numOctaves="3" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="190" xChannelSelector="R" yChannelSelector="G" result="d"/>
+          <feGaussianBlur in="d" stdDeviation="3" result="b"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.011 0.02" numOctaves="4" seed="9" result="t"/>
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.6 0 0 0 -0.7" result="tx"/>
+          <feComposite in="b" in2="tx" operator="arithmetic" k1="1.3" k2="0.3" k3="0" k4="0"/>
+        </filter>
+      </defs>
+      <g class="blob-drift">
+        <g filter="url(#turb)">
+          <path d="M220 120 C340 40 520 90 600 200 C700 330 640 470 560 560 C470 660 300 700 210 600 C120 500 160 380 130 280 C110 200 150 150 220 120 Z" fill="url(#blobFill)"/>
+          <path d="M470 250 C560 230 650 300 640 390 C630 470 540 500 470 460 C410 420 400 280 470 250 Z" fill="url(#blobFill)"/>
+        </g>
+      </g>
+    </svg>
+    <svg class="blob-smoke blob-smoke--b" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="blobFillB" cx="50%" cy="50%" r="55%">
+          <stop offset="0" stop-color="#9aa2b0" stop-opacity="0.42"/>
+          <stop offset="0.6" stop-color="#737c8c" stop-opacity="0.22"/>
+          <stop offset="1" stop-color="#6b7486" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="turbB" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.005 0.007" numOctaves="3" seed="17" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="210" xChannelSelector="G" yChannelSelector="R" result="d"/>
+          <feGaussianBlur in="d" stdDeviation="3" result="b"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.014 0.018" numOctaves="4" seed="31" result="t"/>
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.6 0 0 0 -0.7" result="tx"/>
+          <feComposite in="b" in2="tx" operator="arithmetic" k1="1.3" k2="0.3" k3="0" k4="0"/>
+        </filter>
+      </defs>
+      <g filter="url(#turbB)">
+        <path d="M300 90 C430 60 590 150 640 290 C690 430 600 590 470 640 C340 690 200 600 160 470 C120 340 180 130 300 90 Z" fill="url(#blobFillB)"/>
+        <path d="M180 360 C250 300 360 320 380 410 C400 500 300 560 220 520 C150 490 130 410 180 360 Z" fill="url(#blobFillB)"/>
+      </g>
+    </svg>
+    </div>
+    <div class="cf" aria-hidden="true"><div class="cf-a"></div><div class="cf-b"></div></div>
+    <div class="hero__scan" aria-hidden="true"></div>
+    <div class="hero__vig" aria-hidden="true"></div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__content">
+      <p class="hero__name">Doug Rosenberg</p>
+      <p class="hero__title" role="heading" aria-level="2"><span class="t-main">Better Than&nbsp;</span><span class="tv-t">T</span><span class="tv-v">V</span><span class="hero__sub">original music composed and improvised</span></p>
+      <div class="hero__ctas">
+        <span class="cta cta-primary">Listen to the music &rarr;</span>
+        <span class="cta cta-secondary">Book lessons</span>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <p class="notice" id="rmNote" hidden>Your system has reduced motion turned on, so this preview starts frozen. Press Drifting to play it anyway. The live site would stay still for you.</p>
+
+  <div class="controls">
+    <div class="group">
+      <span>View</span>
+      <div class="seg" role="group" aria-label="Device view" id="deviceSeg">
+        <button type="button" data-device="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" data-device="tablet" aria-pressed="false">Tablet</button>
+        <button type="button" data-device="phone" aria-pressed="false">Phone</button>
+      </div>
+      <output class="readout" id="tierOut"></output>
+    </div>
+    <div class="group">
+      <span>Haze</span>
+      <div class="seg" role="group" aria-label="Haze version" id="modeSeg">
+        <button type="button" data-mode="off" aria-pressed="false">Off</button>
+        <button type="button" data-mode="current" aria-pressed="false">Live site</button>
+        <button type="button" data-mode="smoke" aria-pressed="false">Photo smoke</button>
+        <button type="button" data-mode="lean" aria-pressed="true">Lean haze</button>
+        <button type="button" data-mode="wide" aria-pressed="false">Wider haze</button>
+      </div>
+    </div>
+    <div class="group">
+      <label for="strength"><span>Strength</span></label>
+      <input id="strength" type="range" min="0.2" max="1.2" step="0.05" value="0.8">
+      <output class="readout" id="strengthOut" for="strength">0.80</output>
+    </div>
+    <div class="group">
+      <span>Also</span>
+      <label class="check"><input type="checkbox" id="blobOn" checked> Smoke blob</label>
+      <label class="check"><input type="checkbox" id="textOn" checked> Headline shading</label>
+    </div>
+    <div class="group">
+      <span>Motion</span>
+      <div class="seg" role="group" aria-label="Motion" id="playSeg">
+        <button type="button" data-play="running" aria-pressed="true">Drifting</button>
+        <button type="button" data-play="frozen" aria-pressed="false">Frozen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <p><strong>How Photo smoke works.</strong> Two extra copies of the photo sit over the smoke, cut out by a soft mask that stops before his shoulder. One is sharp, one is blurred. They cross-fade on 15 and 21 second loops while moving a few percent of the frame and growing or shrinking slightly. Frozen shows the still photo.</p>
+    <p><strong>Smoke blob and headline shading.</strong> The blob is an irregular grey shape pushed around by animated noise, so its edges curl and tear as it drifts. The headline text is filled with slow grey-to-white noise plus white wisps, clipped to the letters. T and V keep their test-card colors. Both have checkboxes so you can compare. Cost: the blob re-draws its filter every frame, so it would be desktop-only.</p>
+    <p><strong>Behind the text.</strong> A mask cuts the haze to about a third where the headline sits, so the white title and green subtitle keep their contrast. Strength scales the whole layer.</p>
+    <p><strong>On phones and tablets.</strong> The live site freezes its haze at 1024px and under to protect the mobile Lighthouse score. The Frozen button shows that resting frame. In the real build the wider haze would keep that rule and turn off under reduced motion.</p>
+  </div>
+</div>
+
+<script>
+  var hero = document.getElementById('hero');
+  function bindSeg(id, attr) {
+    var seg = document.getElementById(id);
+    seg.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      hero.setAttribute('data-' + attr, b.getAttribute('data-' + attr));
+      seg.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  }
+  bindSeg('modeSeg', 'mode');
+  bindSeg('playSeg', 'play');
+  // SMIL (the blob's turbulence) is not reachable from CSS, so pause and resume it from here.
+  var blobSvg = document.getElementById('blobSvg');
+  function syncSmil() {
+    if (!blobSvg.pauseAnimations) return;
+    if (hero.getAttribute('data-play') === 'frozen') blobSvg.pauseAnimations(); else blobSvg.unpauseAnimations();
+  }
+  document.getElementById('playSeg').addEventListener('click', syncSmil);
+  document.getElementById('blobOn').addEventListener('change', function (e) { hero.setAttribute('data-blob', e.target.checked ? 'on' : 'off'); });
+  document.getElementById('textOn').addEventListener('change', function (e) { hero.setAttribute('data-textsmoke', e.target.checked ? 'on' : 'off'); });
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    hero.setAttribute('data-play', 'frozen');
+    syncSmil();
+    document.getElementById('rmNote').hidden = false;
+    document.querySelectorAll('#playSeg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-play') === 'frozen')); });
+  }
+  var stage = document.getElementById('stage');
+  var tierOut = document.getElementById('tierOut');
+  function updateTier() {
+    tierOut.textContent = hero.offsetWidth <= 1024 ? 'cheap tier: still glows, slow cross-fade' : 'full tier: drifting haze and blobs';
+  }
+  document.getElementById('deviceSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    stage.setAttribute('data-device', b.getAttribute('data-device'));
+    document.querySelectorAll('#deviceSeg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    updateTier();
+  });
+  window.addEventListener('resize', updateTier);
+  updateTier();
+  var range = document.getElementById('strength');
+  var out = document.getElementById('strengthOut');
+  range.addEventListener('input', function () {
+    hero.style.setProperty('--strength', range.value);
+    out.textContent = Number(range.value).toFixed(2);
+  });
+</script>
