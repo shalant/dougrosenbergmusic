@@ -71,7 +71,7 @@ const photos = [
     <div class="reel-progress"><div class="reel-progress__fill" data-progress></div></div>
   </div>
 
-  <div class="gallery__lightbox" data-lightbox hidden>
+  <div class="gallery__lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
     <button class="gallery__lightbox-close" data-lightbox-close aria-label="Close">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
@@ -377,19 +377,30 @@ const photos = [
     window.addEventListener('resize', recalc);
 
     let lightboxIdx = 0;
+    // The element that opened the viewer, so focus goes back to it on close.
+    let lightboxOpener = null;
 
     function openLightbox(idx) {
+      if (lightbox.hidden) {
+        lightboxOpener = document.activeElement;
+        document.body.style.overflow = 'hidden';
+      }
       lightboxIdx = idx;
       const p = photos[idx];
       lightboxImg.src = url(p.src);
       lightboxImg.alt = p.caption;
       lightboxCaption.textContent = p.caption;
       lightboxCounter.textContent = `${idx + 1} / ${photos.length}`;
+      const wasHidden = lightbox.hidden;
       lightbox.hidden = false;
+      if (wasHidden) document.querySelector('[data-lightbox-close]')?.focus();
     }
 
     function closeLightbox() {
       lightbox.hidden = true;
+      document.body.style.overflow = '';
+      if (lightboxOpener instanceof HTMLElement) lightboxOpener.focus();
+      lightboxOpener = null;
     }
 
     function stepLightbox(delta) {
@@ -407,6 +418,19 @@ const photos = [
       if (e.key === 'Escape') closeLightbox();
       else if (e.key === 'ArrowLeft') stepLightbox(-1);
       else if (e.key === 'ArrowRight') stepLightbox(1);
+      else if (e.key === 'Tab') {
+        // Keep Tab inside the dialog: wrap from the last control to the first.
+        const controls = Array.from(lightbox.querySelectorAll('button'));
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     });
   }
 </script>
@@ -570,6 +594,11 @@ const photos = [
 
   .reel-thumb:hover {
     opacity: 0.8;
+  }
+
+  .reel-thumb:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 2px;
   }
 
   .reel-thumb.active {
