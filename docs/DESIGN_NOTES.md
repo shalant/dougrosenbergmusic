@@ -67,6 +67,28 @@ Originated from a 14-riff exploration artifact (right-column content block, left
 - [x] **Type (my call, easy to override):** Fraunces (expressive serif with real character and a genuine italic, good for the name treatment and editorial-style pull quotes — liner-notes energy) paired with Work Sans for body/UI (quiet, legible, lets Fraunces carry the personality) and JetBrains Mono for small utility labels (track numbers, meta) — deliberately not IBM Plex Mono, to avoid echoing haxbyte's pairing.
 - [x] **Color (my call, easy to override):** keep the existing site's dark/moody/cinematic base (deep near-black navy) and its glowing blue for the name treatment specifically, carrying that mood forward per the "riff on, don't blank-slate" instruction — but add a warm brass/amber accent tied to the actual instrument (the saxophone itself) as a second color, used for the staff-line motif and CTA, so the palette isn't just a single blue note.
 
+## Hero motion: taken out, not decided (2026-10-28)
+
+Two pieces of hero motion were removed during the UI-to-85 work, and Doug is **not settled** on
+whether they should stay gone. Treat both as open, not as deliberate removals.
+
+- **Floating "now playing" chips from the saxophone bell** (removed 2026-10-25, music-first plan
+  step 2, PR #97). Four drifting chips linking to the four records were replaced by a static row
+  of record covers. The stated reasons were that the chips sat at opacity 0 under reduced motion
+  (so those visitors never saw them) and that they only repeated the records' Amazon links. Both
+  are fixable without removing the chips. Doug likes them. They are in git history before that
+  date and archived in `ui-lab` (`hero-terminal-widget.html`).
+- **Headline shimmer** (removed 2026-10-28, UI plan step 5). The headline's slow 16-second green
+  gradient sweep is gone on every screen size; the headline is solid text with "TV" in the logo's
+  test-card colors and a one-time flicker. Removed to stop the sweep leaving arbitrary letters
+  green, but it also took out the continuous motion, which was not Doug's call. Options if it
+  returns: a light sweep across "Better Than" with T and V fixed, or a shifting glow inside T and V
+  only. Keep it off or frozen at 1024px and below (the old mobile Lighthouse hit came from
+  continuous repainting).
+
+What still moves in the hero: the haze drift (frozen at 1024px and below), the fade-up on load,
+and the one-time TV flicker.
+
 ## Reference
 
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.
