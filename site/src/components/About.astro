@@ -129,9 +129,19 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
     max-width: 58ch;
   }
 
+  /* 30rem wraps the four tags two and two at desktop widths; the full column
+     left "Tech" alone on a second line (2026-10-29 re-score). */
   .about__tags {
     margin-top: 1.5rem;
     margin-bottom: 0;
+    max-width: 30rem;
+  }
+
+  /* On a phone the same trick gives one, one, two. */
+  @media (max-width: 520px) {
+    .about__tags {
+      max-width: 15rem;
+    }
   }
 
   @media (max-width: 800px) {

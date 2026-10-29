@@ -104,6 +104,36 @@ Plan: `docs/ui-85-plan-2026-10-25.md`; re-score (about 78) in `docs/ui-assessmen
       the knock-on: seven lights pushed the remote's left arrow 32px off a 320px screen (test
       fails without the fix). Re-verified: 173 e2e passing.
 
+## Hazy hero: approved, port pending (2026-10-29)
+
+Doug approved the look on 2026-10-29 ("i like the new hazy hero") and will say when to start,
+planned for the evening. Nothing is in the site yet: it exists only as a private Artifact
+preview (https://claude.ai/artifact/Qpga9oKkn3NXFA2FyW9gfW). Its source is saved as
+`docs/hero-haze-preview-2026-10-29.html`: open it in a browser to compare against the port (it
+loads `site/public/images/hero.webp`). Port to `site/src/components/HeroGraded.astro` on its own
+branch.
+
+- [ ] **Haze:** four layers, not seven: orange glow, right teal glow, one cool wisp, and the
+      left teal patch Doug likes ("alien teal glow", keep it subtle). Strength 0.80. Plain
+      gradients, no blur filter, normal blending, no masks; the scrim already darkens behind the
+      headline. Fix the left teal patch's opacity so it can't get brighter.
+- [ ] **Grey blobs:** two SVG shapes (different outlines and noise), filter drawn once, moved with
+      transform and opacity on 36s and 47s loops. No per-frame filter animation (that was the
+      choppy version).
+- [ ] **Headline shading:** three noise tiles clipped to "Better Than" (T and V keep their
+      test-card colors), sliding at different speeds on a 28s loop. Check contrast with axe.
+- [ ] **Tablet and phone (1024px and under):** haze and blobs frozen, headline shading still, plus
+      one slow 40s cross-fade between two static smoke layers. All still under reduced motion.
+- [ ] **Checks:** Playwright test for the frozen and reduced-motion states; full suite;
+      Lighthouse desktop and mobile (home mobile LCP is already near its gate: 86 on 2026-10-29
+      with or without these changes); axe.
+- [ ] **Docs:** replace "Hero motion: taken out, not decided" in `docs/DESIGN_NOTES.md` with what
+      shipped and close PR #102 (it is now obsolete).
+- [ ] **Still undecided:** the floating "now playing" chips from the sax bell (Doug liked them;
+      he hasn't said whether to bring them back).
+- Measured in headless Chromium with no GPU (relative numbers only): everything on 12 fps vs 43
+  for the photo alone; the old seven-layer haze was 6-9 fps. Re-measure on a real laptop.
+
 ## Order of operations
 
 1. **Finish basic content/build items** — this project isn't feature-complete yet.

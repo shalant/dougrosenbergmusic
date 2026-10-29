@@ -67,22 +67,21 @@ const faqSchema = {
     margin: 0.25rem 0 2rem;
   }
 
+  /* Ruled rows, not five identical rounded cards (2026-10-29): the cards
+     were the page's last template pattern in the 2026-10-29 re-score. Same
+     hairline rule the Lessons subject list uses. */
   .faq__list {
     max-width: 48rem;
-    display: grid;
-    gap: 0.75rem;
+    border-top: 1px solid var(--staff-line-strong);
   }
 
   .faq__item {
-    background: var(--surface);
-    border: 1px solid var(--staff-line-strong);
-    border-radius: 0.75rem;
-    padding: 0 1.25rem;
+    border-bottom: 1px solid var(--staff-line-strong);
   }
 
   .faq__item summary {
     cursor: pointer;
-    padding-block: 1rem;
+    padding-block: 1.1rem;
     font-weight: 600;
     min-height: 44px;
     display: flex;

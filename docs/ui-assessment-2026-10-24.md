@@ -103,6 +103,42 @@ built the hero, so read the gain as "clearly better", not a measurement.
 
 Plan to reach 85: `docs/ui-85-plan-2026-10-25.md`.
 
+## Re-score, 2026-10-29: about 85 / 100
+
+After steps 1 to 5 of the plan and the axe and Lighthouse fixes. Reviewed: every home page
+section at 1440px and 390px (screenshots with reduced motion on, so the hero's motion is not part
+of this score). Not re-viewed: `/press`, `/easternblok` and `/easternblok/press`, so that row is
+provisional. Same reviewer who built most of it, so treat it as a consistency check, not a
+measurement; I'd allow three points either way. The fixed logo shows on top of some section
+screenshots; that comes from how they were captured and is not a bug.
+
+| Area | Was | Now | Why |
+|---|---|---|---|
+| Identity and distinctiveness | 18 | 18 | TV logo, staff nav and Side A / Side B footer still carry it. |
+| First impression (hero) | 17 | 18 | Solid headline with the test-card T and V; the shimmer flaw is gone. |
+| Craft and polish | 14 | 16 | Gallery pill, `/press` typo, focus states and lightbox fixed. Gaps listed below. |
+| Typography and hierarchy | 12 | 13 | Eyebrows gone, intro left-aligned. Some small grey text remains. |
+| Content and archive pages | 7 | 8 (provisional) | Not re-viewed this pass. |
+| Mobile | 10 | 12 | All 13 sections checked at 390px: no horizontal overflow, layouts hold. |
+
+Craft gaps found in that pass, and what happened to each (branch `ui-craft-polish-2026-10-29`):
+- FAQ as five identical rounded cards: now ruled rows. Fixed.
+- "Send Message" in the mono face while every other button is bold sans: fixed.
+- "Tech" alone on a second line in the About tags: fixed with a narrower measure (two and two on
+  desktop, one, one, two on a phone).
+- Highlights: "Lake Forest Country Day School" as a stray bold line under a bullet list: now its own
+  heading and bullet, like the New Trier block.
+- `/easternblok` layout shift of 0.10: traced to `62ch` column widths and fallback fonts with
+  different metrics; fixed (see `docs/ui-85-plan-2026-10-25.md`, "Craft pass, 2026-10-29").
+- Left on purpose: press outlet links stay about 32px tall (their CSS records that 44px would
+  overlap the quote above; they clear WCAG 2.5.8's 24px).
+- Open, needs Doug: heading style alternates roman and italic (Recordings, Highlights, Private
+  lessons, Quick answers, On record and In Frame are roman; On the Road, Sheet Music Library,
+  "I also build sites like this one." and "Let's make some music." are italic). Not changed
+  because it may be deliberate; if it is, it needs a rule written down.
+- Open, content not code: Performance and Highlights are small grey text lists; one gallery
+  photo (the red-lit one) is grainy next to sharp ones.
+
 ## Related
 
 - Rubric: `career-development/docs/SITE_QUALITY_CHECKLIST.md`

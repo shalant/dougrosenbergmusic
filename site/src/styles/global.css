@@ -75,6 +75,37 @@
   src: url('/fonts/jetbrains-mono.woff2') format('woff2');
 }
 
+/* Metric-matched fallbacks (2026-10-29). Until the real fonts arrive the text
+   paints in a system font, and when they swap in the lines rewrapped:
+   /easternblok's "The story" section shrank 25px, a Lighthouse mobile layout
+   shift of 0.10. These faces draw a local system font scaled to each web
+   font's width and vertical metrics (values from @capsizecss/metrics, which
+   `createFontStack` turned into these rules), so the swap moves almost
+   nothing. They are first in each --font-* stack below. */
+@font-face {
+  font-family: 'Work Sans Fallback';
+  src: local('Arial'), local('ArialMT');
+  ascent-override: 83.0851%;
+  descent-override: 21.7093%;
+  line-gap-override: 0%;
+  size-adjust: 111.9334%;
+}
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Times New Roman'), local('TimesNewRomanPSMT');
+  ascent-override: 84.7148%;
+  descent-override: 22.0882%;
+  line-gap-override: 0%;
+  size-adjust: 115.4462%;
+}
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT');
+  ascent-override: 102.0166%;
+  descent-override: 30.0049%;
+  size-adjust: 99.9837%;
+}
+
 :root {
   --bg: #0a0e17;
   /* solid, not translucent - both consumers (StaffNav's hover tag and its
@@ -101,9 +132,9 @@
   --note-contact: #b287df;
   --note-dev: #e05f6a;
 
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body: 'Work Sans', -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+  --font-display: 'Fraunces', 'Fraunces Fallback', Georgia, 'Times New Roman', serif;
+  --font-body: 'Work Sans', 'Work Sans Fallback', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, 'SF Mono', Consolas, monospace;
 
   /* Motion tokens (2026-10-17). Hover, tap and open/close transitions use
      these, so a new micro-interaction matches the rest without copying

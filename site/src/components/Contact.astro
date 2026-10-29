@@ -232,8 +232,11 @@
   .contact__submit {
     display: block;
     width: 100%;
-    font-family: var(--font-mono);
-    font-size: 0.92rem;
+    /* Body face at the .cta weight and size (2026-10-29): it was mono, so
+       the form's one button didn't match any other button on the page. */
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
     color: var(--bg);
     background: var(--brass);
     border: none;
