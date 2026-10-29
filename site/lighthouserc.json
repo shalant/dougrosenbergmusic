@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "staticDistDir": "./dist",
-      "url": ["index.html", "404.html"],
+      "url": ["index.html", "404.html", "press.html", "easternblok.html", "easternblok/press.html"],
       "numberOfRuns": 3,
       "settings": {
         "chromeFlags": "--headless=new --no-sandbox"

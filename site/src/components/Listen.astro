@@ -36,7 +36,7 @@ const albums = [
         <a class="album" href={album.url} target="_blank" rel="noopener noreferrer">
           <span class="album__art"><img class="album__cover" src={`${import.meta.env.BASE_URL}${album.cover.replace(/^\//, '')}`} alt={`${album.title} album cover`} loading="lazy" /></span>
           <div class="album__body">
-            <p class="album__title">{album.title}</p>
+            <h3 class="album__title">{album.title}</h3>
             <p class="album__blurb">{album.blurb}</p>
           </div>
         </a>
