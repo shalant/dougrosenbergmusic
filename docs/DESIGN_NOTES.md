@@ -86,8 +86,19 @@ whether they should stay gone. Treat both as open, not as deliberate removals.
   only. Keep it off or frozen at 1024px and below (the old mobile Lighthouse hit came from
   continuous repainting).
 
-What still moves in the hero: the haze drift (frozen at 1024px and below), the fade-up on load,
-and the one-time TV flicker.
+### Update, 2026-10-29: smoke and headline shading added
+
+Doug approved the animated smoke from `docs/hero-haze-preview-2026-10-29.html` and it shipped in
+`HeroGraded.astro` ("Lean haze", strength 0.65, smoke blob on, headline shading on). That brings
+back continuous hero motion in a different form from the shimmer: noise clipped to "Better Than"
+drifts grey to near-white on a 28s loop while T and V keep their test-card colors, over four
+drifting haze layers and two torn grey smoke shapes. The shimmer itself stays gone.
+
+What moves now: on desktop, the four haze layers (13 to 26s loops), the two smoke shapes (36s and
+47s) and the headline shading (28s). At 1024px and below the drifting haze is replaced by two
+static layers cross-fading over 40s, one smoke shape sits still, and the headline shading holds
+still. Under `prefers-reduced-motion` all of it is still at every width. Plus the fade-up on load
+and the one-time TV flicker. The sax-bell chips are still undecided.
 
 ## Reference
 
