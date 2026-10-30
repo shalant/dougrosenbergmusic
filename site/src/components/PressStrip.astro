@@ -24,10 +24,16 @@ const years = Array.from({ length: END - START + 1 }, (_, i) => START + i);
 const pct = (fraction: number) => `${(fraction * 100).toFixed(2)}%`;
 const flags = albums
   .filter((album) => album.year >= START && album.year <= END)
-  .map((album) => ({ title: album.title, at: ((album.year - START) * 12 + 6) / ((END - START + 1) * 12) }));
+  .map((album) => ({ title: album.title, year: album.year, at: ((album.year - START) * 12 + 6) / ((END - START + 1) * 12) }));
+// A label is wider than the gap between consecutive years (at 390px "Goran Ivanovic Group" and
+// "Folk Tales", a year apart, printed over each other), so a label whose year is within a year of
+// the one before it drops to a second row. The strip grows by one row only when that happens.
+const rows: number[] = [];
+flags.forEach((flag, i) => rows.push(i > 0 && flag.year - flags[i - 1].year <= 1 && rows[i - 1] === 0 ? 1 : 0));
+const extra = rows.includes(1) ? '1.9rem' : '0rem';
 ---
 
-<div class="strip" aria-hidden="true">
+<div class="strip" style={`--extra:${extra}`} aria-hidden="true">
   <div class="strip__ticks">
     {ticks.map((tick) => <span class={`tick${tick.review ? ' tick--review' : ''}`} style={`left:${pct(tick.at)}`}></span>)}
   </div>
@@ -35,20 +41,20 @@ const flags = albums
     {years.map((year) => <span class="strip__year" style={`left:${pct((year - START) / years.length)}`}>{year}</span>)}
   </div>
   <div class="strip__albums">
-    {flags.map((flag) => <span class="strip__album" style={`left:${pct(flag.at)}`}>{flag.title}</span>)}
+    {flags.map((flag, i) => <span class="strip__album" style={`left:${pct(flag.at)};top:${rows[i] * 1.9}rem`}>{flag.title}</span>)}
   </div>
 </div>
 
 <style>
   .strip {
     position: relative;
-    height: 12rem;
+    height: calc(12rem + var(--extra, 0rem));
     margin-inline: 0.5rem;
   }
 
   .strip__ticks {
     position: absolute;
-    inset: 0 0 4rem;
+    inset: 0 0 calc(4rem + var(--extra, 0rem));
     border-bottom: 2px solid var(--brass);
     /* four more staff lines above the baseline, 14px apart */
     background-image: repeating-linear-gradient(
@@ -82,7 +88,7 @@ const flags = albums
   /* A year is 1/10 of the width; labels sit at the start of their year. */
   .strip__axis {
     position: absolute;
-    inset: auto 0 2.1rem;
+    inset: auto 0 calc(2.1rem + var(--extra, 0rem));
     height: 1.2rem;
   }
 
@@ -101,7 +107,7 @@ const flags = albums
   .strip__albums {
     position: absolute;
     inset: auto 0 0;
-    height: 1.6rem;
+    height: calc(1.6rem + var(--extra, 0rem));
   }
 
   .strip__album {
