@@ -139,6 +139,19 @@ Craft gaps found in that pass, and what happened to each (branch `ui-craft-polis
 - Open, content not code: Performance and Highlights are small grey text lists; one gallery
   photo (the red-lit one) is grainy next to sharp ones.
 
+## Home mobile performance, 2026-10-29 (evening)
+
+Home mobile Lighthouse had been 86 to 88 locally (LCP 3.4s), under the 0.9 gate, with or
+without the hero haze. The LCP element is the hero photo (`hero.webp`, 42KB). Disabling the haze,
+the headline shading, the photo's CSS filter, the scanlines/vignette and the photo's transform each
+changed first paint by less than the run-to-run noise (about 150ms), so the haze is not the cost.
+What did move it: the photo shared bandwidth with the Dev carousel's first screenshot
+(`guacamayo.jpg`, 94KB, several screens down, not lazy). Added `fetchpriority="high"` and
+`decoding="async"` to the hero photo and `loading="lazy"` to that screenshot: Lighthouse mobile
+92, 93, 93 (was 86 to 88), LCP 2.8 to 2.9s, CLS 0. `e2e/image-priority.spec.ts` pins both
+attributes and fails without them. The Dev screen has a fixed aspect ratio, so lazy loading adds no
+shift.
+
 ## Related
 
 - Rubric: `career-development/docs/SITE_QUALITY_CHECKLIST.md`

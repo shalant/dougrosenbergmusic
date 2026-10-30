@@ -74,7 +74,7 @@ const channels = [
            row was dead space this section didn't need. */}
       <div class="dev__screen-wrap">
         <a class="dev__screen" id="dev-screen" href={channels[0].href} target="_blank" rel="noopener noreferrer" aria-label={`View ${channels[0].name}`}>
-          <img class="dev__screen-img" id="dev-screen-img" src={channels[0].img} alt="" />
+          <img class="dev__screen-img" id="dev-screen-img" src={channels[0].img} alt="" loading="lazy" decoding="async" />
         </a>
         {/* The "On air" and channel-count chips sit over the screen but outside the
             link: their text wasn't in the link's aria-label, which failed
