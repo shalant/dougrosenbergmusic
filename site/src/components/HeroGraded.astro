@@ -27,7 +27,7 @@ const records = [
 ---
 
 <header id="hero" class="hero">
-  <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" />
+  <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" fetchpriority="high" decoding="async" />
   <div class="hero__haze" aria-hidden="true">
     <div class="haze-blob haze-blob--wisp"></div>
     <div class="haze-blob haze-blob--glow"></div>
