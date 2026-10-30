@@ -136,6 +136,15 @@ Craft gaps found in that pass, and what happened to each (branch `ui-craft-polis
   lessons, Quick answers, On record and In Frame are roman; On the Road, Sheet Music Library,
   "I also build sites like this one." and "Let's make some music." are italic). Not changed
   because it may be deliberate; if it is, it needs a rule written down.
+- Archive pages re-viewed 2026-10-29 evening (`/press`, `/easternblok`, `/easternblok/press` at
+  1440px and 390px): they hold together and carry the home page's language (staff, noteheads,
+  ruled rows, wanted box). One bug found and fixed: on the Eastern Blok press timeline the album
+  labels "Goran Ivanovic Group" and "Folk Tales", a year apart, printed on top of each other (the
+  overlap was there at every width, including 1440px). A label within a year of the one before it
+  now drops to a second row; `e2e/press-strip.spec.ts` checks the label boxes at 320, 390, 768
+  and 1440px and fails without the fix. That moves the archive row from provisional 8 to a firm
+  8/10: the pages are plainer than the home page, and `/press` leaves the right 40% of the
+  desktop page empty by design (a 42rem reading column).
 - Open, content not code: Performance and Highlights are small grey text lists; one gallery
   photo (the red-lit one) is grainy next to sharp ones.
 
