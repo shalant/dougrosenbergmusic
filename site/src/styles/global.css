@@ -81,10 +81,13 @@
    shift of 0.10. These faces draw a local system font scaled to each web
    font's width and vertical metrics (values from @capsizecss/metrics, which
    `createFontStack` turned into these rules), so the swap moves almost
-   nothing. They are first in each --font-* stack below. */
+   nothing. They are first in each --font-* stack below. local() matches a
+   font's own name, not a fontconfig alias, so Linux (no Arial, no Times New
+   Roman) needs the metric-compatible Liberation/Arimo/Tinos/Cousine names
+   listed too; without them CI's /press measured a 27px shift. */
 @font-face {
   font-family: 'Work Sans Fallback';
-  src: local('Arial'), local('ArialMT');
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Arimo');
   ascent-override: 83.0851%;
   descent-override: 21.7093%;
   line-gap-override: 0%;
@@ -92,7 +95,7 @@
 }
 @font-face {
   font-family: 'Fraunces Fallback';
-  src: local('Times New Roman'), local('TimesNewRomanPSMT');
+  src: local('Times New Roman'), local('TimesNewRomanPSMT'), local('Liberation Serif'), local('Tinos');
   ascent-override: 84.7148%;
   descent-override: 22.0882%;
   line-gap-override: 0%;
@@ -100,7 +103,7 @@
 }
 @font-face {
   font-family: 'JetBrains Mono Fallback';
-  src: local('Courier New'), local('CourierNewPSMT');
+  src: local('Courier New'), local('CourierNewPSMT'), local('Liberation Mono'), local('Cousine');
   ascent-override: 102.0166%;
   descent-override: 30.0049%;
   size-adjust: 99.9837%;
