@@ -121,6 +121,11 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
 - [x] **Tests:** `site/e2e/hero-haze.spec.ts` (desktop animates; resting tier at 1024, 768, 390;
       still under reduced motion at 1440 and 390). Fails on the old hero, passes now.
 - [x] **Docs:** "Update, 2026-10-29" under "Hero motion" in `docs/DESIGN_NOTES.md`.
+- [x] **Merged 2026-10-29 (PR #106), but Cloudflare did not build that merge.** Production stayed on
+      the #105 merge (the dashboard showed no build for the #106 merge, and GitHub never got a
+      Workers Builds check on it), so the haze was not live until a later master merge triggered a
+      build. Confirm the haze is live by looking for `haze-blob` in the live page's CSS before
+      calling it deployed.
 - [ ] **Check on a real laptop and phone:** the frame rates below are headless Chromium with no
       GPU. If desktop feels choppy, lower the strength or drop a layer.
 - [ ] **Still undecided:** the floating "now playing" chips from the sax bell (Doug liked them;
