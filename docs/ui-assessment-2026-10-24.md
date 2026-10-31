@@ -145,8 +145,13 @@ Craft gaps found in that pass, and what happened to each (branch `ui-craft-polis
   and 1440px and fails without the fix. That moves the archive row from provisional 8 to a firm
   8/10: the pages are plainer than the home page, and `/press` leaves the right 40% of the
   desktop page empty by design (a 42rem reading column).
-- Open, content not code: Performance and Highlights are small grey text lists; one gallery
-  photo (the red-lit one) is grainy next to sharp ones.
+- Fixed 2026-10-30 (branch `lists-ruled-rows-2026-10-30`): the Highlights credentials (0.86rem
+  grey bullets) are now ruled rows like the FAQ, role at 0.95rem in full-strength text with the
+  years right-aligned (they stay right-aligned when they wrap), and the "Artists performed with"
+  names went from 0.9rem grey to 0.98rem full-strength, matching the school list above them.
+  `e2e/list-rows.spec.ts` checks size, rule and overflow at 320, 390 and 1440px and fails on the
+  old build.
+- Open, content not code: one gallery photo (the red-lit one) is grainy next to sharp ones.
 
 ## Home mobile performance, 2026-10-29 (evening)
 
