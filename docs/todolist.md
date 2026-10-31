@@ -143,6 +143,11 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
       CSP hashes, 217 e2e passing (29 skipped) including the layout-shift specs; looked at every
       home section at 1440px and 390px plus `/easternblok/press`. Not checked: Lighthouse after
       the change (CI runs it).
+- [x] **Performance and Highlights lists restyled** (branch `lists-ruled-rows-2026-10-30`).
+      Highlights credentials are ruled rows (role left, years right, 0.95rem, full-strength text)
+      instead of 0.86rem grey bullets; "Artists performed with" names are 0.98rem full-strength
+      text. No wording changed; the years were split out of the role text into their own span.
+      `e2e/list-rows.spec.ts` fails on the old build. Verified: see the PR.
 - [ ] **Heading style rule still open.** Recommended: section labels roman, a heading that is a
       full sentence in Doug's voice italic (changes only "On the Road" and "Sheet Music Library"
       to roman). Waiting on Doug.
