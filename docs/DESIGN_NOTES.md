@@ -100,6 +100,28 @@ static layers cross-fading over 40s, one smoke shape sits still, and the headlin
 still. Under `prefers-reduced-motion` all of it is still at every width. Plus the fade-up on load
 and the one-time TV flicker. The sax-bell chips are still undecided.
 
+### Update, 2026-10-30: the haze drifts on phones, with a lite mode for weak devices
+
+Doug looked at the site on a phone and saw no haze motion: the 1024px-and-under tier from
+2026-10-29 swapped the drifting haze for two near-still layers. That tier was a guard from the old
+mobile Lighthouse hit, which came from filter-based layers; the current layers animate only
+transform and opacity, and a local Lighthouse run with the full haze on a phone scored 96 to 97
+(LCP 2.4s, TBT 0, CLS 0), so the guard was removed. The headline shading still holds still at
+1024px and below because it repaints text.
+
+Weak devices and connections get a still hero instead, through `data-fx="lite"` on the hero
+(`HeroGraded.astro`, script at the bottom of the file). Lite is chosen when the browser reports
+Save-Data, a 2G or 3G connection, 2 GB of memory or less, or 2 cores or fewer, or when a frame-rate
+check in the first seconds sees more than 40% of frames over 50ms (a stand-in for under about 20
+fps). Lite keeps the smoke in place but frozen: haze layers hold their starting positions, smoke
+shape a is frozen, b is dropped. The verdict is remembered for the tab session. The drift also
+pauses (`data-live="false"`) while the hero is scrolled out of view or the tab is hidden.
+`?fx=lite` and `?fx=full` force either state, for checking by eye and for tests (headless Chromium
+has no GPU and would trip the frame-rate check). The resting layers (`hero__rest`) are gone.
+The hero image is only 41 KB, so a poor connection costs little; the lite mode is about CPU and GPU.
+Limits: the frame-rate check can misread a busy first few seconds (a big scroll right after load)
+as a weak device, and the result is a still hero, not a broken one. Not measured on a real phone.
+
 ## Reference
 
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.
