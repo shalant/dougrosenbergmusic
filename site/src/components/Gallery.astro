@@ -110,8 +110,9 @@ const photos = [
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = window.matchMedia('(hover: hover)').matches;
 
-    // The reel doesn't autoplay under reduced motion, so don't claim it does.
-    if (reduceMotion && hint) hint.textContent = 'drag or scroll';
+    // The reel doesn't autoplay under reduced motion, so don't claim it does,
+    // and a touch screen swipes rather than drags (2026-10-30).
+    if (hint) hint.textContent = (reduceMotion ? '' : 'auto-playing · ') + (canHover ? 'drag or scroll' : 'swipe');
 
     const AUTOPLAY_SPEED = 0.45;
     const AUTOPLAY_DELAY = 450;
@@ -533,14 +534,14 @@ const photos = [
 
   .reel-panel__caption span {
     display: block;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--text);
     line-height: 1.3;
   }
 
   .reel-panel__index {
     font-family: var(--font-body);
-    font-size: 0.56rem;
+    font-size: 0.8rem;
     letter-spacing: 0.06em;
     color: var(--brass);
     margin-top: 0.15rem;
@@ -680,7 +681,7 @@ const photos = [
     top: 1.6rem;
     left: 1.5rem;
     font-family: var(--font-body);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--text-faint);
   }
 

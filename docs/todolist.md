@@ -148,6 +148,13 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
       instead of 0.86rem grey bullets; "Artists performed with" names are 0.98rem full-strength
       text. No wording changed; the years were split out of the role text into their own span.
       `e2e/list-rows.spec.ts` fails on the old build. Verified: see the PR.
+- [x] **Mobile refinement round** (branch `mobile-refinement-2026-10-30`). Raised 38 small
+      `font-size` declarations to a 12px floor for tracked uppercase and 12.8px for read text (the
+      mono-to-Work-Sans swap had made them look smaller); Send Message to 44px; the two Dev buttons
+      to one full-width pair on a phone; the gallery hint to "swipe" on touch. Left alone on purpose:
+      About photo frame, Dev remote overlap, press outlet link heights. `e2e/mobile-refinement.spec.ts`
+      added. Details in `docs/ui-assessment-2026-10-24.md`, "Mobile refinement round, 2026-10-30".
+      Still unverified on a real phone.
 - [ ] **Heading style rule still open.** Recommended: section labels roman, a heading that is a
       full sentence in Doug's voice italic (changes only "On the Road" and "Sheet Music Library"
       to roman). Waiting on Doug.

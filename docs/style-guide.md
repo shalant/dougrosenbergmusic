@@ -60,6 +60,11 @@ how to add a new weight).
   different, change its size, case or tracking.
 - **Label voice (2026-10-25):** in-section labels on the home page use the global `.label` class, Fraunces italic in `--text-muted` ("Chicago", "Artists performed with", "Subjects", "The records"), not tracked mono caps. The home page has no section-level eyebrows: the staff dividers and headings name each section.
 
+**Minimum text size (2026-10-30):** no visible text under 12px on a phone. Tracked uppercase labels
+are 0.75rem (12px); anything people read (captions, metadata, dates, tags) is 0.8rem (12.8px) or
+larger. `e2e/mobile-refinement.spec.ts` fails if any visible text on `/`, `/press`, `/easternblok` or
+`/easternblok/press` is smaller.
+
 **Before adding a new weight/style combo**, check it's actually needed (a real rendered use, not
 just declared) — a false-positive from a decorative empty `<i>` tag registering as "Work Sans
 italic" in computed style, despite rendering no visible text, was caught and excluded during the

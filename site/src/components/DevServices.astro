@@ -218,6 +218,15 @@ const channels = [
     padding-top: 2.25rem;
   }
 
+  /* Stacked on a phone the two buttons were different widths, left-aligned;
+     full width each reads as one deliberate pair (2026-10-30). */
+  @media (max-width: 520px) {
+    .dev__ctas > * {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+
   /* .cta-primary is shared with the hero, which sits one screen above this
      section - reusing it as-is here read as the exact same button repeated
      rather than this section's own call to action. Recolored to --note-dev
@@ -357,7 +366,7 @@ const channels = [
     align-items: center;
     gap: 0.4rem;
     font-family: var(--font-body);
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--note-highlights);
@@ -380,7 +389,7 @@ const channels = [
 
   .dev__screen-count {
     font-family: var(--font-body);
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     color: var(--text);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   }
@@ -424,7 +433,7 @@ const channels = [
 
   .dev__caption-tagline {
     font-family: var(--font-body);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     margin: 0.3rem 0 0;
   }
@@ -432,7 +441,7 @@ const channels = [
   .dev__caption-stack {
     flex-shrink: 0;
     font-family: var(--font-body);
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--brass);
