@@ -166,6 +166,40 @@ What did move it: the photo shared bandwidth with the Dev carousel's first scree
 attributes and fails without them. The Dev screen has a fixed aspect ratio, so lazy loading adds no
 shift.
 
+## Mobile refinement round, 2026-10-30
+
+Branch `mobile-refinement-2026-10-30`. Reviewed the home page section by section at 390px and
+360px (device scale 2, reduced motion on), then measured every page at 390px for text size and tap
+targets, and checked horizontal overflow at 320, 360, 390 and 430px (none on any of the five pages).
+The fixed logo and menu button show on top of some section screenshots; that is how they were
+captured, not a bug.
+
+Found and fixed:
+- **Tiny text.** The audit counted text at 9.6 to 12px across the site (253 gig dates at 12px, gig
+  tags at 10.4px, the Dev screen chips at 9.6px, most captions and metadata at 11.2 to 11.5px).
+  Dropping JetBrains Mono (PR #110) made it worse: those sizes were tuned for a mono face with a
+  taller x-height, so Work Sans at the same size reads smaller. Raised 38 declarations to a floor of
+  0.8rem (12.8px) for text people read and 0.75rem (12px) for tracked uppercase labels. The rule is
+  now in `docs/style-guide.md`.
+- Send Message was 43px tall; now `min-height: 44px`.
+- The two Dev buttons stacked at different widths on a phone; now one full-width pair at 520px
+  and below.
+- The gallery hint said "drag or scroll" on a touch screen; it now says "swipe" (and keeps
+  "auto-playing" only when the reel autoplays).
+
+Checked and left alone:
+- The About photo's narrower, offset frame stays (recorded in `docs/todolist.md` as the intended
+  asymmetric layout, not a bug).
+- The Dev carousel remote over the preview stays (Doug's call); its LEDs are 26px but take a tap in
+  a 24x44 area (`e2e/tap-targets.spec.ts`).
+- Press outlet links stay 32 to 36px tall on purpose (see `QuoteLedger.astro`).
+
+`e2e/mobile-refinement.spec.ts` guards all four fixes; its text and hint tests fail on the build
+before this change.
+
+Not checked: a real phone. Everything above is headless Chromium at phone sizes, so touch feel,
+scroll momentum, safe-area insets and the haze motion on a GPU are still unverified.
+
 ## Related
 
 - Rubric: `career-development/docs/SITE_QUALITY_CHECKLIST.md`
