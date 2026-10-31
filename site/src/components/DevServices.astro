@@ -561,6 +561,13 @@ const channels = [
     box-shadow: 0 0 5px var(--note-highlights);
   }
 
+  /* The glow above is later in the file than the focus ring and replaced it,
+     so on the active channel (where keyboard focus lands first) nothing
+     showed where focus was (found 2026-10-30). Keep both. */
+  .dev__remote-led.is-active:focus-visible {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6), 0 0 5px var(--note-highlights);
+  }
+
   /* Seven channels since 2026-10-25 make the remote about 300px wide. A
      320px screen leaves the preview only 280px, so below 360px the remote
      hangs 10px past the screen's right edge instead of 28px inside it,

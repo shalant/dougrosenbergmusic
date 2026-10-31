@@ -60,10 +60,14 @@
     toastTimer = window.setTimeout(() => toast.classList.remove('toast--visible'), 6000);
   }
 
+  // Typing in a marked field clears its mark.
+  form.addEventListener('input', (event) => (event.target as HTMLElement).removeAttribute('aria-invalid'));
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     status.textContent = '';
     status.className = 'contact__form-status';
+    form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
 
     const formData = new FormData(form);
     const payload = {
@@ -74,9 +78,20 @@
       website: String(formData.get('website') ?? ''),
     };
 
-    if (!payload.name || !payload.email || !payload.message) {
-      status.textContent = 'Please fill in your name, email, and message.';
+    // Same check the Worker makes, so a typo is caught before the round trip.
+    const emailLooksRight = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
+    const missing = (['name', 'email', 'message'] as const).filter((key) => !payload[key]);
+    if (missing.length || !emailLooksRight) {
+      // Mark every field that needs fixing and put the cursor in the first one
+      // (2026-10-30): the message alone left a keyboard or screen-reader user
+      // to hunt for what was wrong.
+      const bad = missing.length ? missing : (['email'] as const);
+      for (const key of bad) document.getElementById(`contact-${key}`)!.setAttribute('aria-invalid', 'true');
+      status.textContent = missing.length
+        ? 'Please fill in your name, email, and message.'
+        : 'That email address doesn’t look right.';
       status.classList.add('contact__form-status--error');
+      document.getElementById(`contact-${bad[0]}`)!.focus();
       return;
     }
 
@@ -199,6 +214,7 @@
        render select's own internal spacing differently even with identical
        CSS padding) - bumped so the shortest of the three clears 44px. */
     padding: 0.75rem 0.8rem;
+    transition: border-color var(--dur-base) ease;
   }
 
   .contact__field textarea {
@@ -213,12 +229,27 @@
     scroll-margin-top: 6.5rem;
   }
 
+  @media (hover: hover) {
+    .contact__field input:hover,
+    .contact__field select:hover,
+    .contact__field textarea:hover {
+      border-color: rgba(233, 237, 245, 0.3);
+    }
+  }
+
   .contact__field input:focus-visible,
   .contact__field select:focus-visible,
   .contact__field textarea:focus-visible {
     outline: none;
     border-color: var(--brass);
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+  }
+
+  /* After the focus rule on purpose: a field that failed validation keeps its
+     red border even while the cursor is in it. */
+  .contact__field input[aria-invalid='true'],
+  .contact__field textarea[aria-invalid='true'] {
+    border-color: var(--note-dev);
   }
 
   .contact__honeypot {

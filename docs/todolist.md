@@ -134,6 +134,20 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
 - Measured in headless Chromium with no GPU (relative numbers only): everything on 12 fps vs 43
   for the photo alone; the old seven-layer haze was 6-9 fps.
 
+## Cross-browser and interaction states (2026-10-30)
+
+- [x] **Cross-browser pass** (branch `cross-browser-and-states-2026-10-30`). Suite run in Firefox,
+      desktop WebKit and an iPhone WebKit profile: no product defects; fixed two tests that only
+      failed in mobile WebKit; added `-webkit-backdrop-filter` to two rules. Opt-in
+      `E2E_ENGINES=all` projects in `playwright.config.ts`. Details and the Windows-WebKit
+      variable-font caveat in `docs/ui-assessment-2026-10-24.md`.
+- [ ] **Check the type on a real iPhone or Mac.** Playwright's Windows WebKit ignores variable-font
+      weights, so it cannot show how Safari draws Fraunces and Work Sans.
+- [x] **Interaction-state pass:** hover cues on accordion rows, inline links and form fields; focus
+      ring on the active Dev remote light; contact form marks invalid fields, focuses the first and
+      checks the email format on the page. `e2e/interaction-states.spec.ts` and
+      `e2e/contact-validation.spec.ts` fail on the old build.
+
 ## Adaptive haze (2026-10-30)
 
 - [x] **Haze drifts on phones** (branch `hero-haze-mobile-2026-10-30`). Doug saw no haze motion on

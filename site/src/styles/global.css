@@ -196,6 +196,18 @@ a {
   color: inherit;
 }
 
+/* Plain inline links with no class of their own (an archived copy, a source,
+   an outlet name) answer the pointer (2026-10-30): the underline turns brass
+   and thickens. It is the underline, not the text color, because component
+   rules set link colors with a higher specificity than this one can match.
+   Classed links style their own hover. */
+@media (hover: hover) {
+  main a:not([class]):hover {
+    text-decoration-color: var(--brass);
+    text-decoration-thickness: 2px;
+  }
+}
+
 .wrap {
   max-width: 1180px;
   margin: 0 auto;
@@ -391,6 +403,7 @@ a {
   border: 1px solid rgba(233, 237, 245, 0.22);
   background: rgba(19, 26, 38, 0.4);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .cta-secondary:hover,

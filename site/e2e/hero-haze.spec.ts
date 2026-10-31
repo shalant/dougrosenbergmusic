@@ -81,16 +81,18 @@ test('a normal connection and device keep the full hero', async ({ page }) => {
 });
 
 test('the drift pauses when the hero is scrolled out of view', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  // no setViewportSize: resizing an emulated phone to 1440px keeps mobile WebKit's
+  // IntersectionObserver from reporting, which a real phone can't do
   await page.goto('/?fx=full');
   const playState = () =>
     page.evaluate(() => ({
       live: document.querySelector<HTMLElement>('.hero')!.dataset.live,
       state: getComputedStyle(document.querySelector('.haze-blob')!).animationPlayState,
     }));
-  await expect.poll(playState).toEqual({ live: 'true', state: 'running' });
+  const slowCi = { timeout: 15_000 }; // module scripts can start late on a loaded runner
+  await expect.poll(playState, slowCi).toEqual({ live: 'true', state: 'running' });
   await page.evaluate(() => document.querySelector('#listen')!.scrollIntoView());
-  await expect.poll(playState).toEqual({ live: 'false', state: 'paused' });
+  await expect.poll(playState, slowCi).toEqual({ live: 'false', state: 'paused' });
 });
 
 for (const width of [1440, 390]) {

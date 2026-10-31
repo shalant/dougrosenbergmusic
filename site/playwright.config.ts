@@ -11,6 +11,21 @@ import { defineConfig, devices } from '@playwright/test';
 // (2026-10-29); set E2E_PORT=4391 (any free port) to avoid it.
 const port = Number(process.env.E2E_PORT ?? 4322);
 
+// Firefox and WebKit projects are opt-in (E2E_ENGINES=all) so the default run
+// and CI stay Chromium-only. Run them on a quiet machine with --workers=3:
+// three engines in parallel overloads a laptop and produces timeouts that
+// pass when run alone (2026-10-30). Playwright's WebKit on Windows ignores
+// variable-font weights, so type looks heavy and the buttons look regular
+// there; that is the Windows build, not what Safari draws. Check type on a
+// real iPhone or Mac.
+const otherEngines = process.env.E2E_ENGINES
+  ? [
+      { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+      { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+      { name: 'mobile-safari', use: { ...devices['iPhone 14'] } },
+    ]
+  : [];
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -30,6 +45,7 @@ export default defineConfig({
       name: 'mobile-chrome',
       use: { ...devices['Pixel 7'] },
     },
+    ...otherEngines,
   ],
   webServer: {
     // `astro preview` self-daemonizes in this Astro version (same as `astro

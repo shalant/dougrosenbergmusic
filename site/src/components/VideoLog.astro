@@ -102,11 +102,18 @@ const rest = data.videos.filter((v) => !v.lead);
     margin-left: auto;
     font-family: var(--font-body);
     color: var(--brass);
-    transition: rotate var(--dur-med) var(--ease-spring);
+    transition: rotate var(--dur-med) var(--ease-spring), scale var(--dur-base) ease;
   }
 
   .more[open] summary::after {
     rotate: 45deg;
+  }
+
+  /* The row answers the pointer: the "+" swells a little (2026-10-30). */
+  @media (hover: hover) {
+    .more summary:hover::after {
+      scale: 1.4;
+    }
   }
 
   .more__label {

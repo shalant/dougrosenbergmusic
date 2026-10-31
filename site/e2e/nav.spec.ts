@@ -97,7 +97,8 @@ test.describe('mobile header stays visible', () => {
     test(`logo${path === '/' ? ' and menu toggle stay' : ' stays'} in view while scrolling down (${path})`, async ({ page }) => {
       await page.goto(path);
       for (const y of [300, 1200, 2400]) {
-        await page.mouse.wheel(0, y - (await page.evaluate(() => window.scrollY)));
+        // mouse.wheel is not supported in mobile WebKit (iPhone profile), so scroll the page itself
+        await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
         await page.waitForTimeout(400);
         await expect(page.locator('.logo')).toBeInViewport();
         if (path === '/') await expect(page.locator('[data-menu-toggle]')).toBeInViewport();
