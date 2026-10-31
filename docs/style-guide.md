@@ -58,6 +58,12 @@ how to add a new weight).
   all of those now use `--font-body` (Work Sans) and keep their size, tracking and uppercase. Work
   Sans 600 resolves to the loaded 700. Don't add a third family back; if a label needs to look
   different, change its size, case or tracking.
+- **Heading rule (2026-10-30):** a section label is roman (Recordings, On the Road, Highlights,
+  Private lessons, In Frame, On record, Sheet Music Library, Quick answers); a heading that is a
+  full sentence in Doug's voice is italic ("I also build sites like this one.", "Let's make some
+  music."). Test: a home-page `h2` ending in `.`, `!` or `?` is italic, any other is roman
+  (`e2e/heading-style.spec.ts`). Doug deferred the choice to Claude on 2026-10-30. New sections
+  follow the rule, not the neighbours. Sub-headings (`h3`) stay Fraunces roman 600.
 - **Label voice (2026-10-25):** in-section labels on the home page use the global `.label` class, Fraunces italic in `--text-muted` ("Chicago", "Artists performed with", "Subjects", "The records"), not tracked mono caps. The home page has no section-level eyebrows: the staff dividers and headings name each section.
 
 **Minimum text size (2026-10-30):** no visible text under 12px on a phone. Tracked uppercase labels

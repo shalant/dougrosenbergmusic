@@ -132,10 +132,11 @@ Craft gaps found in that pass, and what happened to each (branch `ui-craft-polis
   different metrics; fixed (see `docs/ui-85-plan-2026-10-25.md`, "Craft pass, 2026-10-29").
 - Left on purpose: press outlet links stay about 32px tall (their CSS records that 44px would
   overlap the quote above; they clear WCAG 2.5.8's 24px).
-- Open, needs Doug: heading style alternates roman and italic (Recordings, Highlights, Private
-  lessons, Quick answers, On record and In Frame are roman; On the Road, Sheet Music Library,
-  "I also build sites like this one." and "Let's make some music." are italic). Not changed
-  because it may be deliberate; if it is, it needs a rule written down.
+- Decided 2026-10-30: heading style alternated roman and italic (Recordings, Highlights, Private
+  lessons, Quick answers, On record and In Frame roman; On the Road, Sheet Music Library,
+  "I also build sites like this one." and "Let's make some music." italic). Doug deferred the call;
+  the rule is now: labels roman, full-sentence headings italic, so On the Road and Sheet Music
+  Library went roman. Written in `docs/style-guide.md` and checked by `e2e/heading-style.spec.ts`.
 - Archive pages re-viewed 2026-10-29 evening (`/press`, `/easternblok`, `/easternblok/press` at
   1440px and 390px): they hold together and carry the home page's language (staff, noteheads,
   ruled rows, wanted box). One bug found and fixed: on the Eastern Blok press timeline the album
