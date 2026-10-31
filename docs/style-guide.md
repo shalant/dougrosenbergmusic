@@ -44,7 +44,7 @@ existing pass elsewhere still holds.
 
 ## Typography
 
-Three font families, each self-hosted as woff2 (`site/public/fonts/`, `@font-face` rules at the
+Two font families (JetBrains Mono was dropped 2026-10-30, see below), each self-hosted as woff2 (`site/public/fonts/`, `@font-face` rules at the
 top of `global.css` — no Google Fonts `<link>`/`@import`, see that file's own comment for why and
 how to add a new weight).
 
@@ -53,7 +53,11 @@ how to add a new weight).
   (`font-style: italic; font-weight: 500`), normal+600 for sub-headings/stat numbers.
 - `--font-body`: **Work Sans** — body copy. Weights: 400 (default), 500 (`<strong>` inside
   `.career-highlights__bullets`), 700 (bare `<strong>` elsewhere, browser default bold).
-- `--font-mono`: **JetBrains Mono** — nav labels, form labels, captions, metadata, archive-page eyebrows. Weights: 400, 600.
+- **No monospace face (2026-10-30).** `--font-mono` / JetBrains Mono used to set nav labels, form
+  labels, captions, metadata and archive eyebrows (49 uses). Doug found three families too many, so
+  all of those now use `--font-body` (Work Sans) and keep their size, tracking and uppercase. Work
+  Sans 600 resolves to the loaded 700. Don't add a third family back; if a label needs to look
+  different, change its size, case or tracking.
 - **Label voice (2026-10-25):** in-section labels on the home page use the global `.label` class, Fraunces italic in `--text-muted` ("Chicago", "Artists performed with", "Subjects", "The records"), not tracked mono caps. The home page has no section-level eyebrows: the staff dividers and headings name each section.
 
 **Before adding a new weight/style combo**, check it's actually needed (a real rendered use, not

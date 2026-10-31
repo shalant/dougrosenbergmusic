@@ -133,6 +133,20 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
 - Measured in headless Chromium with no GPU (relative numbers only): everything on 12 fps vs 43
   for the photo alone; the old seven-layer haze was 6-9 fps.
 
+## Two fonts instead of three (2026-10-30)
+
+- [x] **Dropped JetBrains Mono** (branch `drop-mono-font-2026-10-30`). Doug said the site had too
+      many fonts and deferred the choice to Claude. Replaced all 49 `var(--font-mono)` uses with
+      `var(--font-body)` (Work Sans), removed the two `@font-face` rules, the fallback face, the
+      `--font-mono` token and `public/fonts/jetbrains-mono.woff2`. Size, tracking and uppercase on
+      those labels are unchanged. Verified: `astro check` 0 errors, build, 64 unit tests, lint,
+      CSP hashes, 217 e2e passing (29 skipped) including the layout-shift specs; looked at every
+      home section at 1440px and 390px plus `/easternblok/press`. Not checked: Lighthouse after
+      the change (CI runs it).
+- [ ] **Heading style rule still open.** Recommended: section labels roman, a heading that is a
+      full sentence in Doug's voice italic (changes only "On the Road" and "Sheet Music Library"
+      to roman). Waiting on Doug.
+
 ## Order of operations
 
 1. **Finish basic content/build items** — this project isn't feature-complete yet.

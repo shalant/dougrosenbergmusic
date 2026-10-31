@@ -60,20 +60,6 @@
   font-display: swap;
   src: url('/fonts/work-sans.woff2') format('woff2');
 }
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
-}
 
 /* Metric-matched fallbacks (2026-10-29). Until the real fonts arrive the text
    paints in a system font, and when they swap in the lines rewrapped:
@@ -83,7 +69,7 @@
    `createFontStack` turned into these rules), so the swap moves almost
    nothing. They are first in each --font-* stack below. local() matches a
    font's own name, not a fontconfig alias, so Linux (no Arial, no Times New
-   Roman) needs the metric-compatible Liberation/Arimo/Tinos/Cousine names
+   Roman) needs the metric-compatible Liberation/Arimo/Tinos names
    listed too; without them CI's /press measured a 27px shift. */
 @font-face {
   font-family: 'Work Sans Fallback';
@@ -100,13 +86,6 @@
   descent-override: 22.0882%;
   line-gap-override: 0%;
   size-adjust: 115.4462%;
-}
-@font-face {
-  font-family: 'JetBrains Mono Fallback';
-  src: local('Courier New'), local('CourierNewPSMT'), local('Liberation Mono'), local('Cousine');
-  ascent-override: 102.0166%;
-  descent-override: 30.0049%;
-  size-adjust: 99.9837%;
 }
 
 :root {
@@ -137,7 +116,6 @@
 
   --font-display: 'Fraunces', 'Fraunces Fallback', Georgia, 'Times New Roman', serif;
   --font-body: 'Work Sans', 'Work Sans Fallback', -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, 'SF Mono', Consolas, monospace;
 
   /* Motion tokens (2026-10-17). Hover, tap and open/close transitions use
      these, so a new micro-interaction matches the rest without copying
@@ -281,7 +259,7 @@ a {
 }
 
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
