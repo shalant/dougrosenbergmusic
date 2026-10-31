@@ -118,6 +118,7 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
       28s loop, guarded with `@supports (background-clip: text)`.
 - [x] **1024px and under:** drifting haze swapped for two static layers cross-fading over 40s, first
       blob frozen, second dropped, headline shading still. All still under reduced motion.
+      **Superseded 2026-10-30** (see "Adaptive haze" below): the haze drifts on phones too.
 - [x] **Tests:** `site/e2e/hero-haze.spec.ts` (desktop animates; resting tier at 1024, 768, 390;
       still under reduced motion at 1440 and 390). Fails on the old hero, passes now.
 - [x] **Docs:** "Update, 2026-10-29" under "Hero motion" in `docs/DESIGN_NOTES.md`.
@@ -132,6 +133,22 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
       he hasn't said whether to bring them back).
 - Measured in headless Chromium with no GPU (relative numbers only): everything on 12 fps vs 43
   for the photo alone; the old seven-layer haze was 6-9 fps.
+
+## Adaptive haze (2026-10-30)
+
+- [x] **Haze drifts on phones** (branch `hero-haze-mobile-2026-10-30`). Doug saw no haze motion on
+      his phone: the 1024px-and-under tier froze it. Removed that tier and the `hero__rest` layers;
+      headline shading still holds still at 1024px and below. Local Lighthouse with the full haze
+      on a phone: 96 to 97, LCP 2.4s, TBT 0, CLS 0.
+- [x] **Lite mode for weak devices and connections:** `data-fx="lite"` on Save-Data, 2G or 3G, 2 GB
+      or less of memory, 2 cores or fewer, or a frame-rate check under about 20 fps in the first
+      seconds. The drift also pauses when the hero is out of view or the tab is hidden.
+      `?fx=lite` / `?fx=full` force either state. Checked with CPU throttling in headless Chromium:
+      60 fps stays full at 4x; at 15x (18 fps) it switched to lite about 3s in.
+- [x] **Tests:** `e2e/hero-haze.spec.ts` rewritten (drift at 1440/1024/768/390, lite via param,
+      Save-Data, 3G, 2 GB, pause out of view, reduced motion); 9 of 13 fail on the old build.
+- [ ] **Still to check on a real phone:** that the drift is smooth and the battery cost is fine.
+      Try `?fx=lite` to see the fallback.
 
 ## Two fonts instead of three (2026-10-30)
 

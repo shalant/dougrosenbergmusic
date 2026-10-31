@@ -78,7 +78,6 @@ const records = [
       </g>
     </svg>
   </div>
-  <div class="hero__rest" aria-hidden="true"><div class="hero__rest-a"></div><div class="hero__rest-b"></div></div>
   <div class="hero__scan" aria-hidden="true"></div>
   <div class="hero__screen-vignette" aria-hidden="true"></div>
   <div class="hero__scrim" aria-hidden="true"></div>
@@ -260,47 +259,6 @@ const records = [
   @keyframes haze-blob-b {
     0%, 100% { translate: 16vw -4vw; rotate: 14deg; scale: 1.15; opacity: 0.4; }
     50% { translate: -18vw 12vw; rotate: -22deg; scale: 0.9; opacity: 0.95; }
-  }
-
-  /* Resting smoke for the 1024px-and-under tier: two static gradient layers
-     cross-fading over 40s, one opacity animation on two layers and nothing
-     else. Hidden on desktop, where the drifting layers above do the work. */
-  .hero__rest {
-    display: none;
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: var(--haze-strength);
-  }
-
-  .hero__rest-a,
-  .hero__rest-b {
-    position: absolute;
-    inset: 0;
-  }
-
-  .hero__rest-a {
-    opacity: 0.6;
-    animation: haze-rest 40s ease-in-out infinite alternate;
-    background:
-      radial-gradient(40vw 30vw at 78% 24%, rgba(224, 121, 79, 0.16), transparent 70%),
-      radial-gradient(34vw 26vw at 70% 70%, rgba(82, 209, 166, 0.12), transparent 70%),
-      radial-gradient(40vw 14vw at 25% 16%, rgba(190, 208, 232, 0.12), transparent 70%);
-  }
-
-  .hero__rest-b {
-    opacity: 0.5;
-    animation: haze-rest 40s ease-in-out infinite alternate-reverse;
-    background:
-      radial-gradient(38vw 28vw at 60% 42%, rgba(224, 121, 79, 0.13), transparent 70%),
-      radial-gradient(30vw 30vw at 88% 56%, rgba(82, 209, 166, 0.12), transparent 70%),
-      radial-gradient(34vw 26vw at 14% 52%, rgba(82, 209, 166, 0.12), transparent 70%),
-      radial-gradient(44vw 14vw at 55% 82%, rgba(190, 208, 232, 0.1), transparent 70%);
-  }
-
-  @keyframes haze-rest {
-    from { opacity: 0.1; }
-    to { opacity: 1; }
   }
 
   /* the broadcast grade — scanlines and a soft screen-shaped vignette,
@@ -567,29 +525,9 @@ const records = [
      aligned in this range so short lines pull clear of him rather than
      starting at the box's left edge. */
   @media (max-width: 1024px) {
-    /* Lighthouse mobile audit: 50/100, traced to ~5.9s of paint/composite
-       work under throttled CPU (desktop: 95/100, no such cost - so this is
-       purely a lower-end-hardware concern, not a real bug). The moving
-       layers are what ran continuously here, so at this size the drifting
-       haze is swapped for the two slow cross-fading resting layers, the
-       first smoke shape is frozen mid-frame, the second is dropped, and the
-       headline shading holds still. The smoke stays; the continuous
-       repaint goes. The title's shimmer was removed everywhere on
-       2026-10-28; its remaining motion is the fade-up and the one-time TV
-       flicker. */
-    .hero__haze {
-      display: none;
-    }
-    .hero__rest {
-      display: block;
-    }
-    .hero__blob--a {
-      animation: none;
-      opacity: 0.6;
-    }
-    .hero__blob--b {
-      display: none;
-    }
+    /* The haze drifts at every width now (2026-10-30); a weak device or
+       connection gets the still version through data-fx="lite" below. The
+       headline shading holds still here because it repaints text. */
     .hero__main {
       animation: none;
     }
@@ -726,6 +664,31 @@ const records = [
     }
   }
 
+  /* Adaptive motion (2026-10-30). The script below sets data-fx="lite" on the
+     hero when the connection or device looks weak (Save-Data, 2G or 3G, 2 GB
+     of memory or less, 2 cores or fewer) or when the first seconds of
+     animation run under about 20 frames per second. Lite keeps the smoke but
+     still: the haze layers hold their starting positions, smoke shape a is
+     frozen and b dropped. data-live="false" (hero scrolled out of view or tab
+     hidden) pauses the drift to save battery. ?fx=lite and ?fx=full force
+     either state. */
+  .hero[data-fx='lite'] .haze-blob,
+  .hero[data-fx='lite'] .hero__main {
+    animation: none;
+  }
+  .hero[data-fx='lite'] .hero__blob--a {
+    animation: none;
+    opacity: 0.6;
+  }
+  .hero[data-fx='lite'] .hero__blob--b {
+    display: none;
+  }
+  .hero[data-live='false'] .haze-blob,
+  .hero[data-live='false'] .hero__blob,
+  .hero[data-live='false'] .hero__main {
+    animation-play-state: paused;
+  }
+
   /* Last in the file on purpose: the 1024px query above re-declares the
      title's fade-up animation, and when this block sat before it, that
      later rule won, so reduced-motion visitors on tablets and phones
@@ -736,9 +699,7 @@ const records = [
     .hero__tv-t,
     .hero__tv-v,
     .haze-blob,
-    .hero__main,
-    .hero__rest-a,
-    .hero__rest-b {
+    .hero__main {
       animation: none;
     }
     .hero__blob {
@@ -750,3 +711,76 @@ const records = [
     }
   }
 </style>
+
+
+<script>
+  // Adaptive motion (2026-10-30): see the data-fx comment in the style block.
+  type NavExtras = Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+    deviceMemory?: number;
+  };
+
+  const hero = document.querySelector<HTMLElement>('.hero');
+  if (hero) {
+    const nav = navigator as NavExtras;
+    const forced = new URLSearchParams(location.search).get('fx');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const weakDevice =
+      (nav.deviceMemory !== undefined && nav.deviceMemory <= 2) || navigator.hardwareConcurrency <= 2;
+    const slowLink =
+      nav.connection?.saveData === true || /^(slow-2g|2g|3g)$/.test(nav.connection?.effectiveType ?? '');
+
+    const remembered = () => {
+      try {
+        return sessionStorage.getItem('fx') === 'lite';
+      } catch {
+        return false;
+      }
+    };
+    const goLite = () => {
+      hero.dataset.fx = 'lite';
+      try {
+        sessionStorage.setItem('fx', 'lite');
+      } catch {
+        // storage blocked: the verdict just isn't remembered
+      }
+    };
+
+    if (forced === 'lite' || (forced !== 'full' && (weakDevice || slowLink || remembered()))) goLite();
+
+    // Pause the drift whenever nobody can see it.
+    let inView = true;
+    const syncLive = () => {
+      hero.dataset.live = String(inView && !document.hidden);
+    };
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncLive();
+    }).observe(hero);
+    document.addEventListener('visibilitychange', syncLive);
+
+    // Frame-rate watchdog: after load, count frames for 2.5s. More than 40% of
+    // them over 50ms means the device can't keep up, so settle to lite. Skipped
+    // under reduced motion, when forced, and once already lite.
+    if (!reduced && forced === null && hero.dataset.fx !== 'lite') {
+      const watch = () => {
+        let last = performance.now();
+        const end = last + 2500;
+        let frames = 0;
+        let slow = 0;
+        const tick = (now: number) => {
+          if (document.hidden || !inView) return; // no verdict from a hidden hero
+          frames += 1;
+          if (now - last > 50) slow += 1;
+          last = now;
+          if (now < end) requestAnimationFrame(tick);
+          else if (frames >= 20 && slow / frames > 0.4) goLite();
+        };
+        requestAnimationFrame(tick);
+      };
+      const start = () => setTimeout(watch, 800);
+      if (document.readyState === 'complete') start();
+      else addEventListener('load', start, { once: true });
+    }
+  }
+</script>
