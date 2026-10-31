@@ -119,11 +119,18 @@ const faqSchema = {
     font-weight: 400;
     font-size: 1.1rem;
     color: var(--brass);
-    transition: rotate var(--dur-med) var(--ease-spring);
+    transition: rotate var(--dur-med) var(--ease-spring), scale var(--dur-base) ease;
   }
 
   .faq__item[open] summary::after {
     rotate: 45deg;
+  }
+
+  /* The row answers the pointer: the "+" swells a little (2026-10-30). */
+  @media (hover: hover) {
+    .faq__item summary:hover::after {
+      scale: 1.4;
+    }
   }
 
   /* The answer slides open instead of popping in, where the browser can

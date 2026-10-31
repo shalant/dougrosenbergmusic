@@ -120,11 +120,18 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
     margin-left: auto;
     font-family: var(--font-body);
     color: var(--brass);
-    transition: rotate var(--dur-med) var(--ease-spring);
+    transition: rotate var(--dur-med) var(--ease-spring), scale var(--dur-base) ease;
   }
 
   .year[open] summary::after {
     rotate: 45deg;
+  }
+
+  /* The row answers the pointer: the "+" swells a little (2026-10-30). */
+  @media (hover: hover) {
+    .year summary:hover::after {
+      scale: 1.4;
+    }
   }
 
   /* A year's show list slides open where the browser can animate to

@@ -223,6 +223,52 @@ impression and mobile), a sharper replacement for the red-lit gallery photo, and
 sax-bell chips. The remaining points are mostly judgement on identity (how much a stranger would
 remember the site) that this reviewer can't measure.
 
+## Cross-browser and interaction-state pass, 2026-10-30
+
+Branch `cross-browser-and-states-2026-10-30`. Two parts of the craft work, both measured.
+
+**Cross-browser.** Ran the whole e2e suite, plus screenshots of the hero and three sections, in
+Playwright's Firefox 155, desktop WebKit 26.6 and an iPhone 14 WebKit profile (Chromium was all it
+had ever seen).
+- Firefox and desktop WebKit each pass all 126 tests when run alone; iPhone WebKit passes after two
+  fixes to the tests themselves (`mouse.wheel` is unsupported in mobile WebKit, and resizing an
+  emulated phone to 1440px stopped its IntersectionObserver reporting, which a real phone can't
+  do). Running all three engines in parallel produced 24 timeouts that pass when run alone, so the
+  suite takes `--workers=3` and a quiet machine.
+- Firefox renders the home page and the archive pages the same as Chromium.
+- All five scroll-driven animations are behind `@supports (animation-timeline: view())`, so older
+  Safari gets plain visible content. `100dvh` has a `100vh` fallback. Two `backdrop-filter` rules
+  lacked the `-webkit-` prefix (gallery lightbox, `.cta-secondary`); added.
+- **Not a bug, and nearly mistaken for one:** in Playwright's WebKit the headline and italic type look
+  much heavier and bold buttons look regular. A lab page with the same font files showed that build
+  ignores variable-font weights entirely, even with `font-variation-settings`. It is Playwright's
+  Windows WebKit, not Safari on an iPhone or Mac. Declaring the fonts as weight ranges changed
+  nothing there and was reverted. **Real Safari is still unchecked**: look at the type on a real
+  iPhone or Mac.
+- `playwright.config.ts` now has opt-in Firefox, WebKit and iPhone projects (`E2E_ENGINES=all`);
+  CI stays Chromium-only.
+
+**Interaction states.** Hovered and focused every interactive element on `/`, `/press`,
+`/easternblok` and `/easternblok/press` (320 in all) and listed the ones with no visible change. A
+first run with reduced motion on wrongly flagged elements whose hover is a motion effect, so it was
+rerun with normal motion and deeper child sampling. Real gaps, now fixed:
+- Accordion rows (FAQ, press years, show years, "More video") had no hover cue; the "+" now swells.
+- Plain inline links (archived copy, sources, outlet names) had no hover cue; the underline turns
+  brass and thickens. (Text color can't be the cue: component rules set link colors with higher
+  specificity than a global rule can match.)
+- Contact fields and the sheet-music search had no hover cue; the border brightens, and focus still
+  wins.
+- Keyboard focus was invisible on the active Dev remote light, where focus lands first: its glow rule
+  came later than the focus ring and replaced it. Both show now.
+- A failed contact-form validation only printed one line. Now each field that needs fixing gets
+  `aria-invalid` and a red border (kept while focused), the cursor moves to the first, and a
+  malformed email is caught on the page (same regex as the Worker) before the round trip.
+Left alone: the first gallery thumbnail and the first remote light show "no hover change" only
+because they are the active ones.
+
+Guarded by `e2e/interaction-states.spec.ts` and `e2e/contact-validation.spec.ts`; both fail on the
+build before this change.
+
 ## Related
 
 - Rubric: `career-development/docs/SITE_QUALITY_CHECKLIST.md`
