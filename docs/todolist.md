@@ -172,9 +172,13 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
       About photo frame, Dev remote overlap, press outlet link heights. `e2e/mobile-refinement.spec.ts`
       added. Details in `docs/ui-assessment-2026-10-24.md`, "Mobile refinement round, 2026-10-30".
       Still unverified on a real phone.
-- [ ] **Heading style rule still open.** Recommended: section labels roman, a heading that is a
-      full sentence in Doug's voice italic (changes only "On the Road" and "Sheet Music Library"
-      to roman). Waiting on Doug.
+- [x] **Heading style rule decided 2026-10-30** (branch `heading-rule-and-housekeeping-2026-10-30`).
+      Doug deferred the choice to Claude. Section labels are roman and full-sentence headings
+      italic, so "On the Road" and "Sheet Music Library" went roman. Written in
+      `docs/style-guide.md`; `e2e/heading-style.spec.ts` checks it and fails on the old styling.
+- [x] **Housekeeping, same branch:** `playwright.config.ts` reads its port from `E2E_PORT`
+      (default 4322) so a stray server on 4322 can't make local runs test the wrong site; README
+      status line refreshed (was dated 2026-09-20).
 
 ## Order of operations
 

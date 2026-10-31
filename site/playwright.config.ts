@@ -5,6 +5,12 @@ import { defineConfig, devices } from '@playwright/test';
 // docs/todolist.md for why this exists: Lighthouse CI already covers the
 // build+audit half of Testing/QA, this covers the "does the interactive
 // stuff actually work" half.
+//
+// The port comes from E2E_PORT (default 4322). Another project's server
+// holding 4322 made `reuseExistingServer` quietly test the wrong site
+// (2026-10-29); set E2E_PORT=4391 (any free port) to avoid it.
+const port = Number(process.env.E2E_PORT ?? 4322);
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -12,7 +18,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: [['list']],
   use: {
-    baseURL: 'http://localhost:4322',
+    baseURL: `http://localhost:${port}`,
     trace: 'retain-on-failure',
   },
   projects: [
@@ -34,8 +40,8 @@ export default defineConfig({
     // rather than `http-server`: with both /easternblok.html and an
     // /easternblok/ directory (for /easternblok/press), http-server 302s
     // /easternblok to the directory, which has no index, and it 404s.
-    command: 'npx serve dist -l 4322 --no-request-logging',
-    url: 'http://localhost:4322',
+    command: `npx serve dist -l ${port} --no-request-logging`,
+    url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,
   },

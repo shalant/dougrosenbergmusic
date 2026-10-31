@@ -132,10 +132,11 @@ Craft gaps found in that pass, and what happened to each (branch `ui-craft-polis
   different metrics; fixed (see `docs/ui-85-plan-2026-10-25.md`, "Craft pass, 2026-10-29").
 - Left on purpose: press outlet links stay about 32px tall (their CSS records that 44px would
   overlap the quote above; they clear WCAG 2.5.8's 24px).
-- Open, needs Doug: heading style alternates roman and italic (Recordings, Highlights, Private
-  lessons, Quick answers, On record and In Frame are roman; On the Road, Sheet Music Library,
-  "I also build sites like this one." and "Let's make some music." are italic). Not changed
-  because it may be deliberate; if it is, it needs a rule written down.
+- Decided 2026-10-30: heading style alternated roman and italic (Recordings, Highlights, Private
+  lessons, Quick answers, On record and In Frame roman; On the Road, Sheet Music Library,
+  "I also build sites like this one." and "Let's make some music." italic). Doug deferred the call;
+  the rule is now: labels roman, full-sentence headings italic, so On the Road and Sheet Music
+  Library went roman. Written in `docs/style-guide.md` and checked by `e2e/heading-style.spec.ts`.
 - Archive pages re-viewed 2026-10-29 evening (`/press`, `/easternblok`, `/easternblok/press` at
   1440px and 390px): they hold together and carry the home page's language (staff, noteheads,
   ruled rows, wanted box). One bug found and fixed: on the Eastern Blok press timeline the album
@@ -199,6 +200,28 @@ before this change.
 
 Not checked: a real phone. Everything above is headless Chromium at phone sizes, so touch feel,
 scroll momentum, safe-area insets and the haze motion on a GPU are still unverified.
+
+## Re-score, 2026-10-30: about 90 / 100
+
+After PRs #104 to #114 (craft polish, hazy hero, home mobile performance, press timeline fix, two
+fonts instead of three, ruled-row lists, mobile text floor, haze on phones with a lite mode, the
+heading rule). Same reviewer who built most of it, so allow three points either way; read it as a
+consistency check, not a measurement. Doug confirmed on his own phone that the site "looks great on
+mobile" (2026-10-30), which is the first real-device check in this series.
+
+| Area | Was (10-29) | Now | Why |
+|---|---|---|---|
+| Identity and distinctiveness | 18 | 18 | Unchanged; two typefaces make the identity cleaner, not stronger. |
+| First impression (hero) | 19 | 19 | Haze on phones is in PR #113 and not yet seen by Doug on a device, so no credit yet. |
+| Craft and polish | 16 | 17 | Heading rule written and tested, lists restyled, small-text floor, 44px submit, matched Dev buttons. Left: the grainy gallery photo, the sax-bell chips undecided. |
+| Typography and hierarchy | 13 | 14 | Three families down to two, no visible text under 12px on a phone, heading rule. |
+| Content and archive pages | 8 | 9 | Performance and Highlights no longer the weakest blocks; archive pages hold up. |
+| Mobile | 12 | 13 | Doug's phone check; text floor; haze motion still unverified. |
+
+What would move it past 90: seeing the haze run smoothly on a real phone and laptop (first
+impression and mobile), a sharper replacement for the red-lit gallery photo, and a decision on the
+sax-bell chips. The remaining points are mostly judgement on identity (how much a stranger would
+remember the site) that this reviewer can't measure.
 
 ## Related
 
