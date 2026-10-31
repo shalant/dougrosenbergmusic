@@ -134,6 +134,15 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
 - Measured in headless Chromium with no GPU (relative numbers only): everything on 12 fps vs 43
   for the photo alone; the old seven-layer haze was 6-9 fps.
 
+## Edge states (2026-10-31)
+
+- [x] **Sheet-music edge states** (branch `edge-states-2026-10-31`). A search with no hits showed a
+      blank list; it now says no piece matches and what to try. An image piece that fails to load
+      showed an empty frame; it now shows a message pointing at "Open in new tab". A PDF that fails
+      inside the iframe still can't be detected from the page (browsers fire `load` on error
+      pages), so the "Open in new tab" link stays the fallback. 404 page checked: it links home,
+      returns 404. Tests in `e2e/edge-states.spec.ts`.
+
 ## Cross-browser and interaction states (2026-10-30)
 
 - [x] **Cross-browser pass** (branch `cross-browser-and-states-2026-10-30`). Suite run in Firefox,

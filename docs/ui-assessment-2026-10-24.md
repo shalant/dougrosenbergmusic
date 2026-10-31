@@ -273,3 +273,12 @@ build before this change.
 
 - Rubric: `career-development/docs/SITE_QUALITY_CHECKLIST.md`
 - Existing design explorations: `docs/HeroDesigns`, `docs/DESIGN_NOTES.md`, `docs/style-guide.md`
+
+## Edge states, 2026-10-31
+
+Branch `edge-states-2026-10-31`. Looked at what a visitor sees when something is empty or fails.
+- Sheet-music search with no matches: was a blank list, now a line naming the search and what to do.
+- Sheet-music image that fails to load: was an empty frame, now a message. PDFs in the iframe can't
+  be checked from the page, so "Open in new tab" remains the fallback.
+- 404 page: returns status 404 and links home; no change needed.
+- Gallery lightbox not yet examined.
