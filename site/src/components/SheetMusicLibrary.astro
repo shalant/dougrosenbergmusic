@@ -62,6 +62,9 @@ const pieces = [
               </button>
             </li>
           ))}
+          <li class="sheet-music__none" data-sheet-none hidden>
+            No piece matches “<span data-sheet-none-query></span>”. Try a word from the title, or clear the search.
+          </li>
         </ul>
       </div>
 
@@ -79,6 +82,9 @@ const pieces = [
           </div>
           <iframe data-viewer-frame class="sheet-music__frame" title="Sheet music preview" hidden></iframe>
           <img data-viewer-image class="sheet-music__frame sheet-music__frame--image" alt="" hidden />
+          <p class="sheet-music__error" data-viewer-error role="status" hidden>
+            That page didn’t load. Try “Open in new tab”, or check your connection.
+          </p>
         </div>
       </div>
     </div>
@@ -218,6 +224,22 @@ const pieces = [
   }
 
   .sheet-music__item[hidden] {
+    display: none;
+  }
+
+  /* The edge states (2026-10-31): a search with no hits used to leave a blank
+     list, and an image that failed to load left an empty frame. */
+  .sheet-music__none,
+  .sheet-music__error {
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    line-height: 1.5;
+    padding: 0.9rem 0.6rem;
+    margin: 0;
+  }
+
+  .sheet-music__none[hidden],
+  .sheet-music__error[hidden] {
     display: none;
   }
 
@@ -381,14 +403,21 @@ const pieces = [
   const viewerLink = document.querySelector<HTMLAnchorElement>('[data-viewer-link]');
   const viewerFrame = document.querySelector<HTMLIFrameElement>('[data-viewer-frame]');
   const viewerImage = document.querySelector<HTMLImageElement>('[data-viewer-image]');
+  const none = document.querySelector<HTMLElement>('[data-sheet-none]');
+  const noneQuery = document.querySelector<HTMLElement>('[data-sheet-none-query]');
+  const viewerError = document.querySelector<HTMLElement>('[data-viewer-error]');
 
-  if (search && list && viewerEmpty && viewerActive && viewerTitle && viewerLink && viewerFrame && viewerImage) {
+  if (search && list && viewerEmpty && viewerActive && viewerTitle && viewerLink && viewerFrame && viewerImage && none && noneQuery && viewerError) {
     search.addEventListener('input', () => {
       const q = search.value.trim().toLowerCase();
+      let shown = 0;
       items.forEach((item) => {
         const match = item.dataset.title?.toLowerCase().includes(q);
         item.hidden = !match;
+        if (match) shown++;
       });
+      noneQuery.textContent = search.value.trim();
+      none.hidden = shown > 0;
     });
 
     items.forEach((item) => {
@@ -402,6 +431,7 @@ const pieces = [
 
         viewerEmpty.hidden = true;
         viewerActive.hidden = false;
+        viewerError.hidden = true;
         viewerTitle.textContent = item.dataset.title ?? '';
         viewerLink.href = url;
 
@@ -418,6 +448,14 @@ const pieces = [
           viewerFrame.src = url;
         }
       });
+    });
+
+    viewerImage.addEventListener('error', () => {
+      // an emptied src (switching to a PDF) also fires error; only a real URL counts
+      if (viewerImage.getAttribute('src')) {
+        viewerImage.hidden = true;
+        viewerError.hidden = false;
+      }
     });
 
     viewerLink.addEventListener('click', () => {
