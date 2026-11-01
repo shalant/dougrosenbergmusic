@@ -282,3 +282,66 @@ Branch `edge-states-2026-10-31`. Looked at what a visitor sees when something is
   be checked from the page, so "Open in new tab" remains the fallback.
 - 404 page: returns status 404 and links home; no change needed.
 - Gallery lightbox not yet examined.
+
+## Good cop and bad cop, 2026-11-01
+
+Doug asked for both lenses, the way `dougrosenbergdev/UI_AUDIT_PLAN.md` uses them (good cop 89, bad
+cop 76 there). That file never defines them, so they are defined here:
+
+- **Good cop:** the six-area rubric above, scored on what the site achieves. This is the series
+  that reads about 90 (2026-10-30).
+- **Bad cop:** a skeptical stranger who has seen a thousand musician and portfolio sites. They
+  take points for anything that is stock, repeated, hard to read, or forgettable, and give no
+  credit for effort, tests or intent. A separate lens, not comparable to the good-cop number.
+
+Bad-cop pass: live `https://dougrosenberg.com/` at 1440px, scrolled hero through Dev. Not
+viewed: Contact and footer, `/press`, `/easternblok`, mobile, light theme. My judgment, same
+reviewer who built most of the site.
+
+**Bad cop: about 78 / 100.** What costs points:
+1. **The nav pill prints over body text.** The semi-transparent six-blob nav sits on top of the
+   About paragraph and the press sidebar while scrolling, and the words run through it. First
+   logged 2026-10-24 as finding 3 and still visible.
+2. **Walls of dot-separated names.** On the Road, "Artists performed with" and the Highlights
+   university list are plain text runs. They are the longest stretch with no image, rule or
+   change in scale, and the middle of the page blurs together.
+3. **Same dark navy in every section.** The staff dividers separate sections, but nothing else
+   changes between Recordings, About, On the Road and Highlights, so the scroll feels long.
+4. **Left-hugging columns.** The intro, Highlights and About copy sit in a column starting at
+   x=245 with the right 40% empty, and there is roughly 250px of dead space under About.
+5. **Four identical album cards.** One size, one grey caption style. Reasonable for a discography,
+   but the stock grid of the page.
+6. **Dev block still has the remote over the preview and two stacked buttons** (Doug's call on
+   the remote, recorded 2026-10-30), and it is the only coral section.
+
+What the bad cop concedes: the hero, DR logo, staff dividers, ruled-row lists and heading rule
+are not stock, and a stranger would remember the hero.
+
+Cheapest points to win back: stop the nav showing text through it (give the pill a solid or
+blurred backing), and break one of the name walls with a larger-scale treatment.
+
+### Bad-cop fixes, 2026-11-01 (branch `ui-bad-cop-fixes-2026-11-01`)
+
+Doug kept the nav's look ("novel") and the Dev section as they are, and asked for points 2 to 5.
+- **Nav (point 1):** pill background raised from 0.65 to 0.75 alpha, nothing else changed. The phone
+  hamburger button stays at 0.65.
+- **Name walls (2):** Chicago venues in the display face at headline size; the seven collaborators
+  named in the About paragraph set as large italic names above the rest of "Artists performed with";
+  the first four schools in Highlights set the same way. Every name still appears exactly once. Which
+  names lead is my pick, from the About sentence and Doug's own school order; swap freely.
+- **Same navy everywhere (3):** About is a raised band (`--bg-elevated`, hairline rules, faint brass
+  wash behind the photo), alternating with the plain sections and the Highlights band.
+- **Left-hugging columns (4):** intro lede 56rem and up to 1.75rem (was 44rem, 1.4rem); About's
+  bottom padding cut so the strip under it is shorter.
+- **Identical albums (5):** from 760px the debut gets a 1.8fr column, bigger cover and title; the
+  other three sit beside it. Phones keep the compact rows.
+- Guarded by `e2e/bad-cop-fixes.spec.ts` (5 tests, all fail on the build before this change).
+  Full Chromium e2e: 143 passed, 16 phone-only skipped. Not re-scored and not checked on a phone.
+- Gotcha: another process held the default e2e port 4322, so the first full run tested the wrong
+  site and nearly everything timed out. Run with `E2E_PORT=4391`.
+- Gotcha 2 (2026-11-01): `npm run test:e2e` serves the prebuilt `dist/` and never rebuilds, so
+  after editing `site/src` run `npm run build` first. Checking "does the new test fail on the old
+  code" by stashing `site/src` alone passed all 5, because `dist/` still held the new build. The
+  valid check is a separate checkout of the old commit, built on its own: all 5 failed there
+  (nav alpha 0.65, lede 704px, lead cover 253px, About bg equal to its neighbours, feature
+  lists absent), and all 5 pass on the new code.

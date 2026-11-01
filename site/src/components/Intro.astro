@@ -27,10 +27,12 @@
      set as a lede (2026-10-25): centered, it was the one section breaking
      the page's left axis. */
   .intro__text {
-    max-width: 44rem;
+    /* Wider and larger than the 44rem / 1.4rem it had (2026-11-01): the lede
+       filled barely half the content width and left the right side empty. */
+    max-width: 56rem;
     margin: 0;
-    font-size: clamp(1.1rem, 2.3vw, 1.4rem);
-    line-height: 1.6;
+    font-size: clamp(1.2rem, 2.8vw, 1.75rem);
+    line-height: 1.55;
     color: var(--text-muted);
   }
 

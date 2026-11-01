@@ -1,7 +1,9 @@
 ---
+// The first four set large (2026-11-01), in Doug's own order: the whole list was
+// one run of small names. Doug can swap which ones lead.
+const featuredSchools = ['Princeton University', 'University of Michigan', 'Cornell University', 'Carnegie Mellon University'];
 const schools = [
-  'Princeton University', 'University of Michigan', 'Cornell University',
-  'Carnegie Mellon University', 'University of Pittsburgh', 'Lewis University',
+  'University of Pittsburgh', 'Lewis University',
   'SUNY Fredonia', 'University of Minnesota', 'University of Nebraska',
   'Haverford College', 'Elgin Community College', 'Francis Parker School',
   'New Trier High School', 'Kennedy High School',
@@ -12,6 +14,11 @@ const schools = [
   <div class="wrap">
     <h2 class="career-highlights__title">Highlights</h2>
     <p class="label career-highlights__intro">Guest artist and visiting instructor at</p>
+    <ul class="career-highlights__feature scroll-rise">
+      {featuredSchools.map((school) => (
+        <li>{school}</li>
+      ))}
+    </ul>
     <ul class="career-highlights__list scroll-rise">
       {schools.map((school) => (
         <li>{school}</li>
@@ -75,7 +82,7 @@ const schools = [
      for a list that's real credentials. */
   .career-highlights__list {
     list-style: none;
-    margin: 0.6rem 0 0 -1.4rem;
+    margin: 0.2rem 0 0 -1.4rem;
     padding: 0 0 0 1.4rem;
     clip-path: inset(0 0 0 1.4rem);
     display: flex;
@@ -83,6 +90,34 @@ const schools = [
     gap: 0.5rem 1.4rem;
     font-size: 0.98rem;
     color: var(--text);
+  }
+
+  .career-highlights__feature {
+    list-style: none;
+    margin: 0.6rem 0 0.5rem -1.6rem;
+    padding: 0;
+    clip-path: inset(0 0 0 1.6rem);
+    display: flex;
+    flex-wrap: wrap;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .career-highlights__feature li {
+    white-space: nowrap;
+  }
+
+  .career-highlights__feature li::before {
+    content: '·';
+    display: inline-block;
+    width: 1.6rem;
+    text-align: center;
+    font-style: normal;
+    color: var(--brass);
   }
 
   .career-highlights__list li::before {

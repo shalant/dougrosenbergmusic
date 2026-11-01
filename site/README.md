@@ -30,7 +30,7 @@ site/
 | `npm run dev`        | Start local dev server at `localhost:4321`               |
 | `npm run build`      | Build production site to `./dist/`                       |
 | `npm run preview`    | Preview the build locally before deploying                |
-| `npm run test:e2e`   | Run Playwright E2E tests against a production build       |
+| `npm run test:e2e`   | Run Playwright E2E tests against `./dist/` (does **not** rebuild; run `npm run build` first or you test stale output) |
 | `npx lhci autorun`   | Run the Lighthouse CI audit (`lighthouserc.json`) against `./dist/` |
 
 Deploys are automatic: Cloudflare's dashboard git integration builds and runs `npx wrangler deploy`

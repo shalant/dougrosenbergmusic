@@ -32,8 +32,8 @@ const albums = [
     <h2 class="listen__heading">Recordings</h2>
 
     <div class="listen__grid">
-      {albums.map((album) => (
-        <a class="album" href={album.url} target="_blank" rel="noopener noreferrer">
+      {albums.map((album, i) => (
+        <a class={i === 0 ? 'album album--lead' : 'album'} href={album.url} target="_blank" rel="noopener noreferrer">
           <span class="album__art"><img class="album__cover" src={`${import.meta.env.BASE_URL}${album.cover.replace(/^\//, '')}`} alt={`${album.title} album cover`} loading="lazy" /></span>
           <div class="album__body">
             <h3 class="album__title">{album.title}</h3>
@@ -146,6 +146,23 @@ const albums = [
 
   .album__body {
     padding: 0.9rem 0.1rem 0;
+  }
+
+  /* Doug's own record leads (2026-11-01): four identical squares were the
+     page's stock grid. From 760px the debut gets a wider column, so a bigger
+     cover and a larger title, and the three group records sit beside it.
+     Below that the original even grid and the phone rows apply unchanged. */
+  @media (min-width: 760px) {
+    .listen__grid {
+      grid-template-columns: 1.8fr repeat(3, minmax(0, 1fr));
+      align-items: start;
+    }
+    .album--lead .album__title {
+      font-size: 1.5rem;
+    }
+    .album--lead .album__blurb {
+      font-size: 0.95rem;
+    }
   }
 
   .album__title {
