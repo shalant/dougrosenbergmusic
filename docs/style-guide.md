@@ -177,4 +177,6 @@ How much, by kind:
   Alternate plain `--bg` sections with raised bands (`--bg-elevated` or `--surface` plus hairline
   top and bottom rules): Recordings plain, About band, On the Road plain, Highlights band.
 - **Lead item (2026-11-01 rule)**: a grid of equal items gets one lead at 760px and up (the debut
-  album is `.album--lead`, 1.8fr). Phones keep the plain rows.
+  album is `.album--lead`). The lead spans the rows of one column and the rest stack as rows in the
+  other, so the two columns end level; a lead in a one-row grid leaves dead space under its
+  neighbours (161px measured). Phones keep the plain rows. Checked by `e2e/bad-cop-fixes.spec.ts`.

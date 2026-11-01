@@ -345,3 +345,64 @@ Doug kept the nav's look ("novel") and the Dev section as they are, and asked fo
   valid check is a separate checkout of the old commit, built on its own: all 5 failed there
   (nav alpha 0.65, lede 704px, lead cover 253px, About bg equal to its neighbours, feature
   lists absent), and all 5 pass on the new code.
+
+## Phone check and re-score, 2026-11-01
+
+PR #118 is merged and live (the live HTML carries `album--lead`, `performance__venue-list--marquee`
+and `career-highlights__feature`). Same reviewer who built the site, so allow three points either
+way.
+
+**Phone check.** Live `https://dougrosenberg.com/` in Playwright's Pixel 7 emulation (412px wide),
+full page scrolled and screenshotted, plus measurements. This is an emulator, not a real phone;
+Doug's own-device check from 2026-10-30 predates these changes and is still the only real-device
+one.
+- No sideways scroll (document width 412 = viewport 412). The only elements wider than the viewport
+  are the gallery reel, inside its clipped container.
+- No visible text under 12px.
+- Marquee Chicago venues stack in one column in the display face; the "National and international"
+  list keeps two columns; the lead artists and first four schools wrap cleanly in italic with the
+  rest set small below. No clipping, no overlap beyond the fixed logo and menu, which are meant to
+  stay.
+- The lead names measure 16.45:1 (artists, venues) and 14.87:1 (schools) against their section
+  background on phone and desktop. In screenshots they looked dim only because the scroll-reveal
+  was mid-fade.
+- The lead-album layout is desktop only by design, so there is nothing to see on a phone.
+- Not checked: the hero and Dev block on a phone this round, the light theme, the haze motion
+  (still unverified on a real device).
+
+**Good cop: about 92 / 100** (was about 90 on 2026-10-30).
+
+| Area | Was | Now | Why |
+|---|---|---|---|
+| Identity and distinctiveness | 18 | 18 | Unchanged. |
+| First impression (hero) | 19 | 19 | Hero not touched; haze still not seen on a device. |
+| Craft and polish | 17 | 18 | Nav text no longer prints through the pill; sections alternate plain and raised; empty-state and cross-browser fixes from 10-30 and 10-31. |
+| Typography and hierarchy | 14 | 15 | The long name lists now have a scale change instead of one flat run. |
+| Content and archive pages | 9 | 9 | Unchanged. |
+| Mobile | 13 | 13 | Emulated check is clean but adds no new real-device evidence. |
+
+**Bad cop: about 84 / 100** (was about 78), on desktop only for the changed sections. What is
+left:
+1. ~~The Recordings lead album is tall and the other three sit top-aligned beside it, leaving
+   about 250px of empty space under them.~~ Fixed the same day (see below).
+2. The intro and About copy still start at the left of the content column. About is tighter, but a
+   stranger would still call the layout left-weighted.
+3. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, two stacked buttons,
+   the only coral section.
+4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`, light theme.
+
+Of the earlier bad-cop list, points 2, 3 and 5 (name walls, same navy, identical albums) read as
+fixed on the live desktop page. Point 4 (left-hugging columns) is improved, not fixed. Point 1
+(nav over text) rests on the alpha test (0.75, passing); I did not scroll a live desktop page to
+watch text pass under the pill. Point 6 is Doug's deliberate call.
+
+### Recordings dead space, 2026-11-01 (branch `rescore-2026-11-01`)
+
+From 760px the three group records are now rows (cover 120 to 190px, title and blurb beside it)
+stacked in the right column, with the debut spanning all three rows on the left, instead of four
+columns in one row. Measured on a local build: the two columns end within 2px of each other at 1440
+(621 vs 623), 17px at 1024 and 39px at 768, where the old layout left 161px at 1440. Below 760px
+nothing changes. New test `the three small albums end level with the lead` in
+`e2e/bad-cop-fixes.spec.ts` fails on the previous layout (161px) and passes now; the debut-lead
+width test still holds. Full e2e, both projects, fresh build: 281 passed, 39 skipped. Looked at
+1440 and 768 by eye; not checked on a real phone (phones are unchanged).
