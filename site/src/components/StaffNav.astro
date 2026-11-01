@@ -104,7 +104,9 @@ const sections = [
     width: 456px;
     height: 100px;
     z-index: 40;
-    background: rgba(10, 14, 23, 0.65);
+    /* 0.65 -> 0.75 on 2026-11-01 (bad-cop pass: text printed through the pill
+       while scrolling). Still translucent on purpose; the glass look stays. */
+    background: rgba(10, 14, 23, 0.75);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(233, 237, 245, 0.12);

@@ -7,12 +7,21 @@ const nationalVenues = [
   'Krannert Center', 'Dazzle',
 ];
 
-const artists = [
-  'Sam Barsh', 'Brendan Bayliss', 'Bobby Broom', 'Maggie Brown', 'Maurice Brown', 'Oscar Brown Jr.',
-  'Phil Cohran', 'Ernest Dawkins', 'Michael Franti', 'George Freeman', 'Robert Glasper', 'Fareed Haque',
-  'Nikki Glaspie', 'Jen Hartswick', 'Keyon Harrold', 'Marquis Hill', 'Robert "Baabe" Irving III',
-  'Goran Ivanovic', 'Karsh Kale', 'Mark Kelley', 'Rakalam Bob Moses', 'Kris Myers', 'Jeff Parker',
-  'Danilo Pérez', 'Joe Russo', 'Kendrick Scott', 'Sherry Scott', 'John Sinclair', 'Walter Smith',
+// The seven collaborators the About paragraph names, set large (2026-11-01):
+// the full list below was one unbroken run of small names. The picks come from
+// About.astro's own sentence, not a new judgment of who matters most; Doug can
+// swap them. Every name still appears exactly once across the two lists.
+const featuredArtists = [
+  'Sam Barsh', 'Maurice Brown', 'Phil Cohran', 'Robert Glasper',
+  'Robert "Baabe" Irving III', 'Rakalam Bob Moses', 'Kendrick Scott',
+];
+
+const otherArtists = [
+  'Brendan Bayliss', 'Bobby Broom', 'Maggie Brown', 'Oscar Brown Jr.',
+  'Ernest Dawkins', 'Michael Franti', 'George Freeman', 'Fareed Haque',
+  'Nikki Glaspie', 'Jen Hartswick', 'Keyon Harrold', 'Marquis Hill',
+  'Goran Ivanovic', 'Karsh Kale', 'Mark Kelley', 'Kris Myers', 'Jeff Parker',
+  'Danilo Pérez', 'Joe Russo', 'Sherry Scott', 'John Sinclair', 'Walter Smith',
   'Oscar Stagnaro', 'Luciana Souza', 'Matt Ulery', 'Corey Wilkes', 'David Young',
 ];
 ---
@@ -24,7 +33,7 @@ const artists = [
     <div class="performance__venues">
       <div class="performance__venue-group scroll-rise">
         <p class="label performance__venue-label">Chicago</p>
-        <ul class="performance__venue-list">
+        <ul class="performance__venue-list performance__venue-list--marquee">
           {chicagoVenues.map((v) => <li>{v}</li>)}
         </ul>
       </div>
@@ -38,8 +47,11 @@ const artists = [
 
     <div class="performance__artists scroll-rise">
       <p class="label performance__venue-label">Artists performed with</p>
+      <ul class="performance__artists-feature">
+        {featuredArtists.map((a) => <li>{a}</li>)}
+      </ul>
       <ul class="performance__artists-flow">
-        {artists.map((a) => <li>{a}</li>)}
+        {otherArtists.map((a) => <li>{a}</li>)}
       </ul>
     </div>
   </div>
@@ -84,6 +96,46 @@ const artists = [
     gap: 0.6rem;
     font-size: 0.95rem;
     color: var(--text);
+  }
+
+  /* Chicago is the home stage, so its six venues are set in the display face
+     at headline scale; the national list stays small beside it. */
+  .performance__venue-list--marquee {
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    line-height: 1.25;
+  }
+
+  /* Featured collaborators: display italic, wrapping with a brass dot between
+     names (same gap-clip trick as the small list). */
+  .performance__artists-feature {
+    list-style: none;
+    margin: 0 0 1.25rem -1.6rem;
+    padding: 0;
+    clip-path: inset(0 0 0 1.6rem);
+    display: flex;
+    flex-wrap: wrap;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.35rem, 3vw, 2.1rem);
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .performance__artists-feature li {
+    white-space: nowrap;
+  }
+
+  .performance__artists-feature li::before {
+    content: '·';
+    display: inline-block;
+    width: 1.6rem;
+    text-align: center;
+    font-style: normal;
+    color: var(--brass);
   }
 
   .performance__venue-list--two-col {

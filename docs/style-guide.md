@@ -168,3 +168,13 @@ How much, by kind:
   `:hover` — this was a real, shipped gap found via live testing (tabbing to an element), not a
   code read, in round 1. Verify by actually tabbing to new interactive elements, not by assuming a
   hover pass covered it.
+- **Long lists of names (2026-11-01 rule)**: a run of names longer than about ten never ships as one
+  block of body-size text. Lead with the marquee names in the display face (Fraunces, italic or
+  500, `clamp(1.3rem, 2.8vw, 1.9rem)` or larger) and set the rest small beneath, each name once.
+  Examples: `.performance__venue-list--marquee`, `.performance__artists-feature`,
+  `.career-highlights__feature`. Checked by `e2e/bad-cop-fixes.spec.ts`.
+- **Section rhythm (2026-11-01 rule)**: neighbouring sections must not share one flat background.
+  Alternate plain `--bg` sections with raised bands (`--bg-elevated` or `--surface` plus hairline
+  top and bottom rules): Recordings plain, About band, On the Road plain, Highlights band.
+- **Lead item (2026-11-01 rule)**: a grid of equal items gets one lead at 760px and up (the debut
+  album is `.album--lead`, 1.8fr). Phones keep the plain rows.

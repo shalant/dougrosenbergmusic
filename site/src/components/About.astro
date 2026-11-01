@@ -33,9 +33,16 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
 </section>
 
 <style>
+  /* A raised band with a warm brass wash behind the photo (2026-11-01): every
+     section from Recordings to On the Road sat on the same navy, so the scroll
+     blurred. The band alternates with the plain sections around it, like
+     Highlights further down. Bottom padding is shorter because the photo is
+     lifted 2.5rem and left a tall empty strip under the copy. */
   .about {
-    padding-block: clamp(4rem, 9vw, 7rem);
-    background: var(--bg);
+    padding-block: clamp(4rem, 9vw, 7rem) clamp(3rem, 6vw, 4.5rem);
+    background-color: var(--bg-elevated);
+    background-image: radial-gradient(ellipse 45% 70% at 18% 45%, rgba(207, 154, 79, 0.1), transparent 70%);
+    border-block: 1px solid rgba(233, 237, 245, 0.08);
   }
 
   .about__grid {
