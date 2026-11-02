@@ -50,4 +50,13 @@ test.describe('desktop layout', () => {
     expect(widths[0]).toBeGreaterThan(widths[1] * 1.4);
     expect(Math.abs(widths[1] - widths[2])).toBeLessThan(2);
   });
+
+  // 2026-11-01, second pass: in one 4-column row the tall lead left ~250px of
+  // empty space under the other three. They now stack beside it.
+  test('the three small albums end level with the lead, no dead space under them', async ({ page }) => {
+    await page.goto('/');
+    const bottoms = await page.locator('#listen .album').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().bottom));
+    expect(bottoms).toHaveLength(4);
+    expect(Math.abs(bottoms[0] - bottoms[3])).toBeLessThan(40);
+  });
 });

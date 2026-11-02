@@ -152,10 +152,27 @@ const albums = [
      page's stock grid. From 760px the debut gets a wider column, so a bigger
      cover and a larger title, and the three group records sit beside it.
      Below that the original even grid and the phone rows apply unchanged. */
+  /* The three group records stack as rows beside the lead (2026-11-01, second
+     pass): in one 4-column row the tall lead left about 250px of empty space
+     under the other three. Two columns of about equal height close it. */
   @media (min-width: 760px) {
     .listen__grid {
-      grid-template-columns: 1.8fr repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: repeat(3, auto);
+      align-content: start;
       align-items: start;
+    }
+    .album--lead {
+      grid-row: 1 / span 3;
+    }
+    .album:not(.album--lead) {
+      display: grid;
+      grid-template-columns: clamp(120px, 18vw, 190px) minmax(0, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .album:not(.album--lead) .album__body {
+      padding-top: 0.15rem;
     }
     .album--lead .album__title {
       font-size: 1.5rem;
