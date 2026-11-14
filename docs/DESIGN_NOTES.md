@@ -149,7 +149,17 @@ Checked by eye in two screenshots 20s apart on a 1440px build (green wash, then 
 Later the same day, after seeing it on the dev server, Doug asked for the blobs to be 50% less
 visible: the hero blobs went from strength 0.7 to 0.35 and the page-wide glows from 0.5 to 0.25
 (the figures quoted below are the original ones). He also found the dev server "twitchy"; see the
-measurement note at the end of the next section.
+measurement note at the end of the next section. After a look on desktop he then asked for them
+slightly more visible, so the final values are 0.45 for the hero blobs and 0.35 for the page-wide
+glows (set 2026-11-14).
+
+CSP note, 2026-11-14: PR #121 (the blobs) reached `master` without regenerating the script-src hash
+for the hero's inline script, which the blobs change had edited (the line that mirrors `data-fx` to
+`<html>`). Live, the browser therefore blocked that script: lite mode, the frame-rate watchdog and
+the off-screen pause did not run on dougrosenberg.com, while all the CSS animation still did.
+Found by comparing the live page's inline-script hashes with its `Content-Security-Policy` header;
+fixed in the following branch by regenerating with `npm run verify-csp -- --write`. Run
+`npm run build && npm run verify-csp` before merging any change to an inline script.
 
 ### Update, 2026-11-14: the same glows across the whole page background
 
