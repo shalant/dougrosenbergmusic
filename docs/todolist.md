@@ -172,8 +172,11 @@ Desktop view, Lean haze, strength 0.65, smoke blob on, headline shading on, drif
       mode with frozen smoke. Now needs two bad windows, skips 8+ core machines, and isn't stored
       in `sessionStorage`. Three regression tests added. See DESIGN_NOTES, 2026-11-14 update.
 - [x] **Color blobs on the left of the hero (2026-11-14):** three glows drift around the left half
-      and cycle through the nav tones. Four tests added. TODO: run Lighthouse (mobile) with them
-      on and look at a real phone.
+      and cycle through the nav tones. Four tests added.
+- [x] **Ambient glows behind the whole home page (2026-11-14):** `AmbientHues.astro`, a fixed layer
+      of four blobs; sections made transparent or 78% opaque to show it; four tests added (155
+      Chromium E2E pass). Mobile Lighthouse 97 / 100 / 100 / 100. TODO: look at a real phone, and
+      decide whether the archive pages and 404 should get it too (needs the lite script shared).
 - [x] **Tests:** `e2e/hero-haze.spec.ts` rewritten (drift at 1440/1024/768/390, lite via param,
       Save-Data, 3G, 2 GB, pause out of view, reduced motion); 9 of 13 fail on the old build.
 - [ ] **Still to check on a real phone:** that the drift is smooth and the battery cost is fine.

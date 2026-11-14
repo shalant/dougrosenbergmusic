@@ -175,6 +175,27 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Color-cycling glows (2026-11-14): the hero's left-side blobs and the
+   page-wide ambient layer both pass --hue through the nav tones in nav order
+   and back to the start. --hue is a registered <color> so a gradient built
+   from it can interpolate; where @property is unsupported a blob holds its
+   first tone. Shared here so the two layers can't drift apart. */
+@property --hue {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #52d1a6;
+}
+
+@keyframes hue-cycle {
+  0%, 100% { --hue: var(--note-hero); }
+  14% { --hue: var(--note-listen); }
+  28% { --hue: var(--note-about); }
+  43% { --hue: var(--note-highlights); }
+  57% { --hue: var(--note-lessons); }
+  71% { --hue: var(--note-contact); }
+  86% { --hue: var(--note-dev); }
+}
+
 /* Headings had no rule of their own and inherited body's 1.55, which left
    a wide gap whenever a display heading wrapped ("I also build sites like
    this / one.", the two-column contact heading). Balanced wrapping also

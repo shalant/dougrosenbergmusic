@@ -226,12 +226,6 @@ const records = [
      between tones; that repaints each blob's own small layer, which is cheap
      at this size. Where @property isn't supported the blob just holds its
      first tone. */
-  @property --hue {
-    syntax: '<color>';
-    inherits: false;
-    initial-value: #52d1a6;
-  }
-
   .hero {
     --hue-strength: 0.7;
   }
@@ -283,17 +277,7 @@ const records = [
       hue-cycle 112s linear -71s infinite;
   }
 
-  @keyframes hue-cycle {
-    0%, 100% { --hue: var(--note-hero); }
-    14% { --hue: var(--note-listen); }
-    28% { --hue: var(--note-about); }
-    43% { --hue: var(--note-highlights); }
-    57% { --hue: var(--note-lessons); }
-    71% { --hue: var(--note-contact); }
-    86% { --hue: var(--note-dev); }
-  }
-
-  /* Stops at uneven times, and translations that stay inside the left half. */
+  /* hue-cycle and @property --hue live in global.css. Stops at uneven times, and translations that stay inside the left half. */
   @keyframes hue-path-a {
     0%, 100% { translate: 0 0; scale: 1; }
     17% { translate: 14vw 12vh; scale: 1.2; }
@@ -851,6 +835,7 @@ const records = [
     // it froze the smoke on a 16-core, 32 GB desktop (2026-11-14).
     const goLite = (remember = true) => {
       hero.dataset.fx = 'lite';
+      document.documentElement.dataset.fx = 'lite'; // the page-wide ambient glows read it from here
       if (!remember) return;
       try {
         sessionStorage.setItem('fx', 'lite');

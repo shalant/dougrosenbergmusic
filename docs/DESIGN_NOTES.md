@@ -145,7 +145,32 @@ that way. The color is a registered `@property --hue`, so the gradient repaints 
 small layer per frame; the rest is transform only. Where `@property` is unsupported a blob holds
 its first tone. Lite mode, reduced motion and the off-screen pause treat the blobs like the haze.
 Checked by eye in two screenshots 20s apart on a 1440px build (green wash, then blue and amber).
-Not measured: Lighthouse with the blobs on, or a real phone.
+
+### Update, 2026-11-14: the same glows across the whole page background
+
+Doug found the plain charcoal background a little boring and asked for the blobs over the entire
+viewport at any scroll position. Added `AmbientHues.astro` (home page only): a fixed layer behind
+the page with four larger, fainter blobs (strength 0.5, 36 to 50vw with a pixel floor for phones),
+each on its own uneven path (67 to 89s) and color cycle (91 to 117s, offset). The hero keeps its
+own left-side blobs over the photo (the photo is opaque, so the fixed layer is hidden behind it).
+`@property --hue` and `@keyframes hue-cycle` moved to `global.css` so the two layers share one
+color timeline.
+
+To let the layer show, section backgrounds that were opaque `--bg` (Intro, Listen, Performance,
+Lessons, Sheet Music, Dev, FAQ) are `transparent`; they were the body color anyway, so nothing
+else changes. The raised bands (About, Career Highlights, Gallery) are 78% opaque so they keep
+their band look and let a hint through. Contact's fade into the footer now starts from transparent
+(an opaque start left a hard seam under FAQ, caught in a screenshot). The hero photo and the footer
+stay opaque on purpose. Lite mode reaches the fixed layer through `data-fx="lite"` on `<html>`
+(set by the hero script); reduced motion stills it; a hidden tab is paused by the browser.
+
+Limits: home page only. The archive pages, Eastern Blok pages and 404 keep the plain background,
+because the lite/watchdog script lives in the hero and would need to be shared first. The glows sit
+behind text, so Lighthouse's contrast check can't see them; at strength 0.5 the brightest spot is
+about 16% tone over the charcoal, which I judged by eye from screenshots at three scroll positions,
+not by measured contrast. Mobile Lighthouse on the production build: performance 97, accessibility
+100, best practices 100, SEO 100 (LCP 2.4s, TBT 0, CLS 0), the same as before the layer. Not looked
+at on a real phone.
 
 ## Reference
 
