@@ -737,8 +737,12 @@ const records = [
         return false;
       }
     };
-    const goLite = () => {
+    // Only the device and connection checks are remembered for the tab session.
+    // A frame-rate verdict is a guess from a few seconds of timing, and storing
+    // it froze the smoke on a 16-core, 32 GB desktop (2026-11-14).
+    const goLite = (remember = true) => {
       hero.dataset.fx = 'lite';
+      if (!remember) return;
       try {
         sessionStorage.setItem('fx', 'lite');
       } catch {
@@ -759,22 +763,42 @@ const records = [
     }).observe(hero);
     document.addEventListener('visibilitychange', syncLive);
 
-    // Frame-rate watchdog: after load, count frames for 2.5s. More than 40% of
-    // them over 50ms means the device can't keep up, so settle to lite. Skipped
-    // under reduced motion, when forced, and once already lite.
-    if (!reduced && forced === null && hero.dataset.fx !== 'lite') {
+    // Frame-rate watchdog: after load, count frames in 2.5s windows. A window is
+    // bad when more than 40% of its frames run over 50ms, and two bad windows in
+    // a row settle the hero to lite (for this page view only). One bad window is
+    // usually load-time work, a busy tab or a coffee-shop network hiccup, so it
+    // isn't enough. A frame gap over 1s means the tab was throttled, not slow,
+    // and restarts the window. Skipped under reduced motion, when forced, once
+    // already lite, and on machines with 8+ cores, where a slow stretch is a
+    // blip and not the hardware.
+    if (!reduced && forced === null && hero.dataset.fx !== 'lite' && !(navigator.hardwareConcurrency >= 8)) {
+      let badWindows = 0;
       const watch = () => {
         let last = performance.now();
-        const end = last + 2500;
+        let end = last + 2500;
         let frames = 0;
         let slow = 0;
         const tick = (now: number) => {
           if (document.hidden || !inView) return; // no verdict from a hidden hero
-          frames += 1;
-          if (now - last > 50) slow += 1;
+          if (now - last > 1000) {
+            // throttled tab: start the window over
+            end = now + 2500;
+            frames = 0;
+            slow = 0;
+            badWindows = 0;
+          } else {
+            frames += 1;
+            if (now - last > 50) slow += 1;
+          }
           last = now;
-          if (now < end) requestAnimationFrame(tick);
-          else if (frames >= 20 && slow / frames > 0.4) goLite();
+          if (now < end) {
+            requestAnimationFrame(tick);
+            return;
+          }
+          if (frames >= 20 && slow / frames > 0.4) badWindows += 1;
+          else badWindows = 0;
+          if (badWindows >= 2) goLite(false);
+          else requestAnimationFrame(() => watch());
         };
         requestAnimationFrame(tick);
       };

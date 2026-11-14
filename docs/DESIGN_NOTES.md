@@ -122,6 +122,17 @@ The hero image is only 41 KB, so a poor connection costs little; the lite mode i
 Limits: the frame-rate check can misread a busy first few seconds (a big scroll right after load)
 as a weak device, and the result is a still hero, not a broken one. Not measured on a real phone.
 
+### Update, 2026-11-14: the frame-rate check no longer sticks
+
+Doug's own desktop (16 cores, 32 GB, 4g, `deviceMemory` 32) had `sessionStorage.fx = "lite"` and no
+moving smoke; `?fx=full` brought it back. Hardware and connection checks were clean, so the
+frame-rate check had tripped on one bad 2.5s window after load, and the verdict was remembered for
+the whole tab. Changes in `HeroGraded.astro`: two bad windows in a row are needed; a frame gap over
+1s (throttled tab) restarts the window; the check is skipped on 8 or more cores; and a frame-rate
+verdict applies to that page view only (only the device and connection checks are stored). Why it
+tripped is not known; it was not reproduced on real hardware, only with faked slow frames.
+Regression tests in `e2e/hero-haze.spec.ts` (all three failed against the old code).
+
 ## Reference
 
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.
