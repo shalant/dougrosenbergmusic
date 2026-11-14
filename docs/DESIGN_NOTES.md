@@ -146,6 +146,11 @@ small layer per frame; the rest is transform only. Where `@property` is unsuppor
 its first tone. Lite mode, reduced motion and the off-screen pause treat the blobs like the haze.
 Checked by eye in two screenshots 20s apart on a 1440px build (green wash, then blue and amber).
 
+Later the same day, after seeing it on the dev server, Doug asked for the blobs to be 50% less
+visible: the hero blobs went from strength 0.7 to 0.35 and the page-wide glows from 0.5 to 0.25
+(the figures quoted below are the original ones). He also found the dev server "twitchy"; see the
+measurement note at the end of the next section.
+
 ### Update, 2026-11-14: the same glows across the whole page background
 
 Doug found the plain charcoal background a little boring and asked for the blobs over the entire
@@ -171,6 +176,17 @@ about 16% tone over the charcoal, which I judged by eye from screenshots at thre
 not by measured contrast. Mobile Lighthouse on the production build: performance 97, accessibility
 100, best practices 100, SEO 100 (LCP 2.4s, TBT 0, CLS 0), the same as before the layer. Not looked
 at on a real phone.
+
+Twitchiness (Doug, dev server, same day): not reproduced, cause not confirmed. Headless Chromium
+here has no GPU, so everything runs at about 15 to 20 fps and absolute numbers mean nothing; the
+relative cost while scrolling the production build for 8s (frames drawn: more is better) was 181 with
+no blobs, 164 with only the hero blobs, 138 with the page-wide layer but color cycling off, 136 with
+everything on. So the page-wide layer is the costly part, and the animated color is not. Two
+suspects remain, neither tested on real hardware: (1) every path uses `ease-in-out` per keyframe
+segment, so each blob slows to a near stop and speeds up again at each of its four or five stops,
+which reads as surging; (2) the dev server injects styles late and hot-reloads, which restarts
+animations. Possible fix for (1), not done: animate x, y and scale as separate properties with
+different periods and `alternate`, instead of multi-stop paths.
 
 ## Reference
 
