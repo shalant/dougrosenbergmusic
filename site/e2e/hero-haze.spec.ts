@@ -80,6 +80,53 @@ test('a normal connection and device keep the full hero', async ({ page }) => {
   expect((await hazeState(page)).fx).toBeNull();
 });
 
+// Frame-rate watchdog (HeroGraded.astro). A real desktop (i7, 16 cores, 32 GB,
+// 4g) landed in lite mode on 2026-11-14 with the smoke frozen: one bad 2.5s
+// window right after load tripped the check, and the verdict was stored for the
+// whole tab session. These tests fake slow frames by stretching
+// requestAnimationFrame. Not run in parallel with the real GPU-less headless
+// timing: hardwareConcurrency and the frame clock are both stubbed.
+const stubFrames = (cores: number, slowUntilMs: number) => ({ cores, slowUntilMs });
+const fakeSlowFrames = async (page: Page, { cores, slowUntilMs }: { cores: number; slowUntilMs: number }) => {
+  await page.addInitScript(
+    ({ cores, slowUntilMs }) => {
+      Object.defineProperty(navigator, 'hardwareConcurrency', { value: cores });
+      Object.defineProperty(navigator, 'deviceMemory', { value: 8 });
+      Object.defineProperty(navigator, 'connection', { value: { saveData: false, effectiveType: '4g' } });
+      window.requestAnimationFrame = (cb) =>
+        window.setTimeout(() => cb(performance.now()), performance.now() < slowUntilMs ? 100 : 16);
+    },
+    { cores, slowUntilMs },
+  );
+};
+const heroFx = (page: Page) =>
+  page.evaluate(() => ({
+    fx: document.querySelector<HTMLElement>('.hero')!.dataset.fx ?? null,
+    stored: sessionStorage.getItem('fx'),
+  }));
+
+test('sustained slow frames on a modest device settle to lite, without being remembered', async ({ page }) => {
+  await fakeSlowFrames(page, stubFrames(4, 1e9));
+  await page.goto('/');
+  await expect.poll(async () => (await heroFx(page)).fx, { timeout: 20_000 }).toBe('lite');
+  // a verdict from frame timing alone must not stick to the tab
+  expect((await heroFx(page)).stored).toBeNull();
+});
+
+test('one bad window right after load does not freeze the smoke', async ({ page }) => {
+  await fakeSlowFrames(page, stubFrames(4, 3500));
+  await page.goto('/');
+  await page.waitForTimeout(9_000);
+  expect(await heroFx(page)).toEqual({ fx: null, stored: null });
+});
+
+test('a 16-core desktop is never judged by the frame-rate watchdog', async ({ page }) => {
+  await fakeSlowFrames(page, stubFrames(16, 1e9));
+  await page.goto('/');
+  await page.waitForTimeout(9_000);
+  expect(await heroFx(page)).toEqual({ fx: null, stored: null });
+});
+
 test('the drift pauses when the hero is scrolled out of view', async ({ page }) => {
   // no setViewportSize: resizing an emulated phone to 1440px keeps mobile WebKit's
   // IntersectionObserver from reporting, which a real phone can't do
