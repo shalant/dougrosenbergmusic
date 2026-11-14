@@ -34,6 +34,11 @@ const records = [
     <div class="haze-blob haze-blob--teal"></div>
     <div class="haze-blob haze-blob--patch"></div>
   </div>
+  <div class="hero__hues" aria-hidden="true">
+    <div class="hue-blob hue-blob--a"></div>
+    <div class="hue-blob hue-blob--b"></div>
+    <div class="hue-blob hue-blob--c"></div>
+  </div>
   <div class="hero__smoke" aria-hidden="true">
     <svg class="hero__blob hero__blob--a" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet" focusable="false">
       <defs>
@@ -210,6 +215,107 @@ const records = [
     left: 2%;
     background: radial-gradient(circle, rgba(82, 209, 166, 0.15), transparent 70%);
     animation: haze-drift-b 19s ease-in-out infinite reverse;
+  }
+
+  /* Color blobs on the left (2026-11-14, Doug's ask): three soft glows that
+     wander the left half of the hero and slowly pass through every nav tone
+     (--note-*, in nav order, back to the start). Each has its own path length,
+     so the three drift out of step and nothing visibly repeats for minutes.
+     The path is irregular keyframes, not JS randomness, so it stays on the
+     compositor. --hue is a registered <color> so the gradient can interpolate
+     between tones; that repaints each blob's own small layer, which is cheap
+     at this size. Where @property isn't supported the blob just holds its
+     first tone. */
+  @property --hue {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: #52d1a6;
+  }
+
+  .hero {
+    --hue-strength: 0.7;
+  }
+
+  .hero__hues {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 52%;
+    pointer-events: none;
+    opacity: var(--hue-strength);
+  }
+
+  .hue-blob {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+    background: radial-gradient(circle, color-mix(in srgb, var(--hue) 34%, transparent), transparent 68%);
+  }
+
+  .hue-blob--a {
+    width: 34vw;
+    height: 34vw;
+    top: 6%;
+    left: -4%;
+    animation:
+      hue-path-a 61s ease-in-out infinite,
+      hue-cycle 84s linear infinite;
+  }
+
+  .hue-blob--b {
+    width: 28vw;
+    height: 28vw;
+    top: 40%;
+    left: 6%;
+    animation:
+      hue-path-b 47s ease-in-out infinite,
+      hue-cycle 98s linear -33s infinite;
+  }
+
+  .hue-blob--c {
+    width: 38vw;
+    height: 38vw;
+    top: 58%;
+    left: -8%;
+    animation:
+      hue-path-c 73s ease-in-out infinite,
+      hue-cycle 112s linear -71s infinite;
+  }
+
+  @keyframes hue-cycle {
+    0%, 100% { --hue: var(--note-hero); }
+    14% { --hue: var(--note-listen); }
+    28% { --hue: var(--note-about); }
+    43% { --hue: var(--note-highlights); }
+    57% { --hue: var(--note-lessons); }
+    71% { --hue: var(--note-contact); }
+    86% { --hue: var(--note-dev); }
+  }
+
+  /* Stops at uneven times, and translations that stay inside the left half. */
+  @keyframes hue-path-a {
+    0%, 100% { translate: 0 0; scale: 1; }
+    17% { translate: 14vw 12vh; scale: 1.2; }
+    41% { translate: 5vw 34vh; scale: 0.85; }
+    63% { translate: 17vw 22vh; scale: 1.1; }
+    82% { translate: 2vw 6vh; scale: 0.95; }
+  }
+
+  @keyframes hue-path-b {
+    0%, 100% { translate: 0 0; scale: 1; }
+    23% { translate: 12vw -18vh; scale: 1.25; }
+    46% { translate: 3vw -30vh; scale: 0.9; }
+    71% { translate: 15vw -8vh; scale: 1.05; }
+    88% { translate: 6vw 10vh; scale: 0.8; }
+  }
+
+  @keyframes hue-path-c {
+    0%, 100% { translate: 0 0; scale: 1; }
+    19% { translate: 9vw -22vh; scale: 0.9; }
+    38% { translate: 18vw -36vh; scale: 1.15; }
+    59% { translate: 6vw -14vh; scale: 1; }
+    79% { translate: 13vw 4vh; scale: 1.2; }
   }
 
   @keyframes haze-drift-a {
@@ -673,6 +779,7 @@ const records = [
      hidden) pauses the drift to save battery. ?fx=lite and ?fx=full force
      either state. */
   .hero[data-fx='lite'] .haze-blob,
+  .hero[data-fx='lite'] .hue-blob,
   .hero[data-fx='lite'] .hero__main {
     animation: none;
   }
@@ -684,6 +791,7 @@ const records = [
     display: none;
   }
   .hero[data-live='false'] .haze-blob,
+  .hero[data-live='false'] .hue-blob,
   .hero[data-live='false'] .hero__blob,
   .hero[data-live='false'] .hero__main {
     animation-play-state: paused;
@@ -699,6 +807,7 @@ const records = [
     .hero__tv-t,
     .hero__tv-v,
     .haze-blob,
+    .hue-blob,
     .hero__main {
       animation: none;
     }

@@ -133,6 +133,20 @@ verdict applies to that page view only (only the device and connection checks ar
 tripped is not known; it was not reproduced on real hardware, only with faked slow frames.
 Regression tests in `e2e/hero-haze.spec.ts` (all three failed against the old code).
 
+### Update, 2026-11-14: color blobs on the left of the hero
+
+Doug asked for subtle blobs moving around the left of the screen, slowly passing through all the
+nav colors. Added three soft radial glows in `HeroGraded.astro` (`.hero__hues`, left 52% of the
+hero, strength 0.7). Each cycles through the seven `--note-*` tones in nav order (hero green,
+listen brass, about orange, highlights green, lessons blue, contact purple, dev red) over 84s, 98s
+and 112s, started at different offsets, while drifting on irregular keyframe paths of 47s, 61s and
+73s. Nothing is random at runtime (no JS); the uneven stops and mismatched lengths make it read
+that way. The color is a registered `@property --hue`, so the gradient repaints each blob's own
+small layer per frame; the rest is transform only. Where `@property` is unsupported a blob holds
+its first tone. Lite mode, reduced motion and the off-screen pause treat the blobs like the haze.
+Checked by eye in two screenshots 20s apart on a 1440px build (green wash, then blue and amber).
+Not measured: Lighthouse with the blobs on, or a real phone.
+
 ## Reference
 
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.

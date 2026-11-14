@@ -80,6 +80,52 @@ test('a normal connection and device keep the full hero', async ({ page }) => {
   expect((await hazeState(page)).fx).toBeNull();
 });
 
+// Color blobs on the left (2026-11-14): three glows that wander the left half
+// and slowly pass through the nav tones. Same lite / reduced-motion / pause
+// rules as the haze.
+const hueState = (page: Page) =>
+  page.evaluate(() => {
+    const blobs = Array.from(document.querySelectorAll<HTMLElement>('.hue-blob'));
+    return blobs.map((el) => {
+      const box = el.getBoundingClientRect();
+      return {
+        animation: getComputedStyle(el).animationName,
+        hue: getComputedStyle(el).getPropertyValue('--hue').trim(),
+        centerX: box.left + box.width / 2,
+        viewport: window.innerWidth,
+      };
+    });
+  });
+
+for (const width of [1440, 390]) {
+  test(`the color blobs wander the left half and change color at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/?fx=full');
+    const first = await hueState(page);
+    expect(first).toHaveLength(3);
+    for (const blob of first) {
+      expect(blob.animation).toContain('hue-cycle');
+      expect(blob.centerX).toBeLessThan(blob.viewport * 0.5);
+    }
+    await page.waitForTimeout(4_000);
+    const later = await hueState(page);
+    // every blob has moved on to a different color in 4s (a full tour takes 84 to 112s)
+    later.forEach((blob, i) => expect(blob.hue).not.toBe(first[i].hue));
+    for (const blob of later) expect(blob.centerX).toBeLessThan(blob.viewport * 0.6);
+  });
+}
+
+test('the color blobs sit still in lite mode', async ({ page }) => {
+  await page.goto('/?fx=lite');
+  for (const blob of await hueState(page)) expect(blob.animation).toBe('none');
+});
+
+test('the color blobs sit still under reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/?fx=full');
+  for (const blob of await hueState(page)) expect(blob.animation).toBe('none');
+});
+
 // Frame-rate watchdog (HeroGraded.astro). A real desktop (i7, 16 cores, 32 GB,
 // 4g) landed in lite mode on 2026-11-14 with the smoke frozen: one bad 2.5s
 // window right after load tripped the check, and the verdict was stored for the
