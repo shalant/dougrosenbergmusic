@@ -80,6 +80,116 @@ test('a normal connection and device keep the full hero', async ({ page }) => {
   expect((await hazeState(page)).fx).toBeNull();
 });
 
+// Color blobs on the left (2026-11-14): three glows that wander the left half
+// and slowly pass through the nav tones. Same lite / reduced-motion / pause
+// rules as the haze.
+const hueState = (page: Page) =>
+  page.evaluate(() => {
+    const blobs = Array.from(document.querySelectorAll<HTMLElement>('.hue-blob'));
+    return blobs.map((el) => {
+      const box = el.getBoundingClientRect();
+      return {
+        animation: getComputedStyle(el).animationName,
+        hue: getComputedStyle(el).getPropertyValue('--hue').trim(),
+        centerX: box.left + box.width / 2,
+        viewport: window.innerWidth,
+      };
+    });
+  });
+
+for (const width of [1440, 390]) {
+  test(`the color blobs wander the left half and change color at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/?fx=full');
+    const first = await hueState(page);
+    expect(first).toHaveLength(3);
+    for (const blob of first) {
+      expect(blob.animation).toContain('hue-cycle');
+      expect(blob.centerX).toBeLessThan(blob.viewport * 0.5);
+    }
+    await page.waitForTimeout(4_000);
+    const later = await hueState(page);
+    // every blob has moved on to a different color in 4s (a full tour takes 84 to 112s)
+    later.forEach((blob, i) => expect(blob.hue).not.toBe(first[i].hue));
+    for (const blob of later) expect(blob.centerX).toBeLessThan(blob.viewport * 0.6);
+  });
+}
+
+test('the color blobs sit still in lite mode', async ({ page }) => {
+  await page.goto('/?fx=lite');
+  for (const blob of await hueState(page)) expect(blob.animation).toBe('none');
+});
+
+test('the color blobs sit still under reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/?fx=full');
+  for (const blob of await hueState(page)) expect(blob.animation).toBe('none');
+});
+
+// Page-wide ambient glows (2026-11-14, AmbientHues.astro): a fixed layer behind
+// the whole page. It must stay fixed while scrolling, show through the
+// sections (they used to paint an opaque --bg), and follow the lite and
+// reduced-motion rules.
+const ambientState = (page: Page) =>
+  page.evaluate(() => {
+    const layer = document.querySelector<HTMLElement>('.ambient')!;
+    const blobs = Array.from(document.querySelectorAll<HTMLElement>('.ambient-blob'));
+    return {
+      position: getComputedStyle(layer).position,
+      top: layer.getBoundingClientRect().top,
+      animations: blobs.map((el) => getComputedStyle(el).animationName),
+      hues: blobs.map((el) => getComputedStyle(el).getPropertyValue('--hue').trim()),
+    };
+  });
+
+test('the ambient glows stay fixed while the page scrolls and keep changing color', async ({ page }) => {
+  await page.goto('/?fx=full');
+  const first = await ambientState(page);
+  expect(first.position).toBe('fixed');
+  expect(first.animations).toHaveLength(4);
+  for (const name of first.animations) expect(name).toContain('hue-cycle');
+  await page.evaluate(() => document.querySelector('#lessons')!.scrollIntoView());
+  await page.waitForTimeout(3_000);
+  const later = await ambientState(page);
+  expect(later.top).toBe(0);
+  later.hues.forEach((hue, i) => expect(hue).not.toBe(first.hues[i]));
+});
+
+test('sections let the ambient glows show through', async ({ page }) => {
+  await page.goto('/?fx=full');
+  // Backgrounds the glows must reach: plain sections are transparent, the raised bands translucent.
+  const alpha = (selector: string) =>
+    page.evaluate((sel) => {
+      const color = getComputedStyle(document.querySelector(sel)!).backgroundColor;
+      const m = color.match(/rgba?\(([^)]+)\)/) ?? color.match(/color\(srgb ([^)]+)\)/);
+      if (!m) return 0;
+      const parts = m[1].split(/[ ,/]+/).filter(Boolean);
+      return parts.length > 3 ? Number(parts[3]) : 1; // no alpha channel means opaque
+    }, selector);
+  for (const sel of ['.intro', '.listen', '.performance', '.lessons', '.sheet-music', '.dev', '.faq']) {
+    expect(await alpha(sel), `${sel} should be transparent`).toBe(0);
+  }
+  // Contact fades into the footer from transparent, so there is no hard seam where it starts.
+  const contactImage = await page.evaluate(() => getComputedStyle(document.querySelector('.contact')!).backgroundImage);
+  expect(contactImage).toMatch(/^linear-gradient\(rgba\(0, 0, 0, 0\)/);
+  for (const sel of ['.about', '.career-highlights', '.gallery']) {
+    const a = await alpha(sel);
+    expect(a, `${sel} should be translucent`).toBeGreaterThan(0.5);
+    expect(a, `${sel} should be translucent`).toBeLessThan(1);
+  }
+});
+
+test('the ambient glows sit still in lite mode', async ({ page }) => {
+  await page.goto('/?fx=lite');
+  expect((await ambientState(page)).animations.every((name) => name === 'none')).toBe(true);
+});
+
+test('the ambient glows sit still under reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/?fx=full');
+  expect((await ambientState(page)).animations.every((name) => name === 'none')).toBe(true);
+});
+
 // Frame-rate watchdog (HeroGraded.astro). A real desktop (i7, 16 cores, 32 GB,
 // 4g) landed in lite mode on 2026-11-14 with the smoke frozen: one bad 2.5s
 // window right after load tripped the check, and the verdict was stored for the

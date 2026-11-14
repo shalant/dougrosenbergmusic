@@ -133,6 +133,61 @@ verdict applies to that page view only (only the device and connection checks ar
 tripped is not known; it was not reproduced on real hardware, only with faked slow frames.
 Regression tests in `e2e/hero-haze.spec.ts` (all three failed against the old code).
 
+### Update, 2026-11-14: color blobs on the left of the hero
+
+Doug asked for subtle blobs moving around the left of the screen, slowly passing through all the
+nav colors. Added three soft radial glows in `HeroGraded.astro` (`.hero__hues`, left 52% of the
+hero, strength 0.7). Each cycles through the seven `--note-*` tones in nav order (hero green,
+listen brass, about orange, highlights green, lessons blue, contact purple, dev red) over 84s, 98s
+and 112s, started at different offsets, while drifting on irregular keyframe paths of 47s, 61s and
+73s. Nothing is random at runtime (no JS); the uneven stops and mismatched lengths make it read
+that way. The color is a registered `@property --hue`, so the gradient repaints each blob's own
+small layer per frame; the rest is transform only. Where `@property` is unsupported a blob holds
+its first tone. Lite mode, reduced motion and the off-screen pause treat the blobs like the haze.
+Checked by eye in two screenshots 20s apart on a 1440px build (green wash, then blue and amber).
+
+Later the same day, after seeing it on the dev server, Doug asked for the blobs to be 50% less
+visible: the hero blobs went from strength 0.7 to 0.35 and the page-wide glows from 0.5 to 0.25
+(the figures quoted below are the original ones). He also found the dev server "twitchy"; see the
+measurement note at the end of the next section.
+
+### Update, 2026-11-14: the same glows across the whole page background
+
+Doug found the plain charcoal background a little boring and asked for the blobs over the entire
+viewport at any scroll position. Added `AmbientHues.astro` (home page only): a fixed layer behind
+the page with four larger, fainter blobs (strength 0.5, 36 to 50vw with a pixel floor for phones),
+each on its own uneven path (67 to 89s) and color cycle (91 to 117s, offset). The hero keeps its
+own left-side blobs over the photo (the photo is opaque, so the fixed layer is hidden behind it).
+`@property --hue` and `@keyframes hue-cycle` moved to `global.css` so the two layers share one
+color timeline.
+
+To let the layer show, section backgrounds that were opaque `--bg` (Intro, Listen, Performance,
+Lessons, Sheet Music, Dev, FAQ) are `transparent`; they were the body color anyway, so nothing
+else changes. The raised bands (About, Career Highlights, Gallery) are 78% opaque so they keep
+their band look and let a hint through. Contact's fade into the footer now starts from transparent
+(an opaque start left a hard seam under FAQ, caught in a screenshot). The hero photo and the footer
+stay opaque on purpose. Lite mode reaches the fixed layer through `data-fx="lite"` on `<html>`
+(set by the hero script); reduced motion stills it; a hidden tab is paused by the browser.
+
+Limits: home page only. The archive pages, Eastern Blok pages and 404 keep the plain background,
+because the lite/watchdog script lives in the hero and would need to be shared first. The glows sit
+behind text, so Lighthouse's contrast check can't see them; at strength 0.5 the brightest spot is
+about 16% tone over the charcoal, which I judged by eye from screenshots at three scroll positions,
+not by measured contrast. Mobile Lighthouse on the production build: performance 97, accessibility
+100, best practices 100, SEO 100 (LCP 2.4s, TBT 0, CLS 0), the same as before the layer. Not looked
+at on a real phone.
+
+Twitchiness (Doug, dev server, same day): not reproduced, cause not confirmed. Headless Chromium
+here has no GPU, so everything runs at about 15 to 20 fps and absolute numbers mean nothing; the
+relative cost while scrolling the production build for 8s (frames drawn: more is better) was 181 with
+no blobs, 164 with only the hero blobs, 138 with the page-wide layer but color cycling off, 136 with
+everything on. So the page-wide layer is the costly part, and the animated color is not. Two
+suspects remain, neither tested on real hardware: (1) every path uses `ease-in-out` per keyframe
+segment, so each blob slows to a near stop and speeds up again at each of its four or five stops,
+which reads as surging; (2) the dev server injects styles late and hot-reloads, which restarts
+animations. Possible fix for (1), not done: animate x, y and scale as separate properties with
+different periods and `alternate`, instead of multi-stop paths.
+
 ## Reference
 
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.
