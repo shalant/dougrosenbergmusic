@@ -7,13 +7,23 @@
 ---
 
 <section id="intro" class="intro" aria-label="About Doug Rosenberg in brief">
-  <div class="wrap">
+  <div class="wrap intro__grid">
     <p class="intro__text">
       <strong>Doug Rosenberg</strong> is a Chicago-based jazz saxophonist, composer, and educator,
       with the debut album <em>Better Than TV</em> (2014), a New England Conservatory degree, and
       performances at Millennium Park, the Green Mill, and Symphony Center. He also designs and
       builds websites for musicians and small businesses.
     </p>
+    {/* Facts rail (2026-11-15): the same facts as the paragraph, as ruled rows
+         like the On record ledger. The paragraph stays as the visible,
+         lift-able answer for search; this is a second view of it, so keep the
+         two in sync. */}
+    <dl class="intro__facts">
+      <div class="intro__fact"><dt>Debut</dt><dd><em>Better Than TV</em>, 2014</dd></div>
+      <div class="intro__fact"><dt>Degree</dt><dd>New England Conservatory</dd></div>
+      <div class="intro__fact"><dt>Stages</dt><dd>Millennium Park &middot; Green Mill &middot; Symphony Center</dd></div>
+      <div class="intro__fact"><dt>Also</dt><dd>Websites for musicians and small businesses</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -27,8 +37,9 @@
      set as a lede (2026-10-25): centered, it was the one section breaking
      the page's left axis. */
   .intro__text {
-    /* Wider and larger than the 44rem / 1.4rem it had (2026-11-01): the lede
-       filled barely half the content width and left the right side empty. */
+    /* Larger than the 44rem / 1.4rem it had (2026-11-01). It still left the
+       right 40% empty at 56rem, so from 900px the facts rail takes that side
+       (2026-11-15). Below 900px it is one column and the rail sits under it. */
     max-width: 56rem;
     margin: 0;
     font-size: clamp(1.2rem, 2.8vw, 1.75rem);
@@ -39,5 +50,54 @@
   .intro__text strong {
     color: var(--text);
     font-weight: 600;
+  }
+
+  .intro__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .intro__grid {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: clamp(2.5rem, 5vw, 4rem);
+      align-items: start;
+    }
+
+    /* A smaller lede beside the rail so it wraps to about eight lines, not
+       ten: the prototype's 1.6rem balanced the two columns. */
+    .intro__text {
+      font-size: clamp(1.35rem, 1.9vw, 1.6rem);
+    }
+  }
+
+  .intro__facts {
+    margin: 0;
+    border-top: 1px solid var(--staff-line-strong);
+  }
+
+  .intro__fact {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  .intro__fact dt {
+    padding-top: 0.2rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .intro__fact dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 1.35;
+    color: var(--text);
   }
 </style>

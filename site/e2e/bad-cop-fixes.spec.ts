@@ -37,11 +37,8 @@ test.describe('desktop layout', () => {
     expect(about).not.toBe(await bg('#performance'));
   });
 
-  test('the intro lede spans most of the content width', async ({ page }) => {
-    await page.goto('/');
-    const width = await page.locator('.intro__text').evaluate((el) => el.getBoundingClientRect().width);
-    expect(width).toBeGreaterThanOrEqual(800);
-  });
+  // The lede-width test that lived here (>= 800px) moved to e2e/right-half.spec.ts
+  // on 2026-11-15: the lede now shares the row with the facts rail.
 
   test('the debut album leads, wider than the other three', async ({ page }) => {
     await page.goto('/');
