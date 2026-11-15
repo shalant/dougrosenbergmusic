@@ -426,17 +426,19 @@ earned a point.
    "Goran Ivanovic Group" title, the "Cedar Cultural Center" venue, the "Eastern Blok" sidebar text and the
    "Send Message" button all show through it. Same flaw as 2026-10-24 finding 3 and 11-01 point 1, and the
    cheapest points left. The 11-01 note said I had not watched text pass under the pill; this pass did.
-2. **"On record" has dead space.** An empty gap between the 2008 and 2004 quote rows, and the "Eastern Blok"
-   sidebar bracket runs well past its content. Seen mid-scroll only; confirm at rest before treating it as a
-   bug.
+2. ~~**"On record" has dead space.** An empty gap between the 2008 and 2004 quote rows, and the "Eastern Blok"
+   sidebar bracket runs well past its content.~~ Checked at rest the same day and dropped: the gap is the
+   2.5rem break between the two eras, and the bracket spans its era's five quotes with the label centered
+   (`PressTimeline.astro`, bracket 495px tall, label block about 190px). Designed, not a bug. Whether a
+   label floating mid-rule reads well is a taste call; top-aligning it is a one-line change if wanted.
 3. **Still left-weighted.** The intro and About copy sit in the left half with the right side empty, and
    Contact leaves a lot of space under its heading.
 4. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, the only coral section. Not
    counted.
 
-Cheapest next points: give the nav pill a solid or blurred backing, then check the "On record" gap.
+Cheapest next points: give the nav pill a blurred backing (done on `nav-liquid-glass-2026-11-15`), then use the empty right half of the page.
 
 | Date | Lens | Build scored | Score | What changed or cost points |
 |---|---|---|---|---|
 | 2026-11-15 | good cop | live after #122, desktop dark | about 92 | Unchanged from 11-01; mobile and archive carried forward |
-| 2026-11-15 | bad cop | live after #122, desktop dark | about 83 | Nav pill overprint still visible; "On record" gap; left-weighted columns |
+| 2026-11-15 | bad cop | live after #122, desktop dark | about 83 | Nav pill overprint still visible; left-weighted columns ("On record" gap dropped, by design) |
