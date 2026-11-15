@@ -295,7 +295,7 @@ cop 76 there). That file never defines them, so they are defined here:
   credit for effort, tests or intent. A separate lens, not comparable to the good-cop number.
 
 Bad-cop pass: live `https://dougrosenberg.com/` at 1440px, scrolled hero through Dev. Not
-viewed: Contact and footer, `/press`, `/easternblok`, mobile, light theme. My judgment, same
+viewed: Contact and footer, `/press`, `/easternblok`, mobile. My judgment, same
 reviewer who built most of the site.
 
 **Bad cop: about 78 / 100.** What costs points:
@@ -367,7 +367,7 @@ one.
   background on phone and desktop. In screenshots they looked dim only because the scroll-reveal
   was mid-fade.
 - The lead-album layout is desktop only by design, so there is nothing to see on a phone.
-- Not checked: the hero and Dev block on a phone this round, the light theme, the haze motion
+- Not checked: the hero and Dev block on a phone this round, the haze motion
   (still unverified on a real device).
 
 **Good cop: about 92 / 100** (was about 90 on 2026-10-30).
@@ -389,7 +389,7 @@ left:
    stranger would still call the layout left-weighted.
 3. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, two stacked buttons,
    the only coral section.
-4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`, light theme.
+4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`.
 
 Of the earlier bad-cop list, points 2, 3 and 5 (name walls, same navy, identical albums) read as
 fixed on the live desktop page. Point 4 (left-hugging columns) is improved, not fixed. Point 1
@@ -411,7 +411,7 @@ width test still holds. Full e2e, both projects, fresh build: 281 passed, 39 ski
 
 Scored with the shared system in `career-development/docs/UX_UI_SCORING.md`, with the same six areas and
 weights as above. Live `https://dougrosenberg.com/` (after PR #122) at 1440px, dark theme, scrolled hero
-to footer in Chrome. Not viewed: mobile, light theme, `/press`, `/easternblok`, `/easternblok/press`, open
+to footer in Chrome. Not viewed: mobile, `/press`, `/easternblok`, `/easternblok/press`, open
 FAQ items, the bottom of the Dev block (the remote covered it), and the hero haze motion (still frames only,
 so still unverified on a real device). Same reviewer who built most of the site, so allow about three points
 either way. Archive and mobile rows carry the 11-01 scores forward, unre-viewed.
