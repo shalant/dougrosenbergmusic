@@ -9,11 +9,15 @@ test.describe('desktop layout', () => {
   test.skip(({ isMobile }) => isMobile, 'desktop layout');
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test('the nav pill is at least 75% opaque', async ({ page }) => {
+  // 2026-11-15: this used to assert alpha >= 0.75, a workaround for a blur that
+  // never ran. The build kept only -webkit-backdrop-filter, so Chrome computed
+  // backdrop-filter as 'none'. Assert the blur is really applied (all three
+  // nav pieces) so the pill can be a lighter, liquid-glass tint.
+  test('the nav tray blurs what scrolls under it', async ({ page }) => {
     await page.goto('/');
-    const bg = await page.locator('.staff-nav').evaluate((el) => getComputedStyle(el).backgroundColor);
-    const alpha = Number(bg.match(/rgba\([^)]*,\s*([\d.]+)\)/)?.[1] ?? 1);
-    expect(alpha).toBeGreaterThanOrEqual(0.75);
+    const bf = await page.locator('.staff-nav').evaluate((el) => getComputedStyle(el).backdropFilter);
+    const radius = Number(bf.match(/blur\(([\d.]+)px\)/)?.[1] ?? 0);
+    expect(radius).toBeGreaterThanOrEqual(14);
   });
 
   test('featured names are set large and every artist appears once', async ({ page }) => {
