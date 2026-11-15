@@ -463,3 +463,23 @@ checkout. Two other `-webkit-`-only blurs remain (`.cta-secondary`, gallery ligh
 | Date | Lens | Build scored | Score | What changed or cost points |
 |---|---|---|---|---|
 | 2026-11-15 | bad cop | local build, desktop dark, estimate | about 85 | Nav overprint resolved by a real blur; left-weighted columns still open. "On record" gap checked and dropped, see the 2026-11-15 fresh-pass entry |
+
+### Right-half layout, 2026-11-15 (branch `right-half-intro-contact-2026-11-15`)
+
+Bad-cop point "still left-weighted" (Doug picked from prototypes, 2026-11-15):
+- **Intro:** from 900px the lede shares its row with a facts rail, ruled rows like the On record ledger
+  (Debut, Degree, Stages, Also), using only facts already in the paragraph. Below 900px the rail stacks
+  under the lede. The paragraph stays as the visible answer for search; the rail is a second view of it, so
+  keep the two in sync.
+- **Contact:** a portrait under the heading with About's offset brass frame, hidden below 900px so the form
+  stays close on phones. It is `images/gallery/formal.jpg` (the studio portrait), not the hero photo that the
+  hero and About already use. Decorative, so empty alt; lazy, with width and height set. Swap the file to
+  change it.
+- **Tests:** new `e2e/right-half.spec.ts` (rail right of the lede and reaching the content edge; four rows
+  matching the paragraph; stacks without sideways scroll at 320, 390, 768; portrait beside the form at 4:5;
+  hidden on phones; lazy, sized, not the hero). Two existing tests changed: the "lede spans 800px" test in
+  `bad-cop-fixes.spec.ts` is gone (the lede now shares the row), and the smoke test for the 30 to 60 word
+  direct answer now counts the `.intro__text` paragraph, not the whole section, which the rail would push to
+  70. Full e2e both projects 315 passed plus the smoke fix, unit 64/64, lint and `verify-csp` clean.
+- **Checked:** the real page at 1440px in Chrome. Not checked: a real phone, Safari. Not re-scored; I expect
+  about +2 on the bad cop.
