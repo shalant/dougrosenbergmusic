@@ -1325,7 +1325,8 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       sweep of every visible text on the light page. Research and reasoning are in
       `docs/DESIGN_NOTES.md` under "Light theme draft". Open before merge: (1) Doug picks the
       default (it follows the system setting now, so light-OS visitors would see light on launch);
-      (2) toggle placement (footer and archive header only, no toggle in the fixed nav); (3) check on
+      (2) ~~toggle placement~~ done 2026-11-15: Doug asked for one in the nav, so a sun/moon icon
+      button now ends the desktop staff and a "Lights up" pill ends the phone menu; (3) check on
       a real phone and laptop; (4) a Lighthouse run in light; (5) the 404 page follows the theme but
       has no toggle.
 - [x] **Contact form — built, deployed, and fully working as of 2026-09-07 night.**

@@ -41,6 +41,27 @@ test.describe('theme selection', () => {
     await expect(page.locator('.archive [data-theme-toggle]')).toBeVisible();
     await ctx.close();
   });
+
+  // The nav switch (2026-11-15): an icon button at the end of the desktop
+  // staff, a labelled pill in the phone menu. Every switch on the page shows
+  // the same state, whichever one was pressed.
+  test('the nav has a theme switch that stays in step with the footer one', async ({ page, isMobile }) => {
+    await page.goto('/');
+    let navToggle;
+    if (isMobile) {
+      await page.locator('[data-menu-toggle]').click();
+      navToggle = page.locator('.staff-menu [data-theme-toggle]');
+    } else {
+      navToggle = page.locator('.staff-nav [data-theme-toggle]');
+    }
+    await expect(navToggle).toBeVisible();
+    await expect(navToggle).toHaveAccessibleName('Lights up (light theme)');
+    await navToggle.click();
+    expect(await theme(page)).toBe('light');
+    await expect(navToggle).toHaveAccessibleName('Lights down (dark theme)');
+    await expect(page.locator('.site-footer [data-theme-toggle]')).toHaveAccessibleName('Lights down (dark theme)');
+    if (!isMobile) await expect(navToggle).toHaveAttribute('title', 'Lights down');
+  });
 });
 
 test.describe('light theme', () => {

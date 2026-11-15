@@ -71,6 +71,10 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
 
 **Rules (each checked by `e2e/theme.spec.ts`):**
 
+- **Where the switch is:** every page has one within reach without scrolling to the bottom. Home:
+  the icon button at the end of the desktop nav staff and the pill in the phone menu (plus the
+  footer). Archive pages: beside the back link. One script drives every `[data-theme-toggle]` on
+  the page, so they always agree.
 - **Which theme:** a choice saved by the toggle (`localStorage.theme`) wins; otherwise the
   system's `prefers-color-scheme`, followed live. The inline script at the top of
   `BaseLayout.astro`'s `<head>` sets `data-theme` on `<html>` before first paint. Without

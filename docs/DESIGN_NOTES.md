@@ -234,10 +234,14 @@ the visitor's context, which the follow-the-system default does in its simplest 
 - **Craft over polish.** A static paper grain (one SVG noise tile, no animation) on the light page
   only. The page-wide color glows stay on: on paper they read as faint watercolor washes.
 - **Toggle in the site's voice.** "Lights up" / "Lights down", a stage-lights switch with a brass
-  dot, in the footer and beside the back link on the archive pages.
+  dot, in the footer and beside the back link on the archive pages. Added to the nav the same day
+  at Doug's request: on desktop a sun (dark page) or moon (light page) icon button past a hairline
+  at the end of the staff (the pill grew from 456px to 526px; at 861-1010px it still scales to
+  0.74 and stays clear of the hero subject, checked in a 900px screenshot), and on phones a
+  "Lights up" pill under the section list in the hamburger menu.
 
-**Open before merge:** the default (system-following, or dark unless chosen), whether the fixed
-nav needs a toggle, real-device checks, and a Lighthouse run in light. Tracked in
+**Open before merge:** the default (system-following, or dark unless chosen), real-device
+checks, and a Lighthouse run in light. Tracked in
 `docs/todolist.md`'s "Light-mode refactor" item.
 
 ## Reference

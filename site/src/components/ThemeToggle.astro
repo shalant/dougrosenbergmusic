@@ -8,11 +8,29 @@
 // Stage voice: "Lights up" switches to the light page, "Lights down" to the
 // dark one. The visible words are the start of the accessible name (WCAG
 // 2.5.3 label in name); the hidden part says what the lights are.
+//
+// variant="icon" (the desktop nav, 2026-11-15) is a round button with a sun
+// (dark page: press for light) or a moon (light page), the same line style
+// as the nav's section icons. Its whole label is visually hidden, so the
+// accessible name is the same as the pill's, and a native title gives
+// pointer users the words.
+interface Props {
+  variant?: 'pill' | 'icon';
+}
+const { variant = 'pill' } = Astro.props;
+const icon = variant === 'icon';
 ---
 
-<button class="theme-toggle" type="button" data-theme-toggle>
-  <span class="theme-toggle__dot" aria-hidden="true"></span>
-  <span data-theme-toggle-label>Lights up</span><span class="visually-hidden" data-theme-toggle-hint> (light theme)</span>
+<button class:list={['theme-toggle', { 'theme-toggle--icon': icon }]} type="button" data-theme-toggle title={icon ? 'Lights up' : undefined}>
+  {icon ? (
+    <svg class="theme-toggle__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g class="theme-toggle__sun"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></g>
+      <path class="theme-toggle__moon" d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+  ) : (
+    <span class="theme-toggle__dot" aria-hidden="true"></span>
+  )}
+  <span class:list={[{ 'visually-hidden': icon }]} data-theme-toggle-label>Lights up</span><span class="visually-hidden" data-theme-toggle-hint> (light theme)</span>
 </button>
 
 <script>
@@ -35,6 +53,7 @@
       const label = btn.querySelector('[data-theme-toggle-label]');
       const hint = btn.querySelector('[data-theme-toggle-hint]');
       if (label) label.textContent = light ? 'Lights down' : 'Lights up';
+      if (btn.hasAttribute('title')) btn.setAttribute('title', light ? 'Lights down' : 'Lights up');
       if (hint) hint.textContent = light ? ' (dark theme)' : ' (light theme)';
     });
   }
@@ -106,7 +125,49 @@
     box-shadow: 0 0 0 3px var(--focus-ring);
   }
 
+  .theme-toggle--icon {
+    width: 44px;
+    height: 44px;
+    min-height: 0;
+    padding: 0;
+    justify-content: center;
+    color: var(--brass);
+  }
+
+  .theme-toggle__glyph {
+    width: 20px;
+    height: 20px;
+    transition: rotate var(--dur-slow) var(--ease-spring);
+  }
+
+  .theme-toggle__moon {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__sun {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__moon {
+    display: inline;
+  }
+
+  /* A small turn on hover, the same spring the nav icons use. */
+  @media (hover: hover) {
+    .theme-toggle--icon:hover .theme-toggle__glyph {
+      rotate: 25deg;
+    }
+  }
+
+  .theme-toggle--icon:focus-visible .theme-toggle__glyph {
+    rotate: 25deg;
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .theme-toggle__glyph {
+      transition: none;
+      rotate: none !important;
+    }
     .theme-toggle,
     .theme-toggle__dot {
       transition: none;

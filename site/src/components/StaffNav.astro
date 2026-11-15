@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 // Feather-style line icons (24x24, stroke=currentColor) - matches the thin
 // stroke look already used for the hero's scroll-cue chevron.
 const ICONS: Record<string, string> = {
@@ -50,6 +52,13 @@ const sections = [
       <span class="staff-nav__tag">{s.label}</span>
     </button>
   ))}
+
+  {/* Theme switch (2026-11-15): past a hairline at the staff's end, so it
+      reads as a control beside the staff, not a seventh section note. */}
+  <span class="staff-nav__divider" aria-hidden="true"></span>
+  <div class="staff-nav__theme">
+    <ThemeToggle variant="icon" />
+  </div>
 </nav>
 
 <button
@@ -89,6 +98,11 @@ const sections = [
       ))}
     </ul>
   </div>
+  {/* Outside __inner, whose height the vertical staff spans, so the staff
+      ends with the last section instead of running through the switch. */}
+  <div class="staff-menu__theme">
+    <ThemeToggle />
+  </div>
 </div>
 
 <style>
@@ -101,7 +115,9 @@ const sections = [
     position: fixed;
     top: 12px;
     right: 20px;
-    width: 456px;
+    /* 456px, then 526px on 2026-11-15 for the theme switch at the end (12px
+       from the right edge, matching the first note's 12px on the left). */
+    width: 526px;
     height: 100px;
     z-index: 40;
     /* 0.65 -> 0.75 on 2026-11-01 (bad-cop pass: text printed through the pill
@@ -114,12 +130,29 @@ const sections = [
     box-shadow: 0 8px 32px -4px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
+  /* The staff stops before the theme switch (right: 90px), so the five
+     lines end where the section notes do. */
   .staff-nav__line {
     position: absolute;
     left: 20px;
-    right: 20px;
+    right: 90px;
     height: 1px;
     background: var(--staff-line-strong);
+  }
+
+  .staff-nav__divider {
+    position: absolute;
+    left: 459px;
+    top: 26px;
+    width: 1px;
+    height: 48px;
+    background: var(--staff-line-strong);
+  }
+
+  .staff-nav__theme {
+    position: absolute;
+    left: 470px;
+    top: 28px;
   }
 
   .staff-nav__note {
@@ -407,6 +440,12 @@ const sections = [
     text-align: left;
     text-decoration: none;
     color: inherit;
+  }
+
+  .staff-menu__theme {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
   }
 
   .staff-menu__item:focus-visible .staff-menu__label {
