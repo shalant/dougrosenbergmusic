@@ -406,3 +406,24 @@ nothing changes. New test `the three small albums end level with the lead` in
 `e2e/bad-cop-fixes.spec.ts` fails on the previous layout (161px) and passes now; the debut-lead
 width test still holds. Full e2e, both projects, fresh build: 281 passed, 39 skipped. Looked at
 1440 and 768 by eye; not checked on a real phone (phones are unchanged).
+
+### Nav liquid glass, 2026-11-15 (branch `nav-liquid-glass-2026-11-15`)
+
+Bad-cop point 1 (nav pill prints over text) turned out to be a bug, not a tradeoff. On the live site the
+nav's computed `backdrop-filter` was `none`: the build kept only `-webkit-backdrop-filter` and dropped the
+unprefixed property, so Chrome never blurred, and the 0.65 to 0.75 alpha bumps of 2026-11-01 were fighting
+a missing blur. Doug likes the pills and the liquid-glass look, so the pills are unchanged and the tray now
+blurs for real: unprefixed `backdrop-filter: blur(18px) saturate(1.5)`, tint lowered to 0.55, inset top and
+bottom highlights. The same fix applies to the phone toggle and menu. Checked on a local build at 1440px:
+the "Goran Ivanovic Group" title under the tray no longer reads through it. Not checked: a real phone, Safari
+(it now gets the unprefixed property, supported from Safari 18; older Safari falls back to the flat tint).
+The site is dark only by design (`docs/style-guide.md`), so there is no light theme to check.
+
+`e2e/bad-cop-fixes.spec.ts`: the old "at least 75% opaque" test is replaced by "the nav tray blurs what
+scrolls under it" (computed blur at least 14px). Full e2e, both projects, fresh build: 303 passed, 39
+skipped. The old code's failure is evidenced by the live site returning `none`, not by a rebuilt old
+checkout. Two other `-webkit-`-only blurs remain (`.cta-secondary`, gallery lightbox); left for Doug's call.
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-15 | bad cop | local build, desktop dark, estimate | about 85 | Nav overprint resolved by a real blur; "On record" gap and left-weighted columns still open |
