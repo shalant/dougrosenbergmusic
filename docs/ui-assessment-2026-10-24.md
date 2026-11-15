@@ -426,4 +426,4 @@ checkout. Two other `-webkit-`-only blurs remain (`.cta-secondary`, gallery ligh
 
 | Date | Lens | Build scored | Score | What changed or cost points |
 |---|---|---|---|---|
-| 2026-11-15 | bad cop | local build, desktop dark, estimate | about 85 | Nav overprint resolved by a real blur; "On record" gap and left-weighted columns still open |
+| 2026-11-15 | bad cop | local build, desktop dark, estimate | about 85 | Nav overprint resolved by a real blur; left-weighted columns still open. "On record" gap checked and dropped, see the 2026-11-15 fresh-pass entry |
