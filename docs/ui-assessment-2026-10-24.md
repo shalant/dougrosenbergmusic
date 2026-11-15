@@ -295,7 +295,7 @@ cop 76 there). That file never defines them, so they are defined here:
   credit for effort, tests or intent. A separate lens, not comparable to the good-cop number.
 
 Bad-cop pass: live `https://dougrosenberg.com/` at 1440px, scrolled hero through Dev. Not
-viewed: Contact and footer, `/press`, `/easternblok`, mobile, light theme. My judgment, same
+viewed: Contact and footer, `/press`, `/easternblok`, mobile. My judgment, same
 reviewer who built most of the site.
 
 **Bad cop: about 78 / 100.** What costs points:
@@ -367,7 +367,7 @@ one.
   background on phone and desktop. In screenshots they looked dim only because the scroll-reveal
   was mid-fade.
 - The lead-album layout is desktop only by design, so there is nothing to see on a phone.
-- Not checked: the hero and Dev block on a phone this round, the light theme, the haze motion
+- Not checked: the hero and Dev block on a phone this round, the haze motion
   (still unverified on a real device).
 
 **Good cop: about 92 / 100** (was about 90 on 2026-10-30).
@@ -389,7 +389,7 @@ left:
    stranger would still call the layout left-weighted.
 3. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, two stacked buttons,
    the only coral section.
-4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`, light theme.
+4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`.
 
 Of the earlier bad-cop list, points 2, 3 and 5 (name walls, same navy, identical albums) read as
 fixed on the live desktop page. Point 4 (left-hugging columns) is improved, not fixed. Point 1
@@ -406,6 +406,42 @@ nothing changes. New test `the three small albums end level with the lead` in
 `e2e/bad-cop-fixes.spec.ts` fails on the previous layout (161px) and passes now; the debut-lead
 width test still holds. Full e2e, both projects, fresh build: 281 passed, 39 skipped. Looked at
 1440 and 768 by eye; not checked on a real phone (phones are unchanged).
+
+## Fresh pass, 2026-11-15
+
+Scored with the shared system in `career-development/docs/UX_UI_SCORING.md`, with the same six areas and
+weights as above. Live `https://dougrosenberg.com/` (after PR #122) at 1440px, dark theme, scrolled hero
+to footer in Chrome. Not viewed: mobile, `/press`, `/easternblok`, `/easternblok/press`, open
+FAQ items, the bottom of the Dev block (the remote covered it), and the hero haze motion (still frames only,
+so still unverified on a real device). Same reviewer who built most of the site, so allow about three points
+either way. Archive and mobile rows carry the 11-01 scores forward, unre-viewed.
+
+**Good cop: about 92 / 100** (unchanged). Identity 18, hero 19, craft 18, typography 15, archive 9
+(carried), mobile 13 (carried). The Recordings lead and three rows still end level, the name lists keep
+their scale change, the sheet-music empty state and the footer read well. Nothing regressed; nothing new
+earned a point.
+
+**Bad cop: about 83 / 100** (was about 84 on 2026-11-01). What costs points:
+1. **The nav pill still prints over text.** At alpha 0.75 the pill is translucent enough that the
+   "Goran Ivanovic Group" title, the "Cedar Cultural Center" venue, the "Eastern Blok" sidebar text and the
+   "Send Message" button all show through it. Same flaw as 2026-10-24 finding 3 and 11-01 point 1, and the
+   cheapest points left. The 11-01 note said I had not watched text pass under the pill; this pass did.
+2. ~~**"On record" has dead space.** An empty gap between the 2008 and 2004 quote rows, and the "Eastern Blok"
+   sidebar bracket runs well past its content.~~ Checked at rest the same day and dropped: the gap is the
+   2.5rem break between the two eras, and the bracket spans its era's five quotes with the label centered
+   (`PressTimeline.astro`, bracket 495px tall, label block about 190px). Designed, not a bug. Whether a
+   label floating mid-rule reads well is a taste call; top-aligning it is a one-line change if wanted.
+3. **Still left-weighted.** The intro and About copy sit in the left half with the right side empty, and
+   Contact leaves a lot of space under its heading.
+4. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, the only coral section. Not
+   counted.
+
+Cheapest next points: give the nav pill a blurred backing (done on `nav-liquid-glass-2026-11-15`), then use the empty right half of the page.
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-15 | good cop | live after #122, desktop dark | about 92 | Unchanged from 11-01; mobile and archive carried forward |
+| 2026-11-15 | bad cop | live after #122, desktop dark | about 83 | Nav pill overprint still visible; left-weighted columns ("On record" gap dropped, by design) |
 
 ### Nav liquid glass, 2026-11-15 (branch `nav-liquid-glass-2026-11-15`)
 
