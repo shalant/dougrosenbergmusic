@@ -227,10 +227,18 @@ the visitor's context, which the follow-the-system default does in its simplest 
 - **Accents deepened, not swapped.** Each nav tone keeps its hue and drops in lightness until it
   clears AA as text on all three light surfaces, so the six-color system still reads as itself.
   Brass becomes a dark ochre and seafoam a deep green.
-- **Dark plates.** The hero photo, the footer and the Dev TV stay dark. This matches the "dark
-  blocks for pictures" pattern on the artist sites, and it reads as an album: a paper sleeve with a
-  dark cover photo and a dark back cover. It also avoids re-tuning the hero's haze, scrims and
-  blobs, which were tuned against dark over three weeks.
+- **Dark plates.** The footer and the Dev TV stay dark. This matches the "dark blocks for
+  pictures" pattern on the artist sites; the footer reads as the sleeve's dark back cover.
+- **The hero as a sleeve front (same day, Doug's ask: "re-compose the hero to match the light
+  theme", keeping the same photo).** The first draft kept the hero as a dark plate. Doug wanted it
+  to belong to the light page, so in light it is re-composed instead: the photo, cropped portrait
+  around him, becomes a print with the About photo's offset brass frame, and the headline is set
+  in ink beside it, like the front of a record sleeve. The overlay effects (haze, smoke, scrim) are
+  off in light because they only work over the full-bleed dark frame, and the photo is no longer
+  under the text, so nothing needs a scrim. The dark hero is untouched. Trade-off: light loses the
+  cinematic full-screen opening for an editorial one. Known repetition: the About section directly
+  below uses the same photo with the same frame; a different About photo would fix it (Doug's
+  call, not changed here).
 - **Craft over polish.** A static paper grain (one SVG noise tile, no animation) on the light page
   only. The page-wide color glows stay on: on paper they read as faint watercolor washes.
 - **Toggle in the site's voice.** "Lights up" / "Lights down", a stage-lights switch with a brass

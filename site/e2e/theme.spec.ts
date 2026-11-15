@@ -67,7 +67,7 @@ test.describe('theme selection', () => {
 test.describe('light theme', () => {
   test.use({ colorScheme: 'light' });
 
-  test('hero, footer and the Dev screen stay dark plates', async ({ page }) => {
+  test('the footer and the Dev screen stay dark plates; the hero is paper', async ({ page }) => {
     await page.goto('/');
     const bgs = await page.evaluate(() =>
       ['#hero', '.site-footer', '.dev__screen-wrap'].map((sel) => {
@@ -75,8 +75,45 @@ test.describe('light theme', () => {
         return el ? getComputedStyle(el).getPropertyValue('--bg').trim() : null;
       }),
     );
-    expect(bgs).toEqual(['#0a0e17', '#0a0e17', '#0a0e17']);
+    expect(bgs).toEqual(['#f4efe6', '#0a0e17', '#0a0e17']);
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(244, 239, 230)');
+  });
+
+  // The light hero is a sleeve (2026-11-15): the photo is a framed print in
+  // the flow, beside the text from 1025px and above it below that; the
+  // dark-only layers are gone; nothing overlaps the photo, including the
+  // fixed logo.
+  test('the hero re-composes as a sleeve: print beside or above the text, no dark layers', async ({ page, isMobile }) => {
+    await page.goto('/');
+    const r = await page.evaluate(() => {
+      const box = (s: string) => document.querySelector(s)!.getBoundingClientRect();
+      const hidden = ['.hero__haze', '.hero__smoke', '.hero__scrim', '.hero__scan'].every(
+        (s) => getComputedStyle(document.querySelector(s)!).display === 'none',
+      );
+      return { photo: box('.hero__photo'), content: box('.hero__content'), hidden, pos: getComputedStyle(document.querySelector('.hero__photo')!).position };
+    });
+    expect(r.hidden).toBe(true);
+    expect(r.pos).toBe('relative');
+    if (isMobile) {
+      expect(r.content.top).toBeGreaterThanOrEqual(r.photo.bottom);
+    } else {
+      expect(r.content.left).toBeGreaterThanOrEqual(r.photo.right);
+    }
+  });
+
+  // The fixed logo covered the print's corner at 768x1024 and 844x390 in the
+  // first draft (screenshots, 2026-11-15).
+  test('the fixed logo never sits on the hero print', async ({ page }) => {
+    for (const size of [{ width: 1440, height: 900 }, { width: 1100, height: 700 }, { width: 768, height: 1024 }, { width: 390, height: 844 }, { width: 844, height: 390 }]) {
+      await page.setViewportSize(size);
+      await page.goto('/');
+      const overlap = await page.evaluate(() => {
+        const a = document.querySelector('.logo')!.getBoundingClientRect();
+        const b = document.querySelector('.hero__photo')!.getBoundingClientRect();
+        return !(a.right <= b.left || a.bottom <= b.top || a.left >= b.right || a.top >= b.bottom);
+      });
+      expect(overlap, `${size.width}x${size.height}`).toBe(false);
+    }
   });
 
   for (const path of PAGES) {

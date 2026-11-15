@@ -99,9 +99,10 @@
    first paint: a choice saved in localStorage wins, otherwise the system's
    prefers-color-scheme. Without JavaScript the page stays dark.
 
-   .theme-plate keeps the dark set on purpose inside a light page: the hero
-   photo, the footer ("back cover") and the Dev section's TV screen and
-   remote. They are pictures or physical objects, not paper, and their
+   .theme-plate keeps the dark set on purpose inside a light page: the
+   footer ("back cover") and the Dev section's TV screen and remote. (The
+   hero re-composes for light instead; see HeroGraded.astro's "Light theme:
+   the sleeve".) They are pictures or physical objects, not paper, and their
    overlays were tuned against dark. Because .theme-plate re-declares the
    tokens on its own element, everything inside it resolves to dark values
    whatever the page theme is. */

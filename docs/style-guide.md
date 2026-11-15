@@ -81,9 +81,18 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
   JavaScript the page is dark. Editing that script changes its hash: run
   `npm run verify-csp -- --write`.
 - **Dark plates:** a picture or a physical object stays dark on the light page. Mark its root
-  `.theme-plate` and every token inside it resolves to the dark set. Current plates: the hero, the
-  footer (the sleeve's back cover) and the Dev section's TV screen and remote. Reach for a plate
-  rather than re-tuning an overlay for light.
+  `.theme-plate` and every token inside it resolves to the dark set. Current plates: the footer
+  (the sleeve's back cover) and the Dev section's TV screen and remote. Reach for a plate rather
+  than re-tuning an overlay for light. (The hero was a plate in the first draft; see the next rule.)
+- **The light hero is a sleeve (2026-11-15):** same photo, re-composed rather than re-graded. From
+  1025px the photo is a print in the left column (5fr) with the About photo's 14px offset brass
+  frame, and the name, title, CTAs and records sit beside it (6fr) in ink, aligned to the `.wrap`
+  column. Below 1025px the print sits above the text; a short landscape screen goes back to two
+  columns, starting right of the logo. The haze, hue blobs, smoke, scanlines, vignette, scrim and
+  the smoke shading inside "Better Than" are off in light; T's top bar uses `--note-lessons`
+  instead of the sky blue. Every light rule sits under `:root[data-theme='light']`, so the dark
+  hero is unchanged (checked 2026-11-15: hero screenshots identical to master at 1440px and
+  390px). The fixed logo must never sit on the print; the spec checks five viewport sizes.
 - **No literal colors for anything that should flip.** Hairlines are
   `color-mix(in srgb, var(--text) N%, transparent)`, shadows
   `color-mix(in srgb, var(--shadow) N%, transparent)` (light's `--shadow` is a soft warm brown, so
