@@ -295,7 +295,7 @@ cop 76 there). That file never defines them, so they are defined here:
   credit for effort, tests or intent. A separate lens, not comparable to the good-cop number.
 
 Bad-cop pass: live `https://dougrosenberg.com/` at 1440px, scrolled hero through Dev. Not
-viewed: Contact and footer, `/press`, `/easternblok`, mobile, light theme. My judgment, same
+viewed: Contact and footer, `/press`, `/easternblok`, mobile. My judgment, same
 reviewer who built most of the site.
 
 **Bad cop: about 78 / 100.** What costs points:
@@ -367,7 +367,7 @@ one.
   background on phone and desktop. In screenshots they looked dim only because the scroll-reveal
   was mid-fade.
 - The lead-album layout is desktop only by design, so there is nothing to see on a phone.
-- Not checked: the hero and Dev block on a phone this round, the light theme, the haze motion
+- Not checked: the hero and Dev block on a phone this round, the haze motion
   (still unverified on a real device).
 
 **Good cop: about 92 / 100** (was about 90 on 2026-10-30).
@@ -389,7 +389,7 @@ left:
    stranger would still call the layout left-weighted.
 3. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, two stacked buttons,
    the only coral section.
-4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`, light theme.
+4. Not viewed this round: hero, Dev, Contact, `/press`, `/easternblok`.
 
 Of the earlier bad-cop list, points 2, 3 and 5 (name walls, same navy, identical albums) read as
 fixed on the live desktop page. Point 4 (left-hugging columns) is improved, not fixed. Point 1
@@ -411,7 +411,7 @@ width test still holds. Full e2e, both projects, fresh build: 281 passed, 39 ski
 
 Scored with the shared system in `career-development/docs/UX_UI_SCORING.md`, with the same six areas and
 weights as above. Live `https://dougrosenberg.com/` (after PR #122) at 1440px, dark theme, scrolled hero
-to footer in Chrome. Not viewed: mobile, light theme, `/press`, `/easternblok`, `/easternblok/press`, open
+to footer in Chrome. Not viewed: mobile, `/press`, `/easternblok`, `/easternblok/press`, open
 FAQ items, the bottom of the Dev block (the remote covered it), and the hero haze motion (still frames only,
 so still unverified on a real device). Same reviewer who built most of the site, so allow about three points
 either way. Archive and mobile rows carry the 11-01 scores forward, unre-viewed.
@@ -426,17 +426,60 @@ earned a point.
    "Goran Ivanovic Group" title, the "Cedar Cultural Center" venue, the "Eastern Blok" sidebar text and the
    "Send Message" button all show through it. Same flaw as 2026-10-24 finding 3 and 11-01 point 1, and the
    cheapest points left. The 11-01 note said I had not watched text pass under the pill; this pass did.
-2. **"On record" has dead space.** An empty gap between the 2008 and 2004 quote rows, and the "Eastern Blok"
-   sidebar bracket runs well past its content. Seen mid-scroll only; confirm at rest before treating it as a
-   bug.
+2. ~~**"On record" has dead space.** An empty gap between the 2008 and 2004 quote rows, and the "Eastern Blok"
+   sidebar bracket runs well past its content.~~ Checked at rest the same day and dropped: the gap is the
+   2.5rem break between the two eras, and the bracket spans its era's five quotes with the label centered
+   (`PressTimeline.astro`, bracket 495px tall, label block about 190px). Designed, not a bug. Whether a
+   label floating mid-rule reads well is a taste call; top-aligning it is a one-line change if wanted.
 3. **Still left-weighted.** The intro and About copy sit in the left half with the right side empty, and
    Contact leaves a lot of space under its heading.
 4. Dev block unchanged (Doug's call, 2026-10-30): remote over the preview, the only coral section. Not
    counted.
 
-Cheapest next points: give the nav pill a solid or blurred backing, then check the "On record" gap.
+Cheapest next points: give the nav pill a blurred backing (done on `nav-liquid-glass-2026-11-15`), then use the empty right half of the page.
 
 | Date | Lens | Build scored | Score | What changed or cost points |
 |---|---|---|---|---|
 | 2026-11-15 | good cop | live after #122, desktop dark | about 92 | Unchanged from 11-01; mobile and archive carried forward |
-| 2026-11-15 | bad cop | live after #122, desktop dark | about 83 | Nav pill overprint still visible; "On record" gap; left-weighted columns |
+| 2026-11-15 | bad cop | live after #122, desktop dark | about 83 | Nav pill overprint still visible; left-weighted columns ("On record" gap dropped, by design) |
+
+### Nav liquid glass, 2026-11-15 (branch `nav-liquid-glass-2026-11-15`)
+
+Bad-cop point 1 (nav pill prints over text) turned out to be a bug, not a tradeoff. On the live site the
+nav's computed `backdrop-filter` was `none`: the build kept only `-webkit-backdrop-filter` and dropped the
+unprefixed property, so Chrome never blurred, and the 0.65 to 0.75 alpha bumps of 2026-11-01 were fighting
+a missing blur. Doug likes the pills and the liquid-glass look, so the pills are unchanged and the tray now
+blurs for real: unprefixed `backdrop-filter: blur(18px) saturate(1.5)`, tint lowered to 0.55, inset top and
+bottom highlights. The same fix applies to the phone toggle and menu. Checked on a local build at 1440px:
+the "Goran Ivanovic Group" title under the tray no longer reads through it. Not checked: a real phone, Safari
+(it now gets the unprefixed property, supported from Safari 18; older Safari falls back to the flat tint).
+The site is dark only by design (`docs/style-guide.md`), so there is no light theme to check.
+
+`e2e/bad-cop-fixes.spec.ts`: the old "at least 75% opaque" test is replaced by "the nav tray blurs what
+scrolls under it" (computed blur at least 14px). Full e2e, both projects, fresh build: 303 passed, 39
+skipped. The old code's failure is evidenced by the live site returning `none`, not by a rebuilt old
+checkout. Two other `-webkit-`-only blurs remain (`.cta-secondary`, gallery lightbox); left for Doug's call.
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-15 | bad cop | local build, desktop dark, estimate | about 85 | Nav overprint resolved by a real blur; left-weighted columns still open. "On record" gap checked and dropped, see the 2026-11-15 fresh-pass entry |
+
+### Right-half layout, 2026-11-15 (branch `right-half-intro-contact-2026-11-15`)
+
+Bad-cop point "still left-weighted" (Doug picked from prototypes, 2026-11-15):
+- **Intro:** from 900px the lede shares its row with a facts rail, ruled rows like the On record ledger
+  (Debut, Degree, Stages, Also), using only facts already in the paragraph. Below 900px the rail stacks
+  under the lede. The paragraph stays as the visible answer for search; the rail is a second view of it, so
+  keep the two in sync.
+- **Contact:** a portrait under the heading with About's offset brass frame, hidden below 900px so the form
+  stays close on phones. It is `images/gallery/formal.jpg` (the studio portrait), not the hero photo that the
+  hero and About already use. Decorative, so empty alt; lazy, with width and height set. Swap the file to
+  change it.
+- **Tests:** new `e2e/right-half.spec.ts` (rail right of the lede and reaching the content edge; four rows
+  matching the paragraph; stacks without sideways scroll at 320, 390, 768; portrait beside the form at 4:5;
+  hidden on phones; lazy, sized, not the hero). Two existing tests changed: the "lede spans 800px" test in
+  `bad-cop-fixes.spec.ts` is gone (the lede now shares the row), and the smoke test for the 30 to 60 word
+  direct answer now counts the `.intro__text` paragraph, not the whole section, which the rail would push to
+  70. Full e2e both projects 315 passed plus the smoke fix, unit 64/64, lint and `verify-csp` clean.
+- **Checked:** the real page at 1440px in Chrome. Not checked: a real phone, Safari. Not re-scored; I expect
+  about +2 on the bad cop.

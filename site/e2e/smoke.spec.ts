@@ -94,7 +94,11 @@ test.describe('smoke', () => {
     await page.goto('/');
     const intro = page.locator('#intro');
     await expect(intro).toContainText('Chicago-based jazz saxophonist, composer, and educator');
-    const words = (await intro.innerText()).trim().split(/\s+/).length;
+    // Count the answer paragraph, not the whole section: since 2026-11-15 the
+    // section also holds the facts rail, a second view of the same facts. The
+    // 30-60 word rule is about the short, self-contained answer lifted by
+    // search and answer engines, which is still just this paragraph.
+    const words = (await intro.locator('.intro__text').innerText()).trim().split(/\s+/).length;
     expect(words).toBeGreaterThanOrEqual(30);
     expect(words).toBeLessThanOrEqual(60);
   });

@@ -3,6 +3,22 @@
     <div class="contact__intro">
       <h2 class="contact__heading">Let&rsquo;s make some music.</h2>
       <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
+      {/* Portrait (2026-11-15): fills the column under the heading, which was
+           an empty void beside the form. A different photo from the hero and
+           About on purpose (the studio portrait from the gallery). Decorative,
+           so alt is empty; hidden below 900px where the form stacks under the
+           heading and the photo would only push it down. */}
+      <figure class="contact__photo-wrap">
+        <img
+          class="contact__photo"
+          src={`${import.meta.env.BASE_URL}images/gallery/formal.jpg`}
+          alt=""
+          width="1080"
+          height="1350"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </div>
 
     <div class="contact__form-wrap">
@@ -174,6 +190,41 @@
   .contact__sub {
     color: var(--text-muted);
     margin: 0;
+  }
+
+  /* Same offset brass frame as the About photo, without its scroll-driven
+     slide. The 14px frame offset sits inside the grid gap (3rem and up). */
+  .contact__photo-wrap {
+    display: none;
+    margin: 2.5rem 0 0;
+    position: relative;
+    isolation: isolate;
+    width: min(100%, 320px);
+  }
+
+  @media (min-width: 900px) {
+    .contact__photo-wrap {
+      display: block;
+    }
+  }
+
+  .contact__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: grayscale(0.35) sepia(0.18) saturate(1.1);
+    border-radius: 2px;
+  }
+
+  .contact__photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--brass);
+    transform: translate(14px, 14px);
+    z-index: -1;
   }
 
   .contact__form-wrap {

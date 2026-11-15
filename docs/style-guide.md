@@ -237,3 +237,11 @@ How much, by kind:
   album is `.album--lead`). The lead spans the rows of one column and the rest stack as rows in the
   other, so the two columns end level; a lead in a one-row grid leaves dead space under its
   neighbours (161px measured). Phones keep the plain rows. Checked by `e2e/bad-cop-fixes.spec.ts`.
+- **Glass (2026-11-15 rule)**: write `backdrop-filter` unprefixed and nothing else. The build's CSS
+  minifier keeps only one of a prefixed/unprefixed pair and kept `-webkit-backdrop-filter`, so
+  Chrome and Firefox computed `backdrop-filter: none` and the "glass" nav was a flat translucent
+  panel for months. Check any new glass with `getComputedStyle(el).backdropFilter` in Chrome, not by
+  reading the source. The nav tray is the liquid-glass reference: tint 0.55, `blur(18px)
+  saturate(1.5)`, inset top and bottom highlights. Checked by `e2e/bad-cop-fixes.spec.ts`. Still
+  prefixed-only, so no blur in Chrome: `.cta-secondary` (`global.css`) and the gallery lightbox
+  (`Gallery.astro`); decide per element whether to switch them.

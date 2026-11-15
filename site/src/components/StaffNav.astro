@@ -106,11 +106,14 @@ const sections = [
 </div>
 
 <style>
-  /* Glass-blur translucent panel, by request - accepted tradeoff is that
-     body text/images scrolling underneath show through it (previously
-     reverted to a solid --bg-elevated background over this exact issue,
-     confirmed via screenshots of the About pull-quote, the "Professional
-     Affiliations" heading, and a Gallery photo bleeding through). */
+  /* Liquid-glass tray, by request (2026-11-15). Until then the blur never ran:
+     the build kept only `-webkit-backdrop-filter` (Safari) and dropped the
+     unprefixed property, so Chrome and Firefox showed a flat translucent
+     panel and body text printed straight through it. Write the unprefixed
+     property only: the minifier keeps exactly what it is given. A real blur
+     scatters the text underneath, so the tint can be lighter than the 0.75
+     alpha that was a workaround for the missing blur. The inset highlights
+     are the "liquid" part: a bright top edge, a faint bottom one. */
   .staff-nav {
     position: fixed;
     top: 12px;
@@ -120,14 +123,17 @@ const sections = [
     width: 526px;
     height: 100px;
     z-index: 40;
-    /* 0.65 -> 0.75 on 2026-11-01 (bad-cop pass: text printed through the pill
-       while scrolling). Still translucent on purpose; the glass look stays. */
-    background: color-mix(in srgb, var(--bg) 75%, transparent);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+    /* Tint and border are theme tokens (light draft, 2026-11-15); the inset
+       highlights stay white in both themes, since a bright top edge reads as
+       glass on paper too. */
+    background: color-mix(in srgb, var(--bg) 55%, transparent);
+    backdrop-filter: blur(18px) saturate(1.5);
+    border: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
     border-radius: 28px;
-    box-shadow: 0 8px 32px -4px color-mix(in srgb, var(--shadow) 60%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+      0 8px 32px -4px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
   /* The staff stops before the theme switch (right: 90px), so the five
@@ -338,7 +344,6 @@ const sections = [
     gap: 6px;
     background: color-mix(in srgb, var(--bg) 65%, transparent);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
     border-radius: 999px;
     cursor: pointer;
@@ -382,7 +387,6 @@ const sections = [
     z-index: 41;
     background-color: color-mix(in srgb, var(--bg) 82%, transparent);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
     border-radius: 22px;
     padding: 1.3rem 1.2rem;
