@@ -8,6 +8,10 @@
 // Socials are icons since 2026-10-18 (Doug prefers them to text labels),
 // Lucide-style strokes to match the nav and dividers. The developer site sits
 // in that row too, with the same </> mark and red as the nav's DEV note.
+//
+// The footer is a .theme-plate (2026-11-15): it stays dark on the light
+// page too, the back cover of the sleeve. The theme switch lives here.
+import ThemeToggle from './ThemeToggle.astro';
 const sideA = [
   { label: 'Listen', href: '#listen' },
   { label: 'About', href: '#about' },
@@ -49,7 +53,7 @@ const socials = [
 const num = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
-<footer class="site-footer">
+<footer class="site-footer theme-plate">
   <div class="wrap">
     <div class="liner">
       <div class="liner__head">
@@ -128,6 +132,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
       <div class="liner__foot">
         <p class="site-footer__copyright">© {new Date().getFullYear()} Doug Rosenberg. All rights reserved.</p>
+        <ThemeToggle />
         <a class="liner__top" href="#hero">Back to top <span class="liner__top-arrow" aria-hidden="true">↑</span></a>
       </div>
     </div>
@@ -136,14 +141,14 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
 <style>
   .site-footer {
-    background: #060810;
-    border-top: 1px solid rgba(233, 237, 245, 0.08);
+    background: var(--footer-bg);
+    border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
     padding-block: clamp(1.5rem, 5vw, 2.5rem);
   }
 
   /* The sleeve: one brass hairline frame around the whole footer. */
   .liner {
-    border: 1px solid rgba(207, 154, 79, 0.35);
+    border: 1px solid color-mix(in srgb, var(--brass) 35%, transparent);
     padding: clamp(1.25rem, 4vw, 2.25rem) clamp(1rem, 4vw, 2.75rem) clamp(1rem, 3vw, 1.75rem);
     display: flex;
     flex-direction: column;
@@ -157,7 +162,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
     align-items: baseline;
     gap: 0.5rem 1.5rem;
     padding-bottom: 1.1rem;
-    border-bottom: 1px solid rgba(233, 237, 245, 0.1);
+    border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
   }
 
   .liner__name {
@@ -259,7 +264,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
   .liner__track:focus-visible,
   .liner__top:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
@@ -306,7 +311,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    border: 1px solid rgba(233, 237, 245, 0.18);
+    border: 1px solid color-mix(in srgb, var(--text) 18%, transparent);
     color: var(--text-muted);
     transition: color var(--dur-base) ease, border-color var(--dur-base) ease, background-color var(--dur-base) ease, translate var(--dur-med) var(--ease-spring);
   }
@@ -339,7 +344,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
   .site-footer__social:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 0 3px var(--focus-ring);
     translate: 0 -2px;
   }
 

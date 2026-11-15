@@ -1,0 +1,115 @@
+---
+// Light/dark switch (light-mode draft, 2026-11-15). The theme itself is set
+// before first paint by the inline script in BaseLayout.astro; this button
+// only flips it and saves the choice to localStorage ('theme'), so the next
+// page load starts in it. With no saved choice the page follows the system
+// setting, live, including a change while the page is open.
+//
+// Stage voice: "Lights up" switches to the light page, "Lights down" to the
+// dark one. The visible words are the start of the accessible name (WCAG
+// 2.5.3 label in name); the hidden part says what the lights are.
+---
+
+<button class="theme-toggle" type="button" data-theme-toggle>
+  <span class="theme-toggle__dot" aria-hidden="true"></span>
+  <span data-theme-toggle-label>Lights up</span><span class="visually-hidden" data-theme-toggle-hint> (light theme)</span>
+</button>
+
+<script>
+  const KEY = 'theme';
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: light)');
+
+  function saved() {
+    try {
+      const t = localStorage.getItem(KEY);
+      return t === 'light' || t === 'dark' ? t : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function render() {
+    const light = root.dataset.theme === 'light';
+    document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+      const label = btn.querySelector('[data-theme-toggle-label]');
+      const hint = btn.querySelector('[data-theme-toggle-hint]');
+      if (label) label.textContent = light ? 'Lights down' : 'Lights up';
+      if (hint) hint.textContent = light ? ' (dark theme)' : ' (light theme)';
+    });
+  }
+
+  function apply(theme: string) {
+    root.dataset.theme = theme;
+    render();
+  }
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      try {
+        localStorage.setItem(KEY, next);
+      } catch {}
+      apply(next);
+    });
+  });
+
+  media.addEventListener('change', (e) => {
+    if (!saved()) apply(e.matches ? 'light' : 'dark');
+  });
+
+  render();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--text) 18%, transparent);
+    background: transparent;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color var(--dur-base) ease, border-color var(--dur-base) ease, background-color var(--dur-base) ease;
+  }
+
+  /* A stage light: a lit brass dot when the house is dark (press to bring
+     the lights up), an outlined one when it's already light. */
+  .theme-toggle__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--brass);
+    box-shadow: 0 0 8px var(--brass);
+    transition: background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__dot {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--brass);
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible {
+    color: var(--text);
+    border-color: var(--brass);
+    background-color: var(--brass-soft);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle,
+    .theme-toggle__dot {
+      transition: none;
+    }
+  }
+</style>

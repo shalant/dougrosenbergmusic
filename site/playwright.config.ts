@@ -35,6 +35,11 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${port}`,
     trace: 'retain-on-failure',
+    // The site follows the system theme (2026-11-15) and Playwright's browser
+    // reports light by default, which would quietly run every older spec
+    // against the light page. Dark is the theme those specs were written
+    // for; e2e/theme.spec.ts opts into light where it means to.
+    colorScheme: 'dark',
   },
   projects: [
     {

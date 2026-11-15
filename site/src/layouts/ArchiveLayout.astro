@@ -6,6 +6,9 @@
 // is in, and remove the page from the sitemap filter in astro.config.mjs at
 // the same time. /easternblok left draft 2026-10-16 and /press 2026-10-23.
 import BaseLayout from './BaseLayout.astro';
+// The archive pages have no footer, so the theme switch sits beside the
+// back link instead (light-mode draft, 2026-11-15).
+import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
   title: string;
@@ -37,7 +40,10 @@ const {
   <article class="archive" style={`--archive-tone: var(--note-${tone})`}>
     <div class="wrap">
       <header class="archive__header">
-        <a class="archive__back" href={back.href}>&larr; {back.label}</a>
+        <div class="archive__topbar">
+          <a class="archive__back" href={back.href}>&larr; {back.label}</a>
+          <ThemeToggle />
+        </div>
         <div class="archive__staff staff-lines--strong" aria-hidden="true"><span class="archive__note"></span></div>
         <p class="eyebrow">{eyebrow}</p>
         <h1 class="archive__title">{heading}</h1>
@@ -67,12 +73,20 @@ const {
     max-width: 42rem;
   }
 
+  .archive__topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
   .archive__back {
     justify-self: start;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    margin-bottom: 1rem;
     font-family: var(--font-body);
     font-size: 0.8rem;
     color: var(--text-muted);
