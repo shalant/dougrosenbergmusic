@@ -126,6 +126,35 @@ test.describe('light theme', () => {
     expect(ratios.apart).toBeGreaterThanOrEqual(1.2);
   });
 
+  // The sheet-music panel was beige on beige (1.08:1 from the paper, its
+  // empty viewer the same tone as the panel), the flattest block on the page
+  // (bad cop, 2026-11-15). Light makes it a kraft folder holding a white
+  // manuscript page: the folder at least 1.09:1 from the paper, the page at
+  // least 1.2:1 from the folder.
+  test('the sheet-music library reads as a folder holding a page', async ({ page }) => {
+    await page.goto('/');
+    const r = await page.evaluate(() => {
+      const lum = (sel: string) => {
+        const c = getComputedStyle(document.querySelector(sel)!).backgroundColor;
+        const m = c.match(/[\d.]+/g)!.map(Number);
+        const k = c.startsWith('color(srgb') ? 255 : 1;
+        const [r, g, b] = m.slice(0, 3).map((v) => {
+          const s = (v * k) / 255;
+          return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const ratio = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      const paper = lum('body');
+      const folder = lum('.sheet-music__panel');
+      const sheet = lum('.sheet-music__viewer-empty');
+      return { folder: ratio(folder, paper), sheet: ratio(sheet, folder), sheetLighter: sheet > folder };
+    });
+    expect(r.folder).toBeGreaterThanOrEqual(1.09);
+    expect(r.sheet).toBeGreaterThanOrEqual(1.2);
+    expect(r.sheetLighter).toBe(true);
+  });
+
   // The light hero is a sleeve (2026-11-15): the photo is a framed print in
   // the flow, beside the text from 1025px and above it below that; the
   // dark-only layers are gone; nothing overlaps the photo, including the

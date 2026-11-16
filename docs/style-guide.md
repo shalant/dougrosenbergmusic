@@ -253,6 +253,10 @@ How much, by kind:
   (2026-11-15), because on cream the surface steps were too small and the sections ran together.
   `e2e/theme.spec.ts` holds each light band at least 1.09:1 from the paper and the two at least
   1.2:1 apart.
+- **The sheet-music library is a folder holding a page in light (2026-11-15).** The panel is
+  `--band-sunk` (kraft) and the empty viewer, its prompt and the search box are `--band-raised`
+  sheets on it, so the page never matches the panel's tone. `e2e/theme.spec.ts` checks the folder
+  against the paper and the page against the folder.
 - **Album covers have no scan bars.** Cover files are cropped to the artwork; a black scan border
   vanishes on navy but prints as a black strip on paper (`better-than-tv.jpg` and `underwater.jpg`
   were cropped 2026-11-15). `src/album-covers.test.js` checks every cover's four edges.
