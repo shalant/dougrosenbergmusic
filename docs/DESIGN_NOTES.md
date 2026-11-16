@@ -239,6 +239,15 @@ the visitor's context, which the follow-the-system default does in its simplest 
   cinematic full-screen opening for an editorial one. Known repetition: the About section directly
   below uses the same photo with the same frame; a different About photo would fix it (Doug's
   call, not changed here).
+- **Motion back on paper (same day, Doug's ask: he missed the drifting color blobs and asked for
+  smoke on the right).** The hue blobs and the smoke SVGs return in light, but behind the print
+  and the type rather than over them, so the photo stays clean and the blobs glow out around its
+  edges like light leaking past a print. The cool grey smoke read as a smudge on cream, so light
+  re-inks it a warm sepia grey. At its thickest it darkened the paper behind the headline to
+  luma 180, taking the small brass and green lines to about 3.5:1, so a feathered patch of paper
+  sits behind the text block and the smoke curls around the type instead (measured afterwards:
+  the darkest pixel behind those lines is the paper grain itself, at five viewport sizes). The
+  weak-device and reduced-motion rules already cover both layers.
 - **Craft over polish.** A static paper grain (one SVG noise tile, no animation) on the light page
   only. The page-wide color glows stay on: on paper they read as faint watercolor washes.
 - **Toggle in the site's voice.** "Lights up" / "Lights down", a stage-lights switch with a brass

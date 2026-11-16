@@ -82,22 +82,65 @@ test.describe('light theme', () => {
   // The light hero is a sleeve (2026-11-15): the photo is a framed print in
   // the flow, beside the text from 1025px and above it below that; the
   // dark-only layers are gone; nothing overlaps the photo, including the
-  // fixed logo.
+  // fixed logo. The color blobs and the smoke stay, on the paper behind the
+  // print (Doug, 2026-11-15).
   test('the hero re-composes as a sleeve: print beside or above the text, no dark layers', async ({ page, isMobile }) => {
     await page.goto('/');
     const r = await page.evaluate(() => {
       const box = (s: string) => document.querySelector(s)!.getBoundingClientRect();
-      const hidden = ['.hero__haze', '.hero__smoke', '.hero__scrim', '.hero__scan'].every(
-        (s) => getComputedStyle(document.querySelector(s)!).display === 'none',
-      );
-      return { photo: box('.hero__photo'), content: box('.hero__content'), hidden, pos: getComputedStyle(document.querySelector('.hero__photo')!).position };
+      const cs = (s: string) => getComputedStyle(document.querySelector(s)!);
+      const hidden = ['.hero__haze', '.hero__scrim', '.hero__scan'].every((s) => cs(s).display === 'none');
+      const behind = ['.hero__hues', '.hero__smoke'].every((s) => cs(s).display !== 'none' && cs(s).zIndex === '-1');
+      return { photo: box('.hero__photo'), content: box('.hero__content'), hidden, behind, pos: cs('.hero__photo').position };
     });
     expect(r.hidden).toBe(true);
+    expect(r.behind).toBe(true);
     expect(r.pos).toBe('relative');
     if (isMobile) {
       expect(r.content.top).toBeGreaterThanOrEqual(r.photo.bottom);
     } else {
       expect(r.content.left).toBeGreaterThanOrEqual(r.photo.right);
+    }
+  });
+
+  // The smoke took the brass name and the green subtitle under 4.5:1 when it
+  // ran under the type (darkest paper luma 180, 2026-11-15); a feathered
+  // patch of paper now clears it behind the text block. With the text made
+  // transparent, nothing behind the colored lines may be darker than the
+  // paper grain itself (luma 232). The AA sweep below can't see this: the
+  // smoke is a sibling layer, not a background of the text's ancestors.
+  test('the smoke never runs under the hero text', async ({ page }) => {
+    await page.goto('/?fx=full');
+    await page.waitForTimeout(1500); // past the fade-up
+    const clips = await page.evaluate(() =>
+      ['.hero__name', '.hero__sub', '.hero__records-label'].map((s) => {
+        const r = document.querySelector(s)!.getBoundingClientRect();
+        return { x: r.x, y: r.y, width: r.width, height: r.height };
+      }),
+    );
+    await page.addStyleTag({
+      content: '.hero__content *{color:transparent!important;-webkit-text-fill-color:transparent!important}',
+    });
+    for (let frame = 0; frame < 3; frame++) {
+      for (const clip of clips) {
+        const png = await page.screenshot({ clip });
+        const darkest = await page.evaluate(async (b64) => {
+          const img = new Image();
+          img.src = `data:image/png;base64,${b64}`;
+          await img.decode();
+          const c = document.createElement('canvas');
+          c.width = img.width;
+          c.height = img.height;
+          const ctx = c.getContext('2d')!;
+          ctx.drawImage(img, 0, 0);
+          const d = ctx.getImageData(0, 0, c.width, c.height).data;
+          let min = 255;
+          for (let i = 0; i < d.length; i += 4) min = Math.min(min, 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]);
+          return min;
+        }, png.toString('base64'));
+        expect(darkest).toBeGreaterThanOrEqual(225);
+      }
+      await page.waitForTimeout(3000);
     }
   });
 

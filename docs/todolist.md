@@ -1322,7 +1322,8 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       three light surfaces), the toggle (localStorage plus an inline blocking script in
       `BaseLayout.astro`, CSP hash regenerated) and the reach (every page; footer and the Dev TV
       stay dark on purpose as `.theme-plate`; the hero re-composes as a sleeve front with the same
-      photo, added the same day). `e2e/theme.spec.ts` checks it, including an AA
+      photo, added the same day; the drifting color blobs and the smoke were brought back onto
+      the paper behind it later that day at Doug's ask). `e2e/theme.spec.ts` checks it, including an AA
       sweep of every visible text on the light page. Research and reasoning are in
       `docs/DESIGN_NOTES.md` under "Light theme draft". Open before merge: (1) Doug picks the
       default (it follows the system setting now, so light-OS visitors would see light on launch);

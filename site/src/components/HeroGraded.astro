@@ -818,10 +818,10 @@ const records = [
      The same photo, re-composed for paper instead of graded for a screen:
      the photo becomes a print in the left column with the brass offset frame
      the About photo uses, and the headline is set in ink beside it, like the
-     front of a record sleeve. Everything that only reads against dark (haze,
-     hue blobs, smoke, scanlines, vignette, scrim, the smoke shading inside
-     "Better Than") is off; the page-wide watercolor glows show through
-     instead. Dark is untouched: every rule here sits under
+     front of a record sleeve. What only reads against dark (haze, scanlines,
+     vignette, scrim, the smoke shading inside "Better Than") is off; the hue
+     blobs and the smoke move behind the print and the type (see "Motion on
+     paper" below). Dark is untouched: every rule here sits under
      :root[data-theme='light'], and .hero__print is display: contents in dark.
      Columns at 1025px and up, photo over text below that, columns again on a
      short landscape screen. */
@@ -841,8 +841,6 @@ const records = [
   }
 
   :global(:root[data-theme='light']) .hero__haze,
-  :global(:root[data-theme='light']) .hero__hues,
-  :global(:root[data-theme='light']) .hero__smoke,
   :global(:root[data-theme='light']) .hero__scan,
   :global(:root[data-theme='light']) .hero__screen-vignette,
   :global(:root[data-theme='light']) .hero__scrim {
@@ -864,6 +862,51 @@ const records = [
     border: 1px solid var(--brass);
     transform: translate(14px, 14px);
     z-index: -1;
+  }
+
+  /* Motion on paper (2026-11-15, Doug's ask): the color blobs come back on
+     the left and the smoke on the right, both laid on the paper behind the
+     print and the type (z-index -1 inside the isolated hero), so the photo
+     stays clean and the blobs glow out around its edges. The light note
+     tones are darker than the dark ones, so the blobs need less strength to
+     show. The smoke's cool grey reads as a smudge on cream; it is re-inked
+     a warm sepia grey and turned down so it stays behind the headline. */
+  :global(:root[data-theme='light']) .hero__hues,
+  :global(:root[data-theme='light']) .hero__smoke {
+    z-index: -1;
+  }
+
+  :global(:root[data-theme='light']) .hero {
+    --hue-strength: 0.9;
+    --haze-strength: 0.5;
+  }
+
+  :global(:root[data-theme='light']) .hero__smoke stop {
+    stop-color: #7a6a58;
+  }
+
+  /* Smoke darkened the paper behind the type to about luma 180 at its
+     thickest (measured 2026-11-15), which took the brass name and the green
+     subtitle under 4.5:1. A patch of paper sits over the smoke behind the
+     text block, feathered on all four sides, so the smoke curls around the
+     type instead of running under it. It carries the same grain as the body
+     so the patch doesn't read as a flat card. */
+  :global(:root[data-theme='light']) .hero__content::before {
+    content: '';
+    position: absolute;
+    inset: -3.5rem -4rem;
+    z-index: -1;
+    background: var(--paper-grain) var(--bg);
+    --feather: 3.5rem;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+    mask-composite: intersect;
+    pointer-events: none;
   }
 
   /* A portrait crop of the landscape photo, centered on Doug (he sits left

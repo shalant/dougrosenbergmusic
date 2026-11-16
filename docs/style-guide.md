@@ -88,8 +88,13 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
   1025px the photo is a print in the left column (5fr) with the About photo's 14px offset brass
   frame, and the name, title, CTAs and records sit beside it (6fr) in ink, aligned to the `.wrap`
   column. Below 1025px the print sits above the text; a short landscape screen goes back to two
-  columns, starting right of the logo. The haze, hue blobs, smoke, scanlines, vignette, scrim and
-  the smoke shading inside "Better Than" are off in light; T's top bar uses `--note-lessons`
+  columns, starting right of the logo. The haze, scanlines, vignette, scrim and the smoke shading
+  inside "Better Than" are off in light. The hue blobs (left) and the smoke (right) stay, laid on
+  the paper behind the print and the type (`z-index: -1`): blobs at `--hue-strength: 0.9`, smoke
+  re-inked sepia `#7a6a58` at `--haze-strength: 0.5`. A feathered patch of paper
+  (`.hero__content::before`, same grain as the body) clears the smoke behind the text block,
+  because smoke under the type took the brass name and green subtitle under 4.5:1; the spec
+  checks the paper behind those lines stays as light as the grain. T's top bar uses `--note-lessons`
   instead of the sky blue. Every light rule sits under `:root[data-theme='light']`, so the dark
   hero is unchanged (checked 2026-11-15: hero screenshots identical to master at 1440px and
   390px). The fixed logo must never sit on the print; the spec checks five viewport sizes.
