@@ -139,7 +139,7 @@ const kindLabel = (kind: string) => KIND_LABEL[kind as keyof typeof KIND_LABEL];
     grid-template-columns: 4.5rem minmax(0, 1fr) 11rem;
     gap: 0.25rem 1rem;
     padding-block: 0.8rem;
-    border-top: 1px solid rgba(233, 237, 245, 0.05);
+    border-top: 1px solid color-mix(in srgb, var(--text) 5%, transparent);
   }
 
   .clip p {
@@ -166,7 +166,7 @@ const kindLabel = (kind: string) => KIND_LABEL[kind as keyof typeof KIND_LABEL];
   .clip__title a {
     color: inherit;
     text-underline-offset: 3px;
-    text-decoration-color: rgba(233, 237, 245, 0.3);
+    text-decoration-color: color-mix(in srgb, var(--text) 30%, transparent);
   }
 
   .clip__title a:hover,

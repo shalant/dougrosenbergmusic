@@ -26,8 +26,14 @@ const records = [
 ];
 ---
 
+{/* Light theme (2026-11-15): the hero is no longer a dark plate. In dark it
+    is unchanged; in light it re-composes as a print on paper (see "Light
+    theme: the sleeve" at the end of the style block). .hero__print is
+    display: contents in dark, so the photo lays out exactly as before. */}
 <header id="hero" class="hero">
-  <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" fetchpriority="high" decoding="async" />
+  <div class="hero__print">
+    <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" fetchpriority="high" decoding="async" />
+  </div>
   <div class="hero__haze" aria-hidden="true">
     <div class="haze-blob haze-blob--wisp"></div>
     <div class="haze-blob haze-blob--glow"></div>
@@ -130,6 +136,10 @@ const records = [
     justify-content: flex-end;
     overflow: hidden;
     background: var(--bg);
+  }
+
+  .hero__print {
+    display: contents;
   }
 
   .hero__photo {
@@ -801,6 +811,213 @@ const records = [
     }
     .hero__record {
       transition: none;
+    }
+  }
+
+  /* ── Light theme: the sleeve (2026-11-15) ──
+     The same photo, re-composed for paper instead of graded for a screen:
+     the photo becomes a print in the left column with the brass offset frame
+     the About photo uses, and the headline is set in ink beside it, like the
+     front of a record sleeve. What only reads against dark (haze, scanlines,
+     vignette, scrim, the smoke shading inside "Better Than") is off; the hue
+     blobs and the smoke move behind the print and the type (see "Motion on
+     paper" below). Dark is untouched: every rule here sits under
+     :root[data-theme='light'], and .hero__print is display: contents in dark.
+     Columns at 1025px and up, photo over text below that, columns again on a
+     short landscape screen. */
+  :global(:root[data-theme='light']) .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    /* Top padding clears the fixed logo (to y=116 at desktop). Side padding
+       lines the columns up with the .wrap content column of the sections
+       below (1180px max, same gutter). */
+    padding-block: clamp(7.75rem, 15vh, 9.5rem) clamp(3rem, 8vh, 5rem);
+    padding-inline: max(clamp(1.25rem, 4vw, 3rem), calc((100% - 1180px) / 2 + clamp(1.25rem, 4vw, 3rem)));
+    background: transparent;
+    /* the frame's ::after sits at z-index -1; isolate keeps it above the page */
+    isolation: isolate;
+  }
+
+  :global(:root[data-theme='light']) .hero__haze,
+  :global(:root[data-theme='light']) .hero__scan,
+  :global(:root[data-theme='light']) .hero__screen-vignette,
+  :global(:root[data-theme='light']) .hero__scrim {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .hero__print {
+    display: block;
+    position: relative;
+    /* leaves room for the frame's 14px offset inside the column */
+    margin: 0 14px 14px 0;
+    animation: fade-up 0.7s ease-out both;
+  }
+
+  :global(:root[data-theme='light']) .hero__print::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--brass);
+    transform: translate(14px, 14px);
+    z-index: -1;
+  }
+
+  /* Motion on paper (2026-11-15, Doug's ask): the color blobs come back on
+     the left and the smoke on the right, both laid on the paper behind the
+     print and the type (z-index -1 inside the isolated hero), so the photo
+     stays clean and the blobs glow out around its edges. The light note
+     tones are darker than the dark ones, so the blobs need less strength to
+     show. The smoke's cool grey reads as a smudge on cream; it is re-inked
+     a warm sepia grey and turned down so it stays behind the headline. */
+  :global(:root[data-theme='light']) .hero__hues,
+  :global(:root[data-theme='light']) .hero__smoke {
+    z-index: -1;
+  }
+
+  :global(:root[data-theme='light']) .hero {
+    --hue-strength: 0.9;
+    --haze-strength: 0.5;
+  }
+
+  :global(:root[data-theme='light']) .hero__smoke stop {
+    stop-color: #7a6a58;
+  }
+
+  /* Smoke darkened the paper behind the type to about luma 180 at its
+     thickest (measured 2026-11-15), which took the brass name and the green
+     subtitle under 4.5:1. A patch of paper sits over the smoke behind the
+     text block, feathered on all four sides, so the smoke curls around the
+     type instead of running under it. It carries the same grain as the body
+     so the patch doesn't read as a flat card. */
+  :global(:root[data-theme='light']) .hero__content::before {
+    content: '';
+    position: absolute;
+    inset: -3.5rem -4rem;
+    z-index: -1;
+    background: var(--paper-grain) var(--bg);
+    --feather: 3.5rem;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+    mask-composite: intersect;
+    pointer-events: none;
+  }
+
+  /* A portrait crop of the landscape photo, centered on Doug (he sits left
+     of center in the frame). The dark grade's brightness lift stays; the
+     scale-and-shift that made room for the overlay text is dropped. */
+  :global(:root[data-theme='light']) .hero__photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: min(70vh, 700px);
+    object-position: 36% 14%;
+    transform: none;
+  }
+
+  :global(:root[data-theme='light']) .hero__content {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 0;
+    max-width: 38rem;
+    padding: 0;
+    align-self: center;
+    text-align: left;
+  }
+
+  :global(:root[data-theme='light']) .hero__title {
+    font-size: clamp(2.8rem, min(6vw, 11vh), 5.75rem);
+  }
+
+  /* Plain ink: the smoke tiles are white noise and vanish on paper. */
+  :global(:root[data-theme='light']) .hero__main {
+    color: var(--text);
+    -webkit-text-fill-color: var(--text);
+    background: none;
+    animation: none;
+  }
+
+  /* T's top bar was a light sky blue (#7fb0ff) that disappears on paper;
+     light uses the lessons blue, so all four bars clear 3:1 as large text. */
+  :global(:root[data-theme='light']) .hero__tv-t {
+    --bar-top: var(--note-lessons);
+  }
+
+  :global(:root[data-theme='light']) .hero__ctas,
+  :global(:root[data-theme='light']) .hero__records-row {
+    justify-content: flex-start;
+  }
+
+  :global(:root[data-theme='light']) .hero__record {
+    outline-color: color-mix(in srgb, var(--text) 14%, transparent);
+    box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--shadow) 70%, transparent);
+  }
+
+  :global(:root[data-theme='light']) .hero__record-label {
+    left: 0;
+    right: auto;
+  }
+
+  @media (max-width: 1024px) {
+    :global(:root[data-theme='light']) .hero {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: clamp(2rem, 5vw, 3rem);
+      min-height: 0;
+      /* From 641px the fixed logo is 104px tall (to y=116), so the photo
+         starts below it; phones (64px logo) get less, below. */
+      padding-top: 8rem;
+    }
+    :global(:root[data-theme='light']) .hero__photo {
+      height: clamp(300px, 56vh, 640px);
+    }
+    :global(:root[data-theme='light']) .hero__content {
+      max-width: 36rem;
+      padding-bottom: clamp(1rem, 4vw, 2rem);
+    }
+  }
+
+  @media (max-width: 640px) {
+    :global(:root[data-theme='light']) .hero {
+      padding-top: 6rem;
+    }
+    :global(:root[data-theme='light']) .hero__photo {
+      height: clamp(280px, 50svh, 460px);
+    }
+  }
+
+  /* Phones held sideways: back to two columns, sized by height. Height is
+     too short to start the photo below the 104px logo, so the photo column
+     starts to the right of it instead (logo ends at x=124). */
+  @media (max-height: 500px) and (orientation: landscape) {
+    :global(:root[data-theme='light']) .hero {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: center;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      padding-left: 9rem;
+    }
+    :global(:root[data-theme='light']) .hero__photo {
+      height: calc(100dvh - 4.5rem);
+    }
+    /* the nav's hamburger sits top-right; keep the text column under it clear */
+    :global(:root[data-theme='light']) .hero__content {
+      padding-top: 3.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(:root[data-theme='light']) .hero__print {
+      animation: none;
     }
   }
 </style>

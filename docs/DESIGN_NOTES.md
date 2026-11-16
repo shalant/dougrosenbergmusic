@@ -198,6 +198,69 @@ which reads as surging; (2) the dev server injects styles late and hot-reloads, 
 animations. Possible fix for (1), not done: animate x, y and scale as separate properties with
 different periods and `alternate`, instead of multi-stop paths.
 
+## Light theme draft (2026-11-15, branch `light-mode-draft-2026-11-15`, not merged)
+
+Doug asked for a light version drafted on a branch, informed by current musician sites and 2027
+design trends. The token values and rules are in `docs/style-guide.md` under "Themes"; this is
+the why.
+
+**What working musicians' sites do (sampled 2026-11-15 by pulling each homepage's CSS).** Most
+current jazz-artist sites are light or mixed, not dark: Kamasi Washington (white and `#fafafa`
+with `#272727` blocks), Joshua Redman (white), Jacob Collier (white with black bands), Immanuel
+Wilkins (white with `#222` sections), Makaya McCraven and Nubya Garcia (black and white, photo
+led). The closest to this site is saxophonist Melissa Aldana: a near-white `#fcfcff` page with a
+warm amber accent (`#ed9c35`). The common pattern is a light page where photos and album art
+carry the color, and dark used in blocks for pictures. A small sample, read from stylesheets
+rather than screenshots, so treat it as a direction rather than a survey.
+
+**What the 2027 trend pieces agree on** (agency blogs, so opinion, not data): warm off-whites
+instead of pure white, with charcoal instead of black; editorial type (a serif display face
+paired with a grotesque, big scale contrast), which this site already has with Fraunces and Work
+Sans; visible human craft and analog texture over polished generic surfaces; motion only where it
+explains something; accessibility as a baseline; and glassmorphism, decorative gradients and
+motion on every surface fading as differentiators. Several predict "ambient" design that follows
+the visitor's context, which the follow-the-system default does in its simplest form.
+
+**How the draft applies it:**
+- **Paper, not white.** `#f4efe6` is an LP-sleeve stock, close to the off-whites the trend pieces
+  name. The ink is a warm charcoal, `#1f1b16`.
+- **Accents deepened, not swapped.** Each nav tone keeps its hue and drops in lightness until it
+  clears AA as text on all three light surfaces, so the six-color system still reads as itself.
+  Brass becomes a dark ochre and seafoam a deep green.
+- **Dark plates.** The footer and the Dev TV stay dark. This matches the "dark blocks for
+  pictures" pattern on the artist sites; the footer reads as the sleeve's dark back cover.
+- **The hero as a sleeve front (same day, Doug's ask: "re-compose the hero to match the light
+  theme", keeping the same photo).** The first draft kept the hero as a dark plate. Doug wanted it
+  to belong to the light page, so in light it is re-composed instead: the photo, cropped portrait
+  around him, becomes a print with the About photo's offset brass frame, and the headline is set
+  in ink beside it, like the front of a record sleeve. The overlay effects (haze, smoke, scrim) are
+  off in light because they only work over the full-bleed dark frame, and the photo is no longer
+  under the text, so nothing needs a scrim. The dark hero is untouched. Trade-off: light loses the
+  cinematic full-screen opening for an editorial one. Known repetition: the About section directly
+  below uses the same photo with the same frame; a different About photo would fix it (Doug's
+  call, not changed here).
+- **Motion back on paper (same day, Doug's ask: he missed the drifting color blobs and asked for
+  smoke on the right).** The hue blobs and the smoke SVGs return in light, but behind the print
+  and the type rather than over them, so the photo stays clean and the blobs glow out around its
+  edges like light leaking past a print. The cool grey smoke read as a smudge on cream, so light
+  re-inks it a warm sepia grey. At its thickest it darkened the paper behind the headline to
+  luma 180, taking the small brass and green lines to about 3.5:1, so a feathered patch of paper
+  sits behind the text block and the smoke curls around the type instead (measured afterwards:
+  the darkest pixel behind those lines is the paper grain itself, at five viewport sizes). The
+  weak-device and reduced-motion rules already cover both layers.
+- **Craft over polish.** A static paper grain (one SVG noise tile, no animation) on the light page
+  only. The page-wide color glows stay on: on paper they read as faint watercolor washes.
+- **Toggle in the site's voice.** "Lights up" / "Lights down", a stage-lights switch with a brass
+  dot, in the footer and beside the back link on the archive pages. Added to the nav the same day
+  at Doug's request: on desktop a sun (dark page) or moon (light page) icon button past a hairline
+  at the end of the staff (the pill grew from 456px to 526px; at 861-1010px it still scales to
+  0.74 and stays clear of the hero subject, checked in a 900px screenshot), and on phones a
+  "Lights up" pill under the section list in the hamburger menu.
+
+**Open before merge:** the default (system-following, or dark unless chosen), real-device
+checks, and a Lighthouse run in light. Tracked in
+`docs/todolist.md`'s "Light-mode refactor" item.
+
 ## Reference
 
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.

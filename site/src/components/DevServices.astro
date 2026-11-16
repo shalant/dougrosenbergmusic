@@ -72,7 +72,7 @@ const channels = [
            against it) instead of sitting in its own row below - Doug's
            call, both for the physical-object feel and because a separate
            row was dead space this section didn't need. */}
-      <div class="dev__screen-wrap">
+      <div class="dev__screen-wrap theme-plate">
         <a class="dev__screen" id="dev-screen" href={channels[0].href} target="_blank" rel="noopener noreferrer" aria-label={`View ${channels[0].name}`}>
           <img class="dev__screen-img" id="dev-screen-img" src={channels[0].img} alt="" loading="lazy" decoding="async" />
         </a>
@@ -171,8 +171,8 @@ const channels = [
   .dev {
     padding-block: clamp(4rem, 9vw, 7rem);
     background: transparent;
-    border-top: 1px solid rgba(233, 237, 245, 0.08);
-    border-bottom: 1px solid rgba(233, 237, 245, 0.08);
+    border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
   }
 
   /* Both columns stretch to the row, the CTAs sit at the bottom of the
@@ -331,8 +331,8 @@ const channels = [
     inset: 0;
     background-image: repeating-linear-gradient(
       to bottom,
-      rgba(233, 237, 245, 0.05) 0px,
-      rgba(233, 237, 245, 0.05) 1px,
+      color-mix(in srgb, var(--text) 5%, transparent) 0px,
+      color-mix(in srgb, var(--text) 5%, transparent) 1px,
       transparent 1px,
       transparent 4px
     );
@@ -343,7 +343,7 @@ const channels = [
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(10, 14, 23, 0.55) 0%, transparent 22%, transparent 78%, rgba(10, 14, 23, 0.4) 100%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 55%, transparent) 0%, transparent 22%, transparent 78%, color-mix(in srgb, var(--bg) 40%, transparent) 100%);
     pointer-events: none;
   }
 
@@ -370,7 +370,7 @@ const channels = [
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--note-highlights);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px color-mix(in srgb, var(--shadow) 80%, transparent);
   }
 
   .dev__screen-live::before {
@@ -391,7 +391,7 @@ const channels = [
     font-family: var(--font-body);
     font-size: 0.8rem;
     color: var(--text);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px color-mix(in srgb, var(--shadow) 80%, transparent);
   }
 
   /* A dark on-screen-display chip behind each label (2026-10-17): the
@@ -402,7 +402,7 @@ const channels = [
     /* 0.85, was 0.72: over the brightest screenshot pixels the green "On air"
        text measured 3.0:1 at 0.72 (2026-10-28 pixel sample); 0.85 gives
        about 5.6:1 in the worst case. */
-    background: rgba(10, 14, 23, 0.85);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
     border-radius: 3px;
     padding: 0.2rem 0.45rem;
   }
@@ -445,7 +445,7 @@ const channels = [
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--brass);
-    border: 1px solid rgba(207, 154, 79, 0.4);
+    border: 1px solid color-mix(in srgb, var(--brass) 40%, transparent);
     border-radius: 999px;
     padding: 0.2rem 0.6rem;
   }
@@ -464,8 +464,8 @@ const channels = [
     padding-inline: 0.4rem;
     gap: 0.6rem;
     background: linear-gradient(160deg, #1b2333, #0d1119);
-    border: 1px solid rgba(233, 237, 245, 0.08);
-    box-shadow: 0 16px 32px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+    box-shadow: 0 16px 32px -18px color-mix(in srgb, var(--shadow) 80%, transparent), inset 0 1px 0 color-mix(in srgb, var(--text) 4%, transparent);
     transform: rotate(-5deg);
     transition: transform var(--dur-base) ease;
   }
@@ -526,7 +526,7 @@ const channels = [
     padding: 9.5px;
     border: none;
     border-radius: 50%;
-    background-color: rgba(233, 237, 245, 0.18);
+    background-color: color-mix(in srgb, var(--text) 18%, transparent);
     background-clip: content-box;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -548,12 +548,12 @@ const channels = [
 
   .dev__remote-led:hover,
   .dev__remote-led:focus-visible {
-    background-color: rgba(233, 237, 245, 0.4);
+    background-color: color-mix(in srgb, var(--text) 40%, transparent);
   }
 
   .dev__remote-led:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 0 2px var(--focus-ring);
   }
 
   .dev__remote-led.is-active {
@@ -565,7 +565,7 @@ const channels = [
      so on the active channel (where keyboard focus lands first) nothing
      showed where focus was (found 2026-10-30). Keep both. */
   .dev__remote-led.is-active:focus-visible {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6), 0 0 5px var(--note-highlights);
+    box-shadow: 0 0 0 2px var(--focus-ring), 0 0 5px var(--note-highlights);
   }
 
   /* Seven channels since 2026-10-25 make the remote about 300px wide. A

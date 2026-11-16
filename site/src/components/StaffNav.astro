@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 // Feather-style line icons (24x24, stroke=currentColor) - matches the thin
 // stroke look already used for the hero's scroll-cue chevron.
 const ICONS: Record<string, string> = {
@@ -50,6 +52,13 @@ const sections = [
       <span class="staff-nav__tag">{s.label}</span>
     </button>
   ))}
+
+  {/* Theme switch (2026-11-15): past a hairline at the staff's end, so it
+      reads as a control beside the staff, not a seventh section note. */}
+  <span class="staff-nav__divider" aria-hidden="true"></span>
+  <div class="staff-nav__theme">
+    <ThemeToggle variant="icon" />
+  </div>
 </nav>
 
 <button
@@ -89,6 +98,11 @@ const sections = [
       ))}
     </ul>
   </div>
+  {/* Outside __inner, whose height the vertical staff spans, so the staff
+      ends with the last section instead of running through the switch. */}
+  <div class="staff-menu__theme">
+    <ThemeToggle />
+  </div>
 </div>
 
 <style>
@@ -104,25 +118,47 @@ const sections = [
     position: fixed;
     top: 12px;
     right: 20px;
-    width: 456px;
+    /* 456px, then 526px on 2026-11-15 for the theme switch at the end (12px
+       from the right edge, matching the first note's 12px on the left). */
+    width: 526px;
     height: 100px;
     z-index: 40;
-    background: rgba(10, 14, 23, 0.55);
+    /* Tint and border are theme tokens (light draft, 2026-11-15); the inset
+       highlights stay white in both themes, since a bright top edge reads as
+       glass on paper too. */
+    background: color-mix(in srgb, var(--bg) 55%, transparent);
     backdrop-filter: blur(18px) saturate(1.5);
-    border: 1px solid rgba(233, 237, 245, 0.16);
+    border: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
     border-radius: 28px;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.2),
       inset 0 -1px 0 rgba(255, 255, 255, 0.05),
-      0 8px 32px -4px rgba(0, 0, 0, 0.6);
+      0 8px 32px -4px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
+  /* The staff stops before the theme switch (right: 90px), so the five
+     lines end where the section notes do. */
   .staff-nav__line {
     position: absolute;
     left: 20px;
-    right: 20px;
+    right: 90px;
     height: 1px;
     background: var(--staff-line-strong);
+  }
+
+  .staff-nav__divider {
+    position: absolute;
+    left: 459px;
+    top: 26px;
+    width: 1px;
+    height: 48px;
+    background: var(--staff-line-strong);
+  }
+
+  .staff-nav__theme {
+    position: absolute;
+    left: 470px;
+    top: 28px;
   }
 
   .staff-nav__note {
@@ -148,7 +184,7 @@ const sections = [
     font-weight: 600;
     letter-spacing: 0.01em;
     color: var(--bg);
-    box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 20px -8px color-mix(in srgb, var(--shadow) 60%, transparent);
     opacity: 0.5;
     /* No idle loop since 2026-10-17: all seven notes used to breathe
        forever, on every screen (the nav is fixed), which drowned out the
@@ -185,7 +221,7 @@ const sections = [
   }
 
   .staff-nav__note:focus-visible .staff-nav__blob {
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0 3px var(--focus-ring), 0 4px 20px -8px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
   .staff-nav__note.note--hero .staff-nav__blob,
@@ -222,7 +258,7 @@ const sections = [
     text-transform: uppercase;
     color: var(--text);
     background: var(--bg-elevated);
-    border: 1px solid rgba(233, 237, 245, 0.1);
+    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
     padding: 0.32rem 0.75rem;
     border-radius: 5px;
     white-space: nowrap;
@@ -242,8 +278,8 @@ const sections = [
   }
 
   @keyframes breathe-active {
-    0%, 100% { transform: scale(1.05); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.22), 0 2px 10px -4px rgba(0, 0, 0, 0.6); }
-    50% { transform: scale(1.15); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0), 0 2px 10px -4px rgba(0, 0, 0, 0.6); }
+    0%, 100% { transform: scale(1.05); box-shadow: 0 0 0 0 color-mix(in srgb, var(--text) 22%, transparent), 0 2px 10px -4px color-mix(in srgb, var(--shadow) 60%, transparent); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 4px color-mix(in srgb, var(--text) 0%, transparent), 0 2px 10px -4px color-mix(in srgb, var(--shadow) 60%, transparent); }
   }
 
   .staff-nav__note.is-active .staff-nav__blob {
@@ -256,7 +292,7 @@ const sections = [
      the cascade - pause the pulse while focused so the ring stays visible */
   .staff-nav__note.is-active:focus-visible .staff-nav__blob {
     animation: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0 3px var(--focus-ring), 0 4px 20px -8px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
   /* Desktop staff hides below this width; the hamburger below picks up from here. */
@@ -306,9 +342,9 @@ const sections = [
     justify-content: center;
     flex-direction: column;
     gap: 6px;
-    background: rgba(10, 14, 23, 0.65);
+    background: color-mix(in srgb, var(--bg) 65%, transparent);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(233, 237, 245, 0.12);
+    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
     border-radius: 999px;
     cursor: pointer;
   }
@@ -349,12 +385,12 @@ const sections = [
     left: 20px;
     right: 20px;
     z-index: 41;
-    background-color: rgba(10, 14, 23, 0.82);
+    background-color: color-mix(in srgb, var(--bg) 82%, transparent);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(233, 237, 245, 0.12);
+    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
     border-radius: 22px;
     padding: 1.3rem 1.2rem;
-    box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 20px 45px -20px color-mix(in srgb, var(--shadow) 70%, transparent);
   }
 
   .staff-menu__inner {
@@ -410,6 +446,12 @@ const sections = [
     color: inherit;
   }
 
+  .staff-menu__theme {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  }
+
   .staff-menu__item:focus-visible .staff-menu__label {
     color: var(--text);
     text-decoration: underline;
@@ -429,7 +471,7 @@ const sections = [
     justify-content: center;
     color: var(--bg);
     opacity: 0.7;
-    box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 20px -8px color-mix(in srgb, var(--shadow) 60%, transparent);
     transition: opacity var(--dur-base) ease, transform var(--dur-base) ease;
   }
 
@@ -446,7 +488,7 @@ const sections = [
   .staff-menu__item.is-active .staff-menu__dot {
     opacity: 1;
     transform: scale(1.08);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16), 0 4px 20px -8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 16%, transparent), 0 4px 20px -8px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
   .staff-menu__label {

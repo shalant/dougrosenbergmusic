@@ -91,7 +91,7 @@ const { quotes } = Astro.props;
   .ledger__cite a {
     color: var(--text-muted);
     text-decoration: underline;
-    text-decoration-color: rgba(233, 237, 245, 0.2);
+    text-decoration-color: color-mix(in srgb, var(--text) 20%, transparent);
     text-underline-offset: 3px;
     /* The outlet link leads its citation line rather than sitting inside a
        sentence, and was ~15px tall on a phone (2026-10-16 audit). Padding

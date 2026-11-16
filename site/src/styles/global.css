@@ -88,7 +88,26 @@
   size-adjust: 115.4462%;
 }
 
-:root {
+/* ── Themes (light draft, 2026-11-15) ──
+   Two token sets. The dark set is the site as it shipped. The light set is
+   "liner-notes paper": a warm off-white page, warm charcoal ink, and every
+   accent deepened until it clears WCAG AA (4.5:1) as text on all three light
+   surfaces (--bg, --bg-elevated, --surface); see docs/style-guide.md for the
+   measured ratios.
+
+   The inline script in BaseLayout.astro sets data-theme on <html> before
+   first paint: a choice saved in localStorage wins, otherwise the system's
+   prefers-color-scheme. Without JavaScript the page stays dark.
+
+   .theme-plate keeps the dark set on purpose inside a light page: the
+   footer ("back cover") and the Dev section's TV screen and remote. (The
+   hero re-composes for light instead; see HeroGraded.astro's "Light theme:
+   the sleeve".) They are pictures or physical objects, not paper, and their
+   overlays were tuned against dark. Because .theme-plate re-declares the
+   tokens on its own element, everything inside it resolves to dark values
+   whatever the page theme is. */
+:root,
+.theme-plate {
   --bg: #0a0e17;
   /* solid, not translucent - both consumers (StaffNav's hover tag and its
      mobile dropdown panel) need to read as an opaque surface over whatever
@@ -100,10 +119,25 @@
   --text-faint: rgba(233, 237, 245, 0.52);
   --glow: #52d1a6;
   --glow-soft: rgba(82, 209, 166, 0.16);
+  --glow-hover: #9fe8cd;
   --brass: #cf9a4f;
   --brass-soft: rgba(207, 154, 79, 0.14);
   --staff-line: rgba(233, 237, 245, 0.09);
   --staff-line-strong: rgba(233, 237, 245, 0.16);
+  /* Hairlines are --text at a low percentage, so they flip with the theme:
+     color-mix(in srgb, var(--text) 8%, transparent). Focus rings and drop
+     shadows get their own tokens because light needs ink rings and much
+     softer, warmer shadows. --shadow is mixed with transparent at each use
+     (color-mix(in srgb, var(--shadow) 60%, transparent)), which scales its
+     own alpha, so one token covers every existing shadow strength. */
+  --focus-ring: rgba(255, 255, 255, 0.6);
+  --shadow: #000;
+  --footer-bg: #060810;
+  /* Where Contact's gradient ends: the footer's color in dark, so the page
+     fades into it. Light keeps the paper and lets the dark footer start at
+     a hard edge, like the back of a sleeve. */
+  --contact-fade-end: var(--footer-bg);
+  --paper-grain: none;
 
   /* one muted jewel-tone per section, used by the staff-corner nav */
   --note-hero: var(--glow);
@@ -113,6 +147,44 @@
   --note-lessons: #6fa8e8;
   --note-contact: #b287df;
   --note-dev: #e05f6a;
+
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f4efe6;
+  --bg-elevated: #fbf8f2;
+  --surface: #ebe4d6;
+  --text: #1f1b16;
+  --text-muted: rgba(31, 27, 22, 0.74);
+  --text-faint: rgba(31, 27, 22, 0.64);
+  --glow: #0b6e52;
+  --glow-soft: rgba(11, 110, 82, 0.12);
+  --glow-hover: #08573f;
+  --brass: #8a5514;
+  --brass-soft: rgba(138, 85, 20, 0.12);
+  /* Ink staff lines need less alpha than light-on-dark ones to read the
+     same: dark marks on paper carry more visual weight. */
+  --staff-line: rgba(31, 27, 22, 0.08);
+  --staff-line-strong: rgba(31, 27, 22, 0.14);
+  --focus-ring: rgba(31, 27, 22, 0.7);
+  --shadow: rgba(74, 52, 26, 0.38);
+  --contact-fade-end: transparent;
+  /* Paper grain: one static SVG noise tile, drawn once and repeated, so it
+     costs no animation or repaint. img-src already allows data:. Kept faint
+     enough that it reads as stock, not texture, at arm's length. */
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.18 0 0 0 0 0.1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  --note-about: #a33f15;
+  --note-highlights: #1a6e4e;
+  --note-lessons: #2a62a8;
+  --note-contact: #7a45b0;
+  --note-dev: #b3303d;
+
+  color-scheme: light;
+}
+
+:root {
 
   --font-display: 'Fraunces', 'Fraunces Fallback', Georgia, 'Times New Roman', serif;
   --font-body: 'Work Sans', 'Work Sans Fallback', -apple-system, 'Segoe UI', sans-serif;
@@ -130,8 +202,12 @@
   --dur-base: 0.2s;
   --dur-med: 0.3s;
   --dur-slow: 0.45s;
+}
 
-  color-scheme: dark;
+/* A plate's own text color, so content directly inside it (not just
+   descendants that set color from a token) reads light. */
+.theme-plate {
+  color: var(--text);
 }
 
 * {
@@ -168,7 +244,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--paper-grain) var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.55;
@@ -406,7 +482,7 @@ a {
 
 .cta-primary:hover,
 .cta-primary:focus-visible {
-  background: #9fe8cd;
+  background: var(--glow-hover);
 }
 
 .cta-primary:focus-visible {
@@ -421,8 +497,8 @@ a {
 
 .cta-secondary {
   color: var(--text);
-  border: 1px solid rgba(233, 237, 245, 0.22);
-  background: rgba(19, 26, 38, 0.4);
+  border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
+  background: color-mix(in srgb, var(--surface) 40%, transparent);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -435,7 +511,7 @@ a {
 
 .cta:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 /* Shared scroll reveal (2026-10-17): add .scroll-rise to anything that

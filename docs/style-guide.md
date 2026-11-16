@@ -9,8 +9,12 @@ reuse when building something new.
 
 ## Colors
 
-All defined as CSS custom properties in `global.css`'s `:root`. This is a **dark-only** site —
-`color-scheme: dark` is set explicitly, there's no light-theme token set and no toggle (a
+**Light theme (draft, 2026-11-15, branch `light-mode-draft-2026-11-15`):** see "Themes" at the
+end of this section. Everything below the Themes heading still describes the dark set, which is
+unchanged.
+
+All defined as CSS custom properties in `global.css`'s `:root`. Until the light draft, this was a
+**dark-only** site: `color-scheme: dark` set explicitly, no light-theme token set and no toggle (a
 deliberate choice per `docs/DESIGN_NOTES.md`, tracked as a scoped future decision in
 `docs/todolist.md`'s "Light-mode refactor" item, not something to bolt on ad hoc).
 
@@ -41,6 +45,73 @@ real Lighthouse audit caught it failing AA at 3.4:1 in two places (`docs/todolis
 part 6) — if you introduce a new text color or reuse an existing one in a new context (new
 background), recompute contrast against *that specific* background rather than assuming an
 existing pass elsewhere still holds.
+
+### Themes (light draft, 2026-11-15)
+
+Light is "liner-notes paper": a warm off-white page and warm charcoal ink, never pure white or pure
+black. The same token names carry both sets, so components don't know which theme they're in.
+
+| Token | Dark | Light | Light contrast as text (on `--bg` / `--bg-elevated` / `--surface`) |
+|---|---|---|---|
+| `--bg` | `#0a0e17` | `#f4efe6` | |
+| `--bg-elevated` | `#101623` | `#fbf8f2` | |
+| `--surface` | `#131a26` | `#ebe4d6` | |
+| `--text` | `#e9edf5` | `#1f1b16` | 14.95 / 16.15 / 13.53 |
+| `--text-muted` | text at 0.62 | text at 0.74 | 6.77 / 7.09 / 6.41 |
+| `--text-faint` | text at 0.52 | text at 0.64 | 4.89 / 5.01 / 4.71 |
+| `--brass` | `#cf9a4f` | `#8a5514` | 5.41 / 5.84 / 4.90 |
+| `--glow` | `#52d1a6` | `#0b6e52` | 5.45 / 5.88 / 4.93 |
+| `--note-about` | `#e0794f` | `#a33f15` | 5.59 / 6.04 / 5.06 |
+| `--note-highlights` | `#4fb894` | `#1a6e4e` | 5.42 / 5.85 / 4.91 |
+| `--note-lessons` | `#6fa8e8` | `#2a62a8` | 5.38 / 5.81 / 4.87 |
+| `--note-contact` | `#b287df` | `#7a45b0` | 5.55 / 5.99 / 5.02 |
+| `--note-dev` | `#e05f6a` | `#b3303d` | 5.38 / 5.81 / 4.87 |
+
+Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88, 5.84 and 5.81.
+
+**Rules (each checked by `e2e/theme.spec.ts`):**
+
+- **Where the switch is:** every page has one within reach without scrolling to the bottom. Home:
+  the icon button at the end of the desktop nav staff and the pill in the phone menu (plus the
+  footer). Archive pages: beside the back link. One script drives every `[data-theme-toggle]` on
+  the page, so they always agree.
+- **Which theme:** a choice saved by the toggle (`localStorage.theme`) wins; otherwise the
+  system's `prefers-color-scheme`, followed live. The inline script at the top of
+  `BaseLayout.astro`'s `<head>` sets `data-theme` on `<html>` before first paint. Without
+  JavaScript the page is dark. Editing that script changes its hash: run
+  `npm run verify-csp -- --write`.
+- **Dark plates:** a picture or a physical object stays dark on the light page. Mark its root
+  `.theme-plate` and every token inside it resolves to the dark set. Current plates: the footer
+  (the sleeve's back cover) and the Dev section's TV screen and remote. Reach for a plate rather
+  than re-tuning an overlay for light. (The hero was a plate in the first draft; see the next rule.)
+- **The light hero is a sleeve (2026-11-15):** same photo, re-composed rather than re-graded. From
+  1025px the photo is a print in the left column (5fr) with the About photo's 14px offset brass
+  frame, and the name, title, CTAs and records sit beside it (6fr) in ink, aligned to the `.wrap`
+  column. Below 1025px the print sits above the text; a short landscape screen goes back to two
+  columns, starting right of the logo. The haze, scanlines, vignette, scrim and the smoke shading
+  inside "Better Than" are off in light. The hue blobs (left) and the smoke (right) stay, laid on
+  the paper behind the print and the type (`z-index: -1`): blobs at `--hue-strength: 0.9`, smoke
+  re-inked sepia `#7a6a58` at `--haze-strength: 0.5`. A feathered patch of paper
+  (`.hero__content::before`, same grain as the body) clears the smoke behind the text block,
+  because smoke under the type took the brass name and green subtitle under 4.5:1; the spec
+  checks the paper behind those lines stays as light as the grain. T's top bar uses `--note-lessons`
+  instead of the sky blue. Every light rule sits under `:root[data-theme='light']`, so the dark
+  hero is unchanged (checked 2026-11-15: hero screenshots identical to master at 1440px and
+  390px). The fixed logo must never sit on the print; the spec checks five viewport sizes.
+- **No literal colors for anything that should flip.** Hairlines are
+  `color-mix(in srgb, var(--text) N%, transparent)`, shadows
+  `color-mix(in srgb, var(--shadow) N%, transparent)` (light's `--shadow` is a soft warm brown, so
+  the same N gives a much lighter shadow), focus rings `var(--focus-ring)`, translucent nav fills
+  `color-mix(in srgb, var(--bg) N%, transparent)`. Literal `rgba()` stays only where the color sits
+  on a photo (hero overlays, gallery captions, the lightbox).
+- **Contrast:** every visible text on the light page clears AA (4.5:1, or 3:1 for large text)
+  against what it actually sits on. The spec measures this for every text element on `/`,
+  `/press`, `/easternblok` and `/easternblok/press`, and skips plates and text over images or
+  gradients.
+- **Texture:** light gets a static paper grain (`--paper-grain`, one SVG noise tile on `body`);
+  dark gets none. It never animates.
+- **Tests:** `playwright.config.ts` pins every spec to `colorScheme: 'dark'`, because older specs
+  assert dark values. A light-theme assertion opts in with `test.use({ colorScheme: 'light' })`.
 
 ## Typography
 

@@ -1317,6 +1317,20 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       light-theme contrast check, same rigor as the dark-mode pass already done in round 1/round 2
       — a light background raises the AA bar for anything currently relying on a near-black
       backdrop.
+      **Draft built 2026-11-15** on branch `light-mode-draft-2026-11-15` (not merged). It answers
+      each scoping question above: the palette ("liner-notes paper", every accent measured AA on all
+      three light surfaces), the toggle (localStorage plus an inline blocking script in
+      `BaseLayout.astro`, CSP hash regenerated) and the reach (every page; footer and the Dev TV
+      stay dark on purpose as `.theme-plate`; the hero re-composes as a sleeve front with the same
+      photo, added the same day; the drifting color blobs and the smoke were brought back onto
+      the paper behind it later that day at Doug's ask). `e2e/theme.spec.ts` checks it, including an AA
+      sweep of every visible text on the light page. Research and reasoning are in
+      `docs/DESIGN_NOTES.md` under "Light theme draft". Open before merge: (1) Doug picks the
+      default (it follows the system setting now, so light-OS visitors would see light on launch);
+      (2) ~~toggle placement~~ done 2026-11-15: Doug asked for one in the nav, so a sun/moon icon
+      button now ends the desktop staff and a "Lights up" pill ends the phone menu; (3) check on
+      a real phone and laptop; (4) a Lighthouse run in light; (5) the 404 page follows the theme but
+      has no toggle.
 - [x] **Contact form — built, deployed, and fully working as of 2026-09-07 night.**
       Adapted `haxbyte/site/src/worker.js` + `haxbyte/site/src/pages/contact.astro`'s pattern:
       `site/src/worker.js` (new) handles `POST /api/contact` via Cloudflare's native `send_email`

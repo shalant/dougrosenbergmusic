@@ -161,7 +161,7 @@
 <style>
   .contact {
     padding-block: clamp(5rem, 12vw, 8.5rem) clamp(2rem, 4vw, 3rem);
-    background: linear-gradient(180deg, transparent 0%, #060810 100%);
+    background: linear-gradient(180deg, transparent 0%, var(--contact-fade-end) 100%);
   }
 
   /* Two columns from 900px (2026-10-25): the heading on the left edge every
@@ -259,7 +259,7 @@
     font-size: 0.95rem;
     color: var(--text);
     background: var(--surface);
-    border: 1px solid rgba(233, 237, 245, 0.14);
+    border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
     border-radius: 7px;
     /* 0.65rem measured 46px on <input> but only 43px on <select> (browsers
        render select's own internal spacing differently even with identical
@@ -284,7 +284,7 @@
     .contact__field input:hover,
     .contact__field select:hover,
     .contact__field textarea:hover {
-      border-color: rgba(233, 237, 245, 0.3);
+      border-color: color-mix(in srgb, var(--text) 30%, transparent);
     }
   }
 
@@ -293,7 +293,7 @@
   .contact__field textarea:focus-visible {
     outline: none;
     border-color: var(--brass);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 14%, transparent);
   }
 
   /* After the focus rule on purpose: a field that failed validation keeps its
@@ -341,7 +341,7 @@
 
   .contact__submit:focus-visible {
     outline: none;
-    box-shadow: 0 10px 30px var(--brass-soft), 0 0 0 3px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px var(--brass-soft), 0 0 0 3px var(--focus-ring);
   }
 
   .contact__submit:disabled {
@@ -358,7 +358,7 @@
     cursor: progress;
     background-image: repeating-linear-gradient(
       -45deg,
-      rgba(255, 255, 255, 0.16) 0 10px,
+      color-mix(in srgb, var(--text) 16%, transparent) 0 10px,
       transparent 10px 20px
     );
     background-size: 28.28px 28.28px;
@@ -409,7 +409,7 @@
     background: var(--surface);
     color: var(--text);
     border: 1px solid var(--note-highlights);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--shadow) 55%, transparent);
     font-size: 0.95rem;
     text-align: center;
     opacity: 0;

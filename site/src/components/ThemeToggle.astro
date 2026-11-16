@@ -1,0 +1,176 @@
+---
+// Light/dark switch (light-mode draft, 2026-11-15). The theme itself is set
+// before first paint by the inline script in BaseLayout.astro; this button
+// only flips it and saves the choice to localStorage ('theme'), so the next
+// page load starts in it. With no saved choice the page follows the system
+// setting, live, including a change while the page is open.
+//
+// Stage voice: "Lights up" switches to the light page, "Lights down" to the
+// dark one. The visible words are the start of the accessible name (WCAG
+// 2.5.3 label in name); the hidden part says what the lights are.
+//
+// variant="icon" (the desktop nav, 2026-11-15) is a round button with a sun
+// (dark page: press for light) or a moon (light page), the same line style
+// as the nav's section icons. Its whole label is visually hidden, so the
+// accessible name is the same as the pill's, and a native title gives
+// pointer users the words.
+interface Props {
+  variant?: 'pill' | 'icon';
+}
+const { variant = 'pill' } = Astro.props;
+const icon = variant === 'icon';
+---
+
+<button class:list={['theme-toggle', { 'theme-toggle--icon': icon }]} type="button" data-theme-toggle title={icon ? 'Lights up' : undefined}>
+  {icon ? (
+    <svg class="theme-toggle__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g class="theme-toggle__sun"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></g>
+      <path class="theme-toggle__moon" d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+  ) : (
+    <span class="theme-toggle__dot" aria-hidden="true"></span>
+  )}
+  <span class:list={[{ 'visually-hidden': icon }]} data-theme-toggle-label>Lights up</span><span class="visually-hidden" data-theme-toggle-hint> (light theme)</span>
+</button>
+
+<script>
+  const KEY = 'theme';
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: light)');
+
+  function saved() {
+    try {
+      const t = localStorage.getItem(KEY);
+      return t === 'light' || t === 'dark' ? t : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function render() {
+    const light = root.dataset.theme === 'light';
+    document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+      const label = btn.querySelector('[data-theme-toggle-label]');
+      const hint = btn.querySelector('[data-theme-toggle-hint]');
+      if (label) label.textContent = light ? 'Lights down' : 'Lights up';
+      if (btn.hasAttribute('title')) btn.setAttribute('title', light ? 'Lights down' : 'Lights up');
+      if (hint) hint.textContent = light ? ' (dark theme)' : ' (light theme)';
+    });
+  }
+
+  function apply(theme: string) {
+    root.dataset.theme = theme;
+    render();
+  }
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      try {
+        localStorage.setItem(KEY, next);
+      } catch {}
+      apply(next);
+    });
+  });
+
+  media.addEventListener('change', (e) => {
+    if (!saved()) apply(e.matches ? 'light' : 'dark');
+  });
+
+  render();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--text) 18%, transparent);
+    background: transparent;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color var(--dur-base) ease, border-color var(--dur-base) ease, background-color var(--dur-base) ease;
+  }
+
+  /* A stage light: a lit brass dot when the house is dark (press to bring
+     the lights up), an outlined one when it's already light. */
+  .theme-toggle__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--brass);
+    box-shadow: 0 0 8px var(--brass);
+    transition: background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__dot {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--brass);
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible {
+    color: var(--text);
+    border-color: var(--brass);
+    background-color: var(--brass-soft);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+
+  .theme-toggle--icon {
+    width: 44px;
+    height: 44px;
+    min-height: 0;
+    padding: 0;
+    justify-content: center;
+    color: var(--brass);
+  }
+
+  .theme-toggle__glyph {
+    width: 20px;
+    height: 20px;
+    transition: rotate var(--dur-slow) var(--ease-spring);
+  }
+
+  .theme-toggle__moon {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__sun {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__moon {
+    display: inline;
+  }
+
+  /* A small turn on hover, the same spring the nav icons use. */
+  @media (hover: hover) {
+    .theme-toggle--icon:hover .theme-toggle__glyph {
+      rotate: 25deg;
+    }
+  }
+
+  .theme-toggle--icon:focus-visible .theme-toggle__glyph {
+    rotate: 25deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle__glyph {
+      transition: none;
+      rotate: none !important;
+    }
+    .theme-toggle,
+    .theme-toggle__dot {
+      transition: none;
+    }
+  }
+</style>
