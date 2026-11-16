@@ -107,4 +107,25 @@ const { home = true } = Astro.props;
       height: 64px;
     }
   }
+
+  /* Light theme: the TV stands on its own (2026-11-15, Doug: "a card in a
+     card"). In light the backing is a near-white card and the mark is a dark
+     TV plate, so it read as a card inside a card. The backing exists to stop
+     scrolled content showing through the mark's transparent margins, but the
+     TV itself is opaque, so without the card the content only shows around
+     the set, like a sticker. The mark is scaled up and re-centered so the TV
+     fills the box the card used to fill. Dark keeps its backing: dark on dark
+     reads as one object. */
+  :global(:root[data-theme='light']) .logo {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  :global(:root[data-theme='light']) .logo:focus-visible {
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+
+  :global(:root[data-theme='light']) .logo__mark {
+    transform: translateY(-12%) scale(1.3);
+  }
 </style>

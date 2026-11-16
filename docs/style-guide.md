@@ -271,6 +271,11 @@ How much, by kind:
   three different pictures (`hero.webp`, `gallery/sepia.jpg`, `gallery/formal.jpg`). An `<img>`
   with `width`/`height` attributes needs `height: auto` where CSS sets an `aspect-ratio`, or the
   attribute wins and stretches the frame (caught on About's first swap).
+- **The logo is a bare TV in light (2026-11-15).** The fixed mark has no card behind it in light:
+  the near-white backing around a dark TV plate read as a card in a card. The mark is scaled
+  (`translateY(-12%) scale(1.3)`) to fill the box the card filled, and keyboard focus still draws
+  its ring. Dark keeps the backing (dark on dark reads as one object). Content scrolling under the
+  corner shows around the set. `e2e/theme.spec.ts` checks both themes.
 - **Album covers have no scan bars.** Cover files are cropped to the artwork; a black scan border
   vanishes on navy but prints as a black strip on paper (`better-than-tv.jpg` and `underwater.jpg`
   were cropped 2026-11-15). `src/album-covers.test.js` checks every cover's four edges.
