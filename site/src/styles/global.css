@@ -114,6 +114,9 @@
      photo/content sits behind them, not blend into it */
   --bg-elevated: #101623;
   --surface: #131a26;
+  /* section bands (About raised; Highlights and In Frame sunk) */
+  --band-raised: var(--bg-elevated);
+  --band-sunk: var(--surface);
   --text: #e9edf5;
   --text-muted: rgba(233, 237, 245, 0.62);
   --text-faint: rgba(233, 237, 245, 0.52);
@@ -155,6 +158,11 @@
   --bg: #f4efe6;
   --bg-elevated: #fbf8f2;
   --surface: #ebe4d6;
+  /* Bands stepped further from the paper than the surfaces (2026-11-15, bad
+     cop: on cream the sections ran together). Sunk is a kraft tone; every
+     light accent still clears 4.6:1 on it at the bands' 78% mix. */
+  --band-raised: #fffdf9;
+  --band-sunk: #e5dbc9;
   --text: #1f1b16;
   --text-muted: rgba(31, 27, 22, 0.74);
   --text-faint: rgba(31, 27, 22, 0.64);

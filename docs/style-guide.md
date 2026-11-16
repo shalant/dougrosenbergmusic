@@ -56,6 +56,8 @@ black. The same token names carry both sets, so components don't know which them
 | `--bg` | `#0a0e17` | `#f4efe6` | |
 | `--bg-elevated` | `#101623` | `#fbf8f2` | |
 | `--surface` | `#131a26` | `#ebe4d6` | |
+| `--band-raised` | `--bg-elevated` | `#fffdf9` | About band; 1.10:1 from the paper at the band's 78% mix |
+| `--band-sunk` | `--surface` | `#e5dbc9` (kraft) | Highlights and In Frame bands; 1.15:1 from the paper; every light accent at least 4.67:1 on it |
 | `--text` | `#e9edf5` | `#1f1b16` | 14.95 / 16.15 / 13.53 |
 | `--text-muted` | text at 0.62 | text at 0.74 | 6.77 / 7.09 / 6.41 |
 | `--text-faint` | text at 0.52 | text at 0.64 | 4.89 / 5.01 / 4.71 |
@@ -245,8 +247,15 @@ How much, by kind:
   Examples: `.performance__venue-list--marquee`, `.performance__artists-feature`,
   `.career-highlights__feature`. Checked by `e2e/bad-cop-fixes.spec.ts`.
 - **Section rhythm (2026-11-01 rule)**: neighbouring sections must not share one flat background.
-  Alternate plain `--bg` sections with raised bands (`--bg-elevated` or `--surface` plus hairline
-  top and bottom rules): Recordings plain, About band, On the Road plain, Highlights band.
+  Alternate plain `--bg` sections with raised bands (`--band-raised` or `--band-sunk` plus hairline
+  top and bottom rules): Recordings plain, About band, On the Road plain, Highlights band. The band
+  tokens equal `--bg-elevated` and `--surface` in dark; light steps them further from the paper
+  (2026-11-15), because on cream the surface steps were too small and the sections ran together.
+  `e2e/theme.spec.ts` holds each light band at least 1.09:1 from the paper and the two at least
+  1.2:1 apart.
+- **Album covers have no scan bars.** Cover files are cropped to the artwork; a black scan border
+  vanishes on navy but prints as a black strip on paper (`better-than-tv.jpg` and `underwater.jpg`
+  were cropped 2026-11-15). `src/album-covers.test.js` checks every cover's four edges.
 - **Lead item (2026-11-01 rule)**: a grid of equal items gets one lead at 760px and up (the debut
   album is `.album--lead`). The lead spans the rows of one column and the rest stack as rows in the
   other, so the two columns end level; a lead in a one-row grid leaves dead space under its

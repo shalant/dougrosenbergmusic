@@ -506,12 +506,12 @@ Same reviewer who built the light theme, so allow about three points either way.
 | Mobile | 13 | 13 | Emulator only: stacks cleanly, no sideways scroll. Provisional until a real phone. |
 
 **Bad cop: about 80 / 100.** What costs points:
-1. **Black edges on album covers.** `better-than-tv.jpg` and `underwater.jpg` carry black scan borders in the
+1. ~~**Black edges on album covers.** `better-than-tv.jpg` and `underwater.jpg` carry black scan borders in the
    files themselves. On navy they vanished; on paper the lead album gets a black strip top and bottom, and
-   Underwater a thick black base. Fix: crop the two files.
-2. **One paper for every section.** The About band is a shade lighter and Highlights a shade darker, but on
+   Underwater a thick black base. Fix: crop the two files.~~ Fixed the same day, see below.
+2. ~~**One paper for every section.** The About band is a shade lighter and Highlights a shade darker, but on
    cream the steps are smaller than the navy ones, so the middle of the page runs together again (11-01
-   point 3, back in light only).
+   point 3, back in light only).~~ Fixed the same day, see below.
 3. **Same photo twice in a row.** The hero print and the About print are the same photo in the same brass
    frame, one screen apart.
 4. **Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
@@ -533,3 +533,21 @@ Cheapest points: crop the two album covers (point 1), then step the band colors 
 |---|---|---|---|---|
 | 2026-11-15 | good cop | `light-mode-draft-2026-11-15` at 76b06af, light, desktop plus phone emulation | about 89 | First light score; dark is about 92 |
 | 2026-11-15 | bad cop | same | about 80 | Black edges on two album covers, sections run together on paper, hero and About share a photo, empty halves |
+
+### Light easy wins, 2026-11-15 (same branch)
+
+Doug asked for the two cheapest light bad-cop points:
+- **Covers (point 1):** cropped the black scan bars off `better-than-tv.jpg` (12 rows top, 8 bottom, now
+  500x444) and `underwater.jpg` (20 and 20, now 500x460; the `/easternblok` size map updated to match). This
+  also changes dark, where the bars were invisible anyway. New unit test `src/album-covers.test.js` checks
+  all four edges of every cover; it fails on the old files (Better Than TV's top edge averages luma 1.0) and
+  passes now. `sharp` is pinned as a dev dependency at the version Astro already installed (0.35.4) so the
+  test doesn't lean on a transitive package.
+- **Bands (point 2):** new `--band-raised` and `--band-sunk` tokens. Dark maps them to `--bg-elevated` and
+  `--surface`, so dark is unchanged. Light uses `#fffdf9` (About) and a kraft `#e5dbc9` (Highlights, In
+  Frame): 1.10:1 and 1.15:1 from the paper, up from 1.06:1 and 1.08:1. `--surface` itself is unchanged, so
+  forms and panels keep their measured contrast. New test in `e2e/theme.spec.ts`; it fails with the old
+  colors (1.06) and passes now. The AA sweep passes on the new bands.
+- Full Playwright both projects 342 passed, unit 65/65, lint, astro check and `verify-csp` clean. Looked at
+  Recordings, Highlights and In Frame at 1440 in light. Not re-scored and not checked on a real device; I
+  expect about +2 on the light bad cop.
