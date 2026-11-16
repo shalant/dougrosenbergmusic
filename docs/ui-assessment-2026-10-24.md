@@ -483,3 +483,53 @@ Bad-cop point "still left-weighted" (Doug picked from prototypes, 2026-11-15):
   70. Full e2e both projects 315 passed plus the smoke fix, unit 64/64, lint and `verify-csp` clean.
 - **Checked:** the real page at 1440px in Chrome. Not checked: a real phone, Safari. Not re-scored; I expect
   about +2 on the bad cop.
+
+## Light theme pass, 2026-11-15 (branch `light-mode-draft-2026-11-15`)
+
+First score of the light theme, at Doug's ask. Same six areas and weights as above, so the numbers sit
+beside the dark series, but they score a different theme: compare light only with later light scores.
+Viewed: a local build of the branch at `76b06af`, light theme, reduced motion for layout, home page top to
+footer at 1440x900, `/press` and `/easternblok` at 1440, and the home page in Playwright phone emulation at
+390x844. The hero's blob and smoke motion was seen in still frames at full motion. Not viewed: a real phone or
+laptop, Safari, `/easternblok/press`, open FAQ items, the gallery lightbox, the form's error and sent states.
+Same reviewer who built the light theme, so allow about three points either way.
+
+**Good cop: about 89 / 100** (dark is about 92).
+
+| Area | Dark (11-15) | Light | Why |
+|---|---|---|---|
+| Identity and distinctiveness | 18 | 17 | Paper, ink and a serif are the common look among jazz artist sites (see "Light theme draft" in `DESIGN_NOTES.md`), so light starts closer to the pack. The staff dividers, sleeve hero, liner-notes footer and "Lights up / Lights down" keep it his. |
+| First impression (hero) | 19 | 18 | The sleeve front with the drifting color glow and the sepia smoke is strong and reads cleanly. It gives up the cinematic full-screen opening, and photo left, text right is a more familiar layout. Motion not seen on a device. |
+| Craft and polish | 18 | 17 | Every flipping color is a token, AA measured across four pages, plates for the footer and Dev TV, smoke kept out from under the type. Costs: the black scan edges on two album covers, and the sheet-music panel reads beige on beige. |
+| Typography and hierarchy | 15 | 15 | Ink on paper suits the serif; the scale changes in the name lists carry over. |
+| Content and archive pages | 9 | 9 | Both archive pages read well on paper with their own switch; the right 40% is still empty, as in dark. |
+| Mobile | 13 | 13 | Emulator only: stacks cleanly, no sideways scroll. Provisional until a real phone. |
+
+**Bad cop: about 80 / 100.** What costs points:
+1. **Black edges on album covers.** `better-than-tv.jpg` and `underwater.jpg` carry black scan borders in the
+   files themselves. On navy they vanished; on paper the lead album gets a black strip top and bottom, and
+   Underwater a thick black base. Fix: crop the two files.
+2. **One paper for every section.** The About band is a shade lighter and Highlights a shade darker, but on
+   cream the steps are smaller than the navy ones, so the middle of the page runs together again (11-01
+   point 3, back in light only).
+3. **Same photo twice in a row.** The hero print and the About print are the same photo in the same brass
+   frame, one screen apart.
+4. **Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
+   to light, but paper shows empty space more than a dark ground does.
+5. **Sheet-music panel looks washed out.** The beige panel on beige paper, with faint staff lines, has the
+   least contrast of any block on the page (text still passes AA).
+
+Not counted: the fixed logo and menu over content while scrolling on phones (deliberate, kept on purpose
+2026-10-17), the Dev remote over the preview (Doug's call, 2026-10-30).
+
+What the bad cop concedes: the sleeve hero with color leaking around the print, the staff dividers with
+their colored heads, the paper grain, the dark liner-notes footer as a back cover, and the "Lights up"
+switch. A stranger would remember the hero and the footer.
+
+Cheapest points: crop the two album covers (point 1), then step the band colors further apart in light
+(point 2).
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-15 | good cop | `light-mode-draft-2026-11-15` at 76b06af, light, desktop plus phone emulation | about 89 | First light score; dark is about 92 |
+| 2026-11-15 | bad cop | same | about 80 | Black edges on two album covers, sections run together on paper, hero and About share a photo, empty halves |
