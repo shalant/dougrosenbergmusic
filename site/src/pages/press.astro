@@ -24,6 +24,13 @@ const reviewWord = archive.wall.length === 1 ? 'review' : 'reviews';
   eyebrow="Press"
   heading="On record"
   draft={false}
+  toc={[
+    { id: 'when', label: 'When it ran' },
+    ...(archive.wall.length > 0 ? [{ id: 'reviews', label: 'Reviews' }] : []),
+    { id: 'everything-else', label: 'Previews and listings' },
+    { id: 'band', label: 'With Eastern Blok' },
+    { id: 'missing', label: 'Still missing' },
+  ]}
 >
   <p slot="lead" class="archive__lead">
     {archive.total} pieces, {archive.firstYear} to {archive.lastYear}, about Doug Rosenberg's own playing: {archive.wall.length} {reviewWord}, a feature and previews, and the rest club and radio listings.

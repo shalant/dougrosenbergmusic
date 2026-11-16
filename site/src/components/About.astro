@@ -5,7 +5,10 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
 <section id="about" class="about">
   <div class="wrap about__grid">
     <figure class="about__photo-wrap">
-      <img class="about__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg with saxophone" loading="lazy" />
+      {/* Not the hero photo (2026-11-15): the hero print and this one were the same
+          picture one screen apart, in the same brass frame (light bad cop). The warm
+          studio portrait from the gallery reel; Contact uses formal.jpg. */}
+      <img class="about__photo" src={`${import.meta.env.BASE_URL}images/gallery/sepia.jpg`} alt="Doug Rosenberg in a studio portrait, holding a saxophone" width="1080" height="1080" loading="lazy" decoding="async" />
     </figure>
 
     <div class="about__body">
@@ -40,7 +43,7 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
      lifted 2.5rem and left a tall empty strip under the copy. */
   .about {
     padding-block: clamp(4rem, 9vw, 7rem) clamp(3rem, 6vw, 4.5rem);
-    background-color: color-mix(in srgb, var(--bg-elevated) 78%, transparent);
+    background-color: color-mix(in srgb, var(--band-raised) 78%, transparent);
     background-image: radial-gradient(ellipse 45% 70% at 18% 45%, color-mix(in srgb, var(--brass) 10%, transparent), transparent 70%);
     border-block: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
   }
@@ -63,6 +66,8 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
 
   .about__photo {
     width: 100%;
+    /* the height attribute (for layout-shift) would otherwise beat the ratio */
+    height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     object-position: center 15%;

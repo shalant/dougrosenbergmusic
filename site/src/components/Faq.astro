@@ -39,8 +39,12 @@ const faqSchema = {
 ---
 
 <section id="faq" class="faq">
-  <div class="wrap">
-    <h2 class="faq__heading">Quick answers</h2>
+  <div class="wrap faq__layout">
+    <div class="faq__intro">
+      <h2 class="faq__heading">Quick answers</h2>
+      <p class="faq__more">Something not covered here? Ask Doug directly.</p>
+      <a class="cta cta-secondary faq__ask" href="#contact">Send a message</a>
+    </div>
 
     <div class="faq__list">
       {faqs.map(({ q, a }) => (
@@ -65,6 +69,47 @@ const faqSchema = {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3rem);
     margin: 0.25rem 0 2rem;
+  }
+
+  /* From 1000px the heading and a way to ask something else sit in the left
+     column and the questions in the right, so the section uses the whole
+     content width instead of leaving its right half empty (2026-11-15, bad
+     cop). Below that the invitation is hidden and the section is unchanged. */
+  .faq__more,
+  .faq__ask {
+    display: none;
+  }
+
+  @media (min-width: 1000px) {
+    .faq__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: start;
+    }
+
+    .faq__heading {
+      margin-bottom: 1rem;
+    }
+
+    .faq__more {
+      display: block;
+      margin: 0 0 1.5rem;
+      max-width: 22rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .faq__ask {
+      display: inline-flex;
+    }
+
+    .faq__layout .faq__list {
+      /* the old cap was for a lone column; the grid cell sets the width now */
+      max-width: none;
+      /* lines the first rule up with the heading's cap height */
+      margin-top: 0.9rem;
+    }
   }
 
   /* Ruled rows, not five identical rounded cards (2026-10-29): the cards

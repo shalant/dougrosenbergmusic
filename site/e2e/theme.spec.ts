@@ -67,6 +67,18 @@ test.describe('theme selection', () => {
 test.describe('light theme', () => {
   test.use({ colorScheme: 'light' });
 
+  // The 404 page has no footer or archive bar; its switch is the nav's
+  // (checked 2026-11-15, after an open item wrongly said it had none).
+  test('the 404 page follows the theme and its nav switch flips it', async ({ page, isMobile }) => {
+    await page.goto('/no-such-page');
+    expect(await theme(page)).toBe('light');
+    if (isMobile) await page.locator('[data-menu-toggle]').click();
+    const toggle = page.locator(isMobile ? '.staff-menu [data-theme-toggle]' : '.staff-nav [data-theme-toggle]');
+    await expect(toggle).toBeVisible();
+    await toggle.click();
+    expect(await theme(page)).toBe('dark');
+  });
+
   test('the footer and the Dev screen stay dark plates; the hero is paper', async ({ page }) => {
     await page.goto('/');
     const bgs = await page.evaluate(() =>
@@ -77,6 +89,82 @@ test.describe('light theme', () => {
     );
     expect(bgs).toEqual(['#f4efe6', '#0a0e17', '#0a0e17']);
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(244, 239, 230)');
+  });
+
+  // On cream the section bands sat 1.06:1 (About) and 1.08:1 (Highlights,
+  // In Frame) from the paper, and the middle of the page ran together (bad
+  // cop, 2026-11-15). Light now steps them with their own tokens; each band
+  // must sit at least 1.09:1 from the paper, and the raised and sunk bands
+  // at least 1.2:1 from each other.
+  test('the section bands step clearly away from the paper', async ({ page }) => {
+    await page.goto('/');
+    const ratios = await page.evaluate(() => {
+      const lin = (v: number) => {
+        const c = v / 255;
+        return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+      };
+      // the bands are color-mix(token 78%, transparent) over the paper
+      const onPaper = (hex: string) => {
+        const p = [0xf4, 0xef, 0xe6];
+        const t = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+        const [r, g, b] = t.map((v, i) => v * 0.78 + p[i] * 0.22).map(lin);
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const ratio = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      const root = getComputedStyle(document.documentElement);
+      const paper = onPaper(root.getPropertyValue('--bg').trim());
+      const raised = onPaper(root.getPropertyValue('--band-raised').trim());
+      const sunk = onPaper(root.getPropertyValue('--band-sunk').trim());
+      const uses = (sel: string, token: string) =>
+        getComputedStyle(document.querySelector(sel)!).backgroundColor ===
+        (() => {
+          const probe = document.createElement('div');
+          probe.style.background = `color-mix(in srgb, var(${token}) 78%, transparent)`;
+          document.body.append(probe);
+          const c = getComputedStyle(probe).backgroundColor;
+          probe.remove();
+          return c;
+        })();
+      return {
+        raised: ratio(raised, paper),
+        sunk: ratio(sunk, paper),
+        apart: ratio(raised, sunk),
+        wired: uses('.about', '--band-raised') && uses('.career-highlights', '--band-sunk') && uses('.gallery', '--band-sunk'),
+      };
+    });
+    expect(ratios.wired).toBe(true);
+    expect(ratios.raised).toBeGreaterThanOrEqual(1.09);
+    expect(ratios.sunk).toBeGreaterThanOrEqual(1.09);
+    expect(ratios.apart).toBeGreaterThanOrEqual(1.2);
+  });
+
+  // The sheet-music panel was beige on beige (1.08:1 from the paper, its
+  // empty viewer the same tone as the panel), the flattest block on the page
+  // (bad cop, 2026-11-15). Light makes it a kraft folder holding a white
+  // manuscript page: the folder at least 1.09:1 from the paper, the page at
+  // least 1.2:1 from the folder.
+  test('the sheet-music library reads as a folder holding a page', async ({ page }) => {
+    await page.goto('/');
+    const r = await page.evaluate(() => {
+      const lum = (sel: string) => {
+        const c = getComputedStyle(document.querySelector(sel)!).backgroundColor;
+        const m = c.match(/[\d.]+/g)!.map(Number);
+        const k = c.startsWith('color(srgb') ? 255 : 1;
+        const [r, g, b] = m.slice(0, 3).map((v) => {
+          const s = (v * k) / 255;
+          return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const ratio = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      const paper = lum('body');
+      const folder = lum('.sheet-music__panel');
+      const sheet = lum('.sheet-music__viewer-empty');
+      return { folder: ratio(folder, paper), sheet: ratio(sheet, folder), sheetLighter: sheet > folder };
+    });
+    expect(r.folder).toBeGreaterThanOrEqual(1.09);
+    expect(r.sheet).toBeGreaterThanOrEqual(1.2);
+    expect(r.sheetLighter).toBe(true);
   });
 
   // The light hero is a sleeve (2026-11-15): the photo is a framed print in

@@ -78,3 +78,99 @@ test.describe('contact portrait', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 });
+
+// Light bad-cop points left open on 2026-11-15 (docs/ui-assessment-2026-10-24.md):
+// the empty right of Quick answers and of the archive pages' headers, and the
+// hero photo repeated in About.
+
+// A .wrap's box includes its side padding; the content ends inside it.
+async function contentRight(page: import('@playwright/test').Page, selector: string) {
+  return page.locator(selector).evaluate((el) => {
+    const cs = getComputedStyle(el);
+    return el.getBoundingClientRect().right - parseFloat(cs.paddingRight);
+  });
+}
+
+test.describe('Quick answers uses both columns', () => {
+  test('from 1000px the heading and an ask button sit left of the questions', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    const heading = await page.locator('.faq__heading').boundingBox();
+    const ask = page.locator('.faq__ask');
+    await expect(ask).toBeVisible();
+    await expect(ask).toHaveAttribute('href', '#contact');
+    const list = await page.locator('.faq__list').boundingBox();
+    const edge = await contentRight(page, '.faq__layout');
+    expect(list!.x).toBeGreaterThanOrEqual(heading!.x + heading!.width);
+    // the questions reach the content column's right edge (they stopped at 48rem before)
+    expect(list!.x + list!.width).toBeGreaterThanOrEqual(edge - 2);
+  });
+
+  test('below 1000px the section is the single column it was', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('.faq__ask')).toBeHidden();
+    const heading = await page.locator('.faq__heading').boundingBox();
+    const list = await page.locator('.faq__list').boundingBox();
+    expect(list!.y).toBeGreaterThanOrEqual(heading!.y + heading!.height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+});
+
+test.describe('archive pages: the "On this page" rail', () => {
+  for (const path of ['/press', '/easternblok', '/easternblok/press']) {
+    test(`${path}: rail beside the title, every link lands on a heading`, async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto(path);
+      const rail = page.locator('.archive__toc');
+      await expect(rail).toBeVisible();
+      const title = await page.locator('.archive__title').boundingBox();
+      const box = await rail.boundingBox();
+      const edge = await contentRight(page, '.archive .wrap');
+      expect(box!.x).toBeGreaterThanOrEqual(title!.x + title!.width);
+      expect(box!.x + box!.width).toBeGreaterThanOrEqual(edge - 2);
+      const hrefs = await rail.locator('a').evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
+      expect(hrefs.length).toBeGreaterThan(3);
+      for (const href of hrefs) {
+        const h2 = page.locator(`.archive__section h2${href}`);
+        await expect(h2, href).toHaveCount(1);
+      }
+      for (const a of await rail.locator('a').all()) {
+        expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+      }
+    });
+
+    test(`${path}: hidden below 1000px, no sideways scroll`, async ({ page }) => {
+      await page.setViewportSize({ width: 390, height: 900 });
+      await page.goto(path);
+      await expect(page.locator('.archive__toc')).toBeHidden();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    });
+  }
+
+  test('a jumped-to heading clears the fixed nav', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/easternblok');
+    await page.locator('.archive__toc a[href="#members"]').click();
+    await page.waitForTimeout(800);
+    const top = await page.locator('#members').evaluate((el) => el.getBoundingClientRect().top);
+    expect(top).toBeGreaterThanOrEqual(116); // the logo ends at y=116
+  });
+});
+
+test.describe('About has its own photo', () => {
+  test('it is not the hero photo, loads, and keeps the 4:5 frame', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    const src = await page.locator('.about__photo').getAttribute('src');
+    const hero = await page.locator('.hero__photo').getAttribute('src');
+    expect(src).not.toBe(hero);
+    expect(src).not.toContain('hero.webp');
+    expect((await page.request.get(src!)).status()).toBe(200);
+    await page.locator('.about__photo').scrollIntoViewIfNeeded();
+    const box = await page.locator('.about__photo').boundingBox();
+    // the width/height attributes (for layout shift) must not beat the ratio
+    expect(Math.abs(box!.height / box!.width - 1.25)).toBeLessThan(0.02);
+  });
+});
+

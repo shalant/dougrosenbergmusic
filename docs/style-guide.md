@@ -56,6 +56,8 @@ black. The same token names carry both sets, so components don't know which them
 | `--bg` | `#0a0e17` | `#f4efe6` | |
 | `--bg-elevated` | `#101623` | `#fbf8f2` | |
 | `--surface` | `#131a26` | `#ebe4d6` | |
+| `--band-raised` | `--bg-elevated` | `#fffdf9` | About band; 1.10:1 from the paper at the band's 78% mix |
+| `--band-sunk` | `--surface` | `#e5dbc9` (kraft) | Highlights and In Frame bands; 1.15:1 from the paper; every light accent at least 4.67:1 on it |
 | `--text` | `#e9edf5` | `#1f1b16` | 14.95 / 16.15 / 13.53 |
 | `--text-muted` | text at 0.62 | text at 0.74 | 6.77 / 7.09 / 6.41 |
 | `--text-faint` | text at 0.52 | text at 0.64 | 4.89 / 5.01 / 4.71 |
@@ -73,10 +75,12 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
 
 - **Where the switch is:** every page has one within reach without scrolling to the bottom. Home:
   the icon button at the end of the desktop nav staff and the pill in the phone menu (plus the
-  footer). Archive pages: beside the back link. One script drives every `[data-theme-toggle]` on
-  the page, so they always agree.
+  footer). Archive pages: beside the back link. The 404 page: the nav's. One script drives every
+  `[data-theme-toggle]` on the page, so they always agree.
 - **Which theme:** a choice saved by the toggle (`localStorage.theme`) wins; otherwise the
-  system's `prefers-color-scheme`, followed live. The inline script at the top of
+  system's `prefers-color-scheme`, followed live. Decided 2026-11-15 (merged in PR #126): keep
+  following the system rather than defaulting to dark, because a visitor's own setting is the
+  better signal and the nav switch is one tap away. The inline script at the top of
   `BaseLayout.astro`'s `<head>` sets `data-theme` on `<html>` before first paint. Without
   JavaScript the page is dark. Editing that script changes its hash: run
   `npm run verify-csp -- --write`.
@@ -245,8 +249,31 @@ How much, by kind:
   Examples: `.performance__venue-list--marquee`, `.performance__artists-feature`,
   `.career-highlights__feature`. Checked by `e2e/bad-cop-fixes.spec.ts`.
 - **Section rhythm (2026-11-01 rule)**: neighbouring sections must not share one flat background.
-  Alternate plain `--bg` sections with raised bands (`--bg-elevated` or `--surface` plus hairline
-  top and bottom rules): Recordings plain, About band, On the Road plain, Highlights band.
+  Alternate plain `--bg` sections with raised bands (`--band-raised` or `--band-sunk` plus hairline
+  top and bottom rules): Recordings plain, About band, On the Road plain, Highlights band. The band
+  tokens equal `--bg-elevated` and `--surface` in dark; light steps them further from the paper
+  (2026-11-15), because on cream the surface steps were too small and the sections ran together.
+  `e2e/theme.spec.ts` holds each light band at least 1.09:1 from the paper and the two at least
+  1.2:1 apart.
+- **The sheet-music library is a folder holding a page in light (2026-11-15).** The panel is
+  `--band-sunk` (kraft) and the empty viewer, its prompt and the search box are `--band-raised`
+  sheets on it, so the page never matches the panel's tone. `e2e/theme.spec.ts` checks the folder
+  against the paper and the page against the folder.
+- **No empty right half at 1000px and up (2026-11-15).** Quick answers puts its heading and a
+  "Send a message" button left of the questions (`.faq__layout`, 0.8fr / 1.2fr). Every archive
+  page (`ArchiveLayout`'s `toc` prop) has an "On this page" rail right of the title block, ruled
+  rows numbered like the footer's, bottom-aligned so the header is no taller. The rail is hidden
+  below 1000px, where the sections already follow each other. A page passes `toc` with ids that
+  are real `h2`s (a conditional section must be conditional in the list too);
+  `e2e/right-half.spec.ts` checks each link lands on a heading and that jumped-to headings clear
+  the fixed logo (`scroll-margin-top: 7.5rem`).
+- **Neighbouring sections never repeat a photo (2026-11-15).** The hero, About and Contact use
+  three different pictures (`hero.webp`, `gallery/sepia.jpg`, `gallery/formal.jpg`). An `<img>`
+  with `width`/`height` attributes needs `height: auto` where CSS sets an `aspect-ratio`, or the
+  attribute wins and stretches the frame (caught on About's first swap).
+- **Album covers have no scan bars.** Cover files are cropped to the artwork; a black scan border
+  vanishes on navy but prints as a black strip on paper (`better-than-tv.jpg` and `underwater.jpg`
+  were cropped 2026-11-15). `src/album-covers.test.js` checks every cover's four edges.
 - **Lead item (2026-11-01 rule)**: a grid of equal items gets one lead at 760px and up (the debut
   album is `.album--lead`). The lead spans the rows of one column and the rest stack as rows in the
   other, so the two columns end level; a lead in a one-row grid leaves dead space under its

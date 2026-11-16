@@ -506,18 +506,18 @@ Same reviewer who built the light theme, so allow about three points either way.
 | Mobile | 13 | 13 | Emulator only: stacks cleanly, no sideways scroll. Provisional until a real phone. |
 
 **Bad cop: about 80 / 100.** What costs points:
-1. **Black edges on album covers.** `better-than-tv.jpg` and `underwater.jpg` carry black scan borders in the
+1. ~~**Black edges on album covers.** `better-than-tv.jpg` and `underwater.jpg` carry black scan borders in the
    files themselves. On navy they vanished; on paper the lead album gets a black strip top and bottom, and
-   Underwater a thick black base. Fix: crop the two files.
-2. **One paper for every section.** The About band is a shade lighter and Highlights a shade darker, but on
+   Underwater a thick black base. Fix: crop the two files.~~ Fixed the same day, see below.
+2. ~~**One paper for every section.** The About band is a shade lighter and Highlights a shade darker, but on
    cream the steps are smaller than the navy ones, so the middle of the page runs together again (11-01
-   point 3, back in light only).
-3. **Same photo twice in a row.** The hero print and the About print are the same photo in the same brass
-   frame, one screen apart.
-4. **Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
-   to light, but paper shows empty space more than a dark ground does.
-5. **Sheet-music panel looks washed out.** The beige panel on beige paper, with faint staff lines, has the
-   least contrast of any block on the page (text still passes AA).
+   point 3, back in light only).~~ Fixed the same day, see below.
+3. ~~**Same photo twice in a row.** The hero print and the About print are the same photo in the same brass
+   frame, one screen apart.~~ Fixed 2026-11-15 night, see below.
+4. ~~**Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
+   to light, but paper shows empty space more than a dark ground does.~~ Fixed for Quick answers and the archive headers 2026-11-15 night; the Dev section was never empty (its site preview fills the right), so that part of the point was my misread.
+5. ~~**Sheet-music panel looks washed out.** The beige panel on beige paper, with faint staff lines, has the
+   least contrast of any block on the page (text still passes AA).~~ Fixed the same day, see below.
 
 Not counted: the fixed logo and menu over content while scrolling on phones (deliberate, kept on purpose
 2026-10-17), the Dev remote over the preview (Doug's call, 2026-10-30).
@@ -533,3 +533,71 @@ Cheapest points: crop the two album covers (point 1), then step the band colors 
 |---|---|---|---|---|
 | 2026-11-15 | good cop | `light-mode-draft-2026-11-15` at 76b06af, light, desktop plus phone emulation | about 89 | First light score; dark is about 92 |
 | 2026-11-15 | bad cop | same | about 80 | Black edges on two album covers, sections run together on paper, hero and About share a photo, empty halves |
+
+### Light easy wins, 2026-11-15 (same branch)
+
+Doug asked for the two cheapest light bad-cop points:
+- **Covers (point 1):** cropped the black scan bars off `better-than-tv.jpg` (12 rows top, 8 bottom, now
+  500x444) and `underwater.jpg` (20 and 20, now 500x460; the `/easternblok` size map updated to match). This
+  also changes dark, where the bars were invisible anyway. New unit test `src/album-covers.test.js` checks
+  all four edges of every cover; it fails on the old files (Better Than TV's top edge averages luma 1.0) and
+  passes now. `sharp` is pinned as a dev dependency at the version Astro already installed (0.35.4) so the
+  test doesn't lean on a transitive package.
+- **Bands (point 2):** new `--band-raised` and `--band-sunk` tokens. Dark maps them to `--bg-elevated` and
+  `--surface`, so dark is unchanged. Light uses `#fffdf9` (About) and a kraft `#e5dbc9` (Highlights, In
+  Frame): 1.10:1 and 1.15:1 from the paper, up from 1.06:1 and 1.08:1. `--surface` itself is unchanged, so
+  forms and panels keep their measured contrast. New test in `e2e/theme.spec.ts`; it fails with the old
+  colors (1.06) and passes now. The AA sweep passes on the new bands.
+- Full Playwright both projects 342 passed, unit 65/65, lint, astro check and `verify-csp` clean. Looked at
+  Recordings, Highlights and In Frame at 1440 in light. Not re-scored and not checked on a real device; I
+  expect about +2 on the light bad cop.
+
+### Sheet-music folder, 2026-11-15 (same branch)
+
+Light bad-cop point 5, at Doug's ask. In light the library is a kraft folder holding a manuscript page: the
+panel takes `--band-sunk`, and the empty viewer, its prompt patch and the search box take `--band-raised`,
+with the viewer's staves at 20% ink instead of 14% and a soft drop shadow under the page. Light-only rules in
+`SheetMusicLibrary.astro`; dark is unchanged. Measured before: the empty viewer was the same tone as the panel
+(1.00:1). New test in `e2e/theme.spec.ts` (folder at least 1.09:1 from the paper, page at least 1.2:1 from the
+folder and lighter) fails without the rules and passes with them. Full Playwright 344 passed, unit 65/65,
+lint, astro check and `verify-csp` clean, AA sweep included. Looked at it at 1440 and in phone emulation at
+390; not checked on a real device. Not re-scored.
+
+### Light remaining points and re-score, 2026-11-15 night (branch `light-polish-2026-11-15`)
+
+PR #126 merged the light theme at 8:10pm Central; the covers, bands and sheet-music commits came after it, so
+this branch carries them again on top of master plus the work below. Doug asked for every open item at once.
+- **Same photo (point 3):** About now uses `gallery/sepia.jpg`, so hero, About and Contact show three
+  different pictures. Its `width`/`height` attributes briefly stretched the frame to 1080px tall (the
+  attribute beat `aspect-ratio`); `height: auto` fixes it and a test holds the 4:5 ratio.
+- **Empty halves (point 4):** Quick answers is two columns from 1000px (heading, a "Send a message"
+  button, and the questions on the right). Each archive page has an "On this page" rail right of the title
+  block (`ArchiveLayout` `toc` prop; ruled numbered rows, hidden below 1000px), with a scroll margin so
+  jumped-to headings clear the logo. Tests fail on the old code (6 of 11) and pass now.
+- **404:** it already had the nav's switch (the open item was stale); a test now flips the theme there.
+- **Default theme:** decided, keep following the system.
+- **Lighthouse (light, local build, mobile):** performance 94 to 96 (dark 96), accessibility,
+  best practices and SEO 100; desktop performance 100. A first batch read 74 in dark because my own browser
+  tests were running at the same time; repeat runs on an idle machine agreed. The `preferredColorScheme`
+  flag is 0 for dark and 1 for light, which I had backwards at first; the final screenshots confirmed it.
+
+Whole-page look: the home page full length at 1440 in light, plus `/easternblok`, `/press` and the 404 at
+1440, and the home page on a phone at 390 earlier the same day (emulator). Not viewed: a real phone or
+laptop, Safari, the form's error and sent states. Same reviewer who built it, so allow about three points
+either way.
+
+**Good cop: about 91 / 100** (was about 90). Identity 17, hero 18, craft 18, typography 15, archive pages
+10 (the rail gives them structure; was 9), mobile 13 (still emulator only).
+
+**Bad cop: about 86 / 100** (was about 84). What is left:
+1. **About and Contact portraits are close cousins.** Same suit and pose, one sepia and one cool grey, a few
+   screens apart. A third kind of photo (live, or with the band) in one of them would break it.
+2. **Left-weighted sections remain.** Private lessons and On the Road still start at the left of the column,
+   as in dark.
+3. Dev block unchanged (Doug's call, 2026-10-30).
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-15 | good cop | `light-polish-2026-11-15`, light, desktop plus phone emulation | about 91 | Archive rail earns a point; mobile still unverified on a device |
+| 2026-11-15 | bad cop | same | about 86 | Photo repeat and empty halves fixed; portraits similar; left-weighted sections |
+

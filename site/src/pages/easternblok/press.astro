@@ -27,6 +27,12 @@ const reviewCount = archive.wall.length;
   heading="What they wrote"
   draft={false}
   back={{ href: '/easternblok', label: 'Back to Eastern Blok' }}
+  toc={[
+    { id: 'when', label: 'When it ran' },
+    { id: 'reviews', label: 'Reviews and features' },
+    { id: 'everything-else', label: 'Everything else' },
+    { id: 'missing', label: 'Still missing' },
+  ]}
 >
   <p slot="lead" class="archive__lead">
     {archive.total} pieces from {archive.outletCount} outlets, {archive.firstYear} to {archive.lastYear}: {reviewCount} reviews and features, and the rest previews, interviews and listings.

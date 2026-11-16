@@ -1325,12 +1325,14 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       photo, added the same day; the drifting color blobs and the smoke were brought back onto
       the paper behind it later that day at Doug's ask). `e2e/theme.spec.ts` checks it, including an AA
       sweep of every visible text on the light page. Research and reasoning are in
-      `docs/DESIGN_NOTES.md` under "Light theme draft". Open before merge: (1) Doug picks the
-      default (it follows the system setting now, so light-OS visitors would see light on launch);
-      (2) ~~toggle placement~~ done 2026-11-15: Doug asked for one in the nav, so a sun/moon icon
-      button now ends the desktop staff and a "Lights up" pill ends the phone menu; (3) check on
-      a real phone and laptop; (4) a Lighthouse run in light; (5) the 404 page follows the theme but
-      has no toggle.
+      `docs/DESIGN_NOTES.md` under "Light theme draft". **Merged in PR #126 (2026-11-15, evening Central).** Open
+      items, status 2026-11-15 evening (branch `light-polish-2026-11-15`): (1) ~~default~~ decided:
+      keep following the system; (2) ~~toggle placement~~ done: nav switch; (3) check on a real
+      phone and laptop, **still open** (only emulators were used); (4) ~~Lighthouse in light~~ done:
+      mobile performance 94 to 96, desktop 100, accessibility, best practices and SEO 100;
+      (5) ~~404 has no toggle~~ it always had the nav's switch, now covered by a test; (6) ~~About
+      repeats the hero photo~~ done: About uses `gallery/sepia.jpg`; (7) ~~empty right halves~~
+      done for Quick answers and the archive headers (the Dev section was never empty).
 - [x] **Contact form — built, deployed, and fully working as of 2026-09-07 night.**
       Adapted `haxbyte/site/src/worker.js` + `haxbyte/site/src/pages/contact.astro`'s pattern:
       `site/src/worker.js` (new) handles `POST /api/contact` via Cloudflare's native `send_email`
