@@ -9,11 +9,21 @@
 // dark one. The visible words are the start of the accessible name (WCAG
 // 2.5.3 label in name); the hidden part says what the lights are.
 //
-// variant="icon" (the desktop nav, 2026-11-15) is a round button with a sun
-// (dark page: press for light) or a moon (light page), the same line style
-// as the nav's section icons. Its whole label is visually hidden, so the
-// accessible name is the same as the pill's, and a native title gives
-// pointer users the words.
+// The channel knob (2026-11-15, Doug picked option 1 of five TV-themed
+// switches): a rotary dial with two stops, CH 1 for the dark page and CH 2
+// for the light one. variant="icon" (the desktop nav) is the dial alone in a
+// 44px round button; its whole label is visually hidden, so the accessible
+// name is the same as the pill's, and a native title gives pointer users the
+// words. The pill (footer, archive bar, phone menu) keeps its words and
+// carries a small dial where the brass dot was. The dial's rotation is pure
+// CSS from <html data-theme>, so every switch on the page agrees.
+//
+// Changing channel: a press cuts to a burst of static that covers the theme
+// swap and clears in under half a second, and a green on-screen label names
+// the channel (CH 02 / DAY). The label is also a live region, so it is what a
+// screen reader announces. With reduced motion, or on a weak device (the hero
+// script's data-fx="lite"), there is no static: the theme changes at once and
+// the label still shows. A system-setting change never plays it, only a press.
 interface Props {
   variant?: 'pill' | 'icon';
 }
@@ -23,12 +33,24 @@ const icon = variant === 'icon';
 
 <button class:list={['theme-toggle', { 'theme-toggle--icon': icon }]} type="button" data-theme-toggle title={icon ? 'Lights up' : undefined}>
   {icon ? (
-    <svg class="theme-toggle__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <g class="theme-toggle__sun"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></g>
-      <path class="theme-toggle__moon" d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    <svg class="theme-toggle__glyph" viewBox="0 0 52 52" aria-hidden="true">
+      <path class="knob__arc" d="M9 24 A19 19 0 0 1 43 24" />
+      <text class="knob__num knob__num--1" x="5" y="14">1</text>
+      <text class="knob__num knob__num--2" x="47" y="14" text-anchor="end">2</text>
+      <g class="theme-plate theme-toggle__rot">
+        <circle class="knob__body" cx="26" cy="30" r="14" />
+        <circle class="knob__face" cx="26" cy="30" r="10.5" />
+        <line class="knob__ptr" x1="26" y1="30" x2="26" y2="20.5" />
+      </g>
     </svg>
   ) : (
-    <span class="theme-toggle__dot" aria-hidden="true"></span>
+    <svg class="theme-toggle__knob" viewBox="11 15 30 30" aria-hidden="true">
+      <g class="theme-plate theme-toggle__rot">
+        <circle class="knob__body" cx="26" cy="30" r="14" />
+        <circle class="knob__face" cx="26" cy="30" r="10.5" />
+        <line class="knob__ptr" x1="26" y1="30" x2="26" y2="20.5" />
+      </g>
+    </svg>
   )}
   <span class:list={[{ 'visually-hidden': icon }]} data-theme-toggle-label>Lights up</span><span class="visually-hidden" data-theme-toggle-hint> (light theme)</span>
 </button>
@@ -37,6 +59,7 @@ const icon = variant === 'icon';
   const KEY = 'theme';
   const root = document.documentElement;
   const media = window.matchMedia('(prefers-color-scheme: light)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function saved() {
     try {
@@ -63,13 +86,52 @@ const icon = variant === 'icon';
     render();
   }
 
+  // The on-screen label. It exists from the start so the live region is
+  // already in the page when its text changes.
+  const osd = document.createElement('div');
+  osd.className = 'channel-osd';
+  osd.setAttribute('role', 'status');
+  document.body.append(osd);
+  let osdTimer = 0;
+
+  function showOsd(theme: string) {
+    const light = theme === 'light';
+    osd.innerHTML =
+      `<span aria-hidden="true">CH 0${light ? 2 : 1}</span><span aria-hidden="true">${light ? 'DAY' : 'NIGHT'}</span>` +
+      `<span class="visually-hidden">${light ? 'Lights up, light theme' : 'Lights down, dark theme'}</span>`;
+    osd.classList.add('on');
+    clearTimeout(osdTimer);
+    osdTimer = window.setTimeout(() => osd.classList.remove('on'), 1800);
+  }
+
+  // A press cuts to static first, so the swap happens under it: the new
+  // theme is already set when the static starts to clear.
+  function changeChannel(next: string) {
+    const still = reduced.matches || root.dataset.fx === 'lite';
+    if (still) {
+      apply(next);
+      showOsd(next);
+      return;
+    }
+    const snow = document.createElement('div');
+    snow.className = 'channel-static';
+    snow.setAttribute('aria-hidden', 'true');
+    document.body.append(snow);
+    apply(next);
+    showOsd(next);
+    const clear = () => snow.remove();
+    snow
+      .animate([{ opacity: 1 }, { opacity: 1, offset: 0.25 }, { opacity: 0 }], { duration: 440, easing: 'ease-out', fill: 'forwards' })
+      .finished.then(clear, clear);
+  }
+
   document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const next = root.dataset.theme === 'light' ? 'dark' : 'light';
       try {
         localStorage.setItem(KEY, next);
       } catch {}
-      apply(next);
+      changeChannel(next);
     });
   });
 
@@ -97,22 +159,6 @@ const icon = variant === 'icon';
     transition: color var(--dur-base) ease, border-color var(--dur-base) ease, background-color var(--dur-base) ease;
   }
 
-  /* A stage light: a lit brass dot when the house is dark (press to bring
-     the lights up), an outlined one when it's already light. */
-  .theme-toggle__dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--brass);
-    box-shadow: 0 0 8px var(--brass);
-    transition: background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
-  }
-
-  :global(:root[data-theme='light']) .theme-toggle__dot {
-    background: transparent;
-    box-shadow: inset 0 0 0 1.5px var(--brass);
-  }
-
   .theme-toggle:hover,
   .theme-toggle:focus-visible {
     color: var(--text);
@@ -135,42 +181,148 @@ const icon = variant === 'icon';
   }
 
   .theme-toggle__glyph {
-    width: 20px;
-    height: 20px;
-    transition: rotate var(--dur-slow) var(--ease-spring);
+    width: 44px;
+    height: 44px;
+    flex: none;
   }
 
-  .theme-toggle__moon {
-    display: none;
+  .theme-toggle__knob {
+    width: 24px;
+    height: 24px;
+    flex: none;
   }
 
-  :global(:root[data-theme='light']) .theme-toggle__sun {
-    display: none;
+  /* The dial is an object, so like the footer and the Dev TV it keeps the
+     dark tokens in both themes (.theme-plate on the <g>): dark plastic, a
+     brass rim and pointer. Two stops: pointer left (CH 1, dark page) and
+     right (CH 2, light page), with a little overshoot, like a detent. */
+  .knob__body {
+    fill: var(--surface);
+    stroke: var(--brass);
+    stroke-width: 1.4;
   }
 
-  :global(:root[data-theme='light']) .theme-toggle__moon {
-    display: inline;
+  .knob__face {
+    fill: color-mix(in srgb, var(--text) 10%, var(--surface));
   }
 
-  /* A small turn on hover, the same spring the nav icons use. */
-  @media (hover: hover) {
-    .theme-toggle--icon:hover .theme-toggle__glyph {
-      rotate: 25deg;
-    }
+  .knob__ptr {
+    stroke: var(--brass);
+    stroke-width: 2.6;
+    stroke-linecap: round;
   }
 
-  .theme-toggle--icon:focus-visible .theme-toggle__glyph {
-    rotate: 25deg;
+  .knob__arc {
+    fill: none;
+    stroke: var(--text-muted);
+    stroke-width: 1;
+    opacity: 0.6;
+  }
+
+  .knob__num {
+    font: 700 9px var(--font-body);
+    fill: var(--text-muted);
+  }
+
+  .knob__num--1,
+  :global(:root[data-theme='light']) .knob__num--2 {
+    fill: var(--text);
+  }
+
+  :global(:root[data-theme='light']) .knob__num--1 {
+    fill: var(--text-muted);
+  }
+
+  .theme-toggle__rot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: rotate(-50deg);
+    transition: transform var(--dur-med) cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__rot {
+    transform: rotate(50deg);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .theme-toggle__glyph {
+    .theme-toggle__rot {
       transition: none;
-      rotate: none !important;
     }
-    .theme-toggle,
-    .theme-toggle__dot {
+    .theme-toggle {
       transition: none;
+    }
+  }
+</style>
+
+<style is:global>
+  /* The channel change (see the comment at the top of this file). Built by the
+     script, so these are global. The static is opaque grey noise (a tiny
+     feTurbulence SVG, drawn once) with a bright band rolling down it. */
+  .channel-static {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    overflow: hidden;
+    background-color: #777;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-.55'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-.55'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px;
+    animation: channel-jitter 0.12s steps(3) infinite;
+  }
+
+  .channel-static::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -22%;
+    height: 22%;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: channel-roll 0.44s linear infinite;
+  }
+
+  @keyframes channel-jitter {
+    0% { background-position: 0 0; }
+    33% { background-position: -47px 31px; }
+    66% { background-position: 22px -58px; }
+    100% { background-position: -13px 9px; }
+  }
+
+  @keyframes channel-roll {
+    to { top: 100%; }
+  }
+
+  /* A TV on-screen display: a dark box with green type, in the same
+     monospace stack in both themes (it is a picture element, not page chrome). */
+  .channel-osd {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    z-index: 201;
+    display: grid;
+    gap: 0.1em;
+    padding: 0.35em 0.7em 0.25em;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #7dffb0;
+    font: 700 1.6rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 0.4em rgba(125, 255, 176, 0.55);
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+
+  .channel-osd.on {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .channel-osd {
+      transition: none;
+    }
+    .channel-static {
+      display: none;
     }
   }
 </style>

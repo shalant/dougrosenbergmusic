@@ -73,8 +73,24 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
 
 **Rules (each checked by `e2e/theme.spec.ts`):**
 
+- **The switch is a channel knob (2026-11-15, Doug picked option 1 of five TV-themed switches):**
+  a rotary dial with two stops, pointer left with a bright "1" for the dark page (CH 1, night) and
+  right with a bright "2" for the light page (CH 2, day). The dial is an object, so it keeps the
+  dark plate tokens in both themes (`.theme-plate` on its `<g>`): dark plastic, brass rim and
+  pointer. Its rotation is CSS from `<html data-theme>`, so every switch agrees and nothing waits
+  on script. The nav's icon variant is the dial alone (44px, label visually hidden, native
+  `title`); the labelled pill keeps "Lights up / Lights down" with a 24px dial where the brass dot
+  was. Pressing it cuts to a burst of static (`.channel-static`, opaque noise, about 0.44s) that
+  covers the theme swap, and a green on-screen label (`.channel-osd`, CH 02 / DAY) names the
+  channel for 1.8s. The label is a `role="status"` live region created at load, with the
+  decorative copy `aria-hidden` and a visually hidden sentence ("Lights up, light theme"), so a
+  screen reader hears the change. With reduced motion, or the hero script's `data-fx="lite"`,
+  there is no static: the theme changes at once and the label still shows. A change of the
+  system setting never plays the static or the label; only a press does. The five options
+  (knob, power button, rabbit ears, test pattern, remote) were mocked as live miniatures in a
+  Claude artifact; the others are the fallback if the knob wears thin.
 - **Where the switch is:** every page has one within reach without scrolling to the bottom. Home:
-  the icon button at the end of the desktop nav staff and the pill in the phone menu (plus the
+  the dial at the end of the desktop nav staff and the pill in the phone menu (plus the
   footer). Archive pages: beside the back link. The 404 page: the nav's. One script drives every
   `[data-theme-toggle]` on the page, so they always agree.
 - **Which theme:** a choice saved by the toggle (`localStorage.theme`) wins; otherwise the
