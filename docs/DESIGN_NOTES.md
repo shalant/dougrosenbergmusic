@@ -257,9 +257,14 @@ the visitor's context, which the follow-the-system default does in its simplest 
   0.74 and stays clear of the hero subject, checked in a 900px screenshot), and on phones a
   "Lights up" pill under the section list in the hamburger menu.
 
-**Open before merge:** the default (system-following, or dark unless chosen), real-device
-checks, and a Lighthouse run in light. Tracked in
-`docs/todolist.md`'s "Light-mode refactor" item.
+**Merged 2026-11-15 (PR #126, evening Central), then polished the same night** (`light-polish-2026-11-15`): the
+default stays system-following; Lighthouse in light measured (mobile performance 94 to 96 against
+96 in dark, desktop 100, accessibility, best practices and SEO 100 in both); About swapped to
+`gallery/sepia.jpg` so the hero photo is no longer repeated one screen down; Quick answers and
+the archive headers use their empty right halves; the 404 page already had the nav's switch, so
+the open item saying otherwise was stale. Still open: a look on a real phone and laptop (only
+emulators and Playwright's Chromium were used). Tracked in `docs/todolist.md`'s "Light-mode
+refactor" item.
 
 ## Reference
 

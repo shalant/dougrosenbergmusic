@@ -57,6 +57,15 @@ const bandSchema = {
   eyebrow="Archive · Chicago · until 2012"
   heading="Eastern Blok"
   draft={false}
+  toc={[
+    { id: 'story', label: 'The story' },
+    { id: 'photos', label: 'Photos' },
+    { id: 'video', label: 'Video' },
+    { id: 'members', label: 'Members' },
+    { id: 'albums', label: 'Albums' },
+    { id: 'press', label: 'Press' },
+    { id: 'shows', label: 'Shows' },
+  ]}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(bandSchema)} />
   <p slot="lead" class="archive__lead">

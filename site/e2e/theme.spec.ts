@@ -67,6 +67,18 @@ test.describe('theme selection', () => {
 test.describe('light theme', () => {
   test.use({ colorScheme: 'light' });
 
+  // The 404 page has no footer or archive bar; its switch is the nav's
+  // (checked 2026-11-15, after an open item wrongly said it had none).
+  test('the 404 page follows the theme and its nav switch flips it', async ({ page, isMobile }) => {
+    await page.goto('/no-such-page');
+    expect(await theme(page)).toBe('light');
+    if (isMobile) await page.locator('[data-menu-toggle]').click();
+    const toggle = page.locator(isMobile ? '.staff-menu [data-theme-toggle]' : '.staff-nav [data-theme-toggle]');
+    await expect(toggle).toBeVisible();
+    await toggle.click();
+    expect(await theme(page)).toBe('dark');
+  });
+
   test('the footer and the Dev screen stay dark plates; the hero is paper', async ({ page }) => {
     await page.goto('/');
     const bgs = await page.evaluate(() =>

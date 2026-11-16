@@ -20,6 +20,10 @@ interface Props {
   // Which home-page section color the page borrows (its --note-* variable):
   // the eyebrow, the notehead on the staff and each section heading's note.
   tone?: 'about' | 'highlights' | 'listen' | 'lessons' | 'contact' | 'dev';
+  // The page's section headings, for the "On this page" rail beside the
+  // title from 1000px (2026-11-15: the right half of the header was empty).
+  // Each id must be a heading on the page; e2e/right-half.spec.ts checks.
+  toc?: { id: string; label: string }[];
 }
 
 const {
@@ -30,6 +34,7 @@ const {
   draft = true,
   back = { href: '/#press', label: 'Back to dougrosenberg.com' },
   tone = 'highlights',
+  toc = [],
 } = Astro.props;
 ---
 
@@ -39,6 +44,7 @@ const {
   <slot name="head" slot="head" />
   <article class="archive" style={`--archive-tone: var(--note-${tone})`}>
     <div class="wrap">
+      <div class="archive__head">
       <header class="archive__header">
         <div class="archive__topbar">
           <a class="archive__back" href={back.href}>&larr; {back.label}</a>
@@ -49,6 +55,22 @@ const {
         <h1 class="archive__title">{heading}</h1>
         <slot name="lead" />
       </header>
+      {toc.length > 1 && (
+        <nav class="archive__toc" aria-label="On this page">
+          <p class="archive__toc-label">On this page</p>
+          <ol>
+            {toc.map(({ id, label }, i) => (
+              <li>
+                <a href={`#${id}`}>
+                  <span class="archive__toc-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      </div>
       <slot />
     </div>
   </article>
@@ -71,6 +93,83 @@ const {
        right on a wrap boundary at 1350px, three lines in the fallback face and
        two in Work Sans. */
     max-width: 42rem;
+  }
+
+  .archive__head {
+    display: block;
+  }
+
+  /* The rail is hidden below 1000px: the pages are short there and the
+     sections follow each other. From 1000px it fills the right of the header
+     (title block 42rem, rail the rest), bottom-aligned so the header is no
+     taller than before. */
+  .archive__toc {
+    display: none;
+  }
+
+  @media (min-width: 1000px) {
+    .archive__head {
+      display: grid;
+      grid-template-columns: minmax(0, 42rem) minmax(0, 1fr);
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: end;
+    }
+
+    .archive__toc {
+      display: block;
+      justify-self: end;
+      width: min(100%, 21rem);
+      padding-bottom: 0.4rem;
+    }
+  }
+
+  .archive__toc-label {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .archive__toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--staff-line-strong);
+  }
+
+  .archive__toc li {
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  .archive__toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    min-height: 44px;
+    padding-block: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .archive__toc a:hover,
+  .archive__toc a:focus-visible {
+    color: var(--brass);
+  }
+
+  .archive__toc-n {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  /* Jumped-to headings clear the fixed logo and nav. */
+  .archive :global(.archive__section h2) {
+    scroll-margin-top: 7.5rem;
   }
 
   .archive__topbar {

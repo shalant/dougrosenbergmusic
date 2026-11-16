@@ -75,10 +75,12 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
 
 - **Where the switch is:** every page has one within reach without scrolling to the bottom. Home:
   the icon button at the end of the desktop nav staff and the pill in the phone menu (plus the
-  footer). Archive pages: beside the back link. One script drives every `[data-theme-toggle]` on
-  the page, so they always agree.
+  footer). Archive pages: beside the back link. The 404 page: the nav's. One script drives every
+  `[data-theme-toggle]` on the page, so they always agree.
 - **Which theme:** a choice saved by the toggle (`localStorage.theme`) wins; otherwise the
-  system's `prefers-color-scheme`, followed live. The inline script at the top of
+  system's `prefers-color-scheme`, followed live. Decided 2026-11-15 (merged in PR #126): keep
+  following the system rather than defaulting to dark, because a visitor's own setting is the
+  better signal and the nav switch is one tap away. The inline script at the top of
   `BaseLayout.astro`'s `<head>` sets `data-theme` on `<html>` before first paint. Without
   JavaScript the page is dark. Editing that script changes its hash: run
   `npm run verify-csp -- --write`.
@@ -257,6 +259,18 @@ How much, by kind:
   `--band-sunk` (kraft) and the empty viewer, its prompt and the search box are `--band-raised`
   sheets on it, so the page never matches the panel's tone. `e2e/theme.spec.ts` checks the folder
   against the paper and the page against the folder.
+- **No empty right half at 1000px and up (2026-11-15).** Quick answers puts its heading and a
+  "Send a message" button left of the questions (`.faq__layout`, 0.8fr / 1.2fr). Every archive
+  page (`ArchiveLayout`'s `toc` prop) has an "On this page" rail right of the title block, ruled
+  rows numbered like the footer's, bottom-aligned so the header is no taller. The rail is hidden
+  below 1000px, where the sections already follow each other. A page passes `toc` with ids that
+  are real `h2`s (a conditional section must be conditional in the list too);
+  `e2e/right-half.spec.ts` checks each link lands on a heading and that jumped-to headings clear
+  the fixed logo (`scroll-margin-top: 7.5rem`).
+- **Neighbouring sections never repeat a photo (2026-11-15).** The hero, About and Contact use
+  three different pictures (`hero.webp`, `gallery/sepia.jpg`, `gallery/formal.jpg`). An `<img>`
+  with `width`/`height` attributes needs `height: auto` where CSS sets an `aspect-ratio`, or the
+  attribute wins and stretches the frame (caught on About's first swap).
 - **Album covers have no scan bars.** Cover files are cropped to the artwork; a black scan border
   vanishes on navy but prints as a black strip on paper (`better-than-tv.jpg` and `underwater.jpg`
   were cropped 2026-11-15). `src/album-covers.test.js` checks every cover's four edges.

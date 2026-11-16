@@ -512,10 +512,10 @@ Same reviewer who built the light theme, so allow about three points either way.
 2. ~~**One paper for every section.** The About band is a shade lighter and Highlights a shade darker, but on
    cream the steps are smaller than the navy ones, so the middle of the page runs together again (11-01
    point 3, back in light only).~~ Fixed the same day, see below.
-3. **Same photo twice in a row.** The hero print and the About print are the same photo in the same brass
-   frame, one screen apart.
-4. **Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
-   to light, but paper shows empty space more than a dark ground does.
+3. ~~**Same photo twice in a row.** The hero print and the About print are the same photo in the same brass
+   frame, one screen apart.~~ Fixed 2026-11-15 night, see below.
+4. ~~**Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
+   to light, but paper shows empty space more than a dark ground does.~~ Fixed for Quick answers and the archive headers 2026-11-15 night; the Dev section was never empty (its site preview fills the right), so that part of the point was my misread.
 5. ~~**Sheet-music panel looks washed out.** The beige panel on beige paper, with faint staff lines, has the
    least contrast of any block on the page (text still passes AA).~~ Fixed the same day, see below.
 
@@ -562,3 +562,42 @@ with the viewer's staves at 20% ink instead of 14% and a soft drop shadow under 
 folder and lighter) fails without the rules and passes with them. Full Playwright 344 passed, unit 65/65,
 lint, astro check and `verify-csp` clean, AA sweep included. Looked at it at 1440 and in phone emulation at
 390; not checked on a real device. Not re-scored.
+
+### Light remaining points and re-score, 2026-11-15 night (branch `light-polish-2026-11-15`)
+
+PR #126 merged the light theme at 8:10pm Central; the covers, bands and sheet-music commits came after it, so
+this branch carries them again on top of master plus the work below. Doug asked for every open item at once.
+- **Same photo (point 3):** About now uses `gallery/sepia.jpg`, so hero, About and Contact show three
+  different pictures. Its `width`/`height` attributes briefly stretched the frame to 1080px tall (the
+  attribute beat `aspect-ratio`); `height: auto` fixes it and a test holds the 4:5 ratio.
+- **Empty halves (point 4):** Quick answers is two columns from 1000px (heading, a "Send a message"
+  button, and the questions on the right). Each archive page has an "On this page" rail right of the title
+  block (`ArchiveLayout` `toc` prop; ruled numbered rows, hidden below 1000px), with a scroll margin so
+  jumped-to headings clear the logo. Tests fail on the old code (6 of 11) and pass now.
+- **404:** it already had the nav's switch (the open item was stale); a test now flips the theme there.
+- **Default theme:** decided, keep following the system.
+- **Lighthouse (light, local build, mobile):** performance 94 to 96 (dark 96), accessibility,
+  best practices and SEO 100; desktop performance 100. A first batch read 74 in dark because my own browser
+  tests were running at the same time; repeat runs on an idle machine agreed. The `preferredColorScheme`
+  flag is 0 for dark and 1 for light, which I had backwards at first; the final screenshots confirmed it.
+
+Whole-page look: the home page full length at 1440 in light, plus `/easternblok`, `/press` and the 404 at
+1440, and the home page on a phone at 390 earlier the same day (emulator). Not viewed: a real phone or
+laptop, Safari, the form's error and sent states. Same reviewer who built it, so allow about three points
+either way.
+
+**Good cop: about 91 / 100** (was about 90). Identity 17, hero 18, craft 18, typography 15, archive pages
+10 (the rail gives them structure; was 9), mobile 13 (still emulator only).
+
+**Bad cop: about 86 / 100** (was about 84). What is left:
+1. **About and Contact portraits are close cousins.** Same suit and pose, one sepia and one cool grey, a few
+   screens apart. A third kind of photo (live, or with the band) in one of them would break it.
+2. **Left-weighted sections remain.** Private lessons and On the Road still start at the left of the column,
+   as in dark.
+3. Dev block unchanged (Doug's call, 2026-10-30).
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-15 | good cop | `light-polish-2026-11-15`, light, desktop plus phone emulation | about 91 | Archive rail earns a point; mobile still unverified on a device |
+| 2026-11-15 | bad cop | same | about 86 | Photo repeat and empty halves fixed; portraits similar; left-weighted sections |
+
