@@ -391,6 +391,27 @@ const pieces = [
       min-height: 380px;
     }
   }
+
+  /* Light theme: a kraft folder holding a manuscript page (2026-11-15, bad
+     cop: beige panel on beige paper was the flattest block on the page). The
+     panel takes the kraft band tone, and the empty viewer, its prompt patch
+     and the search box are white sheets on it, with the staves a step darker
+     so they read as ruled paper. Dark is unchanged. */
+  :global(:root[data-theme='light']) .sheet-music__panel {
+    background: var(--band-sunk);
+    border-color: color-mix(in srgb, var(--text) 12%, transparent);
+  }
+
+  :global(:root[data-theme='light']) .sheet-music__search,
+  :global(:root[data-theme='light']) .sheet-music__viewer-empty,
+  :global(:root[data-theme='light']) .sheet-music__viewer-empty-text {
+    background-color: var(--band-raised);
+  }
+
+  :global(:root[data-theme='light']) .sheet-music__viewer-empty {
+    --staff-line-strong: color-mix(in srgb, var(--text) 20%, transparent);
+    box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--shadow) 80%, transparent);
+  }
 </style>
 
 <script>

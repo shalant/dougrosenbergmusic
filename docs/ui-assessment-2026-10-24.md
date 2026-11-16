@@ -516,8 +516,8 @@ Same reviewer who built the light theme, so allow about three points either way.
    frame, one screen apart.
 4. **Empty halves.** Quick answers, the Dev intro and the archive pages leave their right side empty. Not new
    to light, but paper shows empty space more than a dark ground does.
-5. **Sheet-music panel looks washed out.** The beige panel on beige paper, with faint staff lines, has the
-   least contrast of any block on the page (text still passes AA).
+5. ~~**Sheet-music panel looks washed out.** The beige panel on beige paper, with faint staff lines, has the
+   least contrast of any block on the page (text still passes AA).~~ Fixed the same day, see below.
 
 Not counted: the fixed logo and menu over content while scrolling on phones (deliberate, kept on purpose
 2026-10-17), the Dev remote over the preview (Doug's call, 2026-10-30).
@@ -551,3 +551,14 @@ Doug asked for the two cheapest light bad-cop points:
 - Full Playwright both projects 342 passed, unit 65/65, lint, astro check and `verify-csp` clean. Looked at
   Recordings, Highlights and In Frame at 1440 in light. Not re-scored and not checked on a real device; I
   expect about +2 on the light bad cop.
+
+### Sheet-music folder, 2026-11-15 (same branch)
+
+Light bad-cop point 5, at Doug's ask. In light the library is a kraft folder holding a manuscript page: the
+panel takes `--band-sunk`, and the empty viewer, its prompt patch and the search box take `--band-raised`,
+with the viewer's staves at 20% ink instead of 14% and a soft drop shadow under the page. Light-only rules in
+`SheetMusicLibrary.astro`; dark is unchanged. Measured before: the empty viewer was the same tone as the panel
+(1.00:1). New test in `e2e/theme.spec.ts` (folder at least 1.09:1 from the paper, page at least 1.2:1 from the
+folder and lighter) fails without the rules and passes with them. Full Playwright 344 passed, unit 65/65,
+lint, astro check and `verify-csp` clean, AA sweep included. Looked at it at 1440 and in phone emulation at
+390; not checked on a real device. Not re-scored.
