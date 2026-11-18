@@ -91,6 +91,27 @@ test.describe('light theme', () => {
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(244, 239, 230)');
   });
 
+  // The fixed logo was a near-white card holding a dark TV plate in light, a
+  // card in a card (Doug, 2026-11-15). Light drops the backing so the TV
+  // stands alone and fills the box; dark keeps its backing.
+  test('the logo is a bare TV in light and keeps its backing in dark', async ({ page }) => {
+    await page.goto('/');
+    const read = () =>
+      page.evaluate(() => {
+        const logo = getComputedStyle(document.querySelector('.logo')!);
+        return { bg: logo.backgroundColor, shadow: logo.boxShadow, mark: getComputedStyle(document.querySelector('.logo__mark')!).transform };
+      });
+    const light = await read();
+    expect(light.bg).toBe('rgba(0, 0, 0, 0)');
+    expect(light.shadow).toBe('none');
+    expect(light.mark).not.toBe('none'); // scaled up to fill the box the card filled
+    await page.evaluate(() => (document.documentElement.dataset.theme = 'dark'));
+    const dark = await read();
+    expect(dark.bg).not.toBe('rgba(0, 0, 0, 0)');
+    expect(dark.shadow).not.toBe('none');
+    expect(dark.mark).toBe('none');
+  });
+
   // On cream the section bands sat 1.06:1 (About) and 1.08:1 (Highlights,
   // In Frame) from the paper, and the middle of the page ran together (bad
   // cop, 2026-11-15). Light now steps them with their own tokens; each band
