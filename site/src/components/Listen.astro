@@ -129,9 +129,32 @@ const albums = [
   }
 
   /* The records arrive one after another as you scroll (.scroll-rise,
-     global.css): the lead first, each of the others a beat later. */
+     global.css): the lead first, each of the others a beat later. Unlike the
+     shared reveal they also grow from 0.95: they are pictures, and nothing
+     measures or focuses inside them. */
   .album {
     --rise-range: entry calc(var(--i) * 7%) entry calc(70% + var(--i) * 6%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .album.scroll-rise {
+        animation-name: album-scroll-rise;
+      }
+    }
+  }
+
+  @keyframes album-scroll-rise {
+    from {
+      opacity: 0;
+      translate: 0 2.75rem;
+      scale: 0.95;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
   }
 
   /* Pick-up tilt (2026-11-17): on a real pointer the cover turns toward the

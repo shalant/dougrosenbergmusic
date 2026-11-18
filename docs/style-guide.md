@@ -233,9 +233,12 @@ How much, by kind:
   `animation-timeline` in a separate, more specific rule (the minifier gotcha in
   `StaffDivider.astro`).
 - **Micro-interactions (2026-11-17)**: small and brief, never a loop. Every home section carries
-  `.scroll-rise` reveal (About text, Recordings, Lessons text and subjects, FAQ, In Frame heading,
-  Contact form). The reveal travels 2.75rem and scales from 0.96 (raised on 2026-11-17 from 1.25rem
-  with no scale, which Doug could barely see). Recordings, Lessons subjects and FAQ rows each reveal
+  `.scroll-rise` reveal (About text, Recordings, Lessons text and subjects, FAQ, In Frame heading),
+  except Contact: a form must not move while it scrolls into view (a focus or scroll-to-field lands
+  under the fixed header, and any scale shrinks its tap targets). The shared reveal travels 2.75rem
+  and fades, nothing else (raised from 1.25rem, which Doug could barely see); a scale on it broke
+  the tap-target and text-flow tests, so only the album covers, which are pictures, also grow from
+  0.95 (`album-scroll-rise`). Recordings, Lessons subjects and FAQ rows each reveal
   separately and cascade: set `--i` per item and a `--rise-range` that starts later by it. The
   album covers also tilt toward a real pointer (up to 10deg, with a following glare); a script
   writes only the pointer's place into variables, no loop, off under reduced motion and

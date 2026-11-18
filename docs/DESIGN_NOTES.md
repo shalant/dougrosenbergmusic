@@ -322,6 +322,13 @@ and cascade; the album covers tilt toward the pointer with a glare and a deeper 
 (`Listen.astro`, a small script writing CSS variables, so it added one CSP hash). Seen in
 screenshots (mid-scroll cascade, tilted cover); not felt on a real device.
 
+The full suite then caught what that pass broke (run on a separate port; an earlier run had hit the
+dev server by mistake). The scale-up shrank the Contact submit to 42.2px (44 x 0.96) and shifted
+the Highlights list's measured rows, and the 2.75rem shift made the Contact form land 44px high
+when scrolled into view, which in real use would put a focused field under the fixed header. Fix:
+the shared reveal is translate and fade only; the Contact form has no reveal at all; only the
+album covers keep a scale (`album-scroll-rise` in `Listen.astro`).
+
 Changed from what I first proposed: links do not "draw" left to right. The press and ledger links
 wrap across lines or rely on padded tap targets with negative margins, and a background-gradient
 underline would sit in the wrong place on both. The existing underline eases instead. Reveals are

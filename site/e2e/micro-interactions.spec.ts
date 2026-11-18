@@ -9,7 +9,11 @@ import { test, expect } from '@playwright/test';
 // - the contact status message eases in;
 // - links ease their underline instead of snapping.
 
-const REVEALS = ['.about__body', '.album', '.lessons__body', '.lessons__subjects li', '.faq__item', '.gallery__head', '.contact__form-wrap'];
+const REVEALS = ['.about__body', '.album', '.lessons__body', '.lessons__subjects li', '.faq__item', '.gallery__head'];
+
+// The Contact form deliberately has no reveal: a form that is shifted while it
+// scrolls into view makes focus and scroll-to-field land under the fixed
+// header, and a scale would shrink its tap targets (2026-11-17).
 
 test.describe('scroll reveals', () => {
   test('each home section has a reveal that runs when motion is allowed', async ({ browser }) => {
