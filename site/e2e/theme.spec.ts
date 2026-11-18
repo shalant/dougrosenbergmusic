@@ -64,6 +64,107 @@ test.describe('theme selection', () => {
   });
 });
 
+// The channel knob (2026-11-15, Doug picked option 1 of five TV-themed
+// switches): a rotary dial with two stops (CH 1 dark, CH 2 light), a burst of
+// static that covers the theme swap, and a green on-screen label that is also
+// the live region screen readers hear. docs/style-guide.md "Themes".
+test.describe('channel knob', () => {
+  const pointerTurn = (page: Page, selector: string) =>
+    page.locator(selector).evaluate((el) => {
+      // matrix(a, b, ...) of a pure rotation: b = sin(angle)
+      const m = new DOMMatrix(getComputedStyle(el).transform);
+      return Math.round((Math.atan2(m.b, m.a) * 180) / Math.PI);
+    });
+
+  test('the dial stands at CH 1 on the dark page and turns to CH 2 on the light one', async ({ page, isMobile }) => {
+    await page.goto('/');
+    const sel = isMobile ? '.site-footer .theme-toggle__rot' : '.staff-nav .theme-toggle__rot';
+    expect(await pointerTurn(page, sel)).toBe(-50);
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    await expect.poll(() => pointerTurn(page, sel)).toBe(50);
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    await expect.poll(() => pointerTurn(page, sel)).toBe(-50);
+  });
+
+  test('every switch on the page turns together, and the labels still say what pressing does', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    await expect.poll(() => pointerTurn(page, '.site-footer .theme-toggle__rot')).toBe(50);
+    await expect(page.locator('.site-footer [data-theme-toggle]')).toHaveAccessibleName('Lights down (dark theme)');
+  });
+
+  test('a press cuts to static, swaps the theme under it, and names the channel', async ({ page }) => {
+    await page.goto('/');
+    // The static lives only 0.44s, so watch for it in the page instead of
+    // racing it from the test (a busy machine would miss it).
+    await page.evaluate(() => {
+      (window as unknown as { snow: number }).snow = 0;
+      new MutationObserver((records) => {
+        for (const r of records) for (const n of r.addedNodes) if ((n as Element).classList?.contains('channel-static')) (window as unknown as { snow: number }).snow++;
+      }).observe(document.body, { childList: true });
+    });
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    // the swap is immediate; the static covers it and then clears
+    expect(await theme(page)).toBe('light');
+    await expect.poll(() => page.evaluate(() => (window as unknown as { snow: number }).snow)).toBe(1);
+    const osd = page.locator('.channel-osd');
+    await expect(osd).toHaveClass(/(^|\s)on(\s|$)/);
+    await expect(osd).toContainText('CH 02');
+    await expect(osd).toContainText('DAY');
+    await expect(page.locator('.channel-static')).toHaveCount(0, { timeout: 8000 });
+    await expect(osd).not.toHaveClass(/(^|\s)on(\s|$)/, { timeout: 8000 });
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    await expect(osd).toContainText('CH 01');
+    await expect(osd).toContainText('NIGHT');
+  });
+
+  test('the label is a live region, so a screen reader hears the change', async ({ page }) => {
+    await page.goto('/');
+    const osd = page.locator('.channel-osd');
+    await expect(osd).toHaveAttribute('role', 'status');
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    await expect(osd.locator('.visually-hidden')).toHaveText('Lights up, light theme');
+    // the decorative copy is hidden from assistive tech, the sentence is not
+    await expect(osd.locator('[aria-hidden="true"]')).toHaveCount(2);
+  });
+
+  test('a change of the system setting never plays the static or the label', async ({ page }) => {
+    await page.goto('/');
+    // The first emulateMedia after load does not reach the page's listener
+    // (seen 2026-11-15 against the e2e server; the second and later do), so
+    // arm the emulation with a no-op change first.
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.emulateMedia({ colorScheme: 'light' });
+    await expect.poll(() => theme(page)).toBe('light');
+    await expect(page.locator('.channel-static')).toHaveCount(0);
+    await expect(page.locator('.channel-osd')).not.toHaveClass(/(^|\s)on(\s|$)/);
+  });
+
+  test('on a weak device (data-fx lite) the theme changes at once with the label and no static', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => (document.documentElement.dataset.fx = 'lite'));
+    await page.locator('.site-footer [data-theme-toggle]').click();
+    expect(await theme(page)).toBe('light');
+    await expect(page.locator('.channel-static')).toHaveCount(0);
+    await expect(page.locator('.channel-osd')).toContainText('CH 02');
+  });
+
+  test.describe('with reduced motion', () => {
+    test.use({ reducedMotion: 'reduce' });
+
+    test('the theme changes at once, no static is ever made, the label still shows', async ({ page }) => {
+      await page.goto('/');
+      await page.locator('.site-footer [data-theme-toggle]').click();
+      expect(await theme(page)).toBe('light');
+      expect(await page.evaluate(() => document.querySelector('.channel-static'))).toBeNull();
+      await expect(page.locator('.channel-osd')).toContainText('CH 02');
+      // and the dial itself does not animate its turn
+      const t = await page.locator('.site-footer .theme-toggle__rot').evaluate((el) => getComputedStyle(el).transitionDuration);
+      expect(parseFloat(t)).toBe(0);
+    });
+  });
+});
+
 test.describe('light theme', () => {
   test.use({ colorScheme: 'light' });
 

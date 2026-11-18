@@ -250,6 +250,20 @@ the visitor's context, which the follow-the-system default does in its simplest 
   weak-device and reduced-motion rules already cover both layers.
 - **Craft over polish.** A static paper grain (one SVG noise tile, no animation) on the light page
   only. The page-wide color glows stay on: on paper they read as faint watercolor washes.
+- **Channel knob (2026-11-15, Doug's ask: the sun/moon toggle was "very conventional", asked for
+  five ways to use the TV theme).** A Claude artifact mocked five live options in a miniature of
+  the nav and hero: channel knob, power button with a CRT collapse, rabbit ears with a vertical-hold
+  roll, a color-bar test pattern, and a remote with channel up and down. Doug took the
+  recommendation: the knob, with the remote's on-screen label. Reasons: it fits the slot the
+  sun/moon icon used (the nav pill keeps its width), it reads as something you turn with two fixed
+  stops, the static is short enough to repeat, and the label (CH 02 / DAY) answers which way is
+  which and doubles as the screen-reader announcement. The others each give something up: the
+  power button reads as off and takes a second, the ears are hard to read at 44px, the test
+  pattern hides its state, the remote doubles the width. The mock used VT323 for the label; the
+  site has no pixel font and adding one for a 1.8s label wasn't worth a font download, so the real
+  label uses the system monospace stack. One real-site change from the mock: the static cuts in
+  at full strength instead of fading in, with the theme swapped in the same frame, so the swap is
+  never visible and the page's state is already right when the press returns.
 - **Toggle in the site's voice.** "Lights up" / "Lights down", a stage-lights switch with a brass
   dot, in the footer and beside the back link on the archive pages. Added to the nav the same day
   at Doug's request: on desktop a sun (dark page) or moon (light page) icon button past a hairline
