@@ -140,7 +140,12 @@
      fades into it. Light keeps the paper and lets the dark footer start at
      a hard edge, like the back of a sleeve. */
   --contact-fade-end: var(--footer-bg);
-  --paper-grain: none;
+  /* Dark grain (2026-11-17): the same static noise tile as the light paper,
+     tinted pale instead of brown, so dark pages aren't flat charcoal.
+     --grain-on-dark is never overridden by the light theme: the footer is a
+     dark plate in both themes and needs the pale tile either way. */
+  --paper-grain: var(--grain-on-dark);
+  --grain-on-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0 0.9 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* one muted jewel-tone per section, used by the staff-corner nav */
   --note-hero: var(--glow);
@@ -180,8 +185,9 @@
   --contact-fade-end: transparent;
   /* Paper grain: one static SVG noise tile, drawn once and repeated, so it
      costs no animation or repaint. img-src already allows data:. Kept faint
-     enough that it reads as stock, not texture, at arm's length. */
-  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.18 0 0 0 0 0.1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+     enough that it reads as stock at arm's length. Raised from 7% to 12% alpha
+     on 2026-11-17 (Doug wanted more texture; dark's grain made light look flat). */
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.18 0 0 0 0 0.1 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   --note-about: #a33f15;
   --note-highlights: #1a6e4e;

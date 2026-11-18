@@ -151,7 +151,26 @@ visible: the hero blobs went from strength 0.7 to 0.35 and the page-wide glows f
 (the figures quoted below are the original ones). He also found the dev server "twitchy"; see the
 measurement note at the end of the next section. After a look on desktop he then asked for them
 slightly more visible, so the final values are 0.45 for the hero blobs and 0.35 for the page-wide
-glows (set 2026-11-14).
+glows (set 2026-11-14). On 2026-11-17 Doug asked for the page-wide glows 10% more visible, so
+`--ambient-strength` in `AmbientHues.astro` went from 0.35 to 0.385 (the hero blobs stay at 0.45).
+
+Same day, Doug said the other pages felt like "plain charcoal and cream." Moved `<AmbientHues />`
+from `index.astro` into `BaseLayout.astro` so Press, Eastern Blok and its Press get the glows, and
+gave dark theme a grain (`--paper-grain` was `none` there; now the light tile retinted pale at 6%
+alpha). Light's grain is unchanged at 7%. Not yet checked by eye on a real device; the dark grain
+strength is a first guess to tune.
+
+After Doug looked at it on the dev server (liked it) he said the darker panels had less texture
+than the rest, in both themes. Cause: About, Highlights and In Frame are 78% opaque and the footer
+is fully opaque, so the page grain (and the glows) reach them at 22% or not at all. Fix: each of
+those four paints its own grain; the footer uses a new `--grain-on-dark` tile (pale, never
+overridden by light) so it shows on the dark plate in light theme too. The glows still only show
+through the bands at 22%; not changed.
+
+Then Doug said light mode's panels felt like they had less texture and liked the texture. Light's
+panels hadn't lost any (the band grain was added in both themes); the likely cause is that dark's
+new pale grain made light's faint 7% look flat by comparison. Raised light's grain alpha from 7% to
+12%, and lengthened the channel-knob static from 0.44s to 0.64s. Dev-server look only.
 
 CSP note, 2026-11-14: PR #121 (the blobs) reached `master` without regenerating the script-src hash
 for the hero's inline script, which the blobs change had edited (the line that mirrors `data-fx` to

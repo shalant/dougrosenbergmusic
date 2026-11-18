@@ -439,7 +439,8 @@ const photos = [
 <style>
   .gallery {
     padding-block: clamp(4rem, 9vw, 7rem);
-    background: color-mix(in srgb, var(--band-sunk) 78%, transparent);
+    /* grain on the band itself, since the 78% fill hides most of the page grain */
+    background: var(--paper-grain) color-mix(in srgb, var(--band-sunk) 78%, transparent);
     position: relative;
   }
 
