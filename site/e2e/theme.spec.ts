@@ -95,7 +95,7 @@ test.describe('channel knob', () => {
 
   test('a press cuts to static, swaps the theme under it, and names the channel', async ({ page }) => {
     await page.goto('/');
-    // The static lives only 0.44s, so watch for it in the page instead of
+    // The static lives only 0.64s, so watch for it in the page instead of
     // racing it from the test (a busy machine would miss it).
     await page.evaluate(() => {
       (window as unknown as { snow: number }).snow = 0;

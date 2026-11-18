@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import AmbientHues from '../components/AmbientHues.astro';
 import HeroGraded from '../components/HeroGraded.astro';
 import DevServices from '../components/DevServices.astro';
 import Listen from '../components/Listen.astro';
@@ -51,7 +50,6 @@ const albumsSchema = { '@context': 'https://schema.org', '@graph': recordings };
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(albumsSchema)} />
-  <AmbientHues />
   <HeroGraded />
   <Intro />
   <StaffDivider icon="music" tone="listen" label="Listen" />

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import AmbientHues from '../components/AmbientHues.astro';
 import StaffNav from '../components/StaffNav.astro';
 
 interface Props {
@@ -188,6 +189,7 @@ const websiteSchema = {
 		</script>
 	</head>
 	<body>
+		<AmbientHues />
 		{/* A banner landmark for the fixed logo, so it isn't page content outside every landmark (axe "region", 2026-10-28). The logo is fixed-position, so this wrapper takes no space. */}
 		<header>
 			<Logo home={home} />

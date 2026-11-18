@@ -51,6 +51,13 @@ existing pass elsewhere still holds.
 Light is "liner-notes paper": a warm off-white page and warm charcoal ink, never pure white or pure
 black. The same token names carry both sets, so components don't know which theme they're in.
 
+**Page texture (2026-11-17):** no page is a flat color. `BaseLayout` renders `AmbientHues` on every
+page (home, Press, Eastern Blok and its Press), and `--paper-grain` is set in both themes (pale
+specks in dark, brown in light) and painted on `body`. The 78%-opaque bands (About, Highlights, In
+Frame) and the opaque footer paint their own grain, because the body's barely reaches them; the
+footer always uses the pale `--grain-on-dark` tile since it is a dark plate in both themes. Checked
+by `site/e2e/texture.spec.ts`.
+
 | Token | Dark | Light | Light contrast as text (on `--bg` / `--bg-elevated` / `--surface`) |
 |---|---|---|---|
 | `--bg` | `#0a0e17` | `#f4efe6` | |
@@ -80,7 +87,7 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
   pointer. Its rotation is CSS from `<html data-theme>`, so every switch agrees and nothing waits
   on script. The nav's icon variant is the dial alone (44px, label visually hidden, native
   `title`); the labelled pill keeps "Lights up / Lights down" with a 24px dial where the brass dot
-  was. Pressing it cuts to a burst of static (`.channel-static`, opaque noise, about 0.44s) that
+  was. Pressing it cuts to a burst of static (`.channel-static`, opaque noise, about 0.64s; lengthened from 0.44s on 2026-11-17 at Doug's request) that
   covers the theme swap, and a green on-screen label (`.channel-osd`, CH 02 / DAY) names the
   channel for 1.8s. The label is a `role="status"` live region created at load, with the
   decorative copy `aria-hidden` and a visually hidden sentence ("Lights up, light theme"), so a

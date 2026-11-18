@@ -121,7 +121,7 @@ const icon = variant === 'icon';
     showOsd(next);
     const clear = () => snow.remove();
     snow
-      .animate([{ opacity: 1 }, { opacity: 1, offset: 0.25 }, { opacity: 0 }], { duration: 440, easing: 'ease-out', fill: 'forwards' })
+      .animate([{ opacity: 1 }, { opacity: 1, offset: 0.25 }, { opacity: 0 }], { duration: 640, easing: 'ease-out', fill: 'forwards' })
       .finished.then(clear, clear);
   }
 
