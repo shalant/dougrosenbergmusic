@@ -304,3 +304,26 @@ refactor" item.
 - Existing live site: dougrosenberg.com (current Blazor build, code in `newMusicWebsiteJan26`) — the current visual mood (dark/cinematic/glowing type) is a real asset worth carrying forward in spirit, even in a fully custom rebuild.
 - `ui-lab` repo — local archive of UI experiments; check there first for anything reusable. This project's nav and brand explorations are archived under `artifacts/dougrosenbergmusic/`, including ideas that didn't make the cut (see Brand direction above).
 - **Pre-launch quality checklist:** before calling this site done, check it against the canonical checklist in the `career-development` repo — not duplicated here on purpose (it's a living doc that gets updated independently; a copy would drift stale). Local: `../career-development/docs/SITE_QUALITY_CHECKLIST.md`. Remote: https://github.com/shalant/career-development/blob/main/docs/SITE_QUALITY_CHECKLIST.md
+
+## Micro-interactions, 2026-11-17 (branch `micro-interactions-2026-11-17`)
+
+Doug asked for "a little extra motion to show this app is really cool", explicitly not jarring.
+A survey found hover and tap feedback already on nearly everything; the gap was entrances. Only
+Highlights, Performance and the quote ledger had a scroll reveal. Added `.scroll-rise` to About,
+Recordings, Lessons (two columns, the staff trailing), FAQ, In Frame's heading and the Contact
+form, so every home section now has exactly one. Also: a press squeezes the "+" on the four
+accordions (FAQ, Show log, Video log, Press years) and the reel thumbnails; the Contact status
+message eases in; links ease their underline color and thickness.
+
+Same day, Doug: "I barely notice any change. I want this site to be WOW." The first pass was too
+timid (1.25rem of travel on tall blocks that finished early). Second pass: the shared reveal now
+travels 2.75rem and scales from 0.96; Recordings, Lessons subjects and FAQ rows reveal one by one
+and cascade; the album covers tilt toward the pointer with a glare and a deeper shadow
+(`Listen.astro`, a small script writing CSS variables, so it added one CSP hash). Seen in
+screenshots (mid-scroll cascade, tilted cover); not felt on a real device.
+
+Changed from what I first proposed: links do not "draw" left to right. The press and ledger links
+wrap across lines or rely on padded tap targets with negative margins, and a background-gradient
+underline would sit in the wrong place on both. The existing underline eases instead. Reveals are
+scroll-driven CSS with no script (no CSP hash), and browsers without scroll timelines show the
+content. Seen on the dev server only; not on a real phone.

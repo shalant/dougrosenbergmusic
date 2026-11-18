@@ -48,7 +48,7 @@ const faqSchema = {
 
     <div class="faq__list">
       {faqs.map(({ q, a }) => (
-        <details class="faq__item">
+        <details class="faq__item scroll-rise">
           <summary>{q}</summary>
           <p>{a}</p>
         </details>
@@ -153,6 +153,12 @@ const faqSchema = {
     list-style: none;
   }
 
+  /* Each answer row rises in on its own (.scroll-rise, global.css), finishing
+     as it enters the screen, so the list cascades as you scroll (2026-11-17). */
+  .faq__item {
+    --rise-range: entry 5% entry 85%;
+  }
+
   .faq__item summary::-webkit-details-marker {
     display: none;
   }
@@ -175,6 +181,14 @@ const faqSchema = {
   @media (hover: hover) {
     .faq__item summary:hover::after {
       scale: 1.4;
+    }
+  }
+
+  /* A press squeezes the "+" (2026-11-17), after the hover rule so it wins
+     while the pointer is down. */
+  @media (prefers-reduced-motion: no-preference) {
+    .faq__item summary:active::after {
+      scale: 0.8;
     }
   }
 

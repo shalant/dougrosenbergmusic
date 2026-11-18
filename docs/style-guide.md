@@ -232,6 +232,18 @@ How much, by kind:
   `.scroll-rise` (set `--rise-range` to retime it) rather than writing new keyframes. Keep
   `animation-timeline` in a separate, more specific rule (the minifier gotcha in
   `StaffDivider.astro`).
+- **Micro-interactions (2026-11-17)**: small and brief, never a loop. Every home section carries
+  `.scroll-rise` reveal (About text, Recordings, Lessons text and subjects, FAQ, In Frame heading,
+  Contact form). The reveal travels 2.75rem and scales from 0.96 (raised on 2026-11-17 from 1.25rem
+  with no scale, which Doug could barely see). Recordings, Lessons subjects and FAQ rows each reveal
+  separately and cascade: set `--i` per item and a `--rise-range` that starts later by it. The
+  album covers also tilt toward a real pointer (up to 10deg, with a following glare); a script
+  writes only the pointer's place into variables, no loop, off under reduced motion and
+  `data-fx="lite"`. A press squeezes small
+  indicators (accordion "+" to 0.8, reel thumbnail to 0.94) in a `no-preference` block placed after
+  the hover rule. Status text eases in (`status-in`, 0.3s). Links ease underline color and
+  thickness (global `a` rule; a component's own `transition` overrides it). Checked by
+  `site/e2e/micro-interactions.spec.ts`.
 - **Ambient loops**: 1-2 per screen, slow (6s+), low contrast. The fixed nav's only loop is the
   active note's pulse.
 - Everything off under `prefers-reduced-motion: reduce`; nothing hidden when scroll timelines

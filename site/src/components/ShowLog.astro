@@ -134,6 +134,13 @@ const last = data.shows[data.shows.length - 1].date.slice(0, 4);
     }
   }
 
+  /* A press squeezes the "+" (2026-11-17). */
+  @media (prefers-reduced-motion: no-preference) {
+    .year summary:active::after {
+      scale: 0.8;
+    }
+  }
+
   /* A year's show list slides open where the browser can animate to
      `height: auto`; elsewhere it opens as before. */
   @supports selector(::details-content) {

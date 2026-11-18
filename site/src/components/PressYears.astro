@@ -102,6 +102,13 @@ const kindLabel = (kind: string) => KIND_LABEL[kind as keyof typeof KIND_LABEL];
     }
   }
 
+  /* A press squeezes the "+" (2026-11-17). */
+  @media (prefers-reduced-motion: no-preference) {
+    .year summary:active::after {
+      scale: 0.8;
+    }
+  }
+
   .year summary:focus-visible {
     outline: 2px solid var(--brass);
     outline-offset: 2px;

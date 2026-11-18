@@ -21,7 +21,7 @@
       </figure>
     </div>
 
-    <div class="contact__form-wrap">
+    <div class="contact__form-wrap scroll-rise">
       <form id="contact-form" class="contact__form" novalidate>
         <div class="contact__field">
           <label for="contact-name">Name</label>
@@ -387,6 +387,21 @@
     font-size: 0.85rem;
     text-align: center;
     color: var(--text-muted);
+  }
+
+  /* The message eases in instead of swapping instantly (2026-11-17). It
+     plays when the paragraph goes from empty to filled. */
+  @media (prefers-reduced-motion: no-preference) {
+    .contact__form-status:not(:empty) {
+      animation: status-in var(--dur-med) var(--ease-out) both;
+    }
+  }
+
+  @keyframes status-in {
+    from {
+      opacity: 0;
+      translate: 0 0.4rem;
+    }
   }
 
   .contact__form-status--success {
