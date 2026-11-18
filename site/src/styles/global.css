@@ -307,6 +307,16 @@ a {
   color: inherit;
 }
 
+/* Underlines ease to their hover state instead of snapping (2026-11-17), so
+   the outlet and source links warm to brass over a beat. Element selector on
+   purpose: any component rule that sets its own transition (.cta, nav notes)
+   has higher specificity and keeps it. */
+@media (prefers-reduced-motion: no-preference) {
+  a {
+    transition: text-decoration-color var(--dur-base) ease, text-decoration-thickness var(--dur-base) var(--ease-out);
+  }
+}
+
 /* Plain inline links with no class of their own (an archived copy, a source,
    an outlet name) answer the pointer (2026-10-30): the underline turns brass
    and thickens. It is the underline, not the text color, because component
@@ -539,7 +549,7 @@ a {
 @keyframes scroll-rise {
   from {
     opacity: 0;
-    translate: 0 1.25rem;
+    translate: 0 2.75rem;
   }
   to {
     opacity: 1;

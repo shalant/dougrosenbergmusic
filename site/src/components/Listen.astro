@@ -33,7 +33,7 @@ const albums = [
 
     <div class="listen__grid">
       {albums.map((album, i) => (
-        <a class={i === 0 ? 'album album--lead' : 'album'} href={album.url} target="_blank" rel="noopener noreferrer">
+        <a class={i === 0 ? 'album album--lead scroll-rise' : 'album scroll-rise'} style={`--i:${i}`} href={album.url} target="_blank" rel="noopener noreferrer">
           <span class="album__art"><img class="album__cover" src={`${import.meta.env.BASE_URL}${album.cover.replace(/^\//, '')}`} alt={`${album.title} album cover`} loading="lazy" /></span>
           <div class="album__body">
             <h3 class="album__title">{album.title}</h3>
@@ -128,6 +128,78 @@ const albums = [
     transform: translateY(0) scale(0.99);
   }
 
+  /* The records arrive one after another as you scroll (.scroll-rise,
+     global.css): the lead first, each of the others a beat later. Unlike the
+     shared reveal they also grow from 0.95: they are pictures, and nothing
+     measures or focuses inside them. */
+  .album {
+    --rise-range: entry calc(var(--i) * 7%) entry calc(70% + var(--i) * 6%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .album.scroll-rise {
+        animation-name: album-scroll-rise;
+      }
+    }
+  }
+
+  @keyframes album-scroll-rise {
+    from {
+      opacity: 0;
+      translate: 0 2.75rem;
+      scale: 0.95;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+  }
+
+  /* Pick-up tilt (2026-11-17): on a real pointer the cover turns toward the
+     cursor like a sleeve held in the hand, with a soft light that follows
+     it. The script below only writes --tx/--ty (-0.5 to 0.5, from the cover's
+     center) and --gx/--gy (0 to 1); everything visible is CSS. No loop, and
+     it settles flat when the pointer leaves. Placed after the hover and
+     press rules so it wins over them. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .album__art {
+      position: relative;
+      transform: perspective(800px) rotateX(calc(var(--ty, 0) * -10deg)) rotateY(calc(var(--tx, 0) * 10deg));
+      transition:
+        outline-color var(--dur-base) ease,
+        transform var(--dur-med) var(--ease-out),
+        box-shadow var(--dur-med) ease;
+    }
+
+    .album__art::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        circle at calc(var(--gx, 0.5) * 100%) calc(var(--gy, 0.5) * 100%),
+        rgba(255, 255, 255, 0.3),
+        transparent 55%
+      );
+      opacity: 0;
+      transition: opacity var(--dur-med) ease;
+    }
+
+    .album:hover .album__art {
+      box-shadow: 0 30px 44px -20px color-mix(in srgb, var(--shadow) 95%, transparent);
+    }
+
+    .album:hover .album__art::after {
+      opacity: 1;
+    }
+
+    .album:active .album__art {
+      transform: perspective(800px) scale(0.98);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .album,
     .album__cover {
@@ -216,3 +288,30 @@ const albums = [
     }
   }
 </style>
+
+<script>
+  // Pick-up tilt for the album covers (2026-11-17): writes the pointer's
+  // place over the cover into CSS variables; the Listen styles do the rest.
+  // Only for a real pointer, never under reduced motion, and not on a weak
+  // device (the hero script sets data-fx="lite" there).
+  const canTilt = matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canTilt) {
+    document.querySelectorAll<HTMLElement>('.album').forEach((album) => {
+      const art = album.querySelector<HTMLElement>('.album__art');
+      if (!art) return;
+      album.addEventListener('pointermove', (e) => {
+        if (document.documentElement.dataset.fx === 'lite') return;
+        const r = art.getBoundingClientRect();
+        const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+        const y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+        album.style.setProperty('--tx', String(x - 0.5));
+        album.style.setProperty('--ty', String(y - 0.5));
+        album.style.setProperty('--gx', String(x));
+        album.style.setProperty('--gy', String(y));
+      });
+      album.addEventListener('pointerleave', () => {
+        for (const v of ['--tx', '--ty', '--gx', '--gy']) album.style.removeProperty(v);
+      });
+    });
+  }
+</script>

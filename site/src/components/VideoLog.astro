@@ -116,6 +116,13 @@ const rest = data.videos.filter((v) => !v.lead);
     }
   }
 
+  /* A press squeezes the "+" (2026-11-17). */
+  @media (prefers-reduced-motion: no-preference) {
+    .more summary:active::after {
+      scale: 0.8;
+    }
+  }
+
   .more__label {
     font-family: var(--font-display);
     font-size: 1.15rem;
