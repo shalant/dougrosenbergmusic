@@ -142,6 +142,32 @@ const records = [
     display: contents;
   }
 
+  /* Parallax drift (2026-11-17): as the hero scrolls away the photo lags
+     behind the page and eases in a little, so it reads as deeper than the
+     content. The extra scale supplies the slack the downward shift needs, so
+     no bare strip ever shows at the top. Scroll-driven, no script; dark theme
+     only (the light hero is a framed print), still on weak devices and
+     under reduced motion. The timeline is a separate, more specific rule on
+     purpose (the minifier gotcha in StaffDivider.astro). */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      :global(:root:not([data-theme='light'], [data-fx='lite'])) .hero__photo {
+        animation: hero-drift linear both;
+      }
+      :global(html:not([data-theme='light'], [data-fx='lite'])) .hero .hero__photo {
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+      }
+    }
+  }
+
+  @keyframes hero-drift {
+    to {
+      translate: 0 9vh;
+      scale: 1.12;
+    }
+  }
+
   .hero__photo {
     position: absolute;
     inset: 0;

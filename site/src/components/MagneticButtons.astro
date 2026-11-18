@@ -1,0 +1,77 @@
+---
+// Magnetic call-to-action buttons (2026-11-17). When a real pointer comes
+// within reach of a .cta, the button leans a few pixels toward it and eases
+// back when the pointer leaves. The script only writes --mx/--my (pixels) and
+// the global `.cta` rule turns them into `translate`, so nothing else about
+// the button changes: its size, its hit area and the layout stay put.
+//
+// Motion rules: only for a hover-capable fine pointer, never under
+// prefers-reduced-motion, and not on a weak device (the hero script sets
+// data-fx="lite"). The loop runs only while a button is still moving.
+---
+
+<script>
+  const canLean = matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canLean) {
+    const REACH = 70; // px beyond the button's own edge where it starts to lean
+    const PULL = 0.3; // share of the pointer's offset the button follows
+    const MAX = 10; // px, the furthest a button ever leans
+    const EASE = 0.18; // per frame, toward the target
+
+    const buttons = Array.from(document.querySelectorAll<HTMLElement>('.cta')).map((el) => ({ el, x: 0, y: 0 }));
+    let pointer: { x: number; y: number } | null = null;
+    let raf = 0;
+
+    const step = () => {
+      raf = 0;
+      let moving = false;
+      for (const b of buttons) {
+        let tx = 0;
+        let ty = 0;
+        if (pointer && document.documentElement.dataset.fx !== 'lite') {
+          const r = b.el.getBoundingClientRect();
+          // Measure from where the button rests, not where it has leaned to.
+          const cx = r.left + r.width / 2 - b.x;
+          const cy = r.top + r.height / 2 - b.y;
+          const dx = pointer.x - cx;
+          const dy = pointer.y - cy;
+          const reachX = r.width / 2 + REACH;
+          const reachY = r.height / 2 + REACH;
+          if (Math.abs(dx) < reachX && Math.abs(dy) < reachY) {
+            tx = Math.max(-MAX, Math.min(MAX, dx * PULL));
+            ty = Math.max(-MAX, Math.min(MAX, dy * PULL));
+          }
+        }
+        b.x += (tx - b.x) * EASE;
+        b.y += (ty - b.y) * EASE;
+        if (Math.abs(tx - b.x) < 0.05 && Math.abs(ty - b.y) < 0.05) {
+          b.x = tx;
+          b.y = ty;
+        } else {
+          moving = true;
+        }
+        b.el.style.setProperty('--mx', `${b.x.toFixed(2)}px`);
+        b.el.style.setProperty('--my', `${b.y.toFixed(2)}px`);
+      }
+      // Run only while something is still moving; a pointer move wakes it.
+      if (moving) raf = requestAnimationFrame(step);
+    };
+
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(step);
+    };
+
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        pointer = { x: e.clientX, y: e.clientY };
+        wake();
+      },
+      { passive: true },
+    );
+    document.documentElement.addEventListener('pointerleave', () => {
+      pointer = null;
+      wake();
+    });
+  }
+</script>

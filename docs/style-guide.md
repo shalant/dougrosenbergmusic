@@ -247,6 +247,17 @@ How much, by kind:
   the hover rule. Status text eases in (`status-in`, 0.3s). Links ease underline color and
   thickness (global `a` rule; a component's own `transition` overrides it). Checked by
   `site/e2e/micro-interactions.spec.ts`.
+- **Bigger motion (2026-11-17)**: section headings (Recordings, On the Road, Highlights, Quick
+  answers, Contact) clip-and-rise with `.heading-reveal`, never inside a `.scroll-rise` block (the
+  two would stack), and not the Dev heading (that block stays as it is). Short elements (headings,
+  FAQ and Lessons rows, ~50-60px) need a `cover` range; an `entry` range plays out over their own
+  height and reads as a snap. A wrapped heading rises as one block, not line by line. In dark the
+  hero photo drifts down 9vh and grows to 1.12 as the hero scrolls away (`hero-drift`, scroll
+  timeline, no script), with enough extra scale that no gap shows; light keeps the framed print
+  still. Every `.cta` leans up to 10px toward a real pointer within 70px of it
+  (`MagneticButtons.astro`: a script writes `--mx`/`--my`, a global rule turns them into
+  `translate`; it runs only while a button is moving and is off under reduced motion and lite).
+  Checked by `site/e2e/wow-motion.spec.ts`.
 - **Ambient loops**: 1-2 per screen, slow (6s+), low contrast. The fixed nav's only loop is the
   active note's pulse.
 - Everything off under `prefers-reduced-motion: reduce`; nothing hidden when scroll timelines

@@ -41,7 +41,7 @@ const faqSchema = {
 <section id="faq" class="faq">
   <div class="wrap faq__layout">
     <div class="faq__intro">
-      <h2 class="faq__heading">Quick answers</h2>
+      <h2 class="faq__heading heading-reveal">Quick answers</h2>
       <p class="faq__more">Something not covered here? Ask Doug directly.</p>
       <a class="cta cta-secondary faq__ask" href="#contact">Send a message</a>
     </div>
@@ -153,10 +153,11 @@ const faqSchema = {
     list-style: none;
   }
 
-  /* Each answer row rises in on its own (.scroll-rise, global.css), finishing
-     as it enters the screen, so the list cascades as you scroll (2026-11-17). */
+  /* Each answer row rises in on its own (.scroll-rise, global.css), so the
+     list cascades as you scroll (2026-11-17). Cover range, not entry: a row
+     is ~60px tall, and an entry range would finish in a few pixels of scroll. */
   .faq__item {
-    --rise-range: entry 5% entry 85%;
+    --rise-range: cover 0% cover 20%;
   }
 
   .faq__item summary::-webkit-details-marker {

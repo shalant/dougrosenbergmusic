@@ -132,10 +132,10 @@ const subjects = [
   }
 
   /* The text block rises in on scroll (.scroll-rise, global.css) and the
-     subjects cascade one after another (2026-11-17): each row finishes as it
-     enters the screen, started a little later by its index. */
+     subjects cascade one after another (2026-11-17): cover range, so each
+     row moves over ~200px of scroll, started a little later by its index. */
   .lessons__subjects li {
-    --rise-range: entry calc(var(--i) * 6%) entry calc(75% + var(--i) * 4%);
+    --rise-range: cover calc(var(--i) * 1.5%) cover calc(20% + var(--i) * 1.5%);
   }
 
   @media (max-width: 760px) {

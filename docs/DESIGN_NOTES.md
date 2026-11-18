@@ -334,3 +334,14 @@ wrap across lines or rely on padded tap targets with negative margins, and a bac
 underline would sit in the wrong place on both. The existing underline eases instead. Reveals are
 scroll-driven CSS with no script (no CSP hash), and browsers without scroll timelines show the
 content. Seen on the dev server only; not on a real phone.
+
+### Bigger motion round (branch `wow-motion-2026-11-17`)
+
+Doug asked to try magnetic buttons, a hero parallax drift and line-by-line headings. Built all
+three: `.cta` buttons lean toward a nearby pointer (script plus a global `translate` rule, no
+layout change); the dark hero photo lags the page by 9vh with a 1.12 grow so no gap shows
+(scroll timeline, no script); five section headings clip-and-rise. Headings rise as one block:
+true line-by-line needs a script to split lines, which I did not add. First version of the heading
+reveal used an `entry` range and was a snap (a 50px heading has ~35px of scroll to play in);
+caught by reading computed opacity at three scroll positions, then moved to a `cover` range, and
+the FAQ and Lessons rows (also short) got the same fix. Seen in screenshots, not felt on a device.
