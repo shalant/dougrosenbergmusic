@@ -92,8 +92,10 @@ const pieces = [
 </section>
 
 <style>
+  /* Top padding is short on purpose (2026-11-19): it follows Private lessons,
+     and the library is that section's practice material. */
   .sheet-music {
-    padding-block: clamp(4rem, 9vw, 7rem);
+    padding-block: clamp(2rem, 4vw, 3.5rem) clamp(4rem, 9vw, 7rem);
     background: transparent;
   }
 

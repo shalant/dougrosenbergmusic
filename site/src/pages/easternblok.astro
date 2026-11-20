@@ -30,6 +30,10 @@ const toursPoland = showData.shows.some((show) => show.region === 'Poland');
 
 const pressCount = publicEntries(bandArchive.entries).length;
 
+// The story's pull quote is the ledger's first quote, read from the same data
+// so it cannot drift from the Press section below it (2026-11-19).
+const pull = easternBlokQuotes[0];
+
 const albums = bandArchive.albums.map((album) => ({ ...album, cover: covers[album.id], yearNote: yearToConfirm[album.id] }));
 
 const bandSchema = {
@@ -75,7 +79,18 @@ const bandSchema = {
   <section class="archive__section" aria-labelledby="story">
     <h2 id="story">The story</h2>
     <p>
-      Eastern Blok began as the Goran Ivanovic Group, a Chicago band led by the Croatian-born guitarist Goran Ivanovic, with Doug Rosenberg on saxophone, flute and clarinet, Matthew Ulery on bass and Michael Caskey on drums. Their first album, <cite>Goran Ivanovic Group</cite> (Balkan Song Records, 2006), mixed Balkan folk music, klezmer and jazz improvisation, and <cite>Downbeat</cite> reviewed it in June 2006. The band took the name Eastern Blok for its second album, <cite>Folk Tales</cite> (2007), and released a third, <cite>Underwater</cite>, in 2011. The show list below records {showCount} concerts from 2005 to 2012, across {stateCount} states{toursPoland && ' and Poland'}.
+      Eastern Blok began as the Goran Ivanovic Group, a Chicago band led by the Croatian-born guitarist Goran Ivanovic, with Doug Rosenberg on saxophone, flute and clarinet, Matthew Ulery on bass and Michael Caskey on drums. Their first album, <cite>Goran Ivanovic Group</cite> (Balkan Song Records, 2006), mixed Balkan folk music, klezmer and jazz improvisation, and <cite>Downbeat</cite> reviewed it in June 2006.
+    </p>
+    <figure class="pull">
+      <blockquote class="pull__quote">
+        <p>&ldquo;{pull.text}&rdquo;</p>
+      </blockquote>
+      <figcaption class="pull__cite">
+        <a href={pull.url} target="_blank" rel="noopener noreferrer">{pull.outlet}<span class="visually-hidden"> (opens in a new tab)</span></a> · {pull.author} · {pull.detail}, {pull.year}
+      </figcaption>
+    </figure>
+    <p>
+      The band took the name Eastern Blok for its second album, <cite>Folk Tales</cite> (2007), and released a third, <cite>Underwater</cite>, in 2011. The show list below records {showCount} concerts from 2005 to 2012, across {stateCount} states{toursPoland && ' and Poland'}.
     </p>
     <p>
       The band's 2007 press bio quoted the <cite>Los Angeles Times</cite> calling their music “relentlessly innovative work” and <cite>Time Out</cite> calling the group “an agile Bela Fleck in Croatia.” Both quotes come from that bio; the original articles haven't been found.
@@ -171,6 +186,42 @@ const bandSchema = {
 </ArchiveLayout>
 
 <style>
+  /* One review quote sets the story's two paragraphs apart (2026-11-19): the
+     page opened on a wall of text beside a short contents list. */
+  .pull {
+    margin: 2rem 0;
+    padding: 0.25rem 0 0.25rem 1.4rem;
+    border-left: 3px solid var(--brass);
+    max-width: 36rem;
+  }
+
+  .pull__quote {
+    margin: 0;
+  }
+
+  .pull__quote p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+    line-height: 1.35;
+    color: var(--text);
+  }
+
+  .pull__cite {
+    margin-top: 0.8rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .pull__cite a {
+    color: var(--text);
+    text-underline-offset: 3px;
+    text-decoration-color: var(--brass);
+  }
+
   .press-more a {
     color: var(--text);
     text-underline-offset: 3px;

@@ -698,15 +698,15 @@ section taller), and the empty ground under the tallest block fell from about 23
 | Mobile | 15 | 13 | 13 | Emulator only, so provisional. The Lessons subject rows got roomier on the phone (see below). |
 
 **Bad cop: dark about 86, light about 88** (was about 84 and about 87 earlier today). What costs points:
-1. **Still about 190px of empty ground after Lessons** before the Sheet Music heading. Mostly the next section's own
-   top padding.
-2. **A text wall on `/easternblok`.** The story is long paragraphs in the left column with only the contents list
-   beside it, on desktop and phone. A pull quote or photo would break it. The page's lower half was not viewed.
-3. **Phone Lessons rows are airy.** The larger subject type and padding made the five rows about 90px each on a
+1. ~~**Still about 190px of empty ground after Lessons** before the Sheet Music heading. Mostly the next section's own
+   top padding.~~ Fixed 2026-11-19, see the fixes below.
+2. ~~**A text wall on `/easternblok`.** The story is long paragraphs in the left column with only the contents list
+   beside it, on desktop and phone. A pull quote or photo would break it. The page's lower half was not viewed.~~ Fixed 2026-11-19, see the fixes below. (The lower half was viewed this round: photos, albums, press ledger and shows are rich; only the story opened as a wall.)
+3. ~~**Phone Lessons rows are airy.** The larger subject type and padding made the five rows about 90px each on a
    phone (they were about 62px), which pushes Sheet Music further down for little gain. The desktop sizes were
-   not meant to carry over.
-4. **On the Road is thin at the bottom right.** The National and international columns end around the fourth row
-   while Chicago runs to six, so the lower right is empty.
+   not meant to carry over.~~ Fixed 2026-11-19, see the fixes below.
+4. ~~**On the Road is thin at the bottom right.** The National and international columns end around the fourth row
+   while Chicago runs to six, so the lower right is empty.~~ Fixed 2026-11-19, see the fixes below.
 5. **Motion is still the part a stranger cannot see in a still**, and none of it has been felt on a phone.
 
 ~~The same portrait three times~~ and ~~empty hollows in Recordings~~ are fixed and not counted.
@@ -728,3 +728,13 @@ real-device check.
 | 2026-11-19 | good cop | same, light | about 93 | Same; archive pages read well on paper |
 | 2026-11-19 | bad cop | same, dark | about 86 | Lessons gap remains, Eastern Blok text wall, roomy phone Lessons rows |
 | 2026-11-19 | bad cop | same, light | about 88 | Same, plus the thin lower right of On the Road |
+
+### Four more bad-cop points fixed, 2026-11-19 (branch `polish-four-2026-11-19`)
+
+- **Lessons to Sheet Music gap (point 1):** the two sections now read as one block. Lessons bottom padding trimmed again and Sheet Music top padding cut to `clamp(2rem, 4vw, 3.5rem)`. Measured by the new test (box to box, 1440, reduced motion) the gap between the list and the Sheet Music heading went from about 161px to about 81px.
+- **Eastern Blok story (point 2):** the first paragraph is split in two with a pull quote between them, in the display italic with a brass rule. It is the ledger's first quote (All About Jazz, Budd Kopman, 2006), read from the same data so it cannot drift, and it links to the review. I did not use the Los Angeles Times or Time Out lines from the 2007 press bio: the page itself says those original articles were never found.
+- **Phone Lessons rows (point 3):** back to the compact size at 760px and under (1.2rem type, 0.95rem padding), 61px each. (I wrote "about 90px" for the roomy rows from a screenshot; the test measured 75px before the fix.)
+- **On the Road (point 4):** the national venue list now fills the height of the Chicago list (rows spread, last row level with Chicago's last line) and is a touch larger (1.05rem).
+
+Point 5 (motion unseen on a device, same reviewer) is not something a code change can fix. It needs Doug on a real phone and laptop; the checklist is in the PR description.
+Not re-scored: this round was seen in screenshots at 1440 and phone width only.

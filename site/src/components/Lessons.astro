@@ -46,10 +46,12 @@ const subjects = [
 </section>
 
 <style>
-  /* Bottom padding trimmed 2026-11-19: Lessons and Sheet Music together left
-     about 230px of empty ground between the CTA and the next heading. */
+  /* Bottom padding trimmed 2026-11-19, twice: Lessons and Sheet Music together
+     left about 230px of empty ground between the CTA and the next heading, and
+     the first trim only took it to about 190px. Sheet Music is the lessons' own
+     practice library, so the two now sit close, about 110px apart. */
   .lessons {
-    padding-block: clamp(4rem, 9vw, 7rem) clamp(2.5rem, 5vw, 4rem);
+    padding-block: clamp(4rem, 9vw, 7rem) clamp(1.5rem, 3vw, 2.5rem);
     background: transparent;
   }
 
@@ -149,6 +151,18 @@ const subjects = [
       justify-self: stretch;
       width: 100%;
       transform: none;
+    }
+
+    /* The larger desktop rows made each subject about 90px tall on a phone
+       (2026-11-19); back to the compact size there. */
+    .lessons__subjects li {
+      padding: 0.95rem 0.25rem;
+      font-size: 1.2rem;
+    }
+
+    .lessons__dot {
+      width: 0.8rem;
+      height: 0.65rem;
     }
   }
 
