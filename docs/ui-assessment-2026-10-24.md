@@ -601,3 +601,59 @@ either way.
 | 2026-11-15 | good cop | `light-polish-2026-11-15`, light, desktop plus phone emulation | about 91 | Archive rail earns a point; mobile still unverified on a device |
 | 2026-11-15 | bad cop | same | about 86 | Photo repeat and empty halves fixed; portraits similar; left-weighted sections |
 
+## Re-score after the motion and page-change rounds, 2026-11-19 (branch `rescore-2026-11-19`)
+
+Whole-page re-score after PRs #130 to #132 merged (page texture and panel grain, micro-interactions,
+magnetic buttons, hero drift, heading reveals, and the static on page changes), per the rule "re-score the
+whole page after each merge". Same six areas and weights as above.
+
+**Viewed:** `master` at 9399ae1 on the dev server. Chromium at 1440x900 and Playwright Pixel 7 emulation, dark and
+light, reduced motion for layout. Home page sections at 1440 (hero, Recordings, About, Highlights, Lessons,
+Dev, FAQ, Contact, footer, In Frame) and at phone width (hero, Recordings, Highlights, Contact), `/press` in
+light, and the arriving static on `/press` at phone width (a still frame). The Astro dev toolbar shows at
+the bottom of every capture because it is the dev server; it is not part of the site and is not counted.
+**Not viewed:** a real phone or laptop, Safari, Firefox, the new motion at full speed (magnetic lean, hero drift,
+heading reveals, album tilt were seen only through tests and earlier stills), `/easternblok` and
+`/easternblok/press` this round (captured, not looked at), open FAQ items, the lightbox, the form's error and
+sent states. Same reviewer who built these changes, so allow about three points either way.
+
+**Good cop: dark about 93, light about 92** (was about 92 and about 91 on 2026-11-15).
+
+| Area | Pts | Dark | Light | Why |
+|---|---|---|---|---|
+| Identity and distinctiveness | 20 | 19 | 18 | The static and channel label now carry across page changes, and the paper and navy grain make the middle of the page feel like a surface. Light is still closer to the common ink-on-paper look. |
+| First impression (hero) | 20 | 19 | 18 | Unchanged: the photo, smoke and glow in dark, the framed sleeve in light. The hero drift is not credited until it is seen on a device. |
+| Craft and polish | 20 | 18 | 18 | Texture and panel grain are real gains. Held back because most of the new motion has been seen only in tests and emulation. |
+| Typography and hierarchy | 15 | 15 | 15 | Unchanged. |
+| Content and archive pages | 10 | 9 | 10 | `/press` in light now fills its right side with the contents list and the timeline. Dark archive pages were not re-viewed, so dark stays at 9. |
+| Mobile | 15 | 13 | 13 | Stacks cleanly, no sideways scroll, tap targets tested. Still emulator only, so provisional. |
+
+**Bad cop: dark about 84, light about 87** (was about 83 and about 86). What costs points:
+1. **Empty right of Recordings at 1440.** The lead cover is big, but the three stacked albums and their short
+   copy leave roughly the right third blank.
+2. **Lessons is left-weighted with dead space under it.** The text block sits left and the Subjects list is
+   short; about 200px of empty ground follows before Sheet Music begins.
+3. **The same portrait three times.** The Contact photo is also the first frame in In Frame, and About and
+   Contact are both a framed saxophone portrait of the same man, one screen from the Gallery.
+4. **Small grey body text on navy.** The About paragraph and the Lessons second paragraph are low in contrast
+   next to the headings, though they pass AA.
+5. **Motion is the part a stranger cannot see in a still.** Nothing here is a flaw, but none of it has been felt
+   on a phone, and Doug found the first micro-interactions barely noticeable.
+
+Not counted: the fixed logo and menu over content on phones (deliberate, 2026-10-17), the Dev remote over the
+preview (Doug's call, 2026-10-30), the dev toolbar in the captures.
+
+What the bad cop concedes: the hero (photo, smoke, color leaking around the print), the staff dividers with
+their colored heads, the liner-notes footer, "Lights up" with the channel dial, and now the static with the
+green channel label. A stranger would remember the hero, the footer and the TV-channel change.
+
+Cheapest points: use a different photo for the Contact portrait (point 3); let the Recordings copy grow or
+sit lower to balance the right side (point 1); give Lessons a second visual or tighten the gap (point 2).
+The biggest unknown is the real-device check, which could move Mobile and Craft by several points either way.
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-19 | good cop | `master` at 9399ae1, dark, desktop plus phone emulation | about 93 | Texture, grain and the page-change static add; motion not yet seen on a device |
+| 2026-11-19 | good cop | same, light | about 92 | `/press` right side now filled; mobile still unverified on a device |
+| 2026-11-19 | bad cop | same, dark | about 84 | Empty right of Recordings, Lessons dead space, same portrait repeated |
+| 2026-11-19 | bad cop | same, light | about 87 | Same three, softer on paper |
