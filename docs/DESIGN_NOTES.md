@@ -357,3 +357,7 @@ connection. The hand-off is a sessionStorage timestamp plus a tiny blocking head
 hash). Not done on purpose: the in-page section jumps (hamburger and staff notes) keep their
 smooth scroll; static there is a possible next step but would replace the scroll with an instant
 cut. Seen in tests and on the dev server, not yet on a real phone or a throttled connection.
+
+### The three cheapest bad-cop points (branch `polish-three-2026-11-19`)
+
+From the 2026-11-19 re-score: the Contact portrait repeated the first In Frame photo and About's pose; the Recordings rows had hollows under short blurbs; Lessons was left-weighted with a gap. Doug asked for all three and for the Contact portrait to come from his gallery. Chose `lakebluff.jpg` (1440px, smiling, outdoors) over the Jazz Gallery shot (only 396px wide, too soft at 2x) and the Andy's shot (dark and blurry). Recordings: text columns now stretch to the cover height with a "Listen on Amazon" cue at the bottom; first try hid the cue because a default `display: none` came later in the file than the desktop rule (seen in a screenshot, fixed by scoping the hide to under 760px). Lessons: bigger list, less bottom padding. Seen in screenshots only.

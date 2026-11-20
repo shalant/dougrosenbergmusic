@@ -629,12 +629,13 @@ sent states. Same reviewer who built these changes, so allow about three points 
 | Mobile | 15 | 13 | 13 | Stacks cleanly, no sideways scroll, tap targets tested. Still emulator only, so provisional. |
 
 **Bad cop: dark about 84, light about 87** (was about 83 and about 86). What costs points:
-1. **Empty right of Recordings at 1440.** The lead cover is big, but the three stacked albums and their short
-   copy leave roughly the right third blank.
-2. **Lessons is left-weighted with dead space under it.** The text block sits left and the Subjects list is
-   short; about 200px of empty ground follows before Sheet Music begins.
-3. **The same portrait three times.** The Contact photo is also the first frame in In Frame, and About and
-   Contact are both a framed saxophone portrait of the same man, one screen from the Gallery.
+1. ~~**Empty right of Recordings at 1440.** The lead cover is big, but the three stacked albums and their short
+   copy leave roughly the right third blank.~~ Fixed 2026-11-19, see below. (On a closer look the hollow was
+   under each short blurb, beside its 190px cover, not at the far right.)
+2. ~~**Lessons is left-weighted with dead space under it.** The text block sits left and the Subjects list is
+   short; about 200px of empty ground follows before Sheet Music begins.~~ Fixed 2026-11-19, see below.
+3. ~~**The same portrait three times.** The Contact photo is also the first frame in In Frame, and About and
+   Contact are both a framed saxophone portrait of the same man, one screen from the Gallery.~~ Fixed 2026-11-19, see below.
 4. **Small grey body text on navy.** The About paragraph and the Lessons second paragraph are low in contrast
    next to the headings, though they pass AA.
 5. **Motion is the part a stranger cannot see in a still.** Nothing here is a flaw, but none of it has been felt
@@ -657,3 +658,11 @@ The biggest unknown is the real-device check, which could move Mobile and Craft 
 | 2026-11-19 | good cop | same, light | about 92 | `/press` right side now filled; mobile still unverified on a device |
 | 2026-11-19 | bad cop | same, dark | about 84 | Empty right of Recordings, Lessons dead space, same portrait repeated |
 | 2026-11-19 | bad cop | same, light | about 87 | Same three, softer on paper |
+
+### Three bad-cop points fixed, 2026-11-19 (branch `polish-three-2026-11-19`)
+
+- **Contact portrait (point 3):** now `gallery/lakebluff.jpg`, Doug's pick from his gallery: a smiling outdoor shot, the one portrait on the page that is not a serious studio pose. It is no longer the first In Frame frame. A test checks it differs from the About photo and from `formal.jpg`.
+- **Recordings (point 1):** at 760px and up each group record's text column is as tall as its cover: larger title and blurb (1.3rem, 0.95rem) and a "Listen on Amazon" cue on the cover's bottom edge (also on the lead record). The cue is decoration; the whole record was already the link.
+- **Lessons (point 2):** Subjects list widened (22rem to 27rem), larger type (1.45rem) and rows, larger note-head dots, and the section's bottom padding trimmed so Sheet Music starts about 60px sooner.
+
+Not re-scored: this round was viewed in screenshots at 1440 (dark and light) and phone width only; the next whole-page re-score will say what it is worth. Not seen on a real phone.

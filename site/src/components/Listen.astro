@@ -38,6 +38,7 @@ const albums = [
           <div class="album__body">
             <h3 class="album__title">{album.title}</h3>
             <p class="album__blurb">{album.blurb}</p>
+            <span class="album__cue" aria-hidden="true">Listen on Amazon &rarr;</span>
           </div>
         </a>
       ))}
@@ -243,14 +244,45 @@ const albums = [
       gap: 1.25rem;
       align-items: start;
     }
+    /* The text column is as tall as its cover (2026-11-19): title and blurb
+       at the top, the listen cue on the cover's bottom edge. Short blurbs next
+       to a 190px cover used to leave a hollow under them. */
     .album:not(.album--lead) .album__body {
       padding-top: 0.15rem;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+    }
+    .album:not(.album--lead) .album__title {
+      font-size: 1.3rem;
+    }
+    .album:not(.album--lead) .album__blurb {
+      font-size: 0.95rem;
+    }
+    .album__cue {
+      display: block;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+    .album--lead .album__cue {
+      margin-top: 0.75rem;
     }
     .album--lead .album__title {
       font-size: 1.5rem;
     }
     .album--lead .album__blurb {
       font-size: 0.95rem;
+    }
+  }
+
+  /* The listen cue is for the wide rows only; the compact rows below 760px skip it. */
+  @media (max-width: 759px) {
+    .album__cue {
+      display: none;
     }
   }
 
