@@ -63,10 +63,14 @@ test.describe('contact portrait', () => {
     const img = page.locator('.contact__photo');
     expect(await img.getAttribute('alt')).toBe('');
     expect(await img.getAttribute('loading')).toBe('lazy');
-    expect(await img.getAttribute('width')).toBe('1080');
-    expect(await img.getAttribute('height')).toBe('1350');
+    expect(await img.getAttribute('width')).toBe('1440');
+    expect(await img.getAttribute('height')).toBe('1440');
     const src = await img.getAttribute('src');
     expect(src).not.toContain('hero.webp');
+    // Not the About portrait, and not the gallery's first frame (it was both on
+    // 2026-11-19 and read as the same photo three times).
+    expect(src).not.toBe(await page.locator('.about__photo').first().getAttribute('src'));
+    expect(src).not.toContain('formal.jpg');
     const res = await page.request.get(src!);
     expect(res.status()).toBe(200);
   });

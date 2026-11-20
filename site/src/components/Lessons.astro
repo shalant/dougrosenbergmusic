@@ -46,8 +46,10 @@ const subjects = [
 </section>
 
 <style>
+  /* Bottom padding trimmed 2026-11-19: Lessons and Sheet Music together left
+     about 230px of empty ground between the CTA and the next heading. */
   .lessons {
-    padding-block: clamp(4rem, 9vw, 7rem);
+    padding-block: clamp(4rem, 9vw, 7rem) clamp(2.5rem, 5vw, 4rem);
     background: transparent;
   }
 
@@ -86,7 +88,7 @@ const subjects = [
   .lessons__staff {
     position: relative;
     justify-self: end;
-    width: min(100%, 22rem);
+    width: min(100%, 27rem);
     transform: translateY(1.25rem);
   }
 
@@ -105,10 +107,10 @@ const subjects = [
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    padding: 0.95rem 0.25rem;
+    padding: 1.2rem 0.25rem;
     border-bottom: 1px solid var(--staff-line-strong);
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.45rem;
   }
 
   /* The subjects aren't links, so hovering one no longer slides the whole
@@ -117,8 +119,8 @@ const subjects = [
      me", and only where hover is real (see global.css). */
   .lessons__dot {
     flex: none;
-    width: 0.8rem;
-    height: 0.65rem;
+    width: 1rem;
+    height: 0.8rem;
     border-radius: 55% 45% 40% 60% / 45% 58% 42% 55%;
     background: var(--note-lessons);
     transition: scale var(--dur-med) var(--ease-spring), rotate var(--dur-med) var(--ease-spring);

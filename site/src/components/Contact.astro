@@ -5,16 +5,19 @@
       <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
       {/* Portrait (2026-11-15): fills the column under the heading, which was
            an empty void beside the form. A different photo from the hero and
-           About on purpose (the studio portrait from the gallery). Decorative,
+           About on purpose. Changed 2026-11-19 from the studio portrait (formal.jpg,
+           also the first frame of In Frame, and the same man in the same pose as
+           About) to the smiling Lake Bluff shot from the gallery: warmer, and the
+           only portrait here that is not a serious studio one. Decorative,
            so alt is empty; hidden below 900px where the form stacks under the
            heading and the photo would only push it down. */}
       <figure class="contact__photo-wrap">
         <img
           class="contact__photo"
-          src={`${import.meta.env.BASE_URL}images/gallery/formal.jpg`}
+          src={`${import.meta.env.BASE_URL}images/gallery/lakebluff.jpg`}
           alt=""
-          width="1080"
-          height="1350"
+          width="1440"
+          height="1440"
           loading="lazy"
           decoding="async"
         />
@@ -215,6 +218,7 @@
     aspect-ratio: 4 / 5;
     object-fit: cover;
     filter: grayscale(0.35) sepia(0.18) saturate(1.1);
+    object-position: 40% 25%;
     border-radius: 2px;
   }
 
