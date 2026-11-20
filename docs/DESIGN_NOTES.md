@@ -361,3 +361,7 @@ cut. Seen in tests and on the dev server, not yet on a real phone or a throttled
 ### The three cheapest bad-cop points (branch `polish-three-2026-11-19`)
 
 From the 2026-11-19 re-score: the Contact portrait repeated the first In Frame photo and About's pose; the Recordings rows had hollows under short blurbs; Lessons was left-weighted with a gap. Doug asked for all three and for the Contact portrait to come from his gallery. Chose `lakebluff.jpg` (1440px, smiling, outdoors) over the Jazz Gallery shot (only 396px wide, too soft at 2x) and the Andy's shot (dark and blurry). Recordings: text columns now stretch to the cover height with a "Listen on Amazon" cue at the bottom; first try hid the cue because a default `display: none` came later in the file than the desktop rule (seen in a screenshot, fixed by scoping the hide to under 760px). Lessons: bigger list, less bottom padding. Seen in screenshots only.
+
+### Four more bad-cop points (branch `polish-four-2026-11-19`)
+
+From the second 2026-11-19 re-score. Lessons and Sheet Music now sit close (the library is the lessons' own practice material), the phone Lessons rows are compact again (my desktop sizes had carried over by mistake), On the Road's national list fills the Chicago list's height, and the Eastern Blok story gets a pull quote. For the pull quote I used the All About Jazz review because it has a live link and is already in the ledger; the 2007 bio quotes are unverified (the page says so), so they stay in the paragraph text. Seen in screenshots only. Real-device check still open.

@@ -83,6 +83,11 @@ const otherArtists = [
     --rise-range: entry 25% cover 32%;
   }
 
+  .performance__venue-group {
+    display: flex;
+    flex-direction: column;
+  }
+
   .performance__venue-label {
     margin: 0 0 0.8rem;
   }
@@ -138,10 +143,16 @@ const otherArtists = [
     color: var(--brass);
   }
 
+  /* The national list is as tall as the Chicago list beside it (2026-11-19):
+     its last row lands on the Chicago list's last line, so the lower right is
+     no longer empty. Rows spread rather than the type growing. */
   .performance__venue-list--two-col {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 0.6rem 1.5rem;
+    flex: 1;
+    align-content: space-between;
+    font-size: 1.05rem;
   }
 
   /* Names never break mid-name, and the separator dot before each name sits
