@@ -1,0 +1,227 @@
+---
+// Changing page = changing channel (2026-11-19). A press on a link to another
+// page of this site used to cut straight to a blank browser load, which on a
+// slow phone connection read as a twitch: the page froze, flashed white, then
+// the next one popped in. Now the press cuts to the same static the theme
+// switch uses, the browser navigates under it, and the new page opens with the
+// static still up and clears it once the page has loaded (or after 1.5s, so a
+// huge image never holds it hostage). A green on-screen label names the
+// channel (CH 04 / PRESS).
+//
+// The hand-off between pages is a sessionStorage flag ('channel-in') plus a
+// tiny blocking script in <head> (BaseLayout) that turns it into
+// html.channel-arriving before first paint, so the static is drawn by CSS
+// with no flash of the new page. Everything here is progressive: no JS, a
+// stalled navigation, reduced motion or a weak device (data-fx="lite") just
+// get an ordinary link. In-page jumps (#contact) are not touched; the
+// smooth scroll handles those.
+//
+// Also home of the static and the on-screen label's styles, which the theme
+// switch (ThemeToggle.astro) shares.
+---
+
+<script>
+  const root = document.documentElement;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // The label box is shared with the theme switch: reuse it if it exists.
+  function osdBox(): HTMLElement {
+    let osd = document.querySelector<HTMLElement>('.channel-osd');
+    if (!osd) {
+      osd = document.createElement('div');
+      osd.className = 'channel-osd';
+      osd.setAttribute('role', 'status');
+      document.body.append(osd);
+    }
+    return osd;
+  }
+
+  // Channel numbers for the site's pages. 01 and 02 belong to the theme dial.
+  const CHANNELS: Record<string, [string, string]> = {
+    '/': ['03', 'HOME'],
+    '/press': ['04', 'PRESS'],
+    '/easternblok': ['05', 'EASTERN BLOK'],
+    '/easternblok/press': ['06', 'EB PRESS'],
+  };
+
+  function channelFor(pathname: string): [string, string] | undefined {
+    const key = pathname.replace(/(\/index)?\.html$/, '').replace(/(.)\/$/, '$1') || '/';
+    return CHANNELS[key];
+  }
+
+  const canCut = () => !reduced.matches && root.dataset.fx !== 'lite';
+
+  // ---- arriving: the static is already up (html.channel-arriving) ----
+  if (root.classList.contains('channel-arriving')) {
+    const ch = channelFor(location.pathname);
+    if (ch) {
+      const osd = osdBox();
+      osd.innerHTML = `<span aria-hidden="true">CH ${ch[0]}</span><span aria-hidden="true">${ch[1]}</span>`;
+      osd.classList.add('on');
+      setTimeout(() => osd.classList.remove('on'), 1800);
+    }
+    let cleared = false;
+    const clear = () => {
+      if (cleared) return;
+      cleared = true;
+      root.classList.add('channel-clearing');
+      setTimeout(() => root.classList.remove('channel-arriving', 'channel-clearing'), 700);
+    };
+    // Up for at least 350ms so it reads as a cut rather than a flicker, and
+    // at most 1.5s so a slow image can't hold the page behind it.
+    const settle = () => setTimeout(clear, 350);
+    if (document.readyState === 'complete') settle();
+    else addEventListener('load', settle, { once: true });
+    setTimeout(clear, 1500);
+  }
+
+  // ---- leaving: cut to static, then navigate ----
+  let leaving = false;
+  document.addEventListener('click', (e) => {
+    if (leaving || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (!(e.target instanceof Element)) return;
+    const a = e.target.closest<HTMLAnchorElement>('a[href]');
+    if (!a || (a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+    const url = new URL(a.href, location.href);
+    if (!/^https?:$/.test(url.protocol) || url.origin !== location.origin) return;
+    // Same page (a #hash jump, or the home link while already home).
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    if (!canCut()) return;
+
+    e.preventDefault();
+    leaving = true;
+    const snow = document.createElement('div');
+    snow.className = 'channel-static';
+    snow.setAttribute('aria-hidden', 'true');
+    document.body.append(snow);
+    snow.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
+    try {
+      sessionStorage.setItem('channel-in', String(Date.now()));
+    } catch {}
+    setTimeout(() => location.assign(url.href), 180);
+    // If the navigation never lands (offline, cancelled), give the page back.
+    setTimeout(() => {
+      snow.remove();
+      leaving = false;
+      try {
+        sessionStorage.removeItem('channel-in');
+      } catch {}
+    }, 12000);
+  });
+
+  // Back/forward can restore this page from memory with the static still on it.
+  addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    document.querySelectorAll('.channel-static').forEach((n) => n.remove());
+    root.classList.remove('channel-arriving', 'channel-clearing');
+    leaving = false;
+    try {
+      sessionStorage.removeItem('channel-in');
+    } catch {}
+  });
+</script>
+
+<style is:global>
+  /* The static: opaque grey noise (a tiny feTurbulence SVG, drawn once) with a
+     bright band rolling down it. `.channel-static` is the element the theme
+     switch and the leaving page build; `html.channel-arriving` draws the same
+     thing from the root's pseudo-elements before the new page's body exists. */
+  .channel-static,
+  html.channel-arriving::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    overflow: hidden;
+    background-color: #777;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-.55'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-.55'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px;
+    animation: channel-jitter 0.12s steps(3) infinite;
+  }
+
+  .channel-static::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -22%;
+    height: 22%;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: channel-roll 0.44s linear infinite;
+  }
+
+  html.channel-arriving::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.4), transparent) no-repeat 0 -30vh / 100% 22vh;
+    animation: channel-band 0.44s linear infinite;
+  }
+
+  html.channel-clearing::before {
+    animation: channel-jitter 0.12s steps(3) infinite, channel-out 640ms ease-out forwards;
+  }
+
+  html.channel-clearing::after {
+    animation: channel-band 0.44s linear infinite, channel-out 640ms ease-out forwards;
+  }
+
+  @keyframes channel-jitter {
+    0% { background-position: 0 0; }
+    33% { background-position: -47px 31px; }
+    66% { background-position: 22px -58px; }
+    100% { background-position: -13px 9px; }
+  }
+
+  @keyframes channel-roll {
+    to { top: 100%; }
+  }
+
+  @keyframes channel-band {
+    to { background-position: 0 100vh; }
+  }
+
+  @keyframes channel-out {
+    0%, 25% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* A TV on-screen display: a dark box with green type, in the same
+     monospace stack in both themes (it is a picture element, not page chrome). */
+  .channel-osd {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    z-index: 201;
+    display: grid;
+    gap: 0.1em;
+    padding: 0.35em 0.7em 0.25em;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #7dffb0;
+    font: 700 1.6rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 0.4em rgba(125, 255, 176, 0.55);
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+
+  .channel-osd.on {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .channel-osd {
+      transition: none;
+    }
+    .channel-static,
+    html.channel-arriving::before,
+    html.channel-arriving::after {
+      display: none;
+    }
+  }
+</style>

@@ -334,3 +334,26 @@ wrap across lines or rely on padded tap targets with negative margins, and a bac
 underline would sit in the wrong place on both. The existing underline eases instead. Reveals are
 scroll-driven CSS with no script (no CSP hash), and browsers without scroll timelines show the
 content. Seen on the dev server only; not on a real phone.
+
+### Bigger motion round (branch `wow-motion-2026-11-17`)
+
+Doug asked to try magnetic buttons, a hero parallax drift and line-by-line headings. Built all
+three: `.cta` buttons lean toward a nearby pointer (script plus a global `translate` rule, no
+layout change); the dark hero photo lags the page by 9vh with a 1.12 grow so no gap shows
+(scroll timeline, no script); five section headings clip-and-rise. Headings rise as one block:
+true line-by-line needs a script to split lines, which I did not add. First version of the heading
+reveal used an `entry` range and was a snap (a 50px heading has ~35px of scroll to play in);
+caught by reading computed opacity at three scroll positions, then moved to a `cover` range, and
+the FAQ and Lessons rows (also short) got the same fix. Seen in screenshots, not felt on a device.
+
+### Page change as a channel change (branch `page-channel-2026-11-19`)
+
+Doug, on his phone with a weak connection: pressing a nav link was "an unglamorous twitch" (the old
+page froze, flashed blank, the next one popped in), and asked whether the theme switch's static
+and channel label could serve every nav link. Built it for links to another page: the press cuts
+to static, the browser navigates under it, the new page opens with the static up and clears it
+once loaded. The static doubles as the loading state, which is the real fix for the slow
+connection. The hand-off is a sessionStorage timestamp plus a tiny blocking head script (new CSP
+hash). Not done on purpose: the in-page section jumps (hamburger and staff notes) keep their
+smooth scroll; static there is a possible next step but would replace the scroll with an instant
+cut. Seen in tests and on the dev server, not yet on a real phone or a throttled connection.

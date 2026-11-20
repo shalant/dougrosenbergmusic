@@ -247,6 +247,27 @@ How much, by kind:
   the hover rule. Status text eases in (`status-in`, 0.3s). Links ease underline color and
   thickness (global `a` rule; a component's own `transition` overrides it). Checked by
   `site/e2e/micro-interactions.spec.ts`.
+- **Bigger motion (2026-11-17)**: section headings (Recordings, On the Road, Highlights, Quick
+  answers, Contact) clip-and-rise with `.heading-reveal`, never inside a `.scroll-rise` block (the
+  two would stack), and not the Dev heading (that block stays as it is). Short elements (headings,
+  FAQ and Lessons rows, ~50-60px) need a `cover` range; an `entry` range plays out over their own
+  height and reads as a snap. A wrapped heading rises as one block, not line by line. In dark the
+  hero photo drifts down 9vh and grows to 1.12 as the hero scrolls away (`hero-drift`, scroll
+  timeline, no script), with enough extra scale that no gap shows; light keeps the framed print
+  still. Every `.cta` leans up to 10px toward a real pointer within 70px of it
+  (`MagneticButtons.astro`: a script writes `--mx`/`--my`, a global rule turns them into
+  `translate`; it runs only while a button is moving and is off under reduced motion and lite).
+  Checked by `site/e2e/wow-motion.spec.ts`.
+- **Page change = channel change (2026-11-19)**: a press on a link to another page of this site
+  (the logo on Press and Eastern Blok, the footer links, the press links) cuts to the theme
+  switch's static for 180ms, then navigates under it; the new page opens with the static already
+  up (a head script turns a sessionStorage flag into `html.channel-arriving` before first paint),
+  names its channel in the green label (CH 03 HOME, 04 PRESS, 05 EASTERN BLOK, 06 EB PRESS; 01 and
+  02 stay the theme dial) and clears after the load, 350ms to 1.5s. Built to cover a slow phone
+  connection: the static is the loading state. In-page `#` jumps, new-tab and outside links,
+  modified clicks, reduced motion and lite devices are left as plain links. The static and label
+  styles live in `PageChannel.astro`, shared with the theme switch. Checked by
+  `site/e2e/page-channel.spec.ts`.
 - **Ambient loops**: 1-2 per screen, slow (6s+), low contrast. The fixed nav's only loop is the
   active note's pulse.
 - Everything off under `prefers-reduced-motion: reduce`; nothing hidden when scroll timelines

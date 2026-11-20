@@ -538,6 +538,47 @@ a {
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
+/* Magnetic buttons (2026-11-17): MagneticButtons.astro writes --mx/--my in
+   pixels while a real pointer is near; this turns them into a lean. Only
+   `translate`, so the button's size, hit area and layout never change. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cta {
+    translate: var(--mx, 0px) var(--my, 0px);
+  }
+}
+
+/* Heading reveal (2026-11-17): a section heading rises into a clip that opens
+   from the top, so it looks cut from the page as it arrives. Scroll-driven
+   like .scroll-rise (no script) and the same two rules: the timeline lives in
+   a separate, more specific one. The range is `cover`, not `entry`: a heading
+   is only ~50px tall, so an entry range would play out over ~35px of scroll
+   and read as a snap; cover spreads it over ~200px. A wrapped heading rises as one block. Put
+   it on a heading that is NOT inside a .scroll-rise block, or the two stack. */
+@keyframes heading-reveal {
+  from {
+    opacity: 0;
+    translate: 0 0.55em;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    clip-path: inset(-0.1em 0 -0.35em 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .heading-reveal {
+      animation: heading-reveal linear both;
+    }
+    html .heading-reveal {
+      animation-timeline: view();
+      animation-range: cover 0% cover 22%;
+    }
+  }
+}
+
 /* Shared scroll reveal (2026-10-17): add .scroll-rise to anything that
    should rise in as it scrolls into view (press rows, Highlights,
    Performance). Driven by scroll position like the staff dividers, so

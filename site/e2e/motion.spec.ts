@@ -37,6 +37,11 @@ test.describe('desktop', () => {
   test('a Lessons subject keeps its place on hover; only its dot moves', async ({ page }) => {
     await page.goto('/');
     const item = page.locator('.lessons__subjects li').first();
+    // Rows rise in on scroll (2026-11-17): bring it to the middle first, where
+    // it has settled, as a visitor would before hovering it.
+    // The page scrolls smoothly, so jump there instantly and wait for it.
+    await item.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await expect.poll(() => item.evaluate((el) => getComputedStyle(el).opacity)).toBe('1');
     const before = await item.evaluate((el) => getComputedStyle(el).paddingLeft);
     await item.hover();
     await expect.poll(() => item.locator('.lessons__dot').evaluate((d) => getComputedStyle(d).scale)).toBe('1.35');
