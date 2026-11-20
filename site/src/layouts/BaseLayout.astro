@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import AmbientHues from '../components/AmbientHues.astro';
 import MagneticButtons from '../components/MagneticButtons.astro';
+import PageChannel from '../components/PageChannel.astro';
 import StaffNav from '../components/StaffNav.astro';
 
 interface Props {
@@ -73,6 +74,12 @@ const websiteSchema = {
 		    (npm run verify-csp -- --write after any edit). ThemeToggle.astro
 		    flips it. */}
 		<script is:inline>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.dataset.theme=t})();</script>
+		{/* Arriving on a channel change (2026-11-19): if the page we came from
+		    cut to static for a link press, it left a timestamp; turn it into
+		    html.channel-arriving before first paint so the static is already up.
+		    PageChannel.astro explains the whole hand-off. Its sha256 is in
+		    public/_headers too. */}
+		<script is:inline>(function(){try{var s=sessionStorage,t=+s.getItem('channel-in');s.removeItem('channel-in');if(t&&Date.now()-t<15000&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('channel-arriving')}catch(e){}})();</script>
 		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
 		<link rel="icon" type="image/png" sizes="32x32" href={`${import.meta.env.BASE_URL}favicon-32x32.png`} />
 		<link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
@@ -192,6 +199,7 @@ const websiteSchema = {
 	<body>
 		<AmbientHues />
 		<MagneticButtons />
+		<PageChannel />
 		{/* A banner landmark for the fixed logo, so it isn't page content outside every landmark (axe "region", 2026-10-28). The logo is fixed-position, so this wrapper takes no space. */}
 		<header>
 			<Logo home={home} />

@@ -88,10 +88,16 @@ const icon = variant === 'icon';
 
   // The on-screen label. It exists from the start so the live region is
   // already in the page when its text changes.
-  const osd = document.createElement('div');
-  osd.className = 'channel-osd';
-  osd.setAttribute('role', 'status');
-  document.body.append(osd);
+  // (Shared with PageChannel.astro, so reuse the box if it already exists.)
+  const osd: HTMLElement = (() => {
+    const found = document.querySelector<HTMLElement>('.channel-osd');
+    if (found) return found;
+    const made = document.createElement('div');
+    made.className = 'channel-osd';
+    made.setAttribute('role', 'status');
+    document.body.append(made);
+    return made;
+  })();
   let osdTimer = 0;
 
   function showOsd(theme: string) {
@@ -254,75 +260,4 @@ const icon = variant === 'icon';
   }
 </style>
 
-<style is:global>
-  /* The channel change (see the comment at the top of this file). Built by the
-     script, so these are global. The static is opaque grey noise (a tiny
-     feTurbulence SVG, drawn once) with a bright band rolling down it. */
-  .channel-static {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    pointer-events: none;
-    overflow: hidden;
-    background-color: #777;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-.55'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-.55'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 140px;
-    animation: channel-jitter 0.12s steps(3) infinite;
-  }
-
-  .channel-static::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -22%;
-    height: 22%;
-    background: linear-gradient(transparent, rgba(255, 255, 255, 0.4), transparent);
-    animation: channel-roll 0.44s linear infinite;
-  }
-
-  @keyframes channel-jitter {
-    0% { background-position: 0 0; }
-    33% { background-position: -47px 31px; }
-    66% { background-position: 22px -58px; }
-    100% { background-position: -13px 9px; }
-  }
-
-  @keyframes channel-roll {
-    to { top: 100%; }
-  }
-
-  /* A TV on-screen display: a dark box with green type, in the same
-     monospace stack in both themes (it is a picture element, not page chrome). */
-  .channel-osd {
-    position: fixed;
-    left: max(1rem, env(safe-area-inset-left, 0px));
-    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
-    z-index: 201;
-    display: grid;
-    gap: 0.1em;
-    padding: 0.35em 0.7em 0.25em;
-    border-radius: 2px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #7dffb0;
-    font: 700 1.6rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
-    letter-spacing: 0.08em;
-    text-shadow: 0 0 0.4em rgba(125, 255, 176, 0.55);
-    opacity: 0;
-    transition: opacity 0.25s;
-    pointer-events: none;
-  }
-
-  .channel-osd.on {
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .channel-osd {
-      transition: none;
-    }
-    .channel-static {
-      display: none;
-    }
-  }
-</style>
+{/* The static and the on-screen label are styled in PageChannel.astro (rendered by BaseLayout on every page), which the page-change cut shares. */}
