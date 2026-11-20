@@ -567,7 +567,11 @@ a {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* Scroll-linked, so only on a mouse-and-screen device (2026-11-19): about 45 of
+   these were alive at once and the browser re-evaluates every one on the main
+   thread for each scrolled frame, which made a phone stutter. On touch the
+   content simply shows. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   @supports (animation-timeline: view()) {
     .heading-reveal {
       animation: heading-reveal linear both;
@@ -598,7 +602,7 @@ a {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   @supports (animation-timeline: view()) {
     .scroll-rise {
       animation: scroll-rise linear both;

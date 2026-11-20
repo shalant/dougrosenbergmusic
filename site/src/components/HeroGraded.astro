@@ -288,9 +288,8 @@ const records = [
     height: 34vw;
     top: 6%;
     left: -4%;
-    animation:
-      hue-path-a 61s ease-in-out infinite,
-      hue-cycle 84s linear infinite;
+    --hue: var(--note-listen);
+    animation: hue-path-a 61s ease-in-out infinite;
   }
 
   .hue-blob--b {
@@ -298,9 +297,8 @@ const records = [
     height: 28vw;
     top: 40%;
     left: 6%;
-    animation:
-      hue-path-b 47s ease-in-out infinite,
-      hue-cycle 98s linear -33s infinite;
+    --hue: var(--note-lessons);
+    animation: hue-path-b 47s ease-in-out infinite;
   }
 
   .hue-blob--c {
@@ -308,49 +306,59 @@ const records = [
     height: 38vw;
     top: 58%;
     left: -8%;
-    animation:
-      hue-path-c 73s ease-in-out infinite,
-      hue-cycle 112s linear -71s infinite;
+    --hue: var(--note-highlights);
+    animation: hue-path-c 73s ease-in-out infinite;
+  }
+
+  /* The color cycle is added back only for a mouse-and-screen device
+     (2026-11-19): animating --hue repaints on the main thread every frame, which
+     is what made phones stutter. Elsewhere each blob holds its own tone and
+     keeps drifting (the drift is now `transform`, which stays off the main
+     thread). */
+  @media (hover: hover) and (pointer: fine) {
+    .hue-blob--a { animation: hue-path-a 61s ease-in-out infinite, hue-cycle 84s linear infinite; }
+    .hue-blob--b { animation: hue-path-b 47s ease-in-out infinite, hue-cycle 98s linear -33s infinite; }
+    .hue-blob--c { animation: hue-path-c 73s ease-in-out infinite, hue-cycle 112s linear -71s infinite; }
   }
 
   /* hue-cycle and @property --hue live in global.css. Stops at uneven times, and translations that stay inside the left half. */
   @keyframes hue-path-a {
-    0%, 100% { translate: 0 0; scale: 1; }
-    17% { translate: 14vw 12vh; scale: 1.2; }
-    41% { translate: 5vw 34vh; scale: 0.85; }
-    63% { translate: 17vw 22vh; scale: 1.1; }
-    82% { translate: 2vw 6vh; scale: 0.95; }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    17% { transform: translate(14vw, 12vh) scale(1.2); }
+    41% { transform: translate(5vw, 34vh) scale(0.85); }
+    63% { transform: translate(17vw, 22vh) scale(1.1); }
+    82% { transform: translate(2vw, 6vh) scale(0.95); }
   }
 
   @keyframes hue-path-b {
-    0%, 100% { translate: 0 0; scale: 1; }
-    23% { translate: 12vw -18vh; scale: 1.25; }
-    46% { translate: 3vw -30vh; scale: 0.9; }
-    71% { translate: 15vw -8vh; scale: 1.05; }
-    88% { translate: 6vw 10vh; scale: 0.8; }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    23% { transform: translate(12vw, -18vh) scale(1.25); }
+    46% { transform: translate(3vw, -30vh) scale(0.9); }
+    71% { transform: translate(15vw, -8vh) scale(1.05); }
+    88% { transform: translate(6vw, 10vh) scale(0.8); }
   }
 
   @keyframes hue-path-c {
-    0%, 100% { translate: 0 0; scale: 1; }
-    19% { translate: 9vw -22vh; scale: 0.9; }
-    38% { translate: 18vw -36vh; scale: 1.15; }
-    59% { translate: 6vw -14vh; scale: 1; }
-    79% { translate: 13vw 4vh; scale: 1.2; }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    19% { transform: translate(9vw, -22vh) scale(0.9); }
+    38% { transform: translate(18vw, -36vh) scale(1.15); }
+    59% { transform: translate(6vw, -14vh) scale(1); }
+    79% { transform: translate(13vw, 4vh) scale(1.2); }
   }
 
   @keyframes haze-drift-a {
-    0%, 100% { translate: 0 0; scale: 1; }
-    50% { translate: -26vw 14vw; scale: 1.45; }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-26vw, 14vw) scale(1.45); }
   }
 
   @keyframes haze-drift-b {
-    0%, 100% { translate: 0 0; scale: 1; }
-    50% { translate: 24vw -13vw; scale: 0.7; }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(24vw, -13vw) scale(0.7); }
   }
 
   @keyframes haze-wisp {
-    0%, 100% { translate: -24vw 0; }
-    50% { translate: 34vw 10vw; }
+    0%, 100% { transform: translate(-24vw, 0) rotate(-8deg); }
+    50% { transform: translate(34vw, 10vw) rotate(-8deg); }
   }
 
   /* Two irregular grey shapes, each torn into its own outline and streaked by
@@ -378,13 +386,13 @@ const records = [
   .hero__blob--b { animation: haze-blob-b 47s ease-in-out infinite; }
 
   @keyframes haze-blob-a {
-    0%, 100% { translate: -14vw 6vw; rotate: -16deg; scale: 1; opacity: 0.9; }
-    50% { translate: 20vw -14vw; rotate: 20deg; scale: 1.2; opacity: 0.45; }
+    0%, 100% { transform: translate(-14vw, 6vw) rotate(-16deg) scale(1); opacity: 0.9; }
+    50% { transform: translate(20vw, -14vw) rotate(20deg) scale(1.2); opacity: 0.45; }
   }
 
   @keyframes haze-blob-b {
-    0%, 100% { translate: 16vw -4vw; rotate: 14deg; scale: 1.15; opacity: 0.4; }
-    50% { translate: -18vw 12vw; rotate: -22deg; scale: 0.9; opacity: 0.95; }
+    0%, 100% { transform: translate(16vw, -4vw) rotate(14deg) scale(1.15); opacity: 0.4; }
+    50% { transform: translate(-18vw, 12vw) rotate(-22deg) scale(0.9); opacity: 0.95; }
   }
 
   /* the broadcast grade — scanlines and a soft screen-shaped vignette,
