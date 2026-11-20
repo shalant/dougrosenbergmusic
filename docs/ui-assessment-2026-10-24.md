@@ -633,7 +633,7 @@ sent states. Same reviewer who built these changes, so allow about three points 
    copy leave roughly the right third blank.~~ Fixed 2026-11-19, see below. (On a closer look the hollow was
    under each short blurb, beside its 190px cover, not at the far right.)
 2. ~~**Lessons is left-weighted with dead space under it.** The text block sits left and the Subjects list is
-   short; about 200px of empty ground follows before Sheet Music begins.~~ Fixed 2026-11-19, see below.
+   short; about 200px of empty ground follows before Sheet Music begins.~~ Left-weighting fixed 2026-11-19; the gap before Sheet Music is only about 40px smaller (see the second pass below).
 3. ~~**The same portrait three times.** The Contact photo is also the first frame in In Frame, and About and
    Contact are both a framed saxophone portrait of the same man, one screen from the Gallery.~~ Fixed 2026-11-19, see below.
 4. **Small grey body text on navy.** The About paragraph and the Lessons second paragraph are low in contrast
@@ -663,6 +663,68 @@ The biggest unknown is the real-device check, which could move Mobile and Craft 
 
 - **Contact portrait (point 3):** now `gallery/lakebluff.jpg`, Doug's pick from his gallery: a smiling outdoor shot, the one portrait on the page that is not a serious studio pose. It is no longer the first In Frame frame. A test checks it differs from the About photo and from `formal.jpg`.
 - **Recordings (point 1):** at 760px and up each group record's text column is as tall as its cover: larger title and blurb (1.3rem, 0.95rem) and a "Listen on Amazon" cue on the cover's bottom edge (also on the lead record). The cue is decoration; the whole record was already the link.
-- **Lessons (point 2):** Subjects list widened (22rem to 27rem), larger type (1.45rem) and rows, larger note-head dots, and the section's bottom padding trimmed so Sheet Music starts about 60px sooner.
+- **Lessons (point 2):** Subjects list widened (22rem to 27rem), larger type (1.45rem) and rows, larger note-head dots, and the section's bottom padding trimmed. (First written as "Sheet Music starts about 60px sooner"; measured in the second pass it is about 40px less empty ground under the list, and the Sheet Music heading sits 13px lower because the list got taller.)
 
 Not re-scored: this round was viewed in screenshots at 1440 (dark and light) and phone width only; the next whole-page re-score will say what it is worth. Not seen on a real phone.
+
+## Re-score after the three fixes, 2026-11-19 (second pass, branch `rescore-2026-11-19b`)
+
+Whole-page re-score after PR #134 merged (Contact portrait, Recordings rows, Lessons balance), per the rule
+"re-score the whole page after each merge". Same six areas and weights as above.
+
+**Viewed:** `master` at c895b0a on the dev server. Chromium at 1440x900 and Playwright Pixel 7 emulation, dark and
+light, reduced motion for layout. Home sections at 1440, with Recordings, Lessons and Contact, On the Road,
+Sheet Music and Highlights looked at in detail; `/press` and `/easternblok` in dark; `/easternblok/press` in
+light; `/easternblok` in light on the phone; Lessons on the phone in dark. This pass looked at the Eastern Blok
+pages, which the first pass skipped. **Not viewed:** a real phone or laptop, Safari, Firefox, the new motion at
+full speed, open FAQ items, the lightbox, form error and sent states, the lower half of the Eastern Blok pages
+(photos, video, members, shows). The dev toolbar at the bottom of the captures is the dev server, not the site.
+Same reviewer who built these changes, so allow about three points either way.
+
+**A correction to the fix notes above:** the Lessons change did not move Sheet Music "about 60px sooner". Measured
+from the same scroll position, the Sheet Music heading sits 13px lower than before (the bigger list made the
+section taller), and the empty ground under the tallest block fell from about 230px to about 187px, so about
+40px less. The left-weighting is fixed; the gap is only a little smaller.
+
+**Good cop: dark about 94, light about 93** (was about 93 and about 92 earlier today).
+
+| Area | Pts | Dark | Light | Why |
+|---|---|---|---|---|
+| Identity and distinctiveness | 20 | 19 | 18 | Unchanged. |
+| First impression (hero) | 20 | 19 | 18 | Unchanged. |
+| Craft and polish | 20 | 19 | 19 | One point for the three fixes: the repeated portrait is gone (the smiling Lake Bluff photo reads as a different person's page section), Recordings rows are full, and Lessons is balanced. Held back because motion is still unseen on a device. |
+| Typography and hierarchy | 15 | 15 | 15 | Unchanged. |
+| Content and archive pages | 10 | 9 | 10 | Both archive pages carry the contents list on the right and read well. Dark keeps its point for the long Eastern Blok story text. |
+| Mobile | 15 | 13 | 13 | Emulator only, so provisional. The Lessons subject rows got roomier on the phone (see below). |
+
+**Bad cop: dark about 86, light about 88** (was about 84 and about 87 earlier today). What costs points:
+1. **Still about 190px of empty ground after Lessons** before the Sheet Music heading. Mostly the next section's own
+   top padding.
+2. **A text wall on `/easternblok`.** The story is long paragraphs in the left column with only the contents list
+   beside it, on desktop and phone. A pull quote or photo would break it. The page's lower half was not viewed.
+3. **Phone Lessons rows are airy.** The larger subject type and padding made the five rows about 90px each on a
+   phone (they were about 62px), which pushes Sheet Music further down for little gain. The desktop sizes were
+   not meant to carry over.
+4. **On the Road is thin at the bottom right.** The National and international columns end around the fourth row
+   while Chicago runs to six, so the lower right is empty.
+5. **Motion is still the part a stranger cannot see in a still**, and none of it has been felt on a phone.
+
+~~The same portrait three times~~ and ~~empty hollows in Recordings~~ are fixed and not counted.
+
+Not counted: the fixed logo and menu over content on phones (deliberate, 2026-10-17), the Dev remote over the
+preview (Doug's call, 2026-10-30), the dev toolbar in the captures.
+
+What the bad cop concedes: the hero (photo, smoke, color leaking around the print), the staff dividers, the
+liner-notes footer, "Lights up" with the channel dial and the static with its green channel label, and the
+Recordings shelf, which now reads as a shelf instead of a list.
+
+Cheapest points: tighten the phone Lessons rows (point 3), break the Eastern Blok story with a pull quote or
+photo (point 2), and trim the Sheet Music top padding after Lessons (point 1). The biggest unknown is still the
+real-device check.
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-19 | good cop | `master` at c895b0a, dark, desktop plus phone emulation | about 94 | Portrait, Recordings and Lessons fixes add a point of craft; motion not seen on a device |
+| 2026-11-19 | good cop | same, light | about 93 | Same; archive pages read well on paper |
+| 2026-11-19 | bad cop | same, dark | about 86 | Lessons gap remains, Eastern Blok text wall, roomy phone Lessons rows |
+| 2026-11-19 | bad cop | same, light | about 88 | Same, plus the thin lower right of On the Road |
