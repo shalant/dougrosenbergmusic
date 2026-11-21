@@ -137,7 +137,7 @@ const albums = [
     --rise-range: entry calc(var(--i) * 7%) entry calc(70% + var(--i) * 6%);
   }
 
-  @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
     @supports (animation-timeline: view()) {
       .album.scroll-rise {
         animation-name: album-scroll-rise;

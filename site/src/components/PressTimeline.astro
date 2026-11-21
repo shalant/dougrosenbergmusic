@@ -202,7 +202,7 @@ const eras = [
     }
   }
 
-  @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
     @supports (animation-timeline: view()) {
       .era__bracket {
         animation: era-bracket-draw linear both;

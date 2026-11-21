@@ -101,16 +101,25 @@ for (const width of [1440, 390]) {
   test(`the color blobs wander the left half and change color at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/?fx=full');
+    // The color cycle runs only on a mouse-and-screen device (2026-11-19); a
+    // touch device keeps the drift with each blob holding its own tone.
+    const cycles = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
     const first = await hueState(page);
     expect(first).toHaveLength(3);
     for (const blob of first) {
-      expect(blob.animation).toContain('hue-cycle');
+      if (cycles) expect(blob.animation).toContain('hue-cycle');
+      else expect(blob.animation).not.toContain('hue-cycle');
+      expect(blob.animation).toContain('hue-path');
       expect(blob.centerX).toBeLessThan(blob.viewport * 0.5);
     }
     await page.waitForTimeout(4_000);
     const later = await hueState(page);
     // every blob has moved on to a different color in 4s (a full tour takes 84 to 112s)
-    later.forEach((blob, i) => expect(blob.hue).not.toBe(first[i].hue));
+    if (cycles) later.forEach((blob, i) => expect(blob.hue).not.toBe(first[i].hue));
+    else {
+      later.forEach((blob, i) => expect(blob.hue).toBe(first[i].hue));
+      expect(new Set(later.map((b) => b.hue)).size).toBe(3);
+    }
     for (const blob of later) expect(blob.centerX).toBeLessThan(blob.viewport * 0.6);
   });
 }
@@ -147,12 +156,49 @@ test('the ambient glows stay fixed while the page scrolls and keep changing colo
   const first = await ambientState(page);
   expect(first.position).toBe('fixed');
   expect(first.animations).toHaveLength(4);
-  for (const name of first.animations) expect(name).toContain('hue-cycle');
+  const cycles = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
+  for (const name of first.animations) {
+    expect(name).toContain('ambient-path');
+    if (cycles) expect(name).toContain('hue-cycle');
+    else expect(name).not.toContain('hue-cycle');
+  }
   await page.evaluate(() => document.querySelector('#lessons')!.scrollIntoView());
   await page.waitForTimeout(3_000);
   const later = await ambientState(page);
   expect(later.top).toBe(0);
-  later.hues.forEach((hue, i) => expect(hue).not.toBe(first.hues[i]));
+  if (cycles) later.hues.forEach((hue, i) => expect(hue).not.toBe(first.hues[i]));
+  else later.hues.forEach((hue, i) => expect(hue).toBe(first.hues[i]));
+});
+
+// Phone smoothness (2026-11-19). The page used about 17% of the browser's main
+// thread at rest, from the glow's color cycle (it repaints four big gradients
+// every frame) and from looping the individual translate/rotate/scale
+// properties, which are main-thread work; `transform` is not. On a touch
+// device no loop may animate --hue or those properties.
+test('on a touch device the loops move by transform and never cycle color', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true, reducedMotion: 'no-preference' });
+  const page = await ctx.newPage();
+  await page.goto('/?fx=full');
+  expect(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches)).toBe(false);
+  const loops = await page.evaluate(() =>
+    document
+      .getAnimations()
+      .filter((a) => a.effect && (a.effect as KeyframeEffect).getTiming().iterations === Infinity && (a as CSSAnimation).animationName)
+      .map((a) => {
+        const kf = (a.effect as KeyframeEffect).getKeyframes();
+        const props = new Set<string>();
+        for (const k of kf) for (const p of Object.keys(k)) if (!['offset', 'easing', 'composite', 'computedOffset'].includes(p)) props.add(p);
+        return { name: (a as CSSAnimation).animationName, props: [...props] };
+      })
+  );
+  expect(loops.length).toBeGreaterThan(5);
+  for (const loop of loops) {
+    expect(loop.name, 'no color cycle on touch').not.toBe('hue-cycle');
+    for (const bad of ['translate', 'rotate', 'scale', '--hue']) {
+      expect(loop.props, loop.name + ' must not animate ' + bad).not.toContain(bad);
+    }
+  }
+  await ctx.close();
 });
 
 test('sections let the ambient glows show through', async ({ page }) => {

@@ -1,0 +1,54 @@
+---
+// The phone's reveal (2026-11-20). On a mouse-and-screen device the section
+// headings and blocks rise in with scroll-linked animations (global.css), which
+// cost the main thread on every scrolled frame; on a phone that stuttered, so
+// touch gets none of them. This is the phone's own version: a one-shot. A block
+// that starts below the fold is held a little low and clear, and rises in once
+// when it first comes into view. After that nothing about it is alive, so
+// scrolling costs nothing.
+//
+// Progressive: no script, no IntersectionObserver, reduced motion or a weak
+// device (data-fx="lite") leave the content simply showing. Blocks already in
+// view at load are never hidden, so there is no flash. Mouse-and-screen
+// devices never run this; they keep the scroll-linked reveals.
+---
+
+<script>
+  const mouse = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lite = document.documentElement.dataset.fx === 'lite';
+  if (!mouse && !reduced && !lite && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          el.classList.add('tr-in');
+          io.unobserve(el);
+          // Done: drop the classes so nothing is left holding the element.
+          setTimeout(() => el.classList.remove('tr-wait', 'tr-in'), 1200);
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    for (const el of document.querySelectorAll<HTMLElement>('.scroll-rise, .heading-reveal')) {
+      if (el.getBoundingClientRect().top > innerHeight * 0.92) {
+        el.classList.add('tr-wait');
+        io.observe(el);
+      }
+    }
+  }
+</script>
+
+<style is:global>
+  .tr-wait {
+    opacity: 0;
+    translate: 0 1.6rem;
+  }
+
+  .tr-wait.tr-in {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity 0.55s ease-out calc(var(--i, 0) * 70ms), translate 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 70ms);
+  }
+</style>

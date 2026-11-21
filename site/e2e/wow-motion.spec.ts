@@ -13,9 +13,11 @@ test.describe('heading reveal', () => {
       const ctx = await browser.newContext({ reducedMotion });
       const page = await ctx.newPage();
       await page.goto('/');
+      // Scroll-linked, so mouse-and-screen devices only (2026-11-19).
+      const fine = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
       for (const sel of HEADINGS) {
         const name = await page.locator(sel).first().evaluate((el) => getComputedStyle(el).animationName);
-        if (reducedMotion === 'reduce') expect(name, sel).toBe('none');
+        if (reducedMotion === 'reduce' || !fine) expect(name, sel).toBe('none');
         else expect(name, sel).toContain('heading-reveal');
       }
       await ctx.close();

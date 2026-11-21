@@ -20,9 +20,13 @@ test.describe('scroll reveals', () => {
     const ctx = await browser.newContext({ reducedMotion: 'no-preference' });
     const page = await ctx.newPage();
     await page.goto('/');
+    // Scroll-linked reveals run on a mouse-and-screen device only (2026-11-19,
+    // phone smoothness); on touch the content simply shows.
+    const fine = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
     for (const sel of REVEALS) {
       const name = await page.locator(sel).first().evaluate((el) => getComputedStyle(el).animationName);
-      expect(name, sel).toContain('scroll-rise');
+      if (fine) expect(name, sel).toContain('scroll-rise');
+      else expect(name, sel).toBe('none');
     }
     await ctx.close();
   });

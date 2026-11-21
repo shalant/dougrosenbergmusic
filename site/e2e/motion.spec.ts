@@ -92,7 +92,10 @@ test.describe('touch', () => {
 
 test('Highlights, Performance and press rows use the shared scroll reveal and end fully visible', async ({ page }) => {
   await page.goto('/');
-  const supported = await page.evaluate(() => CSS.supports('animation-timeline: view()'));
+  // Only on a mouse-and-screen device (2026-11-19); on touch the rows just show.
+  const supported =
+    (await page.evaluate(() => CSS.supports('animation-timeline: view()'))) &&
+    await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
   for (const sel of ['.career-highlights__block', '.performance__venue-group', '.performance__artists', '.ledger__row']) {
     const el = page.locator(sel).first();
     if (supported) {

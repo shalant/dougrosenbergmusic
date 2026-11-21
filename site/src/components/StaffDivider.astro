@@ -114,6 +114,9 @@ const { icon, tone, label } = Astro.props;
     margin-left: 0;
   }
 
+  /* Scroll-linked only on a mouse-and-screen device (2026-11-19, see global.css
+     .scroll-rise); on touch the label is just shown (below). */
+  @media (hover: hover) and (pointer: fine) {
   @supports (animation-timeline: view()) {
     .staff-divider {
       view-timeline-name: --divider;
@@ -140,6 +143,15 @@ const { icon, tone, label } = Astro.props;
     .staff-divider .staff-divider__icon {
       animation-timeline: --divider;
       animation-range: entry 15% cover 40%;
+    }
+  }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .staff-divider__label {
+      max-width: 9rem;
+      opacity: 1;
+      margin-left: 0.6rem;
     }
   }
 

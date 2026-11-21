@@ -268,6 +268,17 @@ How much, by kind:
   modified clicks, reduced motion and lite devices are left as plain links. The static and label
   styles live in `PageChannel.astro`, shared with the theme switch. Checked by
   `site/e2e/page-channel.spec.ts`.
+- **Phone smoothness rules (2026-11-19)**: a phone stuttered, and measuring the browser's main-thread
+  time showed why. Rules that keep it smooth: (1) loop with `transform` and `opacity` only, never
+  the individual `translate`/`rotate`/`scale` properties and never a custom property such as `--hue`:
+  those are main-thread work every frame. (2) The glow's color cycle (`hue-cycle`) runs only for
+  `(hover: hover) and (pointer: fine)`; touch devices keep the drift and each blob holds its own tone.
+  (3) Scroll-linked animations (`animation-timeline: view()`: `.scroll-rise`, `.heading-reveal`,
+  the press bracket, the About frame, the staff dividers) run only for the same mouse-and-screen
+  condition, because the browser re-evaluates all of them on the main thread for every scrolled frame;
+  on touch they are replaced by a one-shot reveal (`TouchReveal.astro`: a block below the fold rises in once when it first arrives, then nothing stays alive) and the divider labels are shown. Rule of thumb: on a phone, motion happens on a tap or once on arrival, never continuously or scroll-linked. (4) Test any new loop or
+  scroll-linked effect on the phone profile with the CPU slowed. Guarded by
+  `site/e2e/phone-smooth.spec.ts` and the touch test in `hero-haze.spec.ts`.
 - **Ambient loops**: 1-2 per screen, slow (6s+), low contrast. The fixed nav's only loop is the
   active note's pulse.
 - Everything off under `prefers-reduced-motion: reduce`; nothing hidden when scroll timelines
