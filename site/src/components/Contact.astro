@@ -201,7 +201,9 @@
     margin: 2.5rem 0 0;
     position: relative;
     isolation: isolate;
-    width: min(100%, 320px);
+    /* 320px to 420px (2026-11-21 re-score): at 320px the portrait left 270px of
+       empty ground between it and the form. */
+    width: min(100%, 420px);
   }
 
   @media (min-width: 900px) {
