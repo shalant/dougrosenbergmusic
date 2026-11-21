@@ -45,6 +45,28 @@ test('touch: the staff divider labels are shown rather than waiting for a scroll
   await ctx.close();
 });
 
+test('touch: a block below the fold rises in once when it arrives, and the page stays free of scroll-linked animations', async ({ browser }) => {
+  const ctx = await touchContext(browser);
+  const page = await ctx.newPage();
+  await page.goto('/');
+  const target = page.locator('.performance__artists');
+  await expect(target).toHaveClass(/tr-wait/);
+  expect(await target.evaluate((el) => getComputedStyle(el).opacity)).toBe('0');
+  await target.scrollIntoViewIfNeeded();
+  await expect(target).not.toHaveClass(/tr-wait/, { timeout: 4000 });
+  expect(await target.evaluate((el) => getComputedStyle(el).opacity)).toBe('1');
+  expect(await page.evaluate(scrollLinked)).toBeLessThanOrEqual(1);
+  await ctx.close();
+});
+
+test('touch: nothing is held hidden for a reader who asks for reduced motion', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+  await page.goto('/');
+  expect(await page.locator('.tr-wait').count()).toBe(0);
+  await ctx.close();
+});
+
 test('mouse and screen: the scroll-linked reveals are still there', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
   const page = await ctx.newPage();
