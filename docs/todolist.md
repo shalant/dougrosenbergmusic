@@ -665,12 +665,15 @@ semantic headings, title/meta description.
       - [x] `sitemap-index.xml` came in with the import (shows "Processing" 2026-09-30); recheck
             that it flips to Success with 1 URL discovered
       - [x] URL Submission for `https://dougrosenberg.com/` (2026-09-29)
-      - [ ] **2026-11-21: Bing dashboard not checked.** Chrome was signed out of Bing Webmaster
-            Tools and Claude doesn't enter credentials; Doug needs to sign in (or check it himself):
-            sitemap status, AI Performance.
+      - [x] **2026-11-21 Bing dashboard (Doug signed in; Claude read it):** `sitemap-index.xml`
+            Success, last crawled 2026-11-19, 1 URL discovered (Google found 4; the IndexNow run
+            below was sent the same day, so re-check). AI Performance (Copilot and partners,
+            2026-10-02 to 2026-11-19): 2 citations in total, both on 2026-10-28, 1 cited page; the
+            grounding-query and page lists show no data (sample only). Up from 0 at 2026-09-29.
+            **Still to do:** re-check the sitemap URL count in a week or two.
       - [x] 2026-11-21: ran `npm run indexnow` for `/`, `/easternblok`, `/easternblok/press` and
             `/press` (200); key URL returns 200.
-      - [ ] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
+      - [x] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
             at 2026-09-29)
       - [ ] IndexNow (pings Bing when pages change) — code added 2026-10-11 on branch
             `cloudflare-baseline-todo-2026-10-11`: key file `site/public/<key>.txt`,
