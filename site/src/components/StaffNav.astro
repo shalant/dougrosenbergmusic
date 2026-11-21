@@ -126,14 +126,14 @@ const sections = [
     /* Tint and border are theme tokens (light draft, 2026-11-15); the inset
        highlights stay white in both themes, since a bright top edge reads as
        glass on paper too. */
-    background: color-mix(in srgb, var(--bg) 55%, transparent);
+    /* More see-through (2026-11-21, Doug): 55% to 30% tint, and no border; the
+       blur and the shadow now carry the edge. */
+    background: color-mix(in srgb, var(--bg) 30%, transparent);
     backdrop-filter: blur(18px) saturate(1.5);
-    border: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
     border-radius: 28px;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.05),
-      0 8px 32px -4px color-mix(in srgb, var(--shadow) 60%, transparent);
+    /* The inset highlights are gone too (2026-11-21): they drew a thin edge
+       that read as a border. */
+    box-shadow: 0 8px 32px -4px color-mix(in srgb, var(--shadow) 60%, transparent);
   }
 
   /* The staff stops before the theme switch (right: 90px), so the five

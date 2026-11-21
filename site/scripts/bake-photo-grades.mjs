@@ -60,4 +60,14 @@ const m = (matrix) => ({ matrix });
 await grade(path.join(pub, 'hero.webp'), path.join(pub, 'hero-graded.webp'), [m(sepia(0.18)), m(saturate(1.08)), { brightness: 1.22 }, { contrast: 1.06 }], 'webp');
 const photo = [m(grayscale(0.35)), m(sepia(0.18)), m(saturate(1.1))];
 await grade(path.join(pub, 'gallery', 'sepia.jpg'), path.join(pub, 'gallery', 'sepia-graded.jpg'), photo, 'jpeg');
-await grade(path.join(pub, 'gallery', 'lakebluff.jpg'), path.join(pub, 'gallery', 'lakebluff-graded.jpg'), photo, 'jpeg');
+await grade(path.join(pub, 'gallery', 'formal.jpg'), path.join(pub, 'gallery', 'formal-graded.jpg'), photo, 'jpeg');
+
+// Small covers for the hero's 64px record row (2026-11-20). The row used the
+// full album covers (30 to 73 KB each, about 190 KB in all, three times the
+// hero photo) and they competed with the photo for a slow connection.
+// 160px covers 2.5x density at the row's largest size.
+for (const name of ['better-than-tv', 'goran-ivanovic-group', 'underwater', 'folk-tales']) {
+  const out = path.join(pub, 'albums', `${name}-160.webp`);
+  const info = await sharp(path.join(pub, 'albums', `${name}.jpg`)).resize(160, 160, { fit: 'cover' }).webp({ quality: 80 }).toFile(out);
+  console.log(`albums/${name}-160.webp  ${(info.size / 1024).toFixed(1)} KB`);
+}

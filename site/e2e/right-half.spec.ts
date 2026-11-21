@@ -67,10 +67,10 @@ test.describe('contact portrait', () => {
     expect(await img.getAttribute('height')).toBe('1440');
     const src = await img.getAttribute('src');
     expect(src).not.toContain('hero.webp');
-    // Not the About portrait, and not the gallery's first frame (it was both on
-    // 2026-11-19 and read as the same photo three times).
+    // Not the About portrait. (2026-11-21: Doug noticed an unrequested swap to
+    // the Lake Bluff shot and the studio portrait is back; the photo is his
+    // call, so do not change it without asking.)
     expect(src).not.toBe(await page.locator('.about__photo').first().getAttribute('src'));
-    expect(src).not.toContain('formal.jpg');
     const res = await page.request.get(src!);
     expect(res.status()).toBe(200);
   });
