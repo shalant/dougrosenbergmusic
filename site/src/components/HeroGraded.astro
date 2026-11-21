@@ -32,7 +32,7 @@ const records = [
     display: contents in dark, so the photo lays out exactly as before. */}
 <header id="hero" class="hero">
   <div class="hero__print">
-    <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="Doug Rosenberg holding a saxophone" fetchpriority="high" decoding="async" />
+    <img class="hero__photo" src={`${import.meta.env.BASE_URL}images/hero-graded.webp`} alt="Doug Rosenberg holding a saxophone" fetchpriority="high" decoding="async" />
   </div>
   <div class="hero__haze" aria-hidden="true">
     <div class="haze-blob haze-blob--wisp"></div>
@@ -184,7 +184,9 @@ const records = [
        20% to 14% to give the scale's symmetric crop room to grow without
        clipping the hat brim. */
     transform: scale(1.08) translateX(-5%);
-    filter: sepia(0.18) saturate(1.08) brightness(1.22) contrast(1.06);
+    /* The grade (sepia, saturate, brightness, contrast) is baked into
+       hero-graded.webp (scripts/bake-photo-grades.mjs): a CSS filter on this
+       big scrolling image was the page's biggest scroll cost in Firefox. */
   }
 
   /* Smoky haze (ported 2026-10-29 from docs/hero-haze-preview-2026-10-29.html,
@@ -817,6 +819,24 @@ const records = [
   }
   .hero[data-fx='lite'] .hero__blob--b {
     display: none;
+  }
+  /* Touch devices get the still version too (2026-11-20): the drifting smoke
+     and glow layers made scrolling stutter in Firefox on a phone. Same rules
+     as lite, which stays for weak mouse-and-screen devices; the page-change
+     static and the theme static are not part of this. */
+  @media (hover: none), (pointer: coarse) {
+    .hero .haze-blob,
+    .hero .hue-blob,
+    .hero .hero__main {
+      animation: none;
+    }
+    .hero .hero__blob--a {
+      animation: none;
+      opacity: 0.6;
+    }
+    .hero .hero__blob--b {
+      display: none;
+    }
   }
   .hero[data-live='false'] .haze-blob,
   .hero[data-live='false'] .hue-blob,

@@ -55,7 +55,7 @@ black. The same token names carry both sets, so components don't know which them
 page (home, Press, Eastern Blok and its Press), and `--paper-grain` is set in both themes (pale
 specks in dark, brown in light) and painted on `body`. The 78%-opaque bands (About, Highlights, In
 Frame) and the opaque footer paint their own grain, because the body's barely reaches them; the
-footer always uses the pale `--grain-on-dark` tile since it is a dark plate in both themes. Checked
+footer used the pale `--grain-on-dark` tile as a dark plate until 2026-11-20; it now follows the theme (kraft in light). Checked
 by `site/e2e/texture.spec.ts`.
 
 | Token | Dark | Light | Light contrast as text (on `--bg` / `--bg-elevated` / `--surface`) |
@@ -108,8 +108,8 @@ Paper text on a filled `--glow`, `--brass` or `--note-dev` button measures 5.88,
   JavaScript the page is dark. Editing that script changes its hash: run
   `npm run verify-csp -- --write`.
 - **Dark plates:** a picture or a physical object stays dark on the light page. Mark its root
-  `.theme-plate` and every token inside it resolves to the dark set. Current plates: the footer
-  (the sleeve's back cover) and the Dev section's TV screen and remote. Reach for a plate rather
+  `.theme-plate` and every token inside it resolves to the dark set. Current plates: the Dev section's TV screen and remote
+  (the footer was one until 2026-11-20: the theme switch lives in it, so a dark footer showed no change when you pressed it; it now has a kraft light version). Reach for a plate rather
   than re-tuning an overlay for light. (The hero was a plate in the first draft; see the next rule.)
 - **The light hero is a sleeve (2026-11-15):** same photo, re-composed rather than re-graded. From
   1025px the photo is a print in the left column (5fr) with the About photo's 14px offset brass
@@ -277,7 +277,10 @@ How much, by kind:
   the press bracket, the About frame, the staff dividers) run only for the same mouse-and-screen
   condition, because the browser re-evaluates all of them on the main thread for every scrolled frame;
   on touch they are replaced by a one-shot reveal (`TouchReveal.astro`: a block below the fold rises in once when it first arrives, then nothing stays alive) and the divider labels are shown. Rule of thumb: on a phone, motion happens on a tap or once on arrival, never continuously or scroll-linked. (4) Test any new loop or
-  scroll-linked effect on the phone profile with the CPU slowed. Guarded by
+  scroll-linked effect on the phone profile with the CPU slowed. (5) Firefox on a phone is slower than Chrome
+  at paint: never put a CSS `filter` on a big scrolling image (bake the grade into the file with
+  `site/scripts/bake-photo-grades.mjs`), no live `backdrop-filter` on touch, and touch holds the ambient
+  glow and hero smoke still. Guarded by
   `site/e2e/phone-smooth.spec.ts` and the touch test in `hero-haze.spec.ts`.
 - **Ambient loops**: 1-2 per screen, slow (6s+), low contrast. The fixed nav's only loop is the
   active note's pulse.

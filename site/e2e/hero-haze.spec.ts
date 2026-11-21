@@ -24,6 +24,7 @@ for (const width of [1440, 1024, 768, 390]) {
   test(`hero smoke drifts at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/?fx=full');
+    if (!(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches))) test.skip(true, 'touch devices hold the glow and smoke still (2026-11-20)');
     const state = await hazeState(page);
     expect(state.hazeDisplay).toBe('block');
     expect(state.blobs).toHaveLength(4);
@@ -101,6 +102,7 @@ for (const width of [1440, 390]) {
   test(`the color blobs wander the left half and change color at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/?fx=full');
+    if (!(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches))) test.skip(true, 'touch devices hold the glow and smoke still (2026-11-20)');
     // The color cycle runs only on a mouse-and-screen device (2026-11-19); a
     // touch device keeps the drift with each blob holding its own tone.
     const cycles = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
@@ -153,6 +155,7 @@ const ambientState = (page: Page) =>
 
 test('the ambient glows stay fixed while the page scrolls and keep changing color', async ({ page }) => {
   await page.goto('/?fx=full');
+  if (!(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches))) test.skip(true, 'touch devices hold the glow and smoke still (2026-11-20)');
   const first = await ambientState(page);
   expect(first.position).toBe('fixed');
   expect(first.animations).toHaveLength(4);
@@ -175,7 +178,7 @@ test('the ambient glows stay fixed while the page scrolls and keep changing colo
 // every frame) and from looping the individual translate/rotate/scale
 // properties, which are main-thread work; `transform` is not. On a touch
 // device no loop may animate --hue or those properties.
-test('on a touch device the loops move by transform and never cycle color', async ({ browser }) => {
+test('on a touch device the glow and smoke are still, and nothing cycles color or moves by the slow properties', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true, reducedMotion: 'no-preference' });
   const page = await ctx.newPage();
   await page.goto('/?fx=full');
@@ -191,7 +194,11 @@ test('on a touch device the loops move by transform and never cycle color', asyn
         return { name: (a as CSSAnimation).animationName, props: [...props] };
       })
   );
-  expect(loops.length).toBeGreaterThan(5);
+  // Stilled in 2026-11-20: in Firefox on a phone the drifting layers doubled the
+  // time per scrolled frame. Only the page's own entrances may still loop.
+  for (const loop of loops) {
+    expect(loop.name, 'no drift on touch').not.toMatch(/^(ambient-path|hue-path|haze-|hero-drift)/);
+  }
   for (const loop of loops) {
     expect(loop.name, 'no color cycle on touch').not.toBe('hue-cycle');
     for (const bad of ['translate', 'rotate', 'scale', '--hue']) {

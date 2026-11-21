@@ -100,7 +100,8 @@
    prefers-color-scheme. Without JavaScript the page stays dark.
 
    .theme-plate keeps the dark set on purpose inside a light page: the
-   footer ("back cover") and the Dev section's TV screen and remote. (The
+   Dev section's TV screen and remote (the footer was one until 2026-11-20,
+   when it got its own light version). (The
    hero re-composes for light instead; see HeroGraded.astro's "Light theme:
    the sleeve".) They are pictures or physical objects, not paper, and their
    overlays were tuned against dark. Because .theme-plate re-declares the
@@ -137,8 +138,7 @@
   --shadow: #000;
   --footer-bg: #060810;
   /* Where Contact's gradient ends: the footer's color in dark, so the page
-     fades into it. Light keeps the paper and lets the dark footer start at
-     a hard edge, like the back of a sleeve. */
+     fades into it. Light does the same into its kraft footer (2026-11-20). */
   --contact-fade-end: var(--footer-bg);
   /* Dark grain (2026-11-17): the same static noise tile as the light paper,
      tinted pale instead of brown, so dark pages aren't flat charcoal.
@@ -182,7 +182,7 @@
   --staff-line-strong: rgba(31, 27, 22, 0.14);
   --focus-ring: rgba(31, 27, 22, 0.7);
   --shadow: rgba(74, 52, 26, 0.38);
-  --contact-fade-end: transparent;
+  --footer-bg: #e5dbc9;
   /* Paper grain: one static SVG noise tile, drawn once and repeated, so it
      costs no animation or repaint. img-src already allows data:. Kept faint
      enough that it reads as stock at arm's length. Raised from 7% to 12% alpha
@@ -525,6 +525,15 @@ a {
   background: color-mix(in srgb, var(--surface) 40%, transparent);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+}
+
+/* No live blur on touch (2026-11-20); see StaffNav.astro. */
+@media (hover: none), (pointer: coarse) {
+  .cta-secondary {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
 }
 
 .cta-secondary:hover,

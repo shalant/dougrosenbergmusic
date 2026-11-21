@@ -4,7 +4,7 @@ import { test, expect, type Page } from '@playwright/test';
 // "Themes" for the rules these check:
 // - the theme follows the system setting until the visitor picks one;
 // - a picked theme is saved and wins on the next load;
-// - hero, footer and the Dev TV are dark "plates" in both themes;
+// - hero and footer follow the theme; the Dev TV is a dark "plates" in both themes;
 // - every visible text element on the light page clears WCAG AA.
 
 const PAGES = ['/', '/press', '/easternblok', '/easternblok/press'];
@@ -180,15 +180,17 @@ test.describe('light theme', () => {
     expect(await theme(page)).toBe('dark');
   });
 
-  test('the footer and the Dev screen stay dark plates; the hero is paper', async ({ page }) => {
+  test('the Dev screen stays a dark plate; the hero and the footer are paper in light', async ({ page }) => {
     await page.goto('/');
     const bgs = await page.evaluate(() =>
-      ['#hero', '.site-footer', '.dev__screen-wrap'].map((sel) => {
+      ['#hero', '.dev__screen-wrap'].map((sel) => {
         const el = document.querySelector(sel);
         return el ? getComputedStyle(el).getPropertyValue('--bg').trim() : null;
       }),
     );
-    expect(bgs).toEqual(['#f4efe6', '#0a0e17', '#0a0e17']);
+    expect(bgs).toEqual(['#f4efe6', '#0a0e17']);
+    // The footer has its own light version: kraft, not the dark back cover.
+    expect(await page.locator('.site-footer').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(229, 219, 201)');
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(244, 239, 230)');
   });
 

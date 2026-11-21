@@ -14,7 +14,7 @@
       <figure class="contact__photo-wrap">
         <img
           class="contact__photo"
-          src={`${import.meta.env.BASE_URL}images/gallery/lakebluff.jpg`}
+          src={`${import.meta.env.BASE_URL}images/gallery/lakebluff-graded.jpg`}
           alt=""
           width="1440"
           height="1440"
@@ -217,7 +217,7 @@
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    filter: grayscale(0.35) sepia(0.18) saturate(1.1);
+    /* grade baked into lakebluff-graded.jpg (scripts/bake-photo-grades.mjs) */
     object-position: 40% 25%;
     border-radius: 2px;
   }
