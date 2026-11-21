@@ -127,10 +127,14 @@ const records = [
        the bar is showing (the common case on load/scroll-up), so the
        bottom-anchored content block below (padding-bottom, phone
        breakpoint) sat partly below the visible fold, reading as "clipped."
-       100dvh tracks the real visible viewport; vh stays first as the
-       fallback for browsers without dvh support. */
+       The small viewport unit (svh) is the visible height with the bar
+       showing, and it is fixed. It was 100dvh until 2026-11-21: dvh changes
+       as the bar collapses, so the hero was resized (and its photo and
+       content re-laid out) in the middle of the first scroll off the hero,
+       which Doug felt as a twitch on his phone. vh stays first as the
+       fallback for browsers without svh support. */
     min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -148,8 +152,12 @@ const records = [
      no bare strip ever shows at the top. Scroll-driven, no script; dark theme
      only (the light hero is a framed print), still on weak devices and
      under reduced motion. The timeline is a separate, more specific rule on
-     purpose (the minifier gotcha in StaffDivider.astro). */
-  @media (prefers-reduced-motion: no-preference) {
+     purpose (the minifier gotcha in StaffDivider.astro).
+     Mouse-and-screen devices only (2026-11-21): on a phone the drift scaled
+     and shifted a full-screen photo on every scrolled frame, and the first
+     scroll off the hero felt twitchy. Touch keeps the photo still, as it
+     already does for the glow and the smoke. */
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
     @supports (animation-timeline: scroll()) {
       :global(:root:not([data-theme='light'], [data-fx='lite'])) .hero__photo {
         animation: hero-drift linear both;
