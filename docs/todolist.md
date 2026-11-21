@@ -44,6 +44,12 @@ this project's own custom items and where it stands against them.
       grade was baked into a copy. Restored `formal.jpg` (now `formal-graded.jpg`), deleted the unused
       `lakebluff-graded.jpg`, and relaxed the test that forbade `formal.jpg`. The photo is Doug's call;
       do not change it without asking. Not checked on a real device.
+- [x] **UI/UX re-score and fixes (2026-11-21, branch `rescore-2026-11-21`).** Good cop dark 94 / light 93
+      (unchanged), bad cop dark 88 / light 90 (was 86 / 88); logged in `docs/ui-assessment-2026-10-24.md`.
+      Raised the smallest body text to 14px and widened the Contact portrait to 420px, with
+      `e2e/readable-text.spec.ts`. Then turned the Highlights school list and the artists list (name
+      walls) into ruled column lists. Still open: the Contact column ending early, and everything that
+      needs a real phone or laptop. Full e2e 458 passed, 0 failed.
 - [ ] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
       Confirmed first that the current hero is the Riff 14 port (PR #27, commit `538bc63`), not a
       stopgap, so this is a rework of the hierarchy rather than a swap. Changed in

@@ -16,72 +16,45 @@ test('sheet music rows use the page font, not the browser button default', async
   expect(item).toBe(body);
 });
 
-// Every row of a dot-separated list should start flush with the section's
-// text column (its leading dot clipped away), and no single item may wrap.
-// The old markup ended wrapped lines with a stray "·" and split names
-// ("Bobby / Broom") across lines.
-async function rowStarts(page: Page, listSelector: string, alignSelector: string) {
-  return page.evaluate(
-    ([listSel, alignSel]) => {
-      const list = document.querySelector(listSel)!;
-      const alignLeft = document.querySelector(alignSel)!.getBoundingClientRect().left;
-      const items = Array.from(list.children) as HTMLElement[];
-      const textLeft = (li: HTMLElement) => {
-        const range = document.createRange();
-        range.selectNodeContents(li.lastChild ?? li);
-        return range.getClientRects()[0].left;
-      };
-      const rows = new Map<number, HTMLElement>();
-      const rowEnds = new Map<number, HTMLElement>();
-      for (const li of items) {
-        const top = Math.round(li.getBoundingClientRect().top);
-        if (!rows.has(top)) rows.set(top, li);
-        rowEnds.set(top, li);
-      }
-      // Anything drawn after an item's text (the old ::after separator)
-      // widens the item past its text: that was the orphan dot at line end.
-      const trailing = [...rowEnds.values()].filter((li) => {
-        const range = document.createRange();
-        range.selectNodeContents(li.lastChild ?? li);
-        const rects = range.getClientRects();
-        return li.getBoundingClientRect().right - rects[rects.length - 1].right > 1;
-      }).map((li) => li.textContent);
-      return {
-        rows: rows.size,
-        trailing,
-        offsets: [...rows.values()].map((li) => Math.round(textLeft(li) - alignLeft)),
-        wrapped: items.filter((li) => {
-          const range = document.createRange();
-          range.selectNodeContents(li);
-          const lines = new Set(Array.from(range.getClientRects()).map((r) => Math.round(r.top)));
-          return lines.size > 1;
-        }).map((li) => li.textContent),
-      };
-    },
-    [listSelector, alignSelector]
-  );
+// 2026-11-21: the Highlights school list and "Artists performed with" were
+// dot-separated runs (a name wall). They are ruled columns now: each name is a
+// row with a hairline above it, no name wraps mid-name on a phone, and the
+// columns are narrower than the section on every width.
+async function columnState(page: Page, listSelector: string) {
+  return page.evaluate((sel) => {
+    const list = document.querySelector<HTMLElement>(sel)!;
+    const items = Array.from(list.children) as HTMLElement[];
+    const lefts = new Set(items.map((li) => Math.round(li.getBoundingClientRect().left)));
+    return {
+      count: items.length,
+      columns: lefts.size,
+      ruled: items.every((li) => getComputedStyle(li).borderTopWidth === '1px'),
+      noDots: items.every((li) => getComputedStyle(li, '::before').content === 'none' || getComputedStyle(li, '::before').content === 'normal'),
+      overflow: list.scrollWidth > list.clientWidth + 1,
+    };
+  }, listSelector);
 }
 
-for (const width of [360, 390]) {
-  test.describe(`dot-separated lists at ${width}px`, () => {
-    test.use({ viewport: { width, height: 800 } });
+// [list, [width, minimum columns]...]: the artists list is two columns on a
+// phone (24 rows in one column was about 900px tall); the school list is ten
+// rows and stays one column there, like the ruled rows below it.
+const lists: Array<[string, Array<[number, number]>]> = [
+  ['.career-highlights__list', [[360, 1], [390, 1], [1440, 3]]],
+  ['.performance__artists-flow', [[360, 2], [390, 2], [1440, 4]]],
+];
 
-    test('Highlights school list', async ({ page }) => {
+for (const [sel, widths] of lists) {
+  for (const [width, minCols] of widths) {
+    test(`${sel} is a ruled column list at ${width}px`, async ({ browser }) => {
+      const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+      const page = await ctx.newPage();
       await page.goto('/');
-      const result = await rowStarts(page, '.career-highlights__list', '.career-highlights__title');
-      expect(result.rows).toBeGreaterThan(1);
-      expect(result.offsets.every((o) => Math.abs(o) <= 1)).toBe(true);
-      expect(result.wrapped).toEqual([]);
-      expect(result.trailing).toEqual([]);
+      const r = await columnState(page, sel);
+      expect(r.ruled, 'every name has a hairline above').toBe(true);
+      expect(r.noDots, 'no separator dots').toBe(true);
+      expect(r.overflow, 'no horizontal overflow').toBe(false);
+      expect(r.columns, 'columns').toBeGreaterThanOrEqual(minCols);
+      await ctx.close();
     });
-
-    test('Artists performed with', async ({ page }) => {
-      await page.goto('/');
-      const result = await rowStarts(page, '.performance__artists-flow', '.performance__artists .performance__venue-label');
-      expect(result.rows).toBeGreaterThan(1);
-      expect(result.offsets.every((o) => Math.abs(o) <= 1)).toBe(true);
-      expect(result.wrapped).toEqual([]);
-      expect(result.trailing).toEqual([]);
-    });
-  });
+  }
 }

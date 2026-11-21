@@ -738,3 +738,57 @@ real-device check.
 
 Point 5 (motion unseen on a device, same reviewer) is not something a code change can fix. It needs Doug on a real phone and laptop; the checklist is in the PR description.
 Not re-scored: this round was seen in screenshots at 1440 and phone width only.
+
+## Re-score, 2026-11-21 (branch `rescore-2026-11-21`)
+
+Reviewer: Claude, the same model that built most of the site, so allow about three points either way. Fresh
+captures of `master` after #138 (the hero load, nav, knob, light blobs and Contact photo changes), made against
+the dev server with reduced motion: full page at 1440x900 and 390x844, dark and light. Seen in screenshots only.
+Not viewed: a real phone or laptop, motion, the archive pages (`/press`, `/easternblok`) and any state other than
+the resting page. Lazy images (the Contact portrait, the Dev TV) showed empty in the full-page strips and loaded
+when scrolled to, so those were checked by scrolling, not counted as bugs.
+
+**Good cop: dark about 94, light about 93** (unchanged). Weights as above. Today's work is polish inside points
+already earned: the knob numbers, the see-through nav without a border, and the light-mode blobs now showing
+(light first impression stays at 18; they were a gap in a point already scored). Mobile stays at 13 of 15: the
+phone work since 2026-11-19 was measured on an emulator, which the rules do not credit.
+
+**Bad cop: dark about 88, light about 90** (was about 86 and about 88). The four points fixed on 2026-11-19 are
+now confirmed in fresh screenshots (Lessons to Sheet Music reads as one block, the Eastern Blok story has its
+pull quote, the phone Lessons rows are compact, On the Road's right column fills), so they are struck and not
+counted. What still costs points:
+1. **Small text.** The commonest body text under 13px was the quote sources in "On record" (12.8px) and the rail
+   beside it, plus the Recordings cue and phone blurb. ~~Fixed 2026-11-21, now 14px (13.6px for the cue).~~
+   The uppercase eyebrow labels (12 to 12.8px) stay: small caps read larger.
+2. **Contact portrait lopsided.** At 320px it left about 270px of empty ground before the form. ~~Widened to
+   420px.~~ New cost, smaller: it now runs about 260px below the form's bottom edge, so the right column ends
+   early on desktop.
+3. ~~**Name walls in Highlights.** "Artists performed with" and the schools list are still long runs of names, with
+   only two scales (italic leaders, then plain) to break them.~~ Fixed 2026-11-21, see below.
+4. **Motion and phone feel are unverified on a device.** Same as every round since 2026-11-15.
+
+Not counted: the "On record" rail's brass bracket with its text centered in a tall frame (a deliberate brace
+motif, `PressTimeline.astro`), the Astro dev toolbar in the captures, the fixed logo and menu on phones, the Dev
+remote over the preview.
+
+Cheapest points next: trimming the Contact portrait to about 380px or giving
+the form's column something under the button (point 2).
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-21 | good cop | `master` after #138, dark, desktop plus phone screenshots | about 94 | Unchanged; polish only; mobile still emulator-only |
+| 2026-11-21 | good cop | same, light | about 93 | Unchanged; blobs now visible |
+| 2026-11-21 | bad cop | same, dark | about 88 | Four 2026-11-19 fixes confirmed; small text fixed; Highlights name walls and the Contact column ending early remain |
+| 2026-11-21 | bad cop | same, light | about 90 | Same, softer on paper |
+
+### Fixed in this branch, 2026-11-21
+
+- **Small text:** quote sources, the "On record" rail (meta, lineage), and the Recordings blurb and cue are 14px
+  (rail link 13px, cue 13.6px). Test: `e2e/readable-text.spec.ts` (failed on the old build, four of four).
+- **Contact portrait:** 420px wide, same test file.
+- **Name walls (bad-cop point 3):** the Highlights school list and "Artists performed with" (24 names) were
+  dot-separated runs under the italic leaders. They are ruled column lists now: each name a row with a hairline
+  above (the site's ruled-row style), flowing down columns. Artists: two columns on a phone (one column was about
+  900px tall), up to five on desktop. Schools: one column on a phone, three to four on desktop. Tests in
+  `e2e/text-flow.spec.ts` replace the old orphan-dot checks (six of eight failed on the old build). Seen at 1440
+  and 390, dark and light. Not re-scored: scores above are as of the start of this branch.

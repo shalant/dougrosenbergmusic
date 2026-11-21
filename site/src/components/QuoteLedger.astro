@@ -82,7 +82,9 @@ const { quotes } = Astro.props;
 
   .ledger__cite {
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    /* 0.8rem to 0.875rem (2026-11-21 re-score: the quote sources were the most
+       common sub-13px body text on the page). */
+    font-size: 0.875rem;
     letter-spacing: 0.03em;
     line-height: 1.55;
     color: var(--text-faint);
