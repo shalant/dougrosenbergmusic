@@ -31,11 +31,15 @@
       },
       { rootMargin: '0px 0px -8% 0px' },
     );
-    for (const el of document.querySelectorAll<HTMLElement>('.scroll-rise, .heading-reveal')) {
-      if (el.getBoundingClientRect().top > innerHeight * 0.92) {
-        el.classList.add('tr-wait');
-        io.observe(el);
-      }
+    // Read every position first, then write: reading a rect after a class
+    // change forces a fresh layout each time (about 40 of them, measured as
+    // most of the page's load-time layout work on a slowed CPU).
+    const below = [...document.querySelectorAll<HTMLElement>('.scroll-rise, .heading-reveal')].filter(
+      (el) => el.getBoundingClientRect().top > innerHeight * 0.92,
+    );
+    for (const el of below) {
+      el.classList.add('tr-wait');
+      io.observe(el);
     }
   }
 </script>
