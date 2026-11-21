@@ -155,31 +155,29 @@ const otherArtists = [
     font-size: 1.05rem;
   }
 
-  /* Names never break mid-name, and the separator dot before each name sits
-     in the gap, clipped at line starts (same technique as CareerHighlights'
-     school list), so no line ends or begins with a stray "·". */
+  /* Ruled columns (2026-11-21 re-score, "name walls"): the other 24 names were
+     one dot-separated run, a wall under the italic leaders. They are rows now,
+     each with a hairline above it like the site's other ruled lists, flowing
+     down columns (alphabetical by last name, so down is the natural way to
+     read). Two columns on a phone, five on a wide screen. Names never wrap. */
   .performance__artists-flow {
     list-style: none;
-    margin: 0 0 0 -1.4rem;
+    margin: 0.5rem 0 0;
     padding: 0;
-    clip-path: inset(0 0 0 1.4rem);
-    display: flex;
-    flex-wrap: wrap;
+    /* 9rem columns, at most five: two on a phone (24 rows in one column was
+       about 900px tall), five on a wide screen. */
+    columns: 9rem 5;
+    column-gap: 1.5rem;
     font-size: 0.98rem;
-    line-height: 2;
+    line-height: 1.4;
     color: var(--text);
   }
 
   .performance__artists-flow li {
+    break-inside: avoid;
     white-space: nowrap;
-  }
-
-  .performance__artists-flow li::before {
-    content: '·';
-    display: inline-block;
-    width: 1.4rem;
-    text-align: center;
-    color: var(--brass);
+    padding-block: 0.5rem;
+    border-top: 1px solid var(--staff-line-strong);
   }
 
   @media (max-width: 700px) {

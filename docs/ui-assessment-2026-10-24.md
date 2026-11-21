@@ -763,15 +763,15 @@ counted. What still costs points:
 2. **Contact portrait lopsided.** At 320px it left about 270px of empty ground before the form. ~~Widened to
    420px.~~ New cost, smaller: it now runs about 260px below the form's bottom edge, so the right column ends
    early on desktop.
-3. **Name walls in Highlights.** "Artists performed with" and the schools list are still long runs of names, with
-   only two scales (italic leaders, then plain) to break them. Not fixed this round.
+3. ~~**Name walls in Highlights.** "Artists performed with" and the schools list are still long runs of names, with
+   only two scales (italic leaders, then plain) to break them.~~ Fixed 2026-11-21, see below.
 4. **Motion and phone feel are unverified on a device.** Same as every round since 2026-11-15.
 
 Not counted: the "On record" rail's brass bracket with its text centered in a tall frame (a deliberate brace
 motif, `PressTimeline.astro`), the Astro dev toolbar in the captures, the fixed logo and menu on phones, the Dev
 remote over the preview.
 
-Cheapest points next: Highlights name walls (point 3) and trimming the Contact portrait to about 380px or giving
+Cheapest points next: trimming the Contact portrait to about 380px or giving
 the form's column something under the button (point 2).
 
 | Date | Lens | Build scored | Score | What changed or cost points |
@@ -786,3 +786,9 @@ the form's column something under the button (point 2).
 - **Small text:** quote sources, the "On record" rail (meta, lineage), and the Recordings blurb and cue are 14px
   (rail link 13px, cue 13.6px). Test: `e2e/readable-text.spec.ts` (failed on the old build, four of four).
 - **Contact portrait:** 420px wide, same test file.
+- **Name walls (bad-cop point 3):** the Highlights school list and "Artists performed with" (24 names) were
+  dot-separated runs under the italic leaders. They are ruled column lists now: each name a row with a hairline
+  above (the site's ruled-row style), flowing down columns. Artists: two columns on a phone (one column was about
+  900px tall), up to five on desktop. Schools: one column on a phone, three to four on desktop. Tests in
+  `e2e/text-flow.spec.ts` replace the old orphan-dot checks (six of eight failed on the old build). Seen at 1440
+  and 390, dark and light. Not re-scored: scores above are as of the start of this branch.
