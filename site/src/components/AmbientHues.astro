@@ -33,6 +33,13 @@
     opacity: var(--ambient-strength);
   }
 
+  /* Light theme (2026-11-21, Doug could not see the blobs on desktop): the same
+     strength that glows on charcoal is a faint stain on paper, so the layer is
+     stronger there. The light note colors are deep, so they read as ink washes. */
+  :global(:root[data-theme='light']) .ambient {
+    --ambient-strength: 0.95;
+  }
+
   .ambient-blob {
     position: absolute;
     border-radius: 50%;

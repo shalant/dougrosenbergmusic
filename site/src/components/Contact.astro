@@ -4,17 +4,16 @@
       <h2 class="contact__heading heading-reveal">Let&rsquo;s make some music.</h2>
       <p class="contact__sub">Available for performances, sessions, and private instruction.</p>
       {/* Portrait (2026-11-15): fills the column under the heading, which was
-           an empty void beside the form. A different photo from the hero and
-           About on purpose. Changed 2026-11-19 from the studio portrait (formal.jpg,
-           also the first frame of In Frame, and the same man in the same pose as
-           About) to the smiling Lake Bluff shot from the gallery: warmer, and the
-           only portrait here that is not a serious studio one. Decorative,
-           so alt is empty; hidden below 900px where the form stacks under the
-           heading and the photo would only push it down. */}
+           an empty void beside the form. The studio portrait (formal.jpg, graded
+           copy). I swapped it for the Lake Bluff shot on 2026-11-19 without being
+           asked and Doug noticed on 2026-11-21, so it is back; which photo goes
+           here is Doug's call. Decorative, so alt is empty; hidden below 900px
+           where the form stacks under the heading and the photo would only push
+           it down. */}
       <figure class="contact__photo-wrap">
         <img
           class="contact__photo"
-          src={`${import.meta.env.BASE_URL}images/gallery/lakebluff-graded.jpg`}
+          src={`${import.meta.env.BASE_URL}images/gallery/formal-graded.jpg`}
           alt=""
           width="1440"
           height="1440"
@@ -217,7 +216,7 @@
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    /* grade baked into lakebluff-graded.jpg (scripts/bake-photo-grades.mjs) */
+    /* grade baked into formal-graded.jpg (scripts/bake-photo-grades.mjs) */
     object-position: 40% 25%;
     border-radius: 2px;
   }

@@ -34,6 +34,16 @@ this project's own custom items and where it stands against them.
       changed. Verified: 64 unit tests, `astro check`, build, CSP check, 155 e2e passing.
       Plan and remaining steps: `docs/music-first-plan-2026-10-25.md`. Not yet checked by eye:
       the hero headline's line breaks at the widths the old copy was tuned for (step 2).
+- [x] **Nav, knob, light blobs, Contact photo (2026-11-21, branch `nav-polish-2026-11-21`).** Doug's
+      notes: the channel knob's "1" and "2" touched the dial's outer arc, the navbar should be more
+      see-through with no border, and the colored blobs were invisible in light mode on desktop.
+      Fixed: numbers moved below the arc ends (`ThemeToggle.astro`); nav tint 55% to 30% and the
+      border and inset highlights removed (`StaffNav.astro`); light-mode ambient strength 0.385 to
+      0.95 (`AmbientHues.astro`). Also: Doug noticed the Contact photo had changed. It had, twice: on
+      2026-11-19 Claude swapped `formal.jpg` for the Lake Bluff shot unasked, and on 2026-11-20 the
+      grade was baked into a copy. Restored `formal.jpg` (now `formal-graded.jpg`), deleted the unused
+      `lakebluff-graded.jpg`, and relaxed the test that forbade `formal.jpg`. The photo is Doug's call;
+      do not change it without asking. Not checked on a real device.
 - [ ] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
       Confirmed first that the current hero is the Riff 14 port (PR #27, commit `538bc63`), not a
       stopgap, so this is a rework of the hierarchy rather than a swap. Changed in
