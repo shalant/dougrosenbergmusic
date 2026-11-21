@@ -645,7 +645,19 @@ semantic headings, title/meta description.
             doesn't redirect (deliberate, not a gap). Doug clicked "Validate fix" 2026-10-24.
             **Still to do:** check the validation result email in 1-2 weeks; run URL Inspection on
             `/easternblok/press` and request indexing if it still shows the draft state.
-      - [ ] Review Performance report once data populates (query/page baseline, name searches)
+      - [x] **2026-11-21 check (Claude, via Doug's signed-in Chrome):** Page indexing (last update
+            2026-11-15): 5 indexed, 39 not. 404 (24), redirect (10), 5xx (1), alternate canonical (1)
+            and discovered-not-indexed (2) all show validation "Not Started"; noindex (1, `/press` on
+            `www`) is "Started" since 2026-10-24 and still running, so no result email yet. URL
+            Inspection says `/easternblok/press` is unknown to Google ("no referring sitemaps",
+            from before the sitemap was re-read); clicked Request indexing, accepted into the
+            priority queue. Sitemap `sitemap-index.xml`: Success, 4 discovered pages, last read
+            2026-11-15. **Still to do:** click "Validate fix" on the 404 group once the next Page
+            indexing update lands (Doug's call; the earlier validations show as not started).
+      - [x] Performance baseline 2026-11-21 (90 days from 2026-09-28): 26 clicks, 244 impressions,
+            CTR 10.7%, average position 6.3. Top queries: "doug rosenberg" (2 clicks, 66
+            impressions) and four "cornbread lee morgan lead sheet" variants (0 clicks, 37
+            impressions in all). Re-check in a month.
       - [x] Confirm Manual actions and Security issues both clean — both "No issues detected"
             on the domain property (2026-10-11)
 - [ ] **Bing Webmaster Tools** (dougrosenberg.com wasn't set up before 2026-09-29)
@@ -653,7 +665,15 @@ semantic headings, title/meta description.
       - [x] `sitemap-index.xml` came in with the import (shows "Processing" 2026-09-30); recheck
             that it flips to Success with 1 URL discovered
       - [x] URL Submission for `https://dougrosenberg.com/` (2026-09-29)
-      - [ ] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
+      - [x] **2026-11-21 Bing dashboard (Doug signed in; Claude read it):** `sitemap-index.xml`
+            Success, last crawled 2026-11-19, 1 URL discovered (Google found 4; the IndexNow run
+            below was sent the same day, so re-check). AI Performance (Copilot and partners,
+            2026-10-02 to 2026-11-19): 2 citations in total, both on 2026-10-28, 1 cited page; the
+            grounding-query and page lists show no data (sample only). Up from 0 at 2026-09-29.
+            **Still to do:** re-check the sitemap URL count in a week or two.
+      - [x] 2026-11-21: ran `npm run indexnow` for `/`, `/easternblok`, `/easternblok/press` and
+            `/press` (200); key URL returns 200.
+      - [x] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
             at 2026-09-29)
       - [ ] IndexNow (pings Bing when pages change) — code added 2026-10-11 on branch
             `cloudflare-baseline-todo-2026-10-11`: key file `site/public/<key>.txt`,
