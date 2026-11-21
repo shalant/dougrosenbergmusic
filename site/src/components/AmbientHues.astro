@@ -125,6 +125,16 @@
     .ambient-blob--d { animation: ambient-path-d 71s ease-in-out infinite, hue-cycle 97s linear -19s infinite; }
   }
 
+  /* Still on touch (2026-11-20): measured in Firefox, the four drifting
+     gradient layers roughly doubled the time per scrolled frame (about 60ms
+     against 28ms with them hidden), even as `transform`. A phone keeps the
+     glow, held in place; a mouse-and-screen device keeps the drift. */
+  @media (hover: none), (pointer: coarse) {
+    .ambient .ambient-blob {
+      animation: none;
+    }
+  }
+
   :global(:root[data-fx='lite']) .ambient-blob {
     animation: none;
   }

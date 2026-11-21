@@ -8,7 +8,7 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
       {/* Not the hero photo (2026-11-15): the hero print and this one were the same
           picture one screen apart, in the same brass frame (light bad cop). The warm
           studio portrait from the gallery reel; Contact uses formal.jpg. */}
-      <img class="about__photo" src={`${import.meta.env.BASE_URL}images/gallery/sepia.jpg`} alt="Doug Rosenberg in a studio portrait, holding a saxophone" width="1080" height="1080" loading="lazy" decoding="async" />
+      <img class="about__photo" src={`${import.meta.env.BASE_URL}images/gallery/sepia-graded.jpg`} alt="Doug Rosenberg in a studio portrait, holding a saxophone" width="1080" height="1080" loading="lazy" decoding="async" />
     </figure>
 
     <div class="about__body scroll-rise">
@@ -74,7 +74,7 @@ const tags = ['Saxophones, flutes, clarinets', 'Composition and arranging', 'Edu
     aspect-ratio: 4 / 5;
     object-fit: cover;
     object-position: center 15%;
-    filter: grayscale(0.35) sepia(0.18) saturate(1.1);
+    /* grade baked into sepia-graded.jpg (scripts/bake-photo-grades.mjs) */
     border-radius: 2px;
   }
 

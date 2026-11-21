@@ -393,6 +393,20 @@ const sections = [
     box-shadow: 0 20px 45px -20px color-mix(in srgb, var(--shadow) 70%, transparent);
   }
 
+  /* No live blur on touch (2026-11-20): a blurred, fixed layer over scrolling
+     content is re-blurred every scrolled frame, and measured in Firefox it
+     was a large share of the time per frame. Same glass, more opaque. */
+  @media (hover: none), (pointer: coarse) {
+    .staff-toggle {
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+    }
+    .staff-menu {
+      backdrop-filter: none;
+      background-color: color-mix(in srgb, var(--bg) 96%, transparent);
+    }
+  }
+
   .staff-menu__inner {
     position: relative;
   }
