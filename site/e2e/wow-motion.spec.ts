@@ -45,6 +45,8 @@ test.describe('hero parallax', () => {
     const ctx = await browser.newContext({ colorScheme: 'dark', reducedMotion: 'no-preference', viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
     await page.goto('/');
+    // The drift is for a mouse-and-screen device only (see the touch test below).
+    if (!(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches))) test.skip(true, 'touch-emulating project');
     const photo = page.locator('.hero__photo');
     expect(await photo.evaluate((el) => getComputedStyle(el).animationName)).toContain('hero-drift');
     for (const y of [0, 300, 600, 890]) {
@@ -60,6 +62,23 @@ test.describe('hero parallax', () => {
     }
     await page.evaluate(() => window.scrollTo(0, 450));
     await expect.poll(() => photo.evaluate((el) => getComputedStyle(el).translate)).not.toMatch(/^(none|0px( 0px)?)$/);
+    await ctx.close();
+  });
+
+  // 2026-11-21: Doug felt the scroll off the hero was twitchy on his phone
+  // (the rest of the page was fine). The drift scales and shifts a full-screen
+  // photo on every scrolled frame, and 100dvh resized the hero as the address
+  // bar collapsed. On touch the photo holds still and the hero keeps one height.
+  test('on a touch device the photo does not drift and the hero does not resize with the address bar', async ({ browser }) => {
+    const ctx = await browser.newContext({ colorScheme: 'dark', reducedMotion: 'no-preference', viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true });
+    const page = await ctx.newPage();
+    await page.goto('/?fx=full');
+    expect(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches)).toBe(false);
+    expect(await page.locator('.hero__photo').evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+    const css = await page.evaluate(() =>
+      [...document.styleSheets].flatMap((s) => { try { return [...s.cssRules].map((r) => r.cssText); } catch { return []; } }).join('\n')
+    );
+    expect(css).not.toMatch(/\.hero\b[^}]*min-height:\s*100dvh/);
     await ctx.close();
   });
 

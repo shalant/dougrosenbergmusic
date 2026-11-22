@@ -50,6 +50,14 @@ this project's own custom items and where it stands against them.
       `e2e/readable-text.spec.ts`. Then turned the Highlights school list and the artists list (name
       walls) into ruled column lists. Still open: the Contact column ending early, and everything that
       needs a real phone or laptop. Full e2e 458 passed, 0 failed.
+- [x] **Twitchy scroll off the hero on a phone (2026-11-21, branch `hero-scroll-twitch-2026-11-21`).**
+      Doug: scrolling is fine on his phone except the first scroll away from the hero. Two suspects,
+      both removed without a device to measure on: the hero's `min-height: 100dvh` (dvh changes as the
+      address bar collapses, so the hero was resized mid-scroll) is now `100svh`; and the scroll-driven
+      photo drift (scale + shift of a full-screen photo every frame) now runs only on a mouse-and-screen
+      device. Test in `e2e/wow-motion.spec.ts`; the desktop drift test skips on the touch-emulating
+      project. Full e2e 459 passed. **Not confirmed on a real phone:** if it still twitches, the next
+      suspects are the hero's blurred smoke layers and the photo fade-in (`data-photo`).
 - [ ] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
       Confirmed first that the current hero is the Riff 14 port (PR #27, commit `538bc63`), not a
       stopgap, so this is a rework of the hierarchy rather than a swap. Changed in
