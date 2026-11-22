@@ -1,0 +1,544 @@
+---
+// The hero's play button, in the bell of the saxophone (2026-11-22). Built
+// from the "Play Button in the Bell" study (ui-lab/artifacts/dougrosenbergmusic/
+// bell-play.html, version 3, "closing ring"), which Doug picked, with the ring
+// effect from "Out of the Bell" toned down because he found it intense.
+//
+// How it works
+//  - A small ring-and-triangle button sits in the mouth of the horn, tilted to
+//    match the opening. It is faint and soft at rest. As a mouse comes near it
+//    sharpens, grows and leans toward the pointer, and its outline ring closes
+//    (the "focus" you can read). Touch has no pointer to measure, so it sits at
+//    medium focus and breathes slowly.
+//  - Press it and the track plays. A player bar (play/pause, title, time, seek,
+//    previous, next, close) slides up from the bottom of the screen and stays
+//    while you scroll. Rings leave the bell on the beats of the real audio on a
+//    mouse-and-screen device (loudness onsets from a Web Audio analyser), and on
+//    a gentle fixed pulse elsewhere.
+//  - The bell's screen position is calculated from the photo's real crop
+//    (object-fit: cover plus object-position), so it stays on the horn at every
+//    window size and in both themes. When the crop pushes the bell off screen
+//    (the dark hero on a phone) or under the headline, the bell hides and the
+//    hero's Listen button remains the way in.
+//
+// The component renders nothing until audio exists: tracks come from
+// src/data/tracks.js and a track is used only when its file is in
+// public/audio/ at build time. See docs/bell-player-2026-11-22.md.
+//
+// Decisions worth keeping: the ring opacity when playing is capped low
+// (see createOnsetDetector in lib/bell-geometry.js) and the button's resting
+// focus while playing is .38, down from .5 in the study. No analyser on touch
+// devices: routing an <audio> element through Web Audio makes iOS's silent
+// switch mute it. Reduced motion and data-fx="lite" get no rings, no tilt and
+// no breathing.
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { tracks, ALBUM, ARTIST, ARTWORK } from '../data/tracks.js';
+
+const base = import.meta.env.BASE_URL;
+const have = (file: string) => existsSync(join(process.cwd(), 'public', file));
+const playable = tracks
+  .filter((t) => have(t.file))
+  .map((t) => ({ id: t.id, title: t.title, src: `${base}${t.file}`, lo: t.lo && have(t.lo) ? `${base}${t.lo}` : null }));
+const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${ARTWORK}`, tracks: playable });
+---
+
+{
+  playable.length > 0 && (
+    <div class="bellp-root" data-bellp={data}>
+      <div class="bellp-layer" data-off>
+        <button type="button" class="bellp" data-cta="hero-bell" aria-controls="bellp-bar" aria-label={`Play ${playable[0].title}`}>
+          <span class="bellp__fade">
+            <span class="bellp__plane">
+              <span class="bellp__pb">
+                <i class="bellp__coin" />
+                <svg class="bellp__ring bellp__ring--dark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="47" pathLength="100" /></svg>
+                <svg class="bellp__ring bellp__ring--mid" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="47" pathLength="100" /></svg>
+                <svg class="bellp__ring bellp__ring--track" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="47" pathLength="100" /></svg>
+                <svg class="bellp__ring bellp__ring--prog" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="47" pathLength="100" /></svg>
+                <svg class="bellp__ic bellp__ic--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 4.5v15l12-7.5z" /></svg>
+                <svg class="bellp__ic bellp__ic--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z" /></svg>
+              </span>
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <section id="bellp-bar" class="bellp-bar" aria-label="Music player" hidden>
+        <button type="button" class="bellp-bar__btn bellp-bar__play" data-act="toggle" aria-label="Play">
+          <svg class="bellp-bar__i-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4.5 2.5v11l9-5.5z" /></svg>
+          <svg class="bellp-bar__i-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" /></svg>
+        </button>
+        <div class="bellp-bar__meta">
+          <span class="bellp-bar__title" data-title />
+          <span class="bellp-bar__sub"><span data-sub /> <span class="bellp-bar__time"><span data-cur>0:00</span> / <span data-dur>-:--</span></span></span>
+        </div>
+        <div class="bellp-bar__nav">
+          <button type="button" class="bellp-bar__btn" data-act="prev" aria-label="Previous track">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 2.5h1.8v11H3zM13.5 2.5v11L5.8 8z" /></svg>
+          </button>
+          <button type="button" class="bellp-bar__btn" data-act="next" aria-label="Next track">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M11.2 2.5H13v11h-1.8zM2.5 2.5 10.2 8l-7.7 5.5z" /></svg>
+          </button>
+          <button type="button" class="bellp-bar__btn" data-act="close" aria-label="Close the player">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" /></svg>
+          </button>
+        </div>
+        <input class="bellp-bar__seek" id="bellp-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek within the track" />
+        <p class="bellp-bar__status" role="status" data-status></p>
+      </section>
+    </div>
+  )
+}
+
+<style is:global>
+  @property --near { syntax: '<number>'; inherits: true; initial-value: 0; }
+  @property --px { syntax: '<number>'; inherits: true; initial-value: 0; }
+  @property --py { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+  /* The layer fills the same box as the photo and, in the dark hero, carries the
+     photo's own scale, shift and scroll drift, so the button stays on the horn.
+     (hero-drift lives in HeroGraded.astro, scoped; keep these values in step.)
+     In the light hero it is the print's box, and clips the rings to the print. */
+  .bellp-layer {
+    --near: 0; --px: 0; --py: 0; --floor: 0; --u: 10px;
+    position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+    transition: --near 0.3s ease-out, --px 0.18s linear, --py 0.18s linear;
+  }
+  .bellp-layer[data-off] { visibility: hidden; }
+  .bellp-layer[data-touch] { --floor: 0.62; }
+  .bellp-layer[data-playing] { --floor: 0.38; }
+  :root:not([data-theme='light']) .bellp-layer { transform: scale(1.08) translateX(-5%); }
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+    @supports (animation-timeline: scroll()) {
+      :root:not([data-theme='light'], [data-fx='lite']) .bellp-layer { animation: bellp-drift linear both; }
+      html:not([data-theme='light'], [data-fx='lite']) .hero .bellp-layer { animation-timeline: scroll(root); animation-range: 0 100vh; }
+    }
+  }
+  @keyframes bellp-drift { to { translate: 0 9vh; scale: 1.12; } }
+
+  .bellp {
+    position: absolute; z-index: 1; margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+    width: calc(var(--u) * 9.4); height: calc(var(--u) * 6.8); min-width: 44px; min-height: 44px;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    pointer-events: auto; -webkit-tap-highlight-color: transparent;
+  }
+  .bellp::after { content: ''; position: absolute; inset: -35% -25%; border-radius: 50%; }
+  .bellp:focus-visible { outline: none; }
+  .bellp:focus-visible .bellp__fade { filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 1px #fff); opacity: 1; scale: 1; }
+
+  /* .bellp__fade carries opacity/blur/scale (they would flatten the 3D below it),
+     .bellp__plane is the 3D root, .bellp__pb is the button's own box. */
+  .bellp__fade {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    opacity: calc(0.2 + 0.8 * max(var(--near), var(--floor)));
+    scale: calc(0.8 + 0.2 * max(var(--near), var(--floor)));
+    filter: blur(calc((1 - max(var(--near), var(--floor))) * var(--u) * 0.3));
+  }
+  .bellp__plane {
+    position: relative; display: grid; place-items: center; transform-style: preserve-3d;
+    transform: perspective(calc(var(--u) * 55)) rotateX(calc(54deg - var(--py) * 7deg)) rotateY(calc(var(--px) * 10deg));
+  }
+  .bellp__pb { --D: max(calc(var(--u) * 7.2), 30px); position: relative; width: var(--D); height: var(--D); transform-style: preserve-3d; transition: scale 0.18s; }
+  .bellp:active .bellp__pb { scale: 0.93; }
+  .bellp-layer[data-touch] .bellp__pb { animation: bellp-breathe 3.2s ease-in-out infinite; }
+  @keyframes bellp-breathe { 50% { scale: 1.07; } }
+
+  .bellp__coin {
+    position: absolute; inset: 0; border-radius: 50%; transform: translateZ(calc(var(--u) * -0.2));
+    background: radial-gradient(circle at 50% 30%, rgba(40, 28, 14, 0.82), rgba(8, 10, 16, 0.88));
+    box-shadow: 0 0 calc(var(--u) * (0.8 + 1.6 * var(--near))) rgba(255, 186, 100, calc(0.1 + 0.3 * var(--near)));
+  }
+  .bellp__ring { position: absolute; inset: -2%; width: 104%; height: 104%; overflow: visible; fill: none; transform: rotate(-90deg); }
+  .bellp__ring circle { stroke-width: 5; stroke-linecap: round; }
+  .bellp__ring--dark { transform: rotate(-90deg) translateZ(calc(var(--u) * -0.7)); }
+  .bellp__ring--dark circle { stroke: #5a350c; }
+  .bellp__ring--mid { transform: rotate(-90deg) translateZ(calc(var(--u) * -0.35)); }
+  .bellp__ring--mid circle { stroke: #8f5e1a; }
+  .bellp__ring--track circle { stroke: rgba(233, 237, 245, 0.22); stroke-width: 3; }
+  .bellp__ring--prog circle {
+    stroke: #f0c27a; stroke-dasharray: 100; stroke-dashoffset: calc(100 - 100 * max(var(--near), var(--floor)));
+    filter: drop-shadow(0 0 calc(var(--u) * 0.5) rgba(255, 190, 110, 0.85));
+  }
+  .bellp-layer[data-playing] .bellp__ring--prog circle { stroke-dashoffset: 0; }
+  .bellp__ic {
+    position: absolute; left: 26%; top: 24%; width: 48%; height: 52%; overflow: visible;
+    fill: #f4cf8e; filter: drop-shadow(0 0 calc(var(--u) * 0.5) rgba(255, 190, 110, 0.55)); transition: opacity 0.2s, transform 0.25s;
+  }
+  .bellp__ic--pause { opacity: 0; transform: scale(0.7); }
+  .bellp-layer[data-playing] .bellp__ic--play { opacity: 0; transform: scale(0.7); }
+  .bellp-layer[data-playing] .bellp__ic--pause { opacity: 1; transform: none; }
+
+  /* A ring leaving the bell: an SVG ellipse the shape of the opening, scaled and
+     faded by the Web Animations API (transform and opacity only). The stroke does
+     not scale, so it stays a hairline as it grows. */
+  .bellp-ring { position: absolute; width: calc(var(--u) * 9.4); height: calc(var(--u) * 6.8); overflow: visible; pointer-events: none; will-change: transform, opacity; }
+  .bellp-ring ellipse { fill: none; stroke: #cf9a4f; stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+
+  /* ---- the player bar ---- */
+  .bellp-bar {
+    position: fixed; z-index: 60; left: 50%; bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    width: min(600px, calc(100vw - 24px)); transform: translateX(-50%);
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'play meta nav' 'seek seek seek'; align-items: center; gap: 0.1rem 0.7rem;
+    padding: 0.4rem 0.6rem 0.5rem 0.5rem; border-radius: 1.4rem;
+    color: var(--text); background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
+    border: 1px solid var(--staff-line-strong); box-shadow: 0 12px 32px -14px var(--shadow);
+    animation: bellp-rise 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .bellp-bar { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); background: color-mix(in srgb, var(--bg-elevated) 80%, transparent); }
+  }
+  @media (min-width: 640px) {
+    .bellp-bar { grid-template-columns: auto minmax(9rem, 13rem) minmax(5rem, 1fr) auto; grid-template-areas: 'play meta seek nav'; border-radius: 999px; padding-inline: 0.5rem 0.7rem; }
+  }
+  .bellp-bar[hidden] { display: none; }
+  @keyframes bellp-rise { from { transform: translate(-50%, 140%); } }
+  .bellp-bar__play { grid-area: play; }
+  .bellp-bar__meta { grid-area: meta; display: grid; min-width: 0; line-height: 1.25; }
+  .bellp-bar__nav { grid-area: nav; display: flex; }
+  .bellp-bar__seek { grid-area: seek; width: 100%; min-width: 0; height: 1.5rem; margin: 0; accent-color: var(--brass); cursor: pointer; }
+  .bellp-bar__title { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bellp-bar__sub { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bellp-bar__time { font-variant-numeric: tabular-nums; }
+  .bellp-bar__btn {
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; padding: 0;
+    background: none; color: var(--text); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .bellp-bar__btn svg { width: 1rem; height: 1rem; }
+  .bellp-bar__btn:hover { background: var(--brass-soft); }
+  .bellp-bar__btn:focus-visible, .bellp-bar__seek:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  .bellp-bar__play { background: var(--brass); color: var(--bg); }
+  .bellp-bar__play:hover { background: var(--brass); filter: brightness(1.1); }
+  .bellp-bar__i-pause { display: none; }
+  .bellp-bar[data-playing] .bellp-bar__i-play { display: none; }
+  .bellp-bar[data-playing] .bellp-bar__i-pause { display: block; }
+  .bellp-bar__status { grid-column: 1 / -1; margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+  .bellp-bar__status:empty { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bellp-layer, .bellp__pb, .bellp__ic { transition: none; }
+    .bellp-bar { animation: none; }
+  }
+  @media print { .bellp-layer, .bellp-bar { display: none; } }
+</style>
+
+<script>
+  import { bellInBox, parsePosition, proximity, createOnsetDetector, BELL } from '../lib/bell-geometry.js';
+
+  type Track = { id: string; title: string; src: string; lo: string | null };
+  type Data = { album: string; artist: string; artwork: string; tracks: Track[] };
+  type NavConn = Navigator & { connection?: { saveData?: boolean; effectiveType?: string } };
+
+  const root = document.querySelector<HTMLElement>('[data-bellp]');
+  const hero = document.querySelector<HTMLElement>('.hero');
+  const print = hero?.querySelector<HTMLElement>('.hero__print') ?? null;
+  const photo = hero?.querySelector<HTMLImageElement>('.hero__photo') ?? null;
+  const layer = root?.querySelector<HTMLElement>('.bellp-layer') ?? null;
+  const bell = layer?.querySelector<HTMLButtonElement>('.bellp') ?? null;
+  const bar = root?.querySelector<HTMLElement>('.bellp-bar') ?? null;
+
+  if (root && hero && print && photo && layer && bell && bar) {
+    const data = JSON.parse(root.dataset.bellp ?? '{}') as Data;
+    const list = data.tracks;
+    const html = document.documentElement;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const calm = () => reduced || html.dataset.fx === 'lite';
+    const NS = 'http://www.w3.org/2000/svg';
+
+    print.appendChild(layer);
+    if (!canHover) layer.dataset.touch = '';
+
+    // ---- where the bell is -------------------------------------------------
+    let u = 10;
+    let cx = 0; // bell center in layer (layout) pixels
+    let cy = 0;
+    function place() {
+      const b = bellInBox(photo!.offsetWidth, photo!.offsetHeight, parsePosition(getComputedStyle(photo!).objectPosition, [0.5, 0.14]));
+      u = b.u;
+      cx = photo!.offsetLeft + b.x;
+      cy = photo!.offsetTop + b.y;
+      layer!.style.setProperty('--u', `${u.toFixed(3)}px`);
+      bell!.style.left = `${cx.toFixed(1)}px`;
+      bell!.style.top = `${cy.toFixed(1)}px`;
+      // Hide the bell when the crop puts it off screen or under the headline.
+      layer!.setAttribute('data-off', '');
+      const r = bell!.getBoundingClientRect();
+      const h = hero!.getBoundingClientRect();
+      const mx = r.left + r.width / 2;
+      const my = r.top + r.height / 2;
+      let ok = mx > h.left + 28 && mx < h.right - 28 && my > h.top + 28 && my < h.bottom - 28;
+      const c = hero!.querySelector<HTMLElement>('.hero__content')?.getBoundingClientRect();
+      if (ok && c && mx > c.left - 24 && mx < c.right + 24 && my > c.top - 24 && my < c.bottom + 24) ok = false;
+      if (ok && photo!.offsetWidth > 0) layer!.removeAttribute('data-off');
+    }
+    const placeSoon = () => requestAnimationFrame(place);
+    const ready = () => {
+      place();
+      new ResizeObserver(placeSoon).observe(hero);
+      new ResizeObserver(placeSoon).observe(photo);
+      new MutationObserver(placeSoon).observe(html, { attributes: true, attributeFilter: ['data-theme'] });
+    };
+    if (photo.complete) ready();
+    else {
+      photo.addEventListener('load', ready, { once: true });
+      photo.addEventListener('error', ready, { once: true });
+    }
+
+    // ---- the audio ---------------------------------------------------------
+    const audio = new Audio();
+    audio.preload = 'none';
+    audio.setAttribute('playsinline', '');
+    let idx = 0;
+    let playing = false;
+    let loaded = -1;
+
+    const q = <T extends HTMLElement>(s: string) => bar.querySelector<T>(s)!;
+    const elTitle = q('[data-title]');
+    const elSub = q('[data-sub]');
+    const elCur = q('[data-cur]');
+    const elDur = q('[data-dur]');
+    const elStatus = q('[data-status]');
+    const seek = q<HTMLInputElement>('.bellp-bar__seek');
+    const fmt = (s: number) => (Number.isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '-:--');
+    const slow = () => {
+      const c = (navigator as NavConn).connection;
+      return c?.saveData === true || /^(slow-2g|2g|3g)$/.test(c?.effectiveType ?? '');
+    };
+
+    function label() {
+      const t = list[idx];
+      bell!.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${t.title}`);
+      q('[data-act="toggle"]').setAttribute('aria-label', playing ? 'Pause' : 'Play');
+      elTitle.textContent = t.title;
+      elSub.textContent = `${idx + 1} of ${list.length} ·`;
+    }
+    function load(i: number) {
+      idx = ((i % list.length) + list.length) % list.length;
+      const t = list[idx];
+      audio.src = t.lo && slow() ? t.lo : t.src;
+      loaded = idx;
+      elCur.textContent = '0:00';
+      elDur.textContent = '-:--';
+      seek.value = '0';
+      elStatus.textContent = '';
+      onset.reset();
+      label();
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: t.title,
+          artist: data.artist,
+          album: data.album,
+          artwork: [{ src: data.artwork, sizes: '160x160', type: 'image/webp' }],
+        });
+      }
+    }
+    function setPlaying(p: boolean) {
+      playing = p;
+      if (p) {
+        layer!.setAttribute('data-playing', '');
+        bar!.setAttribute('data-playing', '');
+      } else {
+        layer!.removeAttribute('data-playing');
+        bar!.removeAttribute('data-playing');
+      }
+      label();
+      if ('mediaSession' in navigator) navigator.mediaSession.playbackState = p ? 'playing' : 'paused';
+      if (p) {
+        ping(0.34, 2800); // the press: one ring straight away
+        kick();
+      }
+    }
+    function play() {
+      if (loaded !== idx) load(idx);
+      bar!.hidden = false;
+      ensureGraph();
+      audio.play().then(
+        () => setPlaying(true),
+        () => {
+          setPlaying(false);
+          elStatus.textContent = 'This track could not be played. Try again, or use the Listen section below.';
+        },
+      );
+    }
+    function pause() {
+      audio.pause();
+      setPlaying(false);
+    }
+    const toggle = () => (playing ? pause() : play());
+
+    audio.addEventListener('loadedmetadata', () => {
+      elDur.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      elCur.textContent = fmt(audio.currentTime);
+      if (Number.isFinite(audio.duration) && audio.duration > 0 && document.activeElement !== seek) seek.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+    });
+    audio.addEventListener('ended', () => {
+      if (idx < list.length - 1) {
+        load(idx + 1);
+        play();
+      } else {
+        setPlaying(false);
+        load(0);
+      }
+    });
+    audio.addEventListener('error', () => {
+      if (!audio.getAttribute('src')) return;
+      setPlaying(false);
+      elStatus.textContent = 'This track could not be loaded. Check your connection and try again.';
+    });
+    seek.addEventListener('input', () => {
+      if (Number.isFinite(audio.duration)) audio.currentTime = (Number(seek.value) / 1000) * audio.duration;
+    });
+
+    bell.addEventListener('click', toggle);
+    bar.addEventListener('click', (e) => {
+      const act = (e.target as Element).closest<HTMLElement>('[data-act]')?.dataset.act;
+      if (act === 'toggle') toggle();
+      else if (act === 'next') {
+        const was = playing;
+        load(idx + 1);
+        if (was) play();
+      } else if (act === 'prev') {
+        if (audio.currentTime > 3) audio.currentTime = 0;
+        else {
+          const was = playing;
+          load(idx - 1);
+          if (was) play();
+        }
+      } else if (act === 'close') {
+        pause();
+        bar.hidden = true;
+        bell.focus({ preventScroll: true });
+      }
+    });
+    if ('mediaSession' in navigator) {
+      const ms = navigator.mediaSession;
+      ms.setActionHandler('play', play);
+      ms.setActionHandler('pause', pause);
+      ms.setActionHandler('nexttrack', () => { const was = playing; load(idx + 1); if (was) play(); });
+      ms.setActionHandler('previoustrack', () => { const was = playing; load(idx - 1); if (was) play(); });
+    }
+    label();
+
+    // ---- rings -------------------------------------------------------------
+    const onset = createOnsetDetector();
+    function ping(alpha: number, ms = 2600) {
+      if (calm() || layer!.hasAttribute('data-off') || layer!.querySelectorAll('.bellp-ring').length > 8) return;
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'bellp-ring');
+      svg.setAttribute('viewBox', '0 0 100 100');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.setAttribute('aria-hidden', 'true');
+      const e = document.createElementNS(NS, 'ellipse');
+      for (const [k, v] of [['cx', '50'], ['cy', '50'], ['rx', '49'], ['ry', '49']]) e.setAttribute(k, v);
+      svg.appendChild(e);
+      svg.style.left = `${cx - (u * BELL.widthPct) / 2}px`;
+      svg.style.top = `${cy - (u * BELL.heightPct) / 2}px`;
+      layer!.insertBefore(svg, bell);
+      const tilt = `rotate(${BELL.tiltDeg}deg)`;
+      const a = svg.animate(
+        [
+          { transform: `${tilt} scale(0.55)`, opacity: alpha },
+          { transform: `translate(${u * 6}px, ${-u * 6}px) ${tilt} scale(6)`, opacity: 0 },
+        ],
+        { duration: ms, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)', fill: 'forwards' },
+      );
+      a.onfinish = () => svg.remove();
+    }
+
+    // Loudness for the rings. Desktop only: see the note at the top.
+    type Graph = { an: AnalyserNode; buf: Uint8Array<ArrayBuffer> };
+    let graph: Graph | null = null;
+    let graphFailed = false;
+    function ensureGraph() {
+      if (graph || graphFailed || !canHover || calm()) return;
+      // The element is routed through Web Audio only once the context is really
+      // running. Routing is one-way, and a context that stays suspended (no audio
+      // device, a strict autoplay policy) would freeze the track. Until then, and
+      // if it never runs, the audio plays straight out and the rings pulse gently.
+      try {
+        const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        const ctx = new AC();
+        graphFailed = true; // set again below on success; blocks a second attempt meanwhile
+        ctx.resume().then(
+          () => {
+            if (ctx.state !== 'running') return void ctx.close();
+            const an = ctx.createAnalyser();
+            an.fftSize = 1024;
+            ctx.createMediaElementSource(audio).connect(an);
+            an.connect(ctx.destination);
+            graph = { an, buf: new Uint8Array(an.fftSize) };
+          },
+          () => void ctx.close(),
+        );
+      } catch {
+        graphFailed = true;
+      }
+    }
+
+    let inView = true;
+    let raf = 0;
+    let lastRing = 0;
+    function loop(now: number) {
+      raf = 0;
+      if (!playing || !inView || document.hidden || calm()) return;
+      if (graph) {
+        graph.an.getByteTimeDomainData(graph.buf);
+        let sum = 0;
+        for (let i = 0; i < graph.buf.length; i++) {
+          const v = (graph.buf[i] - 128) / 128;
+          sum += v * v;
+        }
+        const a = onset.push(Math.sqrt(sum / graph.buf.length), now);
+        if (a > 0) ping(a);
+      } else if (now - lastRing > 1400) {
+        lastRing = now;
+        ping(0.2);
+      }
+      raf = requestAnimationFrame(loop);
+    }
+    function kick() {
+      if (!raf && playing) raf = requestAnimationFrame(loop);
+    }
+    // A slow ring now and then while nothing plays, as a hint.
+    setInterval(() => {
+      if (!playing && inView && !document.hidden) ping(0.26, 3400);
+    }, 5200);
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) kick();
+      else setNear(0);
+    }).observe(hero);
+    document.addEventListener('visibilitychange', kick);
+
+    // ---- the pointer: focus grows as the mouse closes in -------------------
+    function setNear(n: number, px = 0, py = 0) {
+      layer!.style.setProperty('--near', n.toFixed(3));
+      layer!.style.setProperty('--px', px.toFixed(3));
+      layer!.style.setProperty('--py', py.toFixed(3));
+    }
+    if (canHover) {
+      addEventListener(
+        'pointermove',
+        (ev) => {
+          if (!inView || layer.hasAttribute('data-off') || ev.pointerType === 'touch') return;
+          const r = bell.getBoundingClientRect();
+          const lr = layer.getBoundingClientRect();
+          const scale = layer.clientWidth > 0 ? lr.width / layer.clientWidth : 1;
+          const bx = r.left + r.width / 2;
+          const by = r.top + r.height / 2;
+          const photoW = u * 100 * scale;
+          const near = proximity(Math.hypot(ev.clientX - bx, ev.clientY - by), photoW);
+          if (calm()) return setNear(near);
+          setNear(near, Math.max(-1, Math.min(1, (ev.clientX - bx) / (photoW * 0.25))), Math.max(-1, Math.min(1, (ev.clientY - by) / (photoW * 0.17))));
+        },
+        { passive: true },
+      );
+      html.addEventListener('mouseleave', () => setNear(0));
+      bell.addEventListener('focus', () => bell.matches(':focus-visible') && setNear(1));
+      bell.addEventListener('blur', () => setNear(0));
+    }
+  }
+</script>

@@ -20,6 +20,20 @@ and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the ma
 docs, updated centrally when a new practice surfaces). This file doesn't duplicate them; it tracks
 this project's own custom items and where it stands against them.
 
+## Bell player (2026-11-22)
+
+- [x] **Built the hero's play button in the sax bell and its player bar** (branch
+      `bell-player-2026-11-22`; details and decisions in `docs/bell-player-2026-11-22.md`).
+      Dormant until audio exists, so the live hero is unchanged. Verified with temporary test
+      tones (removed): 76 unit tests, `astro check`, lint, CSP check, 460 e2e passing on
+      chromium and mobile-chrome.
+- [ ] **Doug: get the three masters** (Better Than TV, Mato Grosso, Dirty Basement Jazz) as WAV or
+      FLAC, encode them (commands in the doc), drop them in `site/public/audio/`, rebuild.
+- [ ] **Doug: decide the dark hero on a phone.** The crop hides the bell there. Shift the crop, or
+      let "Listen to the music" start the first track on that layout.
+- [ ] **Doug: real-device check** of the bell and bar (iOS silent switch, lock-screen controls,
+      Save-Data) once the real files are in.
+
 ## Music-first direction (2026-10-25)
 
 - [x] **Copy and metadata switched to musician first, web design as the quieter secondary line**
