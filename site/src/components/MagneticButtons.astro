@@ -13,10 +13,13 @@
 <script>
   const canLean = matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (canLean) {
-    const REACH = 70; // px beyond the button's own edge where it starts to lean
-    const PULL = 0.3; // share of the pointer's offset the button follows
-    const MAX = 10; // px, the furthest a button ever leans
-    const EASE = 0.18; // per frame, toward the target
+    // Turned down 2026-11-22 (Doug: "not crazy about magnetic buttons"). It was a 10px lean
+    // from 70px away; now a barely-there 3px from 40px, which is felt more than seen and
+    // never moves a button out from under the cursor as it is clicked.
+    const REACH = 40; // px beyond the button's own edge where it starts to lean
+    const PULL = 0.12; // share of the pointer's offset the button follows
+    const MAX = 3; // px, the furthest a button ever leans
+    const EASE = 0.25; // per frame, toward the target
 
     const buttons = Array.from(document.querySelectorAll<HTMLElement>('.cta')).map((el) => ({ el, x: 0, y: 0 }));
     let pointer: { x: number; y: number } | null = null;

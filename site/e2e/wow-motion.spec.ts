@@ -104,9 +104,15 @@ test.describe('magnetic buttons', () => {
     const cta = page.locator('.hero__ctas .cta').first();
     const box = (await cta.boundingBox())!;
     const home = await cta.evaluate((el) => el.getBoundingClientRect().x);
-    await page.mouse.move(box.x + box.width + 40, box.y + box.height / 2);
-    await expect.poll(() => cta.evaluate((el) => parseFloat(el.style.getPropertyValue('--mx') || '0'))).toBeGreaterThan(3);
-    expect(await cta.evaluate((el) => el.getBoundingClientRect().x)).toBeGreaterThan(home + 1);
+    // Barely-there (2026-11-22): leans at most 3px, from 40px away.
+    await page.mouse.move(box.x + box.width + 20, box.y + box.height / 2);
+    await expect.poll(() => cta.evaluate((el) => parseFloat(el.style.getPropertyValue('--mx') || '0'))).toBeGreaterThan(1.5);
+    expect(await cta.evaluate((el) => parseFloat(el.style.getPropertyValue('--mx') || '0'))).toBeLessThanOrEqual(3.01);
+    expect(await cta.evaluate((el) => el.getBoundingClientRect().x)).toBeGreaterThan(home + 0.5);
+    await page.mouse.move(box.x + box.width + 60, box.y + box.height / 2);
+    await expect.poll(() => cta.evaluate((el) => parseFloat(el.style.getPropertyValue('--mx') || '0'))).toBe(0);
+    await page.mouse.move(box.x + box.width + 20, box.y + box.height / 2);
+    await expect.poll(() => cta.evaluate((el) => parseFloat(el.style.getPropertyValue('--mx') || '0'))).toBeGreaterThan(1.5);
     await page.mouse.move(box.x + box.width / 2, box.y + 600);
     await expect.poll(() => cta.evaluate((el) => parseFloat(el.style.getPropertyValue('--mx') || '0'))).toBe(0);
   });
