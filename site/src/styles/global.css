@@ -256,6 +256,15 @@ html {
   text-size-adjust: 100%;
 }
 
+/* Smooth scrolling stays off for anyone who asks for reduced motion (2026-11-22).
+   The page glides to anchors and menu jumps; with this preference set it simply
+   lands. (Before today the glide ignored the preference.) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   margin: 0;
   background: var(--paper-grain) var(--bg);

@@ -290,7 +290,7 @@ const photos = [
     // interacted at all) it was yanking the whole page down to the gallery.
     function centerThumb(thumb) {
       const target = thumb.offsetLeft - (thumbsEl.clientWidth - thumb.offsetWidth) / 2;
-      thumbsEl.scrollTo({ left: target, behavior: 'smooth' });
+      thumbsEl.scrollTo({ left: target, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }
 
     function updateStack() {
@@ -565,6 +565,9 @@ const photos = [
     display: flex;
     gap: 6px;
     overflow-x: auto;
+    /* Gentle edges (2026-11-22): reaching the end of the strip does not drag the page
+       sideways or trigger the browser's swipe-back. */
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
     padding-block: 0.2rem;
   }
