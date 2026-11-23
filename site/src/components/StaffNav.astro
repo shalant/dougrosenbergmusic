@@ -613,7 +613,7 @@ const sections = [
       // whichever anchor was clicked last.
       e.preventDefault();
       const target = document.getElementById(btn.dataset.target ?? '');
-      target?.scrollIntoView({ behavior: 'smooth' });
+      target?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       closeMenu();
     });
   });

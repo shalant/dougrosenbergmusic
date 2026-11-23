@@ -173,6 +173,9 @@ const pieces = [
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    /* Gentle edges (2026-11-22): at the top or bottom of the list the page behind it
+       does not start to scroll. */
+    overscroll-behavior-y: contain;
     display: flex;
     flex-direction: column;
     gap: 0.15rem;

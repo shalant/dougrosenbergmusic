@@ -373,3 +373,13 @@ How much, by kind:
   primary is untouched. Tokens are `--btn-brass-*` in `global.css`; the label must keep 4.5:1 on
   every stop, hover included (`src/brass-button.test.js`); focus keeps its 3px ring (a plain
   `box-shadow` on the button would replace it). Checked by `e2e/brass-buttons.spec.ts`.
+- **Gentle scrolling (2026-11-22)**: the page does not try to replace the phone's own scroll
+  physics (momentum and rubber-banding are the operating system's, and libraries that fake them
+  cost frames). What it controls: anchors and menu jumps glide using the browser's native smooth
+  scroll, and **not at all under `prefers-reduced-motion`** (`html { scroll-behavior: auto }`,
+  and the nav and gallery `scrollTo` calls check it too; before today the glide ignored the
+  preference). Inner scrollers (the gallery filmstrip, the sheet music list) use
+  `overscroll-behavior: contain` so reaching their end does not drag the page or trigger
+  swipe-back; the page itself keeps the default so pull-to-refresh works. Phones already get a
+  one-shot reveal for headings and blocks (`TouchReveal.astro`). Checked by
+  `e2e/gentle-scroll.spec.ts`.
