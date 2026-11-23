@@ -31,6 +31,8 @@ this project's own custom items and where it stands against them.
       in the player bar. Optional later: swap in lossless masters under the same file names.
 - [x] **Phone crop shifted right and down (2026-11-22, Doug's ask)** so the whole bell shows in the
       dark hero at 640px and under; see the doc for the trade-offs. Doug: check it on your phone.
+- [x] **"Hear it" track list added to Recordings (2026-11-22)**: a plain list of the three tracks that drives
+      the same player as the bell; see the doc. READMEs refreshed in the same branch.
 - [ ] **Doug: real-device check** of the bell and bar (iOS silent switch, lock-screen controls,
       Save-Data) once the real files are in.
 

@@ -1,4 +1,13 @@
 ---
+import { getPlayable } from '../lib/playable-tracks.js';
+
+// "Hear it" (2026-11-22): the tracks Doug put on the site, in full, as a plain
+// list. It appears only when the audio files exist, and it drives the same
+// player as the hero's sax bell (BellPlayer.astro) through window events, so
+// there is one player bar and one source of truth for what is playing.
+const hear = getPlayable(import.meta.env.BASE_URL);
+const count = ['', 'One', 'Two', 'Three', 'Four', 'Five'][hear.tracks.length] ?? String(hear.tracks.length);
+
 const albums = [
   {
     title: 'Better Than TV',
@@ -30,6 +39,37 @@ const albums = [
 <section id="listen" class="listen staff-lines">
   <div class="wrap">
     <h2 class="listen__heading heading-reveal">Recordings</h2>
+
+    {
+      hear.tracks.length > 0 && (
+        <div class="hear">
+          <div class="hear__intro">
+            <h3 class="hear__title">Hear it</h3>
+            <p class="hear__blurb">
+              {count} {hear.tracks.length === 1 ? 'track' : 'tracks'} from <em>{hear.album}</em>, in full.
+            </p>
+            <a class="hear__buy" href={hear.buyUrl} target="_blank" rel="noopener noreferrer" data-cta="listen-buy">
+              Get the album <span aria-hidden="true">&rarr;</span>
+              <span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </div>
+          <ol class="hear__list">
+            {hear.tracks.map((t, i) => (
+              <li>
+                <button type="button" class="hear__row" data-track={i} data-name={t.title} data-length={t.length} data-cta="listen-track" aria-label={`Play ${t.title}${t.length ? `, ${t.length}` : ''}`}>
+                  <span class="hear__btn" aria-hidden="true">
+                    <svg class="hear__i-play" viewBox="0 0 16 16" fill="currentColor" focusable="false"><path d="M4.5 2.5v11l9-5.5z" /></svg>
+                    <svg class="hear__i-pause" viewBox="0 0 16 16" fill="currentColor" focusable="false"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" /></svg>
+                  </span>
+                  <span class="hear__name">{t.title}</span>
+                  {t.length && <span class="hear__time">{t.length}</span>}
+                </button>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
 
     <div class="listen__grid">
       {albums.map((album, i) => (
@@ -319,6 +359,150 @@ const albums = [
       font-size: 0.875rem;
     }
   }
+
+  /* ---- "Hear it": the track list ---- */
+  .hear {
+    display: grid;
+    gap: 1.2rem 3rem;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 760px) {
+    .hear {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr);
+      align-items: start;
+    }
+  }
+
+  .hear__title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--brass);
+  }
+
+  .hear__blurb {
+    margin: 0 0 0.9rem;
+    max-width: 30ch;
+    color: var(--text-muted);
+  }
+
+  .hear__buy {
+    display: inline-block;
+    padding-block: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--brass);
+    text-underline-offset: 4px;
+  }
+
+  .hear__buy:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .hear__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--staff-line-strong);
+  }
+
+  .hear__list li {
+    border-top: 1px solid var(--staff-line-strong);
+  }
+
+  .hear__row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    min-height: 4rem;
+    padding: 0.6rem 0.25rem;
+    border: 0;
+    background: none;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hear__row:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .hear__btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1.5px solid var(--brass);
+    border-radius: 50%;
+    color: var(--brass);
+    transition: background-color var(--dur-base) ease, color var(--dur-base) ease;
+  }
+
+  .hear__btn svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .hear__i-pause {
+    display: none;
+  }
+
+  .hear__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+    line-height: 1.2;
+    transition: color var(--dur-base) ease;
+  }
+
+  .hear__time {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  @media (hover: hover) {
+    .hear__row:hover .hear__btn {
+      background: var(--brass-soft);
+    }
+    .hear__row:hover .hear__name {
+      color: var(--brass);
+    }
+  }
+
+  .hear__row.is-current .hear__name {
+    color: var(--brass);
+  }
+
+  .hear__row[data-playing] .hear__btn {
+    background: var(--brass);
+    color: var(--bg);
+  }
+
+  .hear__row[data-playing] .hear__i-play {
+    display: none;
+  }
+
+  .hear__row[data-playing] .hear__i-pause {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hear__btn,
+    .hear__name {
+      transition: none;
+    }
+  }
 </style>
 
 <script>
@@ -343,6 +527,28 @@ const albums = [
       });
       album.addEventListener('pointerleave', () => {
         for (const v of ['--tx', '--ty', '--gx', '--gy']) album.style.removeProperty(v);
+      });
+    });
+  }
+</script>
+
+<script>
+  // "Hear it": a press on a track asks the bell player (BellPlayer.astro) to play or
+  // pause it; the player answers with which track is current and whether it plays.
+  const rows = document.querySelectorAll<HTMLButtonElement>('.hear__row');
+  if (rows.length) {
+    rows.forEach((row) =>
+      row.addEventListener('click', () => window.dispatchEvent(new CustomEvent('bellp:play', { detail: { index: Number(row.dataset.track) } }))),
+    );
+    window.addEventListener('bellp:state', (e) => {
+      const { index, playing } = (e as CustomEvent<{ index: number; playing: boolean }>).detail;
+      rows.forEach((row) => {
+        const current = Number(row.dataset.track) === index;
+        const on = current && playing;
+        row.classList.toggle('is-current', current);
+        if (on) row.setAttribute('data-playing', '');
+        else row.removeAttribute('data-playing');
+        row.setAttribute('aria-label', `${on ? 'Pause' : 'Play'} ${row.dataset.name}${row.dataset.length ? `, ${row.dataset.length}` : ''}`);
       });
     });
   }
