@@ -763,6 +763,18 @@ const records = [
      covers load at low fetch priority so hero.webp, the page's largest
      paint, isn't competing with them. */
   @media (max-width: 640px) {
+    /* Phone crop moved right and down (2026-11-22, Doug's ask) so the sax
+       bell shows whole for the bell play button (BellPlayer.astro). The
+       portrait crop is a 390-wide window on a photo about 1200 wide, and at
+       the old center position the horn was cut off at the left edge. 36%
+       (the light theme's value too) brings the bell to about 28% of the
+       width at every phone height; the extra translateY uses the slack the
+       1.08 scale already crops off the top, so no bare strip can show.
+       BellPlayer's layer copies this transform; keep the two in step. */
+    .hero__photo {
+      object-position: 36% 14%;
+      transform: scale(1.08) translate(-5%, 3%);
+    }
     .hero__content {
       max-width: 100%;
       align-self: flex-end;

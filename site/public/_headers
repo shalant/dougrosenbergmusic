@@ -98,6 +98,11 @@
 /images/*
   Cache-Control: public, max-age=604800
 
+/audio/*
+  # Versioned by filename (better-than-tv-v2.m4a when a track is remastered), so a
+  # year is safe. Cloudflare serves byte ranges, which seeking and iOS need.
+  Cache-Control: public, max-age=31536000, immutable
+
 /sheetmusic/*
   Cache-Control: public, max-age=604800
   # The sheet-music viewer embeds these PDFs in a same-origin <iframe>, but the
