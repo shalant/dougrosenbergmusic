@@ -80,3 +80,32 @@ test('with audio: the button focuses as a mouse comes near and rings are calm', 
   );
   expect(peak).toBeLessThanOrEqual(0.34 + 1e-6);
 });
+
+// Phone smoothness (2026-11-22): the first version looped a "breathe" animation on
+// touch and drew the rings as SVG with a non-scaling stroke, and the hero felt
+// twitchy on a phone. On touch the bell must not run any endless animation, and a
+// ring must be a plain element animated by transform and opacity only.
+test('touch: the bell runs no endless animation and its rings use transform and opacity only', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true, reducedMotion: 'no-preference' });
+  const page = await ctx.newPage();
+  await page.goto('/');
+  if (!(await hasBell(page))) test.skip(true, 'no audio in this build');
+  await page.waitForTimeout(500);
+  const endless = await page.evaluate(
+    () => document.getAnimations().filter((a) => (a.effect as KeyframeEffect | null)?.target?.closest?.('.bellp-layer') && a.effect!.getTiming().iterations === Infinity).length,
+  );
+  expect(endless).toBe(0);
+  const tag = await page.evaluate(() => {
+    const l = document.querySelector('.bellp-layer')!;
+    const d = document.createElement('div');
+    d.className = 'bellp-ring';
+    l.appendChild(d);
+    const a = d.animate([{ transform: 'scale(.5)', opacity: 0.3 }, { transform: 'scale(4)', opacity: 0 }], 100);
+    const props = Object.keys((a.effect as KeyframeEffect).getKeyframes()[0]).filter((k) => !['offset', 'easing', 'composite', 'computedOffset'].includes(k));
+    d.remove();
+    return { tag: d.tagName, props, stroke: getComputedStyle(d).borderTopWidth };
+  });
+  expect(tag.tag).toBe('DIV');
+  expect(tag.props.sort()).toEqual(['opacity', 'transform']);
+  await ctx.close();
+});

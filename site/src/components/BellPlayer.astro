@@ -9,7 +9,8 @@
 //    match the opening. It is faint and soft at rest. As a mouse comes near it
 //    sharpens, grows and leans toward the pointer, and its outline ring closes
 //    (the "focus" you can read). Touch has no pointer to measure, so it sits at
-//    medium focus and breathes slowly.
+//    medium focus and holds still (a looping "breathe" animation was removed
+//    2026-11-22 after the hero felt twitchy on a phone).
 //  - Press it and the track plays. A player bar (play/pause, title, time, seek,
 //    previous, next, close) slides up from the bottom of the screen and stays
 //    while you scroll. Rings leave the bell on the beats of the real audio on a
@@ -143,10 +144,6 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
   }
   .bellp__pb { --D: max(calc(var(--u) * 7.2), 30px); position: relative; width: var(--D); height: var(--D); transform-style: preserve-3d; transition: scale 0.18s; }
   .bellp:active .bellp__pb { scale: 0.93; }
-  .bellp-layer[data-touch] .bellp__pb { animation: bellp-breathe 3.2s ease-in-out infinite; }
-  @keyframes bellp-breathe { 50% { transform: scale(1.07); } }
-  /* Weak device or slow link (the hero script sets data-fx="lite"): hold still. */
-  :root[data-fx='lite'] .bellp-layer[data-touch] .bellp__pb { animation: none; }
 
   .bellp__coin {
     position: absolute; inset: 0; border-radius: 50%; transform: translateZ(calc(var(--u) * -0.2));
@@ -176,8 +173,10 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
   /* A ring leaving the bell: an SVG ellipse the shape of the opening, scaled and
      faded by the Web Animations API (transform and opacity only). The stroke does
      not scale, so it stays a hairline as it grows. */
-  .bellp-ring { position: absolute; width: calc(var(--u) * 9.4); height: calc(var(--u) * 6.8); overflow: visible; pointer-events: none; will-change: transform, opacity; }
-  .bellp-ring ellipse { fill: none; stroke: #cf9a4f; stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+  .bellp-ring {
+    position: absolute; box-sizing: border-box; width: calc(var(--u) * 9.4); height: calc(var(--u) * 6.8);
+    border: 1px solid #cf9a4f; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+  }
 
   /* ---- the player bar ---- */
   .bellp-bar {
@@ -251,7 +250,6 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
     const calm = () => reduced || html.dataset.fx === 'lite';
-    const NS = 'http://www.w3.org/2000/svg';
 
     print.appendChild(layer);
     if (!canHover) layer.dataset.touch = '';
@@ -449,26 +447,28 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
     const onset = createOnsetDetector();
     function ping(alpha: number, ms = 2600) {
       if (calm() || layer!.hasAttribute('data-off') || layer!.querySelectorAll('.bellp-ring').length > 8) return;
-      const svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('class', 'bellp-ring');
-      svg.setAttribute('viewBox', '0 0 100 100');
-      svg.setAttribute('preserveAspectRatio', 'none');
-      svg.setAttribute('aria-hidden', 'true');
-      const e = document.createElementNS(NS, 'ellipse');
-      for (const [k, v] of [['cx', '50'], ['cy', '50'], ['rx', '49'], ['ry', '49']]) e.setAttribute(k, v);
-      svg.appendChild(e);
-      svg.style.left = `${cx - (u * BELL.widthPct) / 2}px`;
-      svg.style.top = `${cy - (u * BELL.heightPct) / 2}px`;
-      layer!.insertBefore(svg, bell);
+      // A plain bordered div, scaled by transform and faded by opacity, so it
+      // stays on the compositor. (It was an SVG ellipse with a non-scaling
+      // stroke; the browser has to redraw that on every frame while it grows,
+      // which hitched on a phone.) The hairline thickens a little as it grows
+      // and is nearly gone by then, so it reads as a soft wave.
+      const ring = document.createElement('div');
+      ring.className = 'bellp-ring';
+      ring.setAttribute('aria-hidden', 'true');
+      ring.style.left = `${cx - (u * BELL.widthPct) / 2}px`;
+      ring.style.top = `${cy - (u * BELL.heightPct) / 2}px`;
+      layer!.insertBefore(ring, bell);
       const tilt = `rotate(${BELL.tiltDeg}deg)`;
-      const a = svg.animate(
+      const end = canHover ? 6 : 4.5;
+      const a = ring.animate(
         [
           { transform: `${tilt} scale(0.55)`, opacity: alpha },
-          { transform: `translate(${u * 6}px, ${-u * 6}px) ${tilt} scale(6)`, opacity: 0 },
+          { transform: `translate(${u * 3}px, ${-u * 3}px) ${tilt} scale(${(0.55 + end) / 2})`, opacity: alpha * 0.4, offset: 0.5 },
+          { transform: `translate(${u * 6}px, ${-u * 6}px) ${tilt} scale(${end})`, opacity: 0 },
         ],
         { duration: ms, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)', fill: 'forwards' },
       );
-      a.onfinish = () => svg.remove();
+      a.onfinish = () => ring.remove();
     }
 
     // Loudness for the rings. Desktop only: see the note at the top.
@@ -516,7 +516,7 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
         }
         const a = onset.push(Math.sqrt(sum / graph.buf.length), now);
         if (a > 0) ping(a);
-      } else if (now - lastRing > 1400) {
+      } else if (now - lastRing > 2200) {
         lastRing = now;
         ping(0.2);
       }
@@ -528,7 +528,7 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
     // A slow ring now and then while nothing plays, as a hint.
     setInterval(() => {
       if (!playing && inView && !document.hidden) ping(0.26, 3400);
-    }, 5200);
+    }, canHover ? 5200 : 9000);
     new IntersectionObserver(([entry]) => {
       inView = entry.isIntersecting;
       if (inView) kick();
