@@ -364,3 +364,11 @@ How much, by kind:
   saturate(1.5)`, inset top and bottom highlights. Checked by `e2e/bad-cop-fixes.spec.ts`. Still
   prefixed-only, so no blur in Chrome: `.cta-secondary` (`global.css`) and the gallery lightbox
   (`Gallery.astro`); decide per element whether to switch them.
+- **Light theme buttons are brass (2026-11-22)**: Doug did not like the flat green primary on paper
+  and picked "Brass" from `ui-lab/artifacts/dougrosenbergmusic/light-buttons.html`. In light, the
+  hero's `.cta-primary` and the contact Send button are a lit brass pill (cream `#fffaf0` label on a
+  three-stop brass gradient, bevel and shadow; the same metal as the play button in the sax bell),
+  and every `.cta-secondary` is a brass outline. Dark keeps the green. The Dev section's own red
+  primary is untouched. Tokens are `--btn-brass-*` in `global.css`; the label must keep 4.5:1 on
+  every stop, hover included (`src/brass-button.test.js`); focus keeps its 3px ring (a plain
+  `box-shadow` on the button would replace it). Checked by `e2e/brass-buttons.spec.ts`.
