@@ -582,6 +582,16 @@ const sections = [
     else openMenu();
   });
 
+  // Switching light/dark from the menu closes it (2026-11-22, Doug on his phone: the
+  // menu stayed open over the page he had just changed). The panel ignores clicks
+  // inside it, and the switch lives inside it, so it is handled here. A short beat
+  // first, so the knob is seen to turn; none under reduced motion.
+  panel?.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('[data-theme-toggle]')) return;
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.setTimeout(closeMenu, calm ? 0 : 380);
+  });
+
   document.addEventListener('click', (e) => {
     if (!panel || !panel.classList.contains('is-open')) return;
     const target = e.target as Node;
