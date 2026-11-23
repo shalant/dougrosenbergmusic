@@ -90,10 +90,16 @@ is missing is skipped; if none exist the bell and bar are absent.
 
 ## Known gaps
 
-- **Dark hero on a phone:** the portrait crop cuts the horn off the left edge, so the bell
-  is hidden there and phones in dark see no bell. Options (Doug's call): shift the phone
-  photo crop so the horn shows, or let the hero's "Listen to the music" button start the
-  first track on that layout. The light hero on a phone shows the bell.
+- **Dark hero on a phone (fixed 2026-11-22, Doug's call):** the portrait crop used to cut the
+  horn off the left edge, so phones in dark saw no bell. At 640px and under, the dark hero
+  photo now uses `object-position: 36% 14%` (the light theme's value) and
+  `translate(-5%, 3%)` after the 1.08 scale, which brings the bell to about 28% of the width
+  at every phone height and moves Doug right and down. The 3% down uses slack the scale
+  already crops, so no bare strip shows. `BellPlayer.astro`'s layer copies that transform.
+  Trade-offs: his face now sits right of center, nearer the hamburger button; more hat and
+  headroom show above him; the horn's body runs under the left of the headline (the scrim
+  keeps it legible). The bell is still hidden where the text would cover it (checked against
+  the real text lines): the 320x568 phone in dark. Checked at 12 sizes in both themes.
 - The hero's primary button still scrolls to the Listen section; it does not play.
 - A manual low-data toggle in the bar was considered and not built (Save-Data and slow
   connections switch to the `-lo` files automatically). That detection uses the Network

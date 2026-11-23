@@ -29,8 +29,8 @@ this project's own custom items and where it stands against them.
 - [x] **Three songs added 2026-11-22** (Better Than TV, Mato Grosso, Dirty Basement Jazz) from
       Doug's Amazon MP3 purchases, encoded to AAC with a low-bandwidth copy; "Get the album" link
       in the player bar. Optional later: swap in lossless masters under the same file names.
-- [ ] **Doug: decide the dark hero on a phone.** The crop hides the bell there. Shift the crop, or
-      let "Listen to the music" start the first track on that layout.
+- [x] **Phone crop shifted right and down (2026-11-22, Doug's ask)** so the whole bell shows in the
+      dark hero at 640px and under; see the doc for the trade-offs. Doug: check it on your phone.
 - [ ] **Doug: real-device check** of the bell and bar (iOS silent switch, lock-screen controls,
       Save-Data) once the real files are in.
 

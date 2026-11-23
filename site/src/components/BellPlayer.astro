@@ -110,6 +110,7 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
   .bellp-layer[data-touch] { --floor: 0.62; }
   .bellp-layer[data-playing] { --floor: 0.38; }
   :root:not([data-theme='light']) .bellp-layer { transform: scale(1.08) translateX(-5%); }
+  @media (max-width: 640px) { :root:not([data-theme='light']) .bellp-layer { transform: scale(1.08) translate(-5%, 3%); } }
   @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
     @supports (animation-timeline: scroll()) {
       :root:not([data-theme='light'], [data-fx='lite']) .bellp-layer { animation: bellp-drift linear both; }
@@ -274,8 +275,24 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
       const mx = r.left + r.width / 2;
       const my = r.top + r.height / 2;
       let ok = mx > h.left + 28 && mx < h.right - 28 && my > h.top + 28 && my < h.bottom - 28;
-      const c = hero!.querySelector<HTMLElement>('.hero__content')?.getBoundingClientRect();
-      if (ok && c && mx > c.left - 24 && mx < c.right + 24 && my > c.top - 24 && my < c.bottom + 24) ok = false;
+      // Under the headline? Compare with the real text lines and buttons, not the
+      // full-width block they sit in (on a phone that block spans the screen).
+      if (ok) {
+        const pad = 6;
+        const hits = (t: DOMRect) => t.width > 0 && r.left - pad < t.right && r.right + pad > t.left && r.top - pad < t.bottom && r.bottom + pad > t.top;
+        for (const el of hero!.querySelectorAll<HTMLElement>('.hero__name, .hero__title, .hero__ctas .cta, .hero__records-row')) {
+          let rects: DOMRect[];
+          if (el.matches('.hero__name, .hero__title')) {
+            const range = document.createRange();
+            range.selectNodeContents(el);
+            rects = Array.from(range.getClientRects());
+          } else rects = [el.getBoundingClientRect()];
+          if (rects.some(hits)) {
+            ok = false;
+            break;
+          }
+        }
+      }
       if (ok && photo!.offsetWidth > 0) layer!.removeAttribute('data-off');
     }
     const placeSoon = () => requestAnimationFrame(place);
