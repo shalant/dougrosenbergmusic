@@ -254,7 +254,8 @@ How much, by kind:
   height and reads as a snap. A wrapped heading rises as one block, not line by line. In dark the
   hero photo drifts down 9vh and grows to 1.12 as the hero scrolls away (`hero-drift`, scroll
   timeline, no script), with enough extra scale that no gap shows; light keeps the framed print
-  still. Every `.cta` leans up to 10px toward a real pointer within 70px of it
+  still. Every `.cta` leans up to 3px toward a real pointer within 40px of it (turned down
+  2026-11-22 from 10px and 70px; Doug was not keen on the strong version)
   (`MagneticButtons.astro`: a script writes `--mx`/`--my`, a global rule turns them into
   `translate`; it runs only while a button is moving and is off under reduced motion and lite).
   Checked by `site/e2e/wow-motion.spec.ts`.
