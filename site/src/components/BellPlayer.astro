@@ -109,6 +109,15 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
   }
   .bellp-layer[data-off] { visibility: hidden; }
   .bellp-layer[data-touch] { --floor: 0.62; }
+  /* Phone (2026-11-22, Doug on a Galaxy S21 in Firefox: switching this layer off
+     was one of the two biggest wins): no hero-sized transformed, clipped layer
+     holding one small button. The script places the bell straight in hero
+     coordinates from the photo's on-screen box (the phone photo is static), there
+     are no rings, and the button is flat (no stacked 3D edge layers). */
+  html:root .bellp-layer[data-touch] { transform: none; overflow: visible; transition: none; }
+  .bellp-layer[data-touch] .bellp__plane, .bellp-layer[data-touch] .bellp__pb { transform-style: flat; }
+  .bellp-layer[data-touch] .bellp__ring--dark, .bellp-layer[data-touch] .bellp__ring--mid { display: none; }
+  .bellp-layer[data-touch] .bellp__coin { transform: none; }
   .bellp-layer[data-playing] { --floor: 0.38; }
   :root:not([data-theme='light']) .bellp-layer { transform: scale(1.08) translateX(-5%); }
   @media (max-width: 640px) { :root:not([data-theme='light']) .bellp-layer { transform: scale(1.08) translate(-5%, 3%); } }
@@ -259,10 +268,21 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
     let cx = 0; // bell center in layer (layout) pixels
     let cy = 0;
     function place() {
-      const b = bellInBox(photo!.offsetWidth, photo!.offsetHeight, parsePosition(getComputedStyle(photo!).objectPosition, [0.5, 0.14]));
-      u = b.u;
-      cx = photo!.offsetLeft + b.x;
-      cy = photo!.offsetTop + b.y;
+      const pos = parsePosition(getComputedStyle(photo!).objectPosition, [0.5, 0.14]);
+      if (canHover) {
+        const b = bellInBox(photo!.offsetWidth, photo!.offsetHeight, pos);
+        u = b.u;
+        cx = photo!.offsetLeft + b.x;
+        cy = photo!.offsetTop + b.y;
+      } else {
+        // Touch: the layer has no transform of its own, so use the photo's box as drawn.
+        const pr = photo!.getBoundingClientRect();
+        const lr = layer!.getBoundingClientRect();
+        const b = bellInBox(pr.width, pr.height, pos);
+        u = b.u;
+        cx = pr.left - lr.left + b.x;
+        cy = pr.top - lr.top + b.y;
+      }
       layer!.style.setProperty('--u', `${u.toFixed(3)}px`);
       bell!.style.left = `${cx.toFixed(1)}px`;
       bell!.style.top = `${cy.toFixed(1)}px`;
@@ -446,7 +466,7 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
     // ---- rings -------------------------------------------------------------
     const onset = createOnsetDetector();
     function ping(alpha: number, ms = 2600) {
-      if (calm() || layer!.hasAttribute('data-off') || layer!.querySelectorAll('.bellp-ring').length > 8) return;
+      if (!canHover || calm() || layer!.hasAttribute('data-off') || layer!.querySelectorAll('.bellp-ring').length > 8) return;
       // A plain bordered div, scaled by transform and faded by opacity, so it
       // stays on the compositor. (It was an SVG ellipse with a non-scaling
       // stroke; the browser has to redraw that on every frame while it grows,
@@ -523,12 +543,13 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
       raf = requestAnimationFrame(loop);
     }
     function kick() {
-      if (!raf && playing) raf = requestAnimationFrame(loop);
+      if (!raf && playing && canHover) raf = requestAnimationFrame(loop);
     }
-    // A slow ring now and then while nothing plays, as a hint.
-    setInterval(() => {
-      if (!playing && inView && !document.hidden) ping(0.26, 3400);
-    }, canHover ? 5200 : 9000);
+    // A slow ring now and then while nothing plays, as a hint (mouse-and-screen only).
+    if (canHover)
+      setInterval(() => {
+        if (!playing && inView && !document.hidden) ping(0.26, 3400);
+      }, 5200);
     new IntersectionObserver(([entry]) => {
       inView = entry.isIntersecting;
       if (inView) kick();

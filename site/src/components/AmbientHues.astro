@@ -151,4 +151,35 @@
       animation: none;
     }
   }
+  /* Phone (2026-11-22, Doug on a Galaxy S21 in Firefox, who switched layers off
+     with ?off=): the fixed glow was one of the two biggest costs, even held
+     still. A fixed full-screen layer with four blobs and a see-through group sits
+     under everything and is recombined with the scrolling page on every frame.
+     On touch it is replaced by the same four glows painted on the page
+     background: they scroll with the content (repeating every 1.2 screens), so
+     there is no layer at all and no per-frame cost. The strength is baked into
+     the color instead of the group opacity. Mouse-and-screen devices keep the
+     fixed, drifting version. Hero photo and footer stay opaque, as before. */
+  @media (hover: none), (pointer: coarse) {
+    .ambient {
+      display: none;
+    }
+    :global(html) {
+      --amb: 12.3%;
+    }
+    :global(html[data-theme='light']) {
+      --amb: 30%;
+    }
+    :global(html body) {
+      background-image:
+        radial-gradient(circle max(23vw, 140px) at calc(-8% + max(23vw, 140px)) calc(-6vh + max(23vw, 140px)), color-mix(in srgb, var(--note-listen) var(--amb), transparent), transparent 96%),
+        radial-gradient(circle max(20vw, 120px) at calc(110% - max(20vw, 120px)) calc(8vh + max(20vw, 120px)), color-mix(in srgb, var(--note-lessons) var(--amb), transparent), transparent 96%),
+        radial-gradient(circle max(25vw, 150px) at calc(14% + max(25vw, 150px)) calc(112vh - max(25vw, 150px)), color-mix(in srgb, var(--note-highlights) var(--amb), transparent), transparent 96%),
+        radial-gradient(circle max(18vw, 110px) at calc(98% - max(18vw, 110px)) calc(96vh - max(18vw, 110px)), color-mix(in srgb, var(--note-contact) var(--amb), transparent), transparent 96%),
+        var(--paper-grain);
+      background-size: 100% 120vh, 100% 120vh, 100% 120vh, 100% 120vh, auto;
+      background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat;
+      background-color: var(--bg);
+    }
+  }
 </style>
