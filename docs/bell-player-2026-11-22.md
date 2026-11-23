@@ -136,3 +136,25 @@ the live version dropped frames in most runs (dark: 2, 2, 0 at rest and 2, 3, 2 
 A regression test (`e2e/bell-player.spec.ts`, "touch: the bell runs no endless animation...")
 guards both. The headless test is a proxy: it shows the relative difference, not a real
 phone's GPU, so Doug still checks on the device.
+
+## "Hear it" track list (2026-11-22)
+
+A second, obvious way to play, because the bell is hidden on very small dark phones, has no
+proximity cue on touch, and "Listen to the music" only scrolls. The Recordings section
+(`Listen.astro`) now opens with a "Hear it" block: "Three tracks from *Better Than TV*, in full",
+a "Get the album" link, and a ruled list of the tracks, each a play button with its length.
+
+- **One engine.** The list does not own any audio. A press dispatches `bellp:play` ({ index });
+  `BellPlayer.astro` plays, pauses or switches the track and answers with `bellp:state`
+  ({ index, playing }), which the list uses to show the current row and a pause icon. The bar,
+  the bell and the list always agree, and closing the bar clears the list (index -1).
+- **Same gate as the bell.** `lib/playable-tracks.js` (build time) feeds both: a track exists only
+  if its file is in `public/audio/`; with no files neither renders.
+- **Lengths are read from the files**, not typed: `lib/m4a-duration.js` reads the MP4 movie
+  header. Shown lengths are floored like the player's own readout (6:57, 5:57, 7:27).
+- Rows are 64px tall buttons with a visible focus ring and a live label ("Play Mato Grosso,
+  5:57" / "Pause ..."). Analytics labels: `listen-track`, `listen-buy`, next to the bell's
+  `hero-bell`, so bell plays and list plays can be compared later.
+- Tests: `src/track-list.test.js` (header parser, formatter, real files' lengths) and
+  `e2e/track-list.spec.ts` (list contents, play/pause/switch, bar controls reflected in the list,
+  keyboard, tap size, and "no audio, no list").

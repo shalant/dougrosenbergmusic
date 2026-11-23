@@ -32,16 +32,14 @@
 // devices: routing an <audio> element through Web Audio makes iOS's silent
 // switch mute it. Reduced motion and data-fx="lite" get no rings, no tilt and
 // no breathing.
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { tracks, ALBUM, ARTIST, ARTWORK, BUY_URL } from '../data/tracks.js';
+import { getPlayable } from '../lib/playable-tracks.js';
 
-const base = import.meta.env.BASE_URL;
-const have = (file: string) => existsSync(join(process.cwd(), 'public', file));
-const playable = tracks
-  .filter((t) => have(t.file))
-  .map((t) => ({ id: t.id, title: t.title, src: `${base}${t.file}`, lo: t.lo && have(t.lo) ? `${base}${t.lo}` : null }));
-const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${ARTWORK}`, tracks: playable });
+// The same helper feeds the track list in Listen.astro. The list drives this
+// player with two window events: "bellp:play" ({ index }) to play or pause a
+// track, and this script answers with "bellp:state" ({ index, playing }).
+const { tracks: playable, album, artist, artwork, buyUrl } = getPlayable(import.meta.env.BASE_URL);
+const BUY_URL = buyUrl;
+const data = JSON.stringify({ album, artist, artwork, tracks: playable.map(({ id, title, src, lo }) => ({ id, title, src, lo })) });
 ---
 
 {
@@ -353,6 +351,11 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
       q('[data-act="toggle"]').setAttribute('aria-label', playing ? 'Pause' : 'Play');
       elTitle.textContent = t.title;
       elSub.textContent = `${idx + 1} of ${list.length} ·`;
+      if (loaded >= 0) announce(idx);
+    }
+    // Tell the Listen section's track list which track is current and whether it plays.
+    function announce(index: number) {
+      window.dispatchEvent(new CustomEvent('bellp:state', { detail: { index, playing } }));
     }
     function load(i: number) {
       idx = ((i % list.length) + list.length) % list.length;
@@ -434,6 +437,16 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
     });
 
     bell.addEventListener('click', toggle);
+    // The Listen section's track list: press a track to play it, press it again to pause.
+    window.addEventListener('bellp:play', (e) => {
+      const i = (e as CustomEvent<{ index: number }>).detail?.index;
+      if (!Number.isInteger(i) || i < 0 || i >= list.length) return;
+      if (i === idx && loaded === idx) toggle();
+      else {
+        load(i);
+        play();
+      }
+    });
     bar.addEventListener('click', (e) => {
       const act = (e.target as Element).closest<HTMLElement>('[data-act]')?.dataset.act;
       if (act === 'toggle') toggle();
@@ -450,6 +463,7 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
         }
       } else if (act === 'close') {
         pause();
+        announce(-1);
         bar.hidden = true;
         bell.focus({ preventScroll: true });
       }
