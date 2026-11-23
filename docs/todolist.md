@@ -24,11 +24,11 @@ this project's own custom items and where it stands against them.
 
 - [x] **Built the hero's play button in the sax bell and its player bar** (branch
       `bell-player-2026-11-22`; details and decisions in `docs/bell-player-2026-11-22.md`).
-      Dormant until audio exists, so the live hero is unchanged. Verified with temporary test
-      tones (removed): 76 unit tests, `astro check`, lint, CSP check, 460 e2e passing on
-      chromium and mobile-chrome.
-- [ ] **Doug: get the three masters** (Better Than TV, Mato Grosso, Dirty Basement Jazz) as WAV or
-      FLAC, encode them (commands in the doc), drop them in `site/public/audio/`, rebuild.
+      Verified: 76 unit tests, `astro check`, lint, CSP check, and the chromium and mobile-chrome
+      e2e suite (`url-hash` "scrolling away" is timing-flaky under a full parallel run, passes alone).
+- [x] **Three songs added 2026-11-22** (Better Than TV, Mato Grosso, Dirty Basement Jazz) from
+      Doug's Amazon MP3 purchases, encoded to AAC with a low-bandwidth copy; "Get the album" link
+      in the player bar. Optional later: swap in lossless masters under the same file names.
 - [ ] **Doug: decide the dark hero on a phone.** The crop hides the bell there. Shift the crop, or
       let "Listen to the music" start the first track on that layout.
 - [ ] **Doug: real-device check** of the bell and bar (iOS silent switch, lock-screen controls,

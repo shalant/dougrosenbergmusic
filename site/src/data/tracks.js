@@ -17,6 +17,8 @@
 export const ALBUM = 'Better Than TV';
 export const ARTIST = 'Doug Rosenberg';
 export const ARTWORK = 'images/albums/better-than-tv-160.webp';
+// The same Amazon page the hero's record cover links to (HeroGraded.astro).
+export const BUY_URL = 'https://www.amazon.com/dp/B00G9Y8TPE';
 
 export const tracks = [
   { id: 'better-than-tv', title: 'Better Than TV', file: 'audio/better-than-tv.m4a', lo: 'audio/better-than-tv-lo.m4a' },

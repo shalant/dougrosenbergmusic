@@ -7,13 +7,19 @@ effect from `out-of-the-bell.html`). Branch `bell-player-2026-11-22`.
 
 ## Status
 
-- **Dormant until the audio exists.** The component renders nothing unless a track's
-  file is in `site/public/audio/` at build time, so the hero is unchanged today. Nothing
-  fake ships: no placeholder audio, no invented durations (they are read from the files).
-- Built and verified with three temporary test tones (removed before the commit): bell on
-  the horn in both themes at desktop size, hover focus, press-to-play, the clock running,
-  next/previous/close, ring opacity cap, a phone-size light hero. 460 browser tests pass
-  (chromium and mobile-chrome), plus 76 unit tests and lint.
+- **Live with the real files (2026-11-22).** The three songs are Doug's Amazon MP3
+  purchases of Better Than TV (about 300 kbps, 6:57, 7:28 and 5:58), encoded with ffmpeg
+  (`ffmpeg-static` from npm, nothing installed system-wide) to AAC .m4a: full quality at
+  160 kbps (7-9 MB each) and a low-bandwidth copy at 72 kbps (3-4 MB each), metadata and
+  cover art stripped, `+faststart`. Swap in lossless masters later under the same names.
+  The component still renders nothing if no file exists at build time. No durations are
+  typed anywhere; they are read from the files.
+- Verified in Chrome with the real files (plays, clock and duration, rings, bar, "Get the
+  album" link), and in the browser suite: bell on the horn in both themes at desktop size,
+  hover focus, press-to-play, next/previous/close, ring opacity cap, a phone-size light hero.
+  The suite (chromium and mobile-chrome) and 76 unit tests pass, plus lint. The repo's
+  phone-smoothness test caught a looping `scale` animation on touch; it is now `transform`.
+- The player bar has a "Get the album" link to the same Amazon page as the hero's cover.
 - Not yet checked by a person on a real phone (iOS Safari silent switch, lock-screen
   controls, Save-Data). The code paths exist; Doug checks real devices himself.
 
@@ -90,4 +96,19 @@ is missing is skipped; if none exist the bell and bar are absent.
   first track on that layout. The light hero on a phone shows the bell.
 - The hero's primary button still scrolls to the Listen section; it does not play.
 - A manual low-data toggle in the bar was considered and not built (Save-Data and slow
-  connections switch to the `-lo` files automatically).
+  connections switch to the `-lo` files automatically). That detection uses the Network
+  Information API, which Chrome and Android expose but iOS Safari and Firefox do not, so an
+  iPhone on a bad connection still gets the 160 kbps file. There is also no "buffering"
+  message yet; on a stall the time simply stops.
+
+## Connection and smoothness
+
+- Nothing audio loads with the page (`preload="none"`): the cost of the feature at load is a
+  small script, and the bell does not appear until the hero photo has loaded.
+- The bell layer is absolutely positioned, so it causes no layout shift.
+- Touch devices: no scroll listener and no scroll-linked animation (the bell layer's drift is
+  desktop-only), and the breathing loop animates `transform`, which stays off the main thread.
+  Weak devices and slow links (`data-fx="lite"`) get no breathing, rings or tilt.
+- Desktop: one `getBoundingClientRect` per pointer move while the hero is on screen; rings are
+  transform/opacity animations; the ring loop runs only while a track plays and the hero is
+  visible; the 5-second hint ring is gated the same way.

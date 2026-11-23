@@ -33,7 +33,7 @@
 // no breathing.
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { tracks, ALBUM, ARTIST, ARTWORK } from '../data/tracks.js';
+import { tracks, ALBUM, ARTIST, ARTWORK, BUY_URL } from '../data/tracks.js';
 
 const base = import.meta.env.BASE_URL;
 const have = (file: string) => existsSync(join(process.cwd(), 'public', file));
@@ -72,6 +72,7 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
         <div class="bellp-bar__meta">
           <span class="bellp-bar__title" data-title />
           <span class="bellp-bar__sub"><span data-sub /> <span class="bellp-bar__time"><span data-cur>0:00</span> / <span data-dur>-:--</span></span></span>
+          <a class="bellp-bar__buy" href={BUY_URL} target="_blank" rel="noopener noreferrer" data-cta="bell-buy">Get the album<span class="visually-hidden"> (opens in a new tab)</span></a>
         </div>
         <div class="bellp-bar__nav">
           <button type="button" class="bellp-bar__btn" data-act="prev" aria-label="Previous track">
@@ -142,7 +143,9 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
   .bellp__pb { --D: max(calc(var(--u) * 7.2), 30px); position: relative; width: var(--D); height: var(--D); transform-style: preserve-3d; transition: scale 0.18s; }
   .bellp:active .bellp__pb { scale: 0.93; }
   .bellp-layer[data-touch] .bellp__pb { animation: bellp-breathe 3.2s ease-in-out infinite; }
-  @keyframes bellp-breathe { 50% { scale: 1.07; } }
+  @keyframes bellp-breathe { 50% { transform: scale(1.07); } }
+  /* Weak device or slow link (the hero script sets data-fx="lite"): hold still. */
+  :root[data-fx='lite'] .bellp-layer[data-touch] .bellp__pb { animation: none; }
 
   .bellp__coin {
     position: absolute; inset: 0; border-radius: 50%; transform: translateZ(calc(var(--u) * -0.2));
@@ -200,6 +203,9 @@ const data = JSON.stringify({ album: ALBUM, artist: ARTIST, artwork: `${base}${A
   .bellp-bar__title { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .bellp-bar__sub { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bellp-bar__time { font-variant-numeric: tabular-nums; }
+  .bellp-bar__buy { justify-self: start; padding-block: 0.15rem; font-size: 0.78rem; font-weight: 600; color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
+  .bellp-bar__buy:hover { text-decoration-thickness: 2px; }
+  .bellp-bar__buy:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 2px; }
   .bellp-bar__btn {
     display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; padding: 0;
     background: none; color: var(--text); cursor: pointer; -webkit-tap-highlight-color: transparent;
