@@ -42,3 +42,23 @@ rough the cost is the photo or something outside the hero; if smooth, bisect wit
 Likely next steps, in order: flatten the static layers (haze, hues, vignette, scrim) into the
 baked photo, the way the grade already is (`scripts/bake-photo-grades.mjs`); bake the two smoke
 shapes to an image; stop the fixed page glow while the hero is on screen.
+
+## Round 2: Doug's layer-by-layer result (2026-11-22, Galaxy S21, Firefox)
+
+Using `?off=`: smoke off did not help; **ambient off and bell off were the biggest single wins;
+`?off=all` (every hero layer plus the glow) was better still.** Changes, touch only:
+
+- **Page glow painted on the page background.** The fixed layer (four blobs plus a see-through
+  group, under everything and recombined with the scrolling page every frame) was already known
+  to be heavy in Firefox (about 60 ms against 28 ms per frame, `AmbientHues.astro`). On touch it
+  is now four radial gradients on `body`'s background: no layer, scrolls with the content, repeats
+  every 1.2 screens, strength baked into the color (12.3% dark, 30% light). Looks like the old
+  static wash in screenshots. Mouse-and-screen devices keep the fixed, drifting glow.
+- **Bell on touch is a flat little button.** No hero-sized transformed, clipped layer (the layer
+  now has `transform: none; overflow: visible` and the bell is placed from the photo's on-screen
+  box), no rings (hint and playing), no stacked 3D edge layers. Still: play triangle, the ring
+  that closes, the pause icon, the player bar. Desktop keeps rings and the 3D edge.
+- Still switchable for bisecting: `?off=ambient` and `?off=bell` now only matter on a mouse device.
+
+If it is still rough: `?off=haze,hues,vignette,scrim,smoke` on the new build will show what the
+hero layers cost; next step would be flattening the static ones into the baked photo.
