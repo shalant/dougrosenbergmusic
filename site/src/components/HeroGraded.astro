@@ -868,6 +868,25 @@ const records = [
     .hero .hero__main {
       animation: none;
     }
+    /* Cheaper still on a phone (2026-11-22; Doug on a Galaxy S21 in Firefox: dark
+       hero rough to scroll, lite mode no help, light hero fine). Two things the
+       light hero does not have:
+       - the scanlines used mix-blend-mode: overlay, which makes the browser
+         draw everything under them into an off-screen surface and blend it on
+         every frame. On this near-black photo the overlay is almost invisible
+         (a plain-alpha stand-in was tried and showed stripes the live version
+         does not have), so on a phone they are simply off.
+       - the haze and hue blobs sit still here, yet kept will-change: transform,
+         which gives each of the seven its own graphics layer for nothing.
+       ?off=... (see the script) switches single layers off to find any
+       remaining cost on a real phone. */
+    .hero .hero__scan {
+      display: none;
+    }
+    .hero .haze-blob,
+    .hero .hue-blob {
+      will-change: auto;
+    }
     .hero .hero__blob--a {
       animation: none;
       opacity: 0.6;
@@ -881,6 +900,29 @@ const records = [
   .hero[data-live='false'] .hero__blob,
   .hero[data-live='false'] .hero__main {
     animation-play-state: paused;
+  }
+
+  /* ?off=... diagnostic (script below): hide single layers to find what costs
+     frames on a real phone. Not linked from anywhere; harmless if left in. */
+  :global(html[data-off~='scan']) .hero__scan,
+  :global(html[data-off~='all']) .hero__scan,
+  :global(html[data-off~='vignette']) .hero__screen-vignette,
+  :global(html[data-off~='all']) .hero__screen-vignette,
+  :global(html[data-off~='scrim']) .hero__scrim,
+  :global(html[data-off~='all']) .hero__scrim,
+  :global(html[data-off~='haze']) .hero__haze,
+  :global(html[data-off~='all']) .hero__haze,
+  :global(html[data-off~='hues']) .hero__hues,
+  :global(html[data-off~='all']) .hero__hues,
+  :global(html[data-off~='smoke']) .hero__smoke,
+  :global(html[data-off~='all']) .hero__smoke,
+  :global(html[data-off~='ambient']) :global(.ambient),
+  :global(html[data-off~='all']) :global(.ambient),
+  :global(html[data-off~='bell']) :global(.bellp-layer) {
+    display: none;
+  }
+  :global(html[data-off~='photoscale']) .hero__photo {
+    transform: none;
   }
 
   /* Last in the file on purpose: the 1024px query above re-declares the
@@ -1135,6 +1177,14 @@ const records = [
     }
     const nav = navigator as NavExtras;
     const forced = new URLSearchParams(location.search).get('fx');
+    // Diagnostic (2026-11-22): ?off=scan,haze switches those layers off so a phone
+    // can find which one costs frames. Names: scan, vignette, scrim, haze, hues,
+    // smoke, ambient, bell, photoscale, all (every hero layer). Only known names
+    // are kept; nothing from the URL reaches the page as markup.
+    const off = (new URLSearchParams(location.search).get('off') ?? '')
+      .split(',')
+      .filter((n) => /^(scan|vignette|scrim|haze|hues|smoke|ambient|bell|photoscale|all)$/.test(n));
+    if (off.length) document.documentElement.dataset.off = off.join(' ');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const weakDevice =
       (nav.deviceMemory !== undefined && nav.deviceMemory <= 2) || navigator.hardwareConcurrency <= 2;
