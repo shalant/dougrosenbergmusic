@@ -40,8 +40,9 @@ Mechanical copy edits. No visual redesign here.
       8:30am-5pm CT Mon-Fri (the hook enforces this); commit body says why and what was
       verified. Open a PR; Doug merges.
 
-**Status 2026-10-25:** all items done except the commit/PR (pending). The Dev section went to just
-before the FAQ (Doug did not pick; reversible). The headline is the default one.
+**Status 2026-10-25:** done and merged (PR #96). The Dev section went to just before the FAQ
+(Doug did not pick; reversible). The step 1 headline was a placeholder; step 2 replaced it with
+"Better Than TV" (PR #97, see below).
 
 **Done when:** the PR is merged, no old-pitch copy remains, tests/build pass, and the todolist
 records it.

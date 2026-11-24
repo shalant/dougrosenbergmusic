@@ -62,3 +62,8 @@ Using `?off=`: smoke off did not help; **ambient off and bell off were the bigge
 
 If it is still rough: `?off=haze,hues,vignette,scrim,smoke` on the new build will show what the
 hero layers cost; next step would be flattening the static ones into the baked photo.
+
+## Phone check (2026-11-24)
+
+Doug: "scrolling looks great" on his mobile phone, on a Wi-Fi connection. The original report
+was on cellular (Galaxy S21, Firefox), so cellular is still unchecked.
