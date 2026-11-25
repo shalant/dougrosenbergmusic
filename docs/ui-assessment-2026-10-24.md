@@ -792,3 +792,33 @@ the form's column something under the button (point 2).
   900px tall), up to five on desktop. Schools: one column on a phone, three to four on desktop. Tests in
   `e2e/text-flow.spec.ts` replace the old orphan-dot checks (six of eight failed on the old build). Seen at 1440
   and 390, dark and light. Not re-scored: scores above are as of the start of this branch.
+
+## Re-score, 2026-11-24 (branch `todo-schema-score-2026-11-24`)
+
+Reviewer: Claude, the same model that built most of the site, so allow about three points either way. Fresh
+captures of the **live** home page (`master` at 198aee7) with reduced motion: full page at 1440x900 and a
+Pixel 7 emulation, dark and light, seen as contact sheets plus the two dark heroes. Not viewed: motion, the
+archive pages, interaction states, the player bar. Real-device evidence: Doug reported 2026-11-24 that
+scrolling "looks great" on his phone over Wi-Fi.
+
+**Good cop: dark about 95, light about 94** (was 94 / 93). The "Hear it" track list puts playable music on the
+page, and mobile gets one point back (14 of 15) for the first real-device report. Cellular is unchecked.
+
+**Bad cop: dark about 89, light about 90** (was 88 / 90). Brass buttons and the track list help. What costs:
+1. **The Contact portrait still runs well below the form**, so the right column ends early on desktop.
+2. **The sheet-music viewer is a large blank staff panel** until a piece is picked (desktop).
+3. **The phone page is very long** (about 14,000px), and the school list under Highlights is one long
+   single column.
+4. ~~**Footer kicker names `dougrosenbergmusic.com`**, which does not resolve in DNS (`Footer.astro`).~~ Fixed
+   the same day. Not re-scored.
+5. **Motion is unverified by the reviewer.**
+
+Not counted: the desktop bell button being nearly invisible at rest (documented design in
+`docs/bell-player-2026-11-22.md`), though a stranger looking at a still would not know the hero plays music.
+
+| Date | Lens | Build scored | Score | What changed or cost points |
+|---|---|---|---|---|
+| 2026-11-24 | good cop | live, `master` at 198aee7, dark | about 95 | Track list; first real-phone report |
+| 2026-11-24 | good cop | same, light | about 94 | Same |
+| 2026-11-24 | bad cop | same, dark | about 89 | Contact column, blank viewer, long phone page, wrong domain in footer |
+| 2026-11-24 | bad cop | same, light | about 90 | Same |

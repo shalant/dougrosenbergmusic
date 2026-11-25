@@ -20,6 +20,31 @@ and `career-development/docs/SITE_QUALITY_CHECKLIST.md` — those two are the ma
 docs, updated centrally when a new practice surfaces). This file doesn't duplicate them; it tracks
 this project's own custom items and where it stands against them.
 
+## Open now (checked 2026-11-24)
+
+Short list; the dated sections below keep the detail and history.
+
+**Needs Doug**
+- [ ] Phone: scrolling on cellular (Wi-Fi looked great 2026-11-24); bell player silent switch,
+      lock-screen controls and Save-Data; type and motion on a real iPhone, Mac or laptop.
+- [ ] Open the sheet-music viewer in a real browser (live headers re-checked 2026-11-24).
+- [ ] Source files for the 7 missing sheet music pieces.
+- [ ] Decisions: `worksFor` in the schema; one name and headline across both sites; branch
+      protection on `master`; non-name searches to target.
+- [ ] Align profiles (`docs/entity-consistency-checklist.md`).
+- [ ] Search Console: "Validate fix" on the 404 group.
+- [ ] Tell Goran and the other members about `/easternblok` (not recorded as done).
+
+**Claude can do when asked**
+- [x] Fix the footer domain and the dead press links (`docs/site-audit-2026-11-24.md`). UX/UI re-score
+      the same day: good cop 95 / 94, bad cop 89 / 90.
+- [ ] Clear the remaining dev-tool `npm audit` findings; needs major upgrades such as `@lhci/cli`
+      (`docs/site-audit-2026-11-24.md`). The critical one was fixed 2026-11-24.
+- [ ] Move the `press-archive` backup to private Azure Blob (needs a storage account). Stopgap
+      made 2026-11-24: `OneDrive/Backups/press-archive/press-archive-2026-11-24.zip`
+      (290 files, sizes match the source).
+
+
 ## Bell player (2026-11-22)
 
 - [x] **Built the hero's play button in the sax bell and its player bar** (branch
@@ -74,7 +99,8 @@ this project's own custom items and where it stands against them.
       device. Test in `e2e/wow-motion.spec.ts`; the desktop drift test skips on the touch-emulating
       project. Full e2e 459 passed. **Not confirmed on a real phone:** if it still twitches, the next
       suspects are the hero's blurred smoke layers and the photo fade-in (`data-photo`).
-- [ ] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
+- [x] **Hero hierarchy, first pass (branch `music-first-hero-2026-10-25`, step 2 of the plan).**
+      *Done, checked 2026-11-24: merged as PR #97; the hero has been reworked and re-scored several times since.*
       Confirmed first that the current hero is the Riff 14 port (PR #27, commit `538bc63`), not a
       stopgap, so this is a rework of the hierarchy rather than a swap. Changed in
       `HeroGraded.astro`: the headline is about 1.6x larger (`clamp(2.6rem, 5.4vw, 5rem)`) with
@@ -705,7 +731,8 @@ semantic headings, title/meta description.
             `/press` (200); key URL returns 200.
       - [x] Check AI Performance report as a citation baseline (dougrosenbergdev.com: 0 citations
             at 2026-09-29)
-      - [ ] IndexNow (pings Bing when pages change) — code added 2026-10-11 on branch
+      - [x] IndexNow (pings Bing when pages change) — code added 2026-10-11 on branch
+            *Done, checked 2026-11-24: `npm run indexnow` was run 2026-11-21 (200). Not wired into deploy, on purpose.*
             `cloudflare-baseline-todo-2026-10-11`: key file `site/public/<key>.txt`,
             `site/scripts/indexnow.mjs` (`npm run indexnow`, `-- --dry-run` to preview), 4 unit
             tests. Submits the sitemap URLs (just `/`) to `api.indexnow.org`; Bing, Yandex, Seznam
@@ -755,7 +782,8 @@ semantic headings, title/meta description.
       Rich Results Test on the live URL and a real send from a phone.
 - [x] **Mobile contact form (2026-09-30)** — fixed header no longer covers the Name field,
       compact phone layout, success toast + scroll-to-top (shipped in PR #58).
-- [ ] **Contact form → customer-intake-backend Leads table (code done 2026-09-30, NOT yet
+- [x] **Contact form → customer-intake-backend Leads table (code done 2026-09-30, NOT yet
+      *Done, checked 2026-11-24: the live check on 2026-10-03 (below) passed. `OriginSite` is still unconfirmed.*
       verified live).** Added `site/src/lead-forward.js`; `handleContact()` now runs a
       best-effort `POST https://admin.dougrosenbergdev.com/api/leads` alongside the email send
       (`Promise.allSettled`, 5s timeout, errors logged, never fatal — email stays the only
@@ -1362,12 +1390,14 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       spacing comes along for free, no changes needed to the per-note pixel offsets or the photo.
       Verified clear at 861px (previously the worst case) and no jump/overlap at the 1010px
       transition boundary.
-- [ ] **UI/UX "clearly exceptional" pass (assessed 2026-10-24, deferred by Doug).** Scored 70/100
+- [x] **UI/UX "clearly exceptional" pass (assessed 2026-10-24, deferred by Doug).** Scored 70/100
+      *Done, checked 2026-11-24: done in later rounds; scores are in `docs/ui-assessment-2026-10-24.md` (good cop about 94 on 2026-11-21).*
       on desktop; mobile unverified. Ranked findings and a suggested order are in
       `docs/ui-assessment-2026-10-24.md`. Biggest levers: hero hierarchy, proof (a project
       preview) near the hero, nav/carousel overlap, repeated eyebrows, archive pages that don't
       match the home page. Check first whether the current hero is the "Riff 14" port.
-- [ ] **Light-mode refactor.** Site is currently dark-only by deliberate choice (see
+- [x] **Light-mode refactor.** Site is currently dark-only by deliberate choice (see
+      *Done, checked 2026-11-24: shipped in PR #126 and #127. The real-device check noted below is still open.*
       `docs/DESIGN_NOTES.md`) — no toggle, no `prefers-color-scheme` handling. Per
       `SITE_QUALITY_CHECKLIST.md`'s Design System category, dual-theme support (if added) needs to
       be a scoped decision up front — palette, toggle mechanism (manual override persisted to
@@ -1704,7 +1734,8 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             (matching the siblings) and recompressed (quality 85, stripped metadata): 231.8KB →
             71.3KB (-155KB, beats the original ~130KiB estimate). Visually verified side-by-side,
             no visible quality loss at its actual display size.
-      - [ ] **Branch/git hygiene, checked 2026-09-15:** 13 of the repo's 17 branches on `origin`
+      - [x] **Branch/git hygiene, checked 2026-09-15:** 13 of the repo's 17 branches on `origin`
+            *Done, checked 2026-11-24: 26 local and 129 remote merged branches deleted. Unmerged branches were kept.*
             are already fully merged into `master` (confirmed via `git merge-base --is-ancestor`
             against `origin/master` for every branch) and just sitting there stale — candidates
             for deletion: `case-study-draft`, `contact-form`, `docs/hero-smoke-exploration-notes`,
@@ -2197,12 +2228,14 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             matter (band shots, album art) and save them into `press-archive/<id>/images/`
       - [ ] No entry has an `archiveUrl` of its own yet. Submitting URLs to the Wayback Machine's
             Save Page Now is an outward action; do it with Doug's OK
-      - [ ] Every entry is `approved: false`. Doug needs to choose which can be used publicly and
+      - [x] Every entry is `approved: false`. Doug needs to choose which can be used publicly and
+            *Done, checked 2026-11-24: Doug: all press is approved. 81 of 85 entries are `approved: true`; the other 4 are listener comments and a concert recording, which the site never shows.*
             how much quoting is acceptable before any of it reaches the site
       - [x] Decide whether and how to show a "Press" section (shared with the Eastern Blok item
             above). The merged `press.json` is built to feed it. Decided 2026-10-15, see "Press on
             the site" below
-      - [ ] Housekeeping: open or skip a PR for `press-json-regen-2026-10-05`; remove the extra
+      - [x] Housekeeping: open or skip a PR for `press-json-regen-2026-10-05`; remove the extra
+            *Done, checked 2026-11-24: extra worktrees removed and merged branches deleted, local and on GitHub.*
             worktrees (`dougrosenbergmusic-press`, `dougrosenbergmusic-eb2`) with
             `git worktree remove`; delete merged remote press branches
       - **Deliberate rule for this archive:** several other Rosenbergs show up in results (bassist
@@ -2215,7 +2248,8 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
       mostly repeat it. Search position on the page doesn't matter for SEO/GEO/AEO (crawlers read
       the whole page); the value is in short attributed quotes, links to the sources, and schema
       tying each review to Doug and the band. Steps, in order:
-      - [ ] **1. Approve entries.** Go through the entries that name Doug with their pull quotes;
+      - [x] **1. Approve entries.** Go through the entries that name Doug with their pull quotes;
+            *Done, checked 2026-11-24: all showable entries are approved (Doug confirmed).*
             Doug sets `approved: true` on the ones that can be shown. Nothing reaches the site
             before this. Regenerate `press/press.json` after
       - [x] 2026-10-15: Doug approved six entries (All About Jazz 2006 and 2008, DownBeat 2006,
@@ -2246,7 +2280,8 @@ dougrosenbergdev repo claiming this site had the same gap was wrong.
             Wilmette (403 to automated fetches) and the YouTube clip are `verified: false` and show
             "not confirmed"; open them by hand to confirm. Still unapproved in `candidates.json`: the
             Tribune quote (no source) and five band-side items
-      - [ ] **2. Home-page timeline section.** Decided 2026-10-15: a short career timeline with a
+      - [x] **2. Home-page timeline section.** Decided 2026-10-15: a short career timeline with a
+            *Done, checked 2026-11-24: shipped 2026-10-15 (`PressTimeline.astro`, see below).*
             few approved quotes and links, using the "Era bracket" Ledger variation (rows grouped
             by project, a bracket per group with a one-line history and one link to its page).
             Outlet links go to the original review; the Eastern Blok bracket links to

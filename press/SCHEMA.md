@@ -23,6 +23,7 @@ Several Claude sessions (and Doug) collect press, album and performance coverage
 | `archiveUrl` | A Wayback Machine link (Save Page Now or an existing capture). |
 | `archive` | Folder name under `press-archive/` holding the full copy, or `null`. |
 | `namesDoug` | `true` only if the text actually names him. |
+| `linkDead` | Optional, site data files only. `true` once `url` no longer loads: the page drops the link and offers `archiveUrl` if set. Added 2026-11-24. |
 | `rating` | If the outlet gave one (e.g. `3 stars`), else `null`. |
 | `showDates` | Optional. ISO dates of the shows this item covers or lists, so a gig in `eastern-blok-shows.json` can be matched to its press. A date that is not in the show log is flagged in `notes`. Added 2026-10-23. |
 | `pullQuotes` | Array of short attributed quotes. Empty array if none. |

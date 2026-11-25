@@ -390,6 +390,7 @@
       "author": null,
       "date": "2011-12-09",
       "url": "https://www.benningtonbanner.com/local-news/e-week",
+      "linkDead": true,
       "archiveUrl": null,
       "archive": null,
       "namesDoug": false,
@@ -1012,6 +1013,7 @@
       "author": null,
       "date": null,
       "url": "http://chicago.floodmagazine.com/events/2010/12/8/eastern-blok",
+      "linkDead": true,
       "namesDoug": true,
       "showDates": [
         "2010-12-08"
@@ -1256,6 +1258,7 @@
       "author": "Justin Dainer-Best and Jacob Carroll",
       "date": "2007-09-25",
       "url": "http://www.biconews.com/article/view/5948",
+      "linkDead": true,
       "namesDoug": false,
       "showDates": [
         "2007-09-22"
@@ -1328,6 +1331,7 @@
       "author": "Derek Walker",
       "date": "2007",
       "url": "http://www.tollbooth.org/2007/reviews/eblok.html",
+      "linkDead": true,
       "namesDoug": false,
       "notes": "Album review (Paperwork Media label listed). Mentions the saxophone and flutes but names only Goran Ivanovic. Month not shown on the page; the copyright line reads 1996-2007."
     },
@@ -1437,6 +1441,7 @@
       "author": null,
       "date": "2007",
       "url": "http://revuemagazine.net/03%20-%20features.html",
+      "linkDead": true,
       "showDates": [
         "2007-11-09"
       ],
@@ -1461,6 +1466,7 @@
       "author": null,
       "date": "2007-08-20",
       "url": "http://www.propculture.com/view.php?id=24&page=tunes",
+      "linkDead": true,
       "namesDoug": false,
       "notes": "Linked from the band's news page as \"another review of our new album\" (2007-08-20). The page returns 404 and has no Wayback capture, so unread."
     },
@@ -1641,6 +1647,7 @@
       "author": null,
       "date": "2008-10-06",
       "url": "http://www.easternblok.net/calendar.html",
+      "linkDead": true,
       "showDates": [
         "2008-10-28",
         "2008-10-29"

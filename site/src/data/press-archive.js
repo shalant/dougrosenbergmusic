@@ -84,7 +84,11 @@ export function highlightName(text) {
 }
 
 export function publicEntries(entries) {
-	return entries.filter((e) => e.approved === true && !NEVER_SHOWN.has(e.kind));
+	// A dead page (linkDead) keeps its URL in the data but is shown without a link;
+	// the archived copy, where there is one, is offered instead.
+	return entries
+		.filter((e) => e.approved === true && !NEVER_SHOWN.has(e.kind))
+		.map((e) => (e.linkDead ? { ...e, url: null } : e));
 }
 
 const byDate = (a, b) => (sortDate(a) ?? '9999').localeCompare(sortDate(b) ?? '9999');

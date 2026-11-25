@@ -50,7 +50,7 @@ const kindLabel = (kind: string) => KIND_LABEL[kind as keyof typeof KIND_LABEL];
                 {!entry.url && <span>no live page</span>}
                 {entry.archiveUrl && <a href={entry.archiveUrl} target="_blank" rel="noopener noreferrer">archived copy<span class="visually-hidden"> (opens in a new tab)</span></a>}
                 {isTranslated(entry) && <span>translated</span>}
-                {entry.verified === false && entry.url && <span>not confirmed</span>}
+                {entry.verified === false && (entry.url || entry.linkDead) && <span>not confirmed</span>}
               </p>
             </li>
           );
