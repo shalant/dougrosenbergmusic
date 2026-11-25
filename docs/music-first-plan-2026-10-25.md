@@ -88,6 +88,10 @@ embeds). Kept: photo, haze, broadcast grade, the italic accent phrase, both CTAs
 4. **Mobile, keyboard focus and reduced-motion pass** at 390px and 768px; run the
    `site-audit` agent against `SITE_QUALITY_CHECKLIST`; re-score against the 70/100 baseline.
 
+**Status 2026-11-24:** these four are covered by later merged work (2026-10-25 to 10-31: overlap and
+chrome fixes, archive-page staff motif, mobile and accessibility passes, site audit, re-scores). Nothing
+left to build from this plan.
+
 ## Open questions for Doug
 
 - ~~Final hero headline~~ **Decided 2026-10-25:** "Better Than TV" (the debut album's title) with
