@@ -43,12 +43,12 @@ const groups = (split
             {entry.author && <span>, {entry.author}</span>}
             <span class="cut__when"> · {dateLabel(entry.date, true) || 'undated'}{entry.album && albumTitles[entry.album] ? ` · on ${albumTitles[entry.album]}` : ''}</span>
           </p>
-          {(!entry.url || entry.archiveUrl || isTranslated(entry) || (entry.verified === false && entry.url)) && (
+          {(!entry.url || entry.archiveUrl || isTranslated(entry) || (entry.verified === false && (entry.url || entry.linkDead))) && (
             <p class="cut__note">
               {!entry.url && <span>no live page</span>}
               {entry.archiveUrl && <a href={entry.archiveUrl} target="_blank" rel="noopener noreferrer">archived copy<span class="visually-hidden"> (opens in a new tab)</span></a>}
               {isTranslated(entry) && <span>translated from Polish</span>}
-              {entry.verified === false && entry.url && <span>not independently confirmed</span>}
+              {entry.verified === false && (entry.url || entry.linkDead) && <span>not independently confirmed</span>}
             </p>
           )}
         </li>

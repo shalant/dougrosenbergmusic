@@ -809,7 +809,8 @@ page, and mobile gets one point back (14 of 15) for the first real-device report
 2. **The sheet-music viewer is a large blank staff panel** until a piece is picked (desktop).
 3. **The phone page is very long** (about 14,000px), and the school list under Highlights is one long
    single column.
-4. **Footer kicker names `dougrosenbergmusic.com`**, which does not resolve in DNS (`Footer.astro`).
+4. ~~**Footer kicker names `dougrosenbergmusic.com`**, which does not resolve in DNS (`Footer.astro`).~~ Fixed
+   the same day. Not re-scored.
 5. **Motion is unverified by the reviewer.**
 
 Not counted: the desktop bell button being nearly invisible at rest (documented design in

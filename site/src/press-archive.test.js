@@ -85,3 +85,21 @@ test("tick positions stay inside the strip and are null outside it", () => {
 	assert.equal(tickPosition("2016-03-09", 2004, 2013), null);
 	assert.equal(tickPosition(null, 2004, 2013), null);
 });
+
+// Links found dead on 2026-11-24. The data keeps the original URL; the page must not link to it.
+const DEAD = /chicagoist\.com|booboorecords\.com|biconews\.com|revuemagazine\.net|easternblok\.net|propculture\.com|floodmagazine\.com|tollbooth\.org|benningtonbanner\.com\/local-news\/e-week/;
+
+test("no shown entry links to a page known to be dead", () => {
+	assert.deepEqual(shown.filter((e) => e.url && DEAD.test(e.url)).map((e) => e.id), []);
+});
+
+test("the Better Than TV review and the Booboo listing still offer an archived copy", () => {
+	for (const id of ["chicagoist-better-than-tv-2013-12", "booboo-new-releases-2014-05-13"]) {
+		assert.match(shown.find((e) => e.id === id)?.archiveUrl ?? "", /web\.archive\.org/, id);
+	}
+});
+
+test("the footer names the domain the site is served from", () => {
+	const footer = readFileSync(new URL("./components/Footer.astro", import.meta.url), "utf8");
+	assert.match(footer, /Liner notes · dougrosenberg\.com</);
+});

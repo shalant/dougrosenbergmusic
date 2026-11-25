@@ -34,3 +34,17 @@ be checked by command, test or screenshot; items not listed were **not checked**
 
 Search Console, analytics settings, real-device behaviour, keyboard walk-through, a fresh Lighthouse run by
 hand, a real contact form send, and the sheet-music viewer in a real browser (Chrome stopped responding).
+
+## Fixed the same day (branch `fix-footer-links-deps-2026-11-24`)
+
+- **Finding 1:** the footer now reads `dougrosenberg.com`.
+- **Finding 4:** the nine dead links are marked `linkDead` in the press data and are no longer linked. Five
+  offer an archived copy (chicagoist, booboorecords, biconews, tollbooth, easternblok.net). Four show "no live
+  page": benningtonbanner, floodmagazine and propculture have no Wayback capture; the revuemagazine capture
+  does not mention the band, so it is not offered.
+- **Finding 2, partly:** targeted `npm update` plus `sharp` 0.35.5 (Astro is now 7.4.13). The critical
+  advisory is gone and `npm audit --omit=dev` reports 0. 23 remain in dev tools (5 low, 4 moderate, 14 high);
+  clearing them needs major upgrades such as `@lhci/cli`, not done. Do not run a bare `npm audit fix` here:
+  it hoisted `cookie` 0.4.2 from the Lighthouse tool and broke the Astro build.
+- CSP hashes regenerated. 88 unit tests, build, CSP check, lint, `astro check`, and the browser suite
+  (504 passed, 64 skipped, 0 failed, 3 workers).

@@ -36,9 +36,10 @@ Short list; the dated sections below keep the detail and history.
 - [ ] Tell Goran and the other members about `/easternblok` (not recorded as done).
 
 **Claude can do when asked**
-- [ ] Fix the footer domain and the dead press links (`docs/site-audit-2026-11-24.md`). UX/UI re-score
+- [x] Fix the footer domain and the dead press links (`docs/site-audit-2026-11-24.md`). UX/UI re-score
       the same day: good cop 95 / 94, bad cop 89 / 90.
-- [ ] Update dependencies flagged by `npm audit` (see the 2026-11-24 audit below).
+- [ ] Clear the remaining dev-tool `npm audit` findings; needs major upgrades such as `@lhci/cli`
+      (`docs/site-audit-2026-11-24.md`). The critical one was fixed 2026-11-24.
 - [ ] Move the `press-archive` backup to private Azure Blob (needs a storage account). Stopgap
       made 2026-11-24: `OneDrive/Backups/press-archive/press-archive-2026-11-24.zip`
       (290 files, sizes match the source).
