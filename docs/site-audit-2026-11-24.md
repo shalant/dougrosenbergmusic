@@ -48,3 +48,5 @@ hand, a real contact form send, and the sheet-music viewer in a real browser (Ch
   it hoisted `cookie` 0.4.2 from the Lighthouse tool and broke the Astro build.
 - CSP hashes regenerated. 88 unit tests, build, CSP check, lint, `astro check`, and the browser suite
   (504 passed, 64 skipped, 0 failed, 3 workers).
+- The newer Astro needs Node 22.23.4 or later; CI (all four workflows) moved from 22.12.0 to 22.23.5 and
+  `engines` was raised to match.
