@@ -100,6 +100,9 @@ static layers cross-fading over 40s, one smoke shape sits still, and the headlin
 still. Under `prefers-reduced-motion` all of it is still at every width. Plus the fade-up on load
 and the one-time TV flicker. The sax-bell chips are still undecided.
 
+(2026-11-26: at 1024px and below the fade-up on the name and headline is off, to bring the largest
+paint forward. Desktop keeps it, and the TV flicker stays at every width.)
+
 ### Update, 2026-10-30: the haze drifts on phones, with a lite mode for weak devices
 
 Doug looked at the site on a phone and saw no haze motion: the 1024px-and-under tier from
