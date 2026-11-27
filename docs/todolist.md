@@ -94,8 +94,10 @@ remove the least interesting animations one by one and measure each.
       `hero-no-fade-mobile-2026-11-26`; desktop keeps it, TV flicker stays). Local build, light
       theme, simulated mobile, nine runs each: median unthrottled LCP 1.97s to 0.86s (every run
       improved); simulated LCP 2.7s and score 96 unchanged.
-- [ ] After merge: several live PageSpeed runs, to see whether the low runs (83) still happen.
-- [ ] Step 2, only if needed: photo print fade-up (light theme).
+- [x] After merge: five live mobile PageSpeed runs, 2026-11-26 10:02-10:07pm CT. Scores 94, 96,
+      99, 99, 96 (median 96); LCP 2.1-2.7s; FCP 1.1s every run; blocking time 0-40ms; CLS 0; Speed
+      Index 1.2-4.5s. No run near the earlier 83, though five runs cannot rule one out.
+- [ ] Step 2, only if needed: photo print fade-up (light theme). Not needed as of 2026-11-26.
 - [ ] Step 3, only if needed: "TV" flicker (Doug leans to keep; tied to the title and logo).
 
 ## Bell player (2026-11-22)

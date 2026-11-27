@@ -13,15 +13,36 @@ the `sameAs` update at the bottom, which is a small code change.
 - **Name:** Doug Rosenberg (not "Douglas" / "Doug R." — pick one form and keep it;
   the LinkedIn URL uses `douglasrosenberg`, so consider "Doug (Douglas) Rosenberg"
   there only if LinkedIn requires it)
-- **One-line bio (≈50 words, same as the site intro):**
-  > Doug Rosenberg is a Chicago-based web designer and developer who builds websites
-  > for musicians and small businesses, covering design, development, branding, and
-  > ongoing support. He is also a jazz saxophonist, composer, and educator, with the
-  > debut album *Better Than TV* (2014) and a New England Conservatory degree.
-- **Short bio (≈15 words, for bios with tight limits):** Chicago web designer and
-  developer, and jazz saxophonist, composer, and educator.
-- **Primary site:** https://dougrosenberg.com/ · **Dev/portfolio:** https://dougrosenbergdev.com/
+Music and developer profiles carry separate bios (decided 2026-11-26). A music bio has
+no web-design line, and a developer bio has no music pitch. Eastern Blok disbanded around
+2012: write "best known for his work with the band Eastern Blok", never "co-leader" or
+present tense about the band.
+
+- **Main music page:** https://dougrosenberg.com/ · **Developer:** https://dougrosenbergdev.com/
 - **Location:** Chicago, IL · **Contact:** doug.rosenberg@gmail.com
+
+**Music bio** (YouTube; also Bandcamp, Spotify, Apple Music):
+
+> Doug Rosenberg is a Chicago jazz saxophonist, composer and educator. He is best known for
+> his work with the band Eastern Blok. His debut album is Better Than TV (2014). He has
+> performed with Robert Glasper, Rakalam Bob Moses, Kendrick Scott, Danilo Pérez and Fareed
+> Haque, at venues including Millennium Park, the Green Mill, Symphony Center and the Jazz
+> Showcase. A New England Conservatory graduate, he also teaches private lessons.
+>
+> Music, lessons and booking: https://dougrosenberg.com/
+
+**Music bio, short:** Chicago jazz saxophonist, composer and educator, best known for his
+work with the band Eastern Blok.
+
+**LinkedIn headline:** Web Designer & Developer | Chicago
+
+**LinkedIn About:**
+
+> Doug Rosenberg is a Chicago web designer and developer who builds websites for musicians
+> and small businesses, covering design, development, branding and ongoing support.
+
+**GitHub bio:** Web designer and developer in Chicago. Websites for musicians and small
+businesses.
 
 ## 2. Profiles to audit (bio text + website link)
 
@@ -30,12 +51,12 @@ Open each, paste the matching bio, and make the website link the canonical URL
 
 | Profile | URL | Bio to use | Link to |
 | --- | --- | --- | --- |
-| YouTube | https://youtube.com/@dougrosenberg2361 | one-line | dougrosenberg.com |
-| Instagram | https://instagram.com/shalantdoro | short | dougrosenberg.com |
-| LinkedIn | https://linkedin.com/in/douglasrosenberg | one-line (About) + headline | dougrosenberg.com |
-| GitHub | https://github.com/shalant | short (profile README / bio) | dougrosenbergdev.com |
+| YouTube (music) | https://youtube.com/@dougrosenberg2361 | music | dougrosenberg.com |
+| LinkedIn (developer only) | https://linkedin.com/in/douglasrosenberg | LinkedIn headline + About | dougrosenbergdev.com |
+| GitHub (developer only) | https://github.com/shalant | GitHub bio | dougrosenbergdev.com |
+| Instagram | https://instagram.com/shalantdoro | personal: leave as is | no change needed |
 | Amazon album pages | Better Than TV, Goran Ivanovic Group, Underwater, Folk Tales | n/a | check artist name spelling matches |
-| Bandcamp / Spotify / Apple Music | (check which exist) | short | dougrosenberg.com |
+| Bandcamp / Spotify / Apple Music | (check which exist) | music, short | dougrosenberg.com |
 | Eastern Blok / Goran Ivanovic pages | (band sites, if any) | credit line | dougrosenberg.com |
 
 ## 3. Knowledge sources assistants lean on
