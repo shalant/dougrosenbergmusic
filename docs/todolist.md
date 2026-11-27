@@ -45,6 +45,39 @@ Short list; the dated sections below keep the detail and history.
       (290 files, sizes match the source).
 
 
+## PageSpeed Insights, live site (2026-11-25)
+
+Doug ran pagespeed.web.dev on `https://dougrosenberg.com/` (about 1:40pm CT, Lighthouse 13.6.0).
+One run each, no real-user field data ("No Data").
+
+| | Mobile | Desktop |
+|---|---|---|
+| Performance | 76 | 96 |
+| Accessibility / Best practices / SEO | 100 / 100 / 100 | 100 / 100 / 100 |
+| FCP | 1.1s | 0.3s |
+| LCP | 4.7s | 1.2s |
+| TBT | 220ms | 110ms |
+| CLS | 0 | 0 |
+| Speed Index | 4.4s | 0.8s |
+
+Mobile is well above the "something in the 50s" predicted in the 2026-09-15 note below.
+
+- [ ] **Mobile LCP is 4.7s** (Google's "good" is 2.5s or less). Reported savings, mobile: images
+      308 KiB, unused JavaScript 74 KiB, cache lifetimes 45 KiB, legacy JavaScript 21 KiB,
+      render-blocking requests 400ms.
+      - **Investigated 2026-11-25** (local Lighthouse 12.1.0, mobile, against the live site; three
+        runs per variant). The LCP element is the hero headline (`h1.hero__title`), not the photo.
+        Blocking `gtag.js` (179 KB) took simulated LCP from 6.4-6.8s to 3.6-3.8s. Blocking the
+        off-screen images or the italic font made no clear difference. The same batch ran slower
+        than a first single run (4.7s), so compare within a batch only.
+      - The headline registers as LCP at about 2.2s unthrottled, well after first paint (about
+        0.9s). Likely its entrance animations (fade-up, "TV" flicker), but local A/B runs were too
+        noisy to confirm. A late LCP lets `gtag.js` count against it in the simulation.
+      - With real (devtools) throttling: LCP about 3.7s, first paint about 3.5s. So first paint is
+        a second problem, not yet investigated.
+      - Not fixed yet. Proposed: load `gtag.js` after the page has loaded and gone idle, or on
+        first interaction (trade-off: very short visits may go uncounted).
+
 ## Bell player (2026-11-22)
 
 - [x] **Built the hero's play button in the sax bell and its player bar** (branch
