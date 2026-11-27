@@ -84,6 +84,20 @@ Mobile is well above the "something in the 50s" predicted in the 2026-09-15 note
         came at about 0.7s, before the headline paints at about 1.9s.
 - [ ] After merge and deploy: re-run pagespeed.web.dev, and check GA4 still records visits.
 
+### Trimming load animations one at a time (started 2026-11-26)
+
+Live after PR #154 (`gtag.js` delay), 2026-11-26 about 9:35pm CT: desktop 100 (LCP 0.6s); mobile 83
+(LCP 4.4s, headline render delay about 4.1s) on one run and 96 (LCP 2.7s) on the next. Doug's plan:
+remove the least interesting animations one by one and measure each.
+
+- [x] **Step 1: name and headline fade-up off at 1024px and below** (branch
+      `hero-no-fade-mobile-2026-11-26`; desktop keeps it, TV flicker stays). Local build, light
+      theme, simulated mobile, nine runs each: median unthrottled LCP 1.97s to 0.86s (every run
+      improved); simulated LCP 2.7s and score 96 unchanged.
+- [ ] After merge: several live PageSpeed runs, to see whether the low runs (83) still happen.
+- [ ] Step 2, only if needed: photo print fade-up (light theme).
+- [ ] Step 3, only if needed: "TV" flicker (Doug leans to keep; tied to the title and logo).
+
 ## Bell player (2026-11-22)
 
 - [x] **Built the hero's play button in the sax bell and its player bar** (branch

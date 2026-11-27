@@ -38,11 +38,25 @@ test.describe('smoke', () => {
   test('hero headline is solid text with TV in test-card colors', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('.hero__title')).toHaveCSS('background-image', 'none');
-    await expect(page.locator('.hero__title')).toHaveCSS('animation-name', 'fade-up');
     for (const letter of ['.hero__tv-t', '.hero__tv-v']) {
       expect(await page.locator(letter).evaluate((el) => getComputedStyle(el).backgroundImage)).toContain('linear-gradient');
     }
   });
+
+  // 2026-11-26: the name and headline fade-up is off at 1024px and below (the
+  // headline is the page's largest paint on phones). Desktop keeps it, and the
+  // TV flicker stays everywhere.
+  for (const [width, fade] of [[390, 'none'], [1024, 'none'], [1025, 'fade-up']] as const) {
+    test(`hero name and headline fade at ${width}px: ${fade}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await page.goto('/');
+      for (const sel of ['.hero__name', '.hero__title']) {
+        await expect(page.locator(sel)).toHaveCSS('animation-name', fade);
+      }
+      await expect(page.locator('.hero__tv-t')).toHaveCSS('animation-name', 'tv-on');
+    });
+  }
 
   test('the TV flicker does not run under reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });

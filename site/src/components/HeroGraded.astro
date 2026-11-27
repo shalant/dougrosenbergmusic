@@ -693,8 +693,12 @@ const records = [
     .hero__main {
       animation: none;
     }
+    /* No fade-up on the name and headline here (2026-11-26): the headline is
+       the largest paint on phones, and it was the plainest effect in the hero.
+       The TV flicker stays. */
+    .hero__name,
     .hero__title {
-      animation: fade-up 0.7s ease-out 0.15s both;
+      animation: none;
     }
     .hero__content {
       position: relative;
