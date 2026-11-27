@@ -75,8 +75,14 @@ Mobile is well above the "something in the 50s" predicted in the 2026-09-15 note
         noisy to confirm. A late LCP lets `gtag.js` count against it in the simulation.
       - With real (devtools) throttling: LCP about 3.7s, first paint about 3.5s. So first paint is
         a second problem, not yet investigated.
-      - Not fixed yet. Proposed: load `gtag.js` after the page has loaded and gone idle, or on
-        first interaction (trade-off: very short visits may go uncounted).
+      - **Fixed 2026-11-26 (branch `defer-gtag-2026-11-26`):** `gtag.js` now loads on the first
+        interaction, or 3.5s after load. On a local build served under a non-localhost name, mobile
+        score went from 70-79 to 93-95 and simulated LCP from 5.4-5.9s to 2.7-2.8s. Part of the gain
+        is that the test ends before the script is requested. Trade-off: a visit under about 4s with
+        no interaction isn't counted by GA4 (Cloudflare Web Analytics still loads at once).
+      - dougrosenbergdev's idle-after-load loader was tried first and changed nothing here: idle
+        came at about 0.7s, before the headline paints at about 1.9s.
+- [ ] After merge and deploy: re-run pagespeed.web.dev, and check GA4 still records visits.
 
 ## Bell player (2026-11-22)
 

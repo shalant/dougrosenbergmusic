@@ -168,10 +168,28 @@ const websiteSchema = {
 				cf.setAttribute('data-cf-beacon', JSON.stringify({ token: '775b11737d154a3a8878533ba375f9f9' }));
 				document.head.appendChild(cf);
 
-				var ga = document.createElement('script');
-				ga.async = true;
-				ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF';
-				document.head.appendChild(ga);
+				// gtag.js waits for the first interaction, or 3.5s after load, so it
+				// doesn't compete with the largest paint (about 3s of simulated mobile
+				// LCP, 2026-11-26). Waiting only for an idle browser, as
+				// dougrosenbergdev does, was too soon here: idle came at about 0.7s and
+				// the headline paints at about 1.9s. Events queue on dataLayer below
+				// and replay in order when it arrives. A visit that ends before either
+				// trigger isn't counted by GA4.
+				var started = false;
+				var triggers = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
+				var loadGtag = function () {
+					if (started) return;
+					started = true;
+					triggers.forEach(function (t) { removeEventListener(t, loadGtag); });
+					var ga = document.createElement('script');
+					ga.async = true;
+					ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-BGSJ1FWPTF';
+					document.head.appendChild(ga);
+				};
+				var loadLater = function () { setTimeout(loadGtag, 3500); };
+				triggers.forEach(function (t) { addEventListener(t, loadGtag, { passive: true, once: true }); });
+				if (document.readyState === 'complete') loadLater();
+				else addEventListener('load', loadLater);
 			}
 			window.dataLayer = window.dataLayer || [];
 			window.gtag = function gtag() { window.dataLayer.push(arguments); };
